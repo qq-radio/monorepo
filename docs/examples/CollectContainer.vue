@@ -5,12 +5,12 @@
       <div><slot name="desc" /></div>
     </div>
     <div class="collect-container-item">
-      <div>Value：</div>
-      <div><slot name="value" /></div>
-    </div>
-    <div class="collect-container-item">
       <div>Demo：</div>
       <div><slot name="default" /></div>
+    </div>
+    <div class="collect-container-item">
+      <div>Value：</div>
+      <div><slot name="value" /></div>
     </div>
   </div>
 </template>

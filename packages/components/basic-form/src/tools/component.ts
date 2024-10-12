@@ -13,7 +13,11 @@ import {
   ElTransfer,
   ElColorPicker,
 } from "element-plus";
-import { BasicCheckbox, BasicRadio, BasicSelect } from "@center/components";
+import {
+  BasicCheckbox,
+  BasicRadioGroup,
+  BasicSelect,
+} from "@center/components";
 
 import type { Component } from "vue";
 
@@ -22,7 +26,7 @@ const componentMap = new Map<ComponentType, Component>();
 componentMap.set("input", ElInput);
 componentMap.set("input-number", ElInputNumber);
 componentMap.set("textarea", ElInput);
-// componentMap.set("radio", BasicRadio);
+// componentMap.set("radio", BasicRadioGroup);
 componentMap.set("checkbox", BasicCheckbox);
 // componentMap.set("select", BasicSelect);
 componentMap.set("tree-select", ElTreeSelect);

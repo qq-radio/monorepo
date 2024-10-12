@@ -3,28 +3,15 @@
   <br />
 
   <CollectContainer>
-    <template #desc>基本用法</template>
+    <template #desc>单个用法</template>
     <template #value>{{ state.value1 }}</template>
-    <BasicRadio v-model="state.value1" label="选项-1" :value="1" />
-  </CollectContainer>
-
-  <CollectContainer>
-    <template #desc>透传EPlus原有的props</template>
-    <template #value>{{ state.value2 }}</template>
-    <BasicRadio
-      v-model="state.value2"
-      label="选项-2"
-      size="small"
-      :value="2"
-      disabled
-      border
-    />
+    <BasicRadioGroup v-model="state.value1" label="选项-1" :value="1" />
   </CollectContainer>
 
   <CollectContainer>
     <template #desc>未传value时，label会作为value使用</template>
     <template #value>{{ state.value3 }}</template>
-    <BasicRadio v-model="state.value3" label="选项-3" />
+    <BasicRadioGroup v-model="state.value3" label="选项-3" />
   </CollectContainer>
 
   <CollectContainer>
@@ -32,7 +19,7 @@
       <div>传入options渲染多个radio，并且单独禁用第3个radio</div>
     </template>
     <template #value>{{ state.value4 }}</template>
-    <BasicRadio
+    <BasicRadioGroup
       v-model="state.value4"
       :options="[
         {
@@ -55,7 +42,7 @@
   <CollectContainer>
     <template #desc>若希望选项值来自后端接口，请传入api</template>
     <template #value>{{ state.value5 }}</template>
-    <BasicRadio v-model="state.value5" :api="api" />
+    <BasicRadioGroup v-model="state.value5" :api="api" />
   </CollectContainer>
 
   <CollectContainer>
@@ -67,28 +54,34 @@
       <div>{{ state.value6 }}</div>
       <div>{{ moreValues }}</div>
     </template>
-    <BasicRadio v-model="state.value6" :api="api" @change="onChange" />
+    <BasicRadioGroup v-model="state.value6" :api="api" @change="onChange" />
   </CollectContainer>
 
   <CollectContainer>
-    <template #desc>radio支持customRender写法，如customRender h</template>
+    <template #desc>
+      更灵活的渲染：按render > slot > label的优先级进行radio渲染
+    </template>
     <template #value>{{ state.value7 }}</template>
-    <BasicRadio v-model="state.value7" :options="customRenderOptions" />
+    <BasicRadioGroup v-model="state.value7" :options="renderOptions">
+      <template #custom-slot>用slot方式渲染（优先级2）</template>
+    </BasicRadioGroup>
   </CollectContainer>
 </template>
 
 <script setup lang="tsx">
-import { BasicRadio } from "@center/components";
+import { BasicRadioGroup } from "@center/components";
+
 import CollectContainer from "../CollectContainer.vue";
 
 const state = ref({
   value1: undefined,
   value2: undefined,
   value3: undefined,
-  value4: undefined,
+  value4: 2,
   value5: undefined,
   value6: undefined,
   value7: undefined,
+  value8: undefined,
 });
 
 const api = () => {
@@ -116,20 +109,28 @@ const api = () => {
 
 const moreValues = ref();
 const onChange = ({ label, value, option }) => {
-  console.log("label, value , option:", label, value, option);
   moreValues.value = option;
 };
 
-const customRenderOptions = [
+const renderOptions = [
   {
-    label: "选项-tsx-1",
+    label: "1",
     value: 1,
-    customRender: () => h("div", "zz"),
+    customRender: () => h("div", "使用h渲染（优先级1）"),
   },
   {
-    label: "选项-tsx-2",
-    value: 22,
-    // customRender: <div>oooopppppp</div>,
+    label: "2",
+    value: 2,
+    customRender: <div>使用render jsx渲染（优先级1）</div>,
+  },
+  {
+    label: "3",
+    value: 3,
+    customSlot: "custom-slot",
+  },
+  {
+    value: "4",
+    label: "普通的label渲染，优先级最低",
   },
 ];
 </script>
