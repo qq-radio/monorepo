@@ -1,5 +1,9 @@
 <template>
-  <el-radio-group v-bind="getBindValues" v-model="stateLabel">
+  <el-checkbox-group
+    v-bind="getBindValues"
+    v-model="stateLabel"
+    @change="onChange"
+  >
     <template v-for="(item, index) in stateOptions" :key="index">
       <component
         :is="getComponent(item.isButton)"
@@ -8,7 +12,6 @@
         :disabled="item.disabled"
         :border="item.border"
         :size="item.size"
-        @click.native.prevent="handleClick(item)"
       >
         <BasicRender
           v-if="isFunction(item.customRender)"
@@ -29,15 +32,14 @@
         <span v-else>{{ item.label }}</span>
       </component>
     </template>
-  </el-radio-group>
+  </el-checkbox-group>
 </template>
-
 <script lang="ts" setup>
 import {
   BasicCheckboxGroupProps,
   BasicCheckboxGroupEmits,
   CheckboxOption,
-  RadioValue,
+  ModelValue,
 } from "./type";
 
 import { useOptionQuery } from "@center/composables";
@@ -48,7 +50,7 @@ import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
 import { BasicRender } from "@center/components/basic-render";
 
 defineOptions({
-  name: "BasicRadioGroup",
+  name: "BasicCheckboxGroup",
 });
 
 const attrs = useAttrs();
@@ -62,50 +64,48 @@ const getBindValues = computed(() => ({
   ...attrs,
 }));
 
-const { options: stateOptions, init, findLabel } = useOptionQuery(props);
+const stateLabel = ref<string[]>();
+const stateValue = ref<(string | number)[]>([]);
 
-const stateLabel = ref<string>();
-const stateValue = ref<RadioValue>();
+const {
+  options: stateOptions,
+  init,
+  filterOptionsByValue,
+  findLabels,
+  findValues,
+} = useOptionQuery(props);
+
+onMounted(() => {
+  init();
+});
 
 watch(
   () => props.modelValue,
   () => {
-    stateValue.value = props.modelValue;
-    stateLabel.value = findLabel(props.modelValue);
+    if (props.modelValue) {
+      stateValue.value = props.modelValue;
+      stateLabel.value = findLabels(props.modelValue);
+    }
   },
   { immediate: true }
 );
 
 const getComponent = (isButton: boolean) =>
-  isButton || props.isButton ? "el-radio-button" : "el-radio";
+  isButton || props.isButton ? "el-checkbox-button" : "el-checkbox";
 
 const getCallbackParams = (item: CheckboxOption) => ({
   value: stateValue.value,
-  label: stateLabel.value,
   option: item,
 });
 
-const handleClick = (option: CheckboxOption) => {
-  const { label, value, disabled } = option;
-
-  if (disabled === true) {
-    return;
-  }
-
-  const flag = stateLabel.value === label;
-
-  stateLabel.value = flag ? undefined : label;
-  stateValue.value = flag ? "" : value;
+const onChange = () => {
+  stateValue.value = findValues(stateLabel.value);
 
   emit("update:modelValue", stateValue.value);
   emit("change", {
-    value,
-    label,
-    option: flag ? undefined : option,
+    values: stateValue.value,
+    labels: stateLabel.value,
+    options: filterOptionsByValue(stateValue.value),
   });
 };
-
-onMounted(() => {
-  init();
-});
 </script>

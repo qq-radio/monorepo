@@ -14,7 +14,7 @@ import {
   ElColorPicker,
 } from "element-plus";
 import {
-  BasicCheckbox,
+  BasicCheckboxGroup,
   BasicRadioGroup,
   BasicSelect,
 } from "@center/components";
@@ -27,7 +27,7 @@ componentMap.set("input", ElInput);
 componentMap.set("input-number", ElInputNumber);
 componentMap.set("textarea", ElInput);
 // componentMap.set("radio", BasicRadioGroup);
-componentMap.set("checkbox", BasicCheckbox);
+componentMap.set("checkbox", BasicCheckboxGroup);
 // componentMap.set("select", BasicSelect);
 componentMap.set("tree-select", ElTreeSelect);
 componentMap.set("cascader", ElCascader);

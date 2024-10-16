@@ -8,7 +8,7 @@ import {
   mapObjectArrayFields,
 } from "@center/utils";
 
-export type Value = string | number | boolean | undefined;
+export type Value = string | number;
 
 export interface Option {
   label?: string;
@@ -27,6 +27,9 @@ export interface UseOptionQuery {
     options: Ref<Option[]>;
     init: () => void;
     findLabel: (value: Value) => string | undefined;
+    filterOptionsByValue: (values: Value[]) => Option[];
+    findLabels: (values: Value[]) => string[];
+    findValues: (values: Value[]) => string[];
   };
 }
 
@@ -71,9 +74,30 @@ export const useOptionQuery: UseOptionQuery = (props) => {
   const findLabel = (value: Value) =>
     (props.options || options.value).find((s) => s.value === value)?.label;
 
+  const filterOptionsByValue = (values) => {
+    return options.value.filter((option) =>
+      values.includes(option.value || "")
+    );
+  };
+
+  const findLabels = (values) => {
+    return options.value
+      .filter((option) => values.includes(option.value || ""))
+      .map((i) => i.label);
+  };
+
+  const findValues = (labels) => {
+    return options.value
+      .filter((option) => labels.includes(option.label || ""))
+      .map((i) => i.value);
+  };
+
   return {
     options,
     init,
     findLabel,
+    filterOptionsByValue,
+    findLabels,
+    findValues,
   };
 };

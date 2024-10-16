@@ -1,21 +1,5 @@
-export type RadioValue = string | number | boolean | undefined;
-
-export type RadioSize = "large" | "default" | "small";
-
-export interface CheckboxOption {
-  label?: string;
-  value?: RadioValue;
-  disabled?: boolean;
-  border?: boolean;
-  size?: RadioSize;
-
-  isButton?: boolean;
-  customRender?: Render;
-  customSlot?: string;
-}
-
 export interface BasicCheckboxGroupProps {
-  modelValue?: RadioValue;
+  modelValue?: ModelValue;
   isButton?: boolean;
 
   options?: CheckboxOption[];
@@ -28,19 +12,31 @@ export interface BasicCheckboxGroupProps {
 }
 
 export interface BasicCheckboxGroupEmits {
-  (e: "update:modelValue", value: RadioValue): void;
+  (e: "update:modelValue", value: ModelValue): void;
   (
     e: "change",
     params: {
-      label: string | undefined;
-      value: RadioValue;
-      option?: CheckboxOption;
+      value: ModelValue;
+      options?: CheckboxOption[];
     }
   ): void;
 }
 
-export interface RadioCallbackParams {
+export interface CheckboxOption {
   label?: string;
-  value?: RadioValue;
+  value?: string | number;
+  disabled?: boolean;
+  border?: boolean;
+  size?: OptionSize;
+
+  isButton?: boolean;
+  customRender?: Render;
+  customSlot?: string;
+}
+
+export type ModelValue = (string | number)[];
+
+export interface CheckboxCallbackParams {
+  value?: ModelValue;
   option: CheckboxOption;
 }

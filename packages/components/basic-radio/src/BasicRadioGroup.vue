@@ -76,7 +76,7 @@ watch(
   { immediate: true }
 );
 
-const getComponent = (isButton: boolean) =>
+const getComponent = (isButton?: boolean) =>
   isButton || props.isButton ? "el-radio-button" : "el-radio";
 
 const getCallbackParams = (item: RadioOption) => ({

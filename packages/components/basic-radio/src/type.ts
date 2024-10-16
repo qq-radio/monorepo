@@ -1,4 +1,4 @@
-export type RadioValue = string | number | boolean | undefined;
+export type RadioValue = string | number;
 
 export type RadioSize = "large" | "default" | "small";
 

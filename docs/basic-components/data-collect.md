@@ -2,9 +2,9 @@
 
 先解决 checkbox 的错 -->
 
-<!-- :::demo
+:::demo
 basic-components/basic-checkbox
-::: -->
+:::
 
 :::demo
 basic-components/basic-radio
