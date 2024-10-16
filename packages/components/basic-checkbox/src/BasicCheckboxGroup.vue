@@ -34,9 +34,9 @@
 
 <script lang="ts" setup>
 import {
-  BasicRadioGroupProps,
-  BasicRadioGroupEmits,
-  RadioOption,
+  BasicCheckboxGroupProps,
+  BasicCheckboxGroupEmits,
+  CheckboxOption,
   RadioValue,
 } from "./type";
 
@@ -54,9 +54,9 @@ defineOptions({
 const attrs = useAttrs();
 const slots = useSlots();
 
-const props = withDefaults(defineProps<BasicRadioGroupProps>(), {});
+const props = withDefaults(defineProps<BasicCheckboxGroupProps>(), {});
 
-const emit = defineEmits<BasicRadioGroupEmits>();
+const emit = defineEmits<BasicCheckboxGroupEmits>();
 
 const getBindValues = computed(() => ({
   ...attrs,
@@ -79,13 +79,13 @@ watch(
 const getComponent = (isButton: boolean) =>
   isButton || props.isButton ? "el-radio-button" : "el-radio";
 
-const getCallbackParams = (item: RadioOption) => ({
+const getCallbackParams = (item: CheckboxOption) => ({
   value: stateValue.value,
   label: stateLabel.value,
   option: item,
 });
 
-const handleClick = (option: RadioOption) => {
+const handleClick = (option: CheckboxOption) => {
   const { label, value, disabled } = option;
 
   if (disabled === true) {

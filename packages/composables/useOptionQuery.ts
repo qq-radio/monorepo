@@ -19,8 +19,6 @@ export interface Option {
 export interface UseOptionQuery {
   (props: {
     options?: Option[];
-    label?: string;
-    value?: Value;
     api?: () => Promise<any>;
     resultField?: string;
     labelField?: string;
@@ -35,37 +33,19 @@ export interface UseOptionQuery {
 export const useOptionQuery: UseOptionQuery = (props) => {
   const options = ref<Option[]>([]);
 
-  const init = () => {
-    if (isArray(props.options)) {
-      options.value = props.options;
-      return;
-    }
-
-    if (!isArray(props.options) && props.label) {
-      options.value = [
-        {
-          label: props.label,
-          value: props.value || props.label,
-        },
-      ];
-      return;
-    }
-
-    query();
-  };
-
-  const query = async () => {
-    const { api } = props;
-
+  const init = async () => {
     try {
-      if (!isFunction(api)) {
+      if (isArray(props.options)) {
+        options.value = handleResult(props.options);
         return;
       }
 
-      const result = await api();
-      options.value = handleResult(result);
+      if (isFunction(props.api)) {
+        const result = await props.api();
+        options.value = handleResult(result);
+      }
     } catch (error) {
-      console.error("UseOptionQuery query error:", error);
+      console.error("UseOptionQuery init error:", error);
     }
   };
 

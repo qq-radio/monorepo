@@ -1,7 +1,11 @@
+import type { VNode } from "vue";
+
 declare interface Recordable<T = unknown> {
-  [key: string]: T
+  [key: string]: T;
 }
 
-declare type Nullable<T> = T | null
+declare type Nullable<T> = T | null;
 
-declare type Arrayable<T> = T | T[]
+declare type Arrayable<T> = T | T[];
+
+declare type Render = () => VNode;

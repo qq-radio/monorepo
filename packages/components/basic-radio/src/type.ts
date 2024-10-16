@@ -1,37 +1,40 @@
 export type RadioValue = string | number | boolean | undefined;
 
-export type RadioType = "radio" | "radio-button";
+export type RadioSize = "large" | "default" | "small";
 
-export interface SingleRadio {
+export interface RadioOption {
   label?: string;
   value?: RadioValue;
-  type?: RadioType;
   disabled?: boolean;
+  border?: boolean;
+  size?: RadioSize;
 
-  customProps?: Recordable;
-  customRender?: Recordable;
-  customSlot?: Recordable;
+  isButton?: boolean;
+  customRender?: Render;
+  customSlot?: string;
 }
 
-export interface BasicRadioProps extends SingleRadio {
+export interface BasicRadioGroupProps {
   modelValue?: RadioValue;
-  options?: SingleRadio[];
-  type?: RadioType;
+  isButton?: boolean;
 
+  options?: RadioOption[];
   api?: () => Promise<unknown>;
   resultField?: string;
   labelField?: string;
   valueField?: string;
+
+  render?: Render;
 }
 
-export interface BasicRadioEmits {
+export interface BasicRadioGroupEmits {
   (e: "update:modelValue", value: RadioValue): void;
   (
     e: "change",
     params: {
       label: string | undefined;
       value: RadioValue;
-      option?: SingleRadio;
+      option?: RadioOption;
     }
   ): void;
 }
@@ -39,5 +42,5 @@ export interface BasicRadioEmits {
 export interface RadioCallbackParams {
   label?: string;
   value?: RadioValue;
-  option: SingleRadio;
+  option: RadioOption;
 }
