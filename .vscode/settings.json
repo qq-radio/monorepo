@@ -38,6 +38,11 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },

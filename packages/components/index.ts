@@ -7,5 +7,6 @@ export * from "./basic-pagination";
 export * from "./basic-radio";
 export * from "./basic-render";
 export * from "./basic-select";
+export * from "./basic-list";
 export * from "./basic-status";
 export * from "./basic-table";
