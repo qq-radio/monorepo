@@ -1,4 +1,4 @@
-import type { Ref } from "vue";
+import type { Ref, UnwrapRef } from "vue";
 
 import { ref } from "vue";
 import {
@@ -11,61 +11,61 @@ import {
 export type Value = string | number;
 
 export interface Option {
-  label?: string;
-  value?: Value;
-  [key: string]: any;
+  label: string;
+  value: Value;
 }
 
-export interface UseOptionQuery {
-  (props: {
-    options?: Option[];
-    api?: () => Promise<any>;
-    resultField?: string;
-    labelField?: string;
-    valueField?: string;
-  }): {
-    options: Ref<Option[]>;
-    init: () => void;
-    findLabel: (value: Value) => string | undefined;
-    filterOptionsByValue: (values: Value[]) => Option[];
-    findLabels: (values: Value[]) => string[];
-    findValues: (values: Value[]) => string[];
-  };
-}
-
-export const useOptionQuery: UseOptionQuery = (props) => {
-  const options = ref<Option[]>([]);
+export function useOptionQuery<T extends Option>(props: {
+  options?: Recordable[];
+  api?: () => Promise<any>;
+  resultField?: string;
+  labelField?: string;
+  valueField?: string;
+  formatter?: (option: any) => any;
+}): {
+  options: Ref<UnwrapRef<T[]> | T[]>;
+  init: () => void;
+  findLabel: (value: Value) => string | undefined;
+  findOptions: (values: Value[]) => Option[];
+  findLabels: (values?: Value[]) => string[];
+  findValues: (values?: string[]) => Value[];
+} {
+  const options = ref<T[]>([]);
 
   const init = async () => {
     try {
       if (isArray(props.options)) {
-        options.value = handleResult(props.options);
+        options.value = handleOptions(props.options);
         return;
       }
 
       if (isFunction(props.api)) {
         const result = await props.api();
-        options.value = handleResult(result);
+        options.value = handleOptions(result);
       }
     } catch (error) {
       console.error("UseOptionQuery init error:", error);
     }
   };
 
-  const handleResult = (result: unknown) => {
-    const { resultField, labelField, valueField } = props;
+  const handleOptions = (result: unknown) => {
+    const { resultField, labelField, valueField, formatter } = props;
 
-    const list = resultField ? getValue(result, resultField) : result;
+    let list = resultField ? getValue(result, resultField) : result;
 
     if (!isArray(list)) {
       return [];
     }
 
     if (labelField && valueField) {
-      return mapObjectArrayFields(list, {
+      list = mapObjectArrayFields(list, {
         label: labelField,
         value: valueField,
       });
+    }
+
+    if (isFunction(formatter)) {
+      list = list.map(formatter);
     }
 
     return list;
@@ -74,30 +74,40 @@ export const useOptionQuery: UseOptionQuery = (props) => {
   const findLabel = (value: Value) =>
     (props.options || options.value).find((s) => s.value === value)?.label;
 
-  const filterOptionsByValue = (values) => {
+  const findOptions = (values: Value[]) => {
     return options.value.filter((option) =>
       values.includes(option.value || "")
     );
   };
 
-  const findLabels = (values) => {
-    return options.value
-      .filter((option) => values.includes(option.value || ""))
-      .map((i) => i.label);
+  const findLabels = (values?: Value[]) => {
+    return values?.length
+      ? options.value
+          .filter((option) => values.includes(option.value || ""))
+          .map((i) => i.label)
+      : [];
   };
 
-  const findValues = (labels) => {
-    return options.value
-      .filter((option) => labels.includes(option.label || ""))
-      .map((i) => i.value);
+  const findValues = (labels?: string[]) => {
+    return labels?.length
+      ? options.value
+          .filter((option) => labels.includes(option.label || ""))
+          .map((i) => i.value)
+      : [];
   };
+
+  const getAllValues = () => options.value.map((i) => i.value) || [];
+
+  const getAllLabels = () => options.value.map((i) => i.label) || [];
 
   return {
     options,
     init,
     findLabel,
-    filterOptionsByValue,
+    findOptions,
     findLabels,
     findValues,
+    getAllValues,
+    getAllLabels,
   };
-};
+}

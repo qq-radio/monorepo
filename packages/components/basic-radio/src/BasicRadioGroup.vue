@@ -62,7 +62,7 @@ const getBindValues = computed(() => ({
   ...attrs,
 }));
 
-const { options: stateOptions, init, findLabel } = useOptionQuery(props);
+const { options: stateOptions, init, findLabel } = useOptionQuery<RadioOption>(props);
 
 const stateLabel = ref<string>();
 const stateValue = ref<RadioValue>();

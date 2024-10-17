@@ -1,8 +1,16 @@
 <template>
+  <el-checkbox
+    v-if="hasCheckAll"
+    v-model="isCheckAll"
+    :indeterminate="isIndeterminate"
+    @change="handleCheckAllChange"
+  >
+    全选
+  </el-checkbox>
   <el-checkbox-group
     v-bind="getBindValues"
     v-model="stateLabel"
-    @change="onChange"
+    @change="handleCheckChange"
   >
     <template v-for="(item, index) in stateOptions" :key="index">
       <component
@@ -39,7 +47,6 @@ import {
   BasicCheckboxGroupProps,
   BasicCheckboxGroupEmits,
   CheckboxOption,
-  ModelValue,
 } from "./type";
 
 import { useOptionQuery } from "@center/composables";
@@ -51,6 +58,7 @@ import { BasicRender } from "@center/components/basic-render";
 
 defineOptions({
   name: "BasicCheckboxGroup",
+  inheritAttrs: false,
 });
 
 const attrs = useAttrs();
@@ -64,16 +72,19 @@ const getBindValues = computed(() => ({
   ...attrs,
 }));
 
+const isCheckAll = ref(false);
+const isIndeterminate = ref(false);
+
 const stateLabel = ref<string[]>();
 const stateValue = ref<(string | number)[]>([]);
 
 const {
   options: stateOptions,
   init,
-  filterOptionsByValue,
+  findOptions,
   findLabels,
   findValues,
-} = useOptionQuery(props);
+} = useOptionQuery<CheckboxOption>(props);
 
 onMounted(() => {
   init();
@@ -90,7 +101,7 @@ watch(
   { immediate: true }
 );
 
-const getComponent = (isButton: boolean) =>
+const getComponent = (isButton?: boolean) =>
   isButton || props.isButton ? "el-checkbox-button" : "el-checkbox";
 
 const getCallbackParams = (item: CheckboxOption) => ({
@@ -98,14 +109,31 @@ const getCallbackParams = (item: CheckboxOption) => ({
   option: item,
 });
 
-const onChange = () => {
-  stateValue.value = findValues(stateLabel.value);
+const getAllLabels = () => stateOptions.value.map((i) => i.label) || [];
 
+const handleCheckAllChange = (checkAll: boolean) => {
+  stateLabel.value = checkAll ? getAllLabels() : [];
+  isIndeterminate.value = false;
+
+  emitChange();
+};
+
+const handleCheckChange = (values: string[]) => {
+  const checkedCount = values.length;
+  isCheckAll.value = checkedCount === stateOptions.value.length;
+  isIndeterminate.value =
+    checkedCount > 0 && checkedCount < stateOptions.value.length;
+
+  emitChange();
+};
+
+const emitChange = () => {
+  stateValue.value = findValues(stateLabel.value);
   emit("update:modelValue", stateValue.value);
   emit("change", {
     values: stateValue.value,
     labels: stateLabel.value,
-    options: filterOptionsByValue(stateValue.value),
+    options: findOptions(stateValue.value),
   });
 };
 </script>

@@ -1,4 +1,10 @@
 @use "../../../theme/index.scss" as *;
 
 @include b(select) {
+  @include e(check-all) {
+    width: 100%;
+    padding-left: 10px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid #e4e7ed;
+  }
 }

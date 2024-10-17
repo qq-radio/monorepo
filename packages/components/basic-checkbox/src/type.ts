@@ -1,6 +1,7 @@
 export interface BasicCheckboxGroupProps {
   modelValue?: ModelValue;
   isButton?: boolean;
+  hasCheckAll?: boolean;
 
   options?: CheckboxOption[];
   api?: () => Promise<unknown>;
@@ -17,14 +18,15 @@ export interface BasicCheckboxGroupEmits {
     e: "change",
     params: {
       value: ModelValue;
-      options?: CheckboxOption[];
+      labels: string[];
+      options: CheckboxOption[];
     }
   ): void;
 }
 
 export interface CheckboxOption {
-  label?: string;
-  value?: string | number;
+  label: string;
+  value: string | number;
   disabled?: boolean;
   border?: boolean;
   size?: OptionSize;

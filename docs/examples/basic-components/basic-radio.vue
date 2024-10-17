@@ -65,7 +65,7 @@
   </CollectContainer>
 
   <CollectContainer>
-    <template #desc> 更灵活的渲染：customRender渲染、customSlot渲染 </template>
+    <template #desc>更灵活的渲染：customRender渲染、customSlot渲染</template>
     <template #value>{{ state.value7 }}</template>
     <BasicRadioGroup v-model="state.value7" :options="renderOptions">
       <template #slot-watermelon="{ option }">
