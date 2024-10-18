@@ -1,4 +1,4 @@
-import type { ComponentType } from "../type";
+import type { ComponentType } from "../types";
 import {
   ElInput,
   ElInputNumber,
@@ -13,12 +13,8 @@ import {
   ElTransfer,
   ElColorPicker,
 } from "element-plus";
-import {
-  BasicCheckboxGroup,
-  BasicRadioGroup,
-  BasicSelect,
-} from "@center/components";
-
+import { BasicRadioGroup } from "@center/components/basic-radio";
+import { BasicSelect } from "@center/components/basic-select";
 import type { Component } from "vue";
 
 const componentMap = new Map<ComponentType, Component>();
@@ -26,9 +22,9 @@ const componentMap = new Map<ComponentType, Component>();
 componentMap.set("input", ElInput);
 componentMap.set("input-number", ElInputNumber);
 componentMap.set("textarea", ElInput);
-// componentMap.set("radio", BasicRadioGroup);
-componentMap.set("checkbox", BasicCheckboxGroup);
-// componentMap.set("select", BasicSelect);
+componentMap.set("radio", BasicRadioGroup);
+componentMap.set("checkbox", ElCheckbox);
+componentMap.set("select", BasicSelect);
 componentMap.set("tree-select", ElTreeSelect);
 componentMap.set("cascader", ElCascader);
 componentMap.set("transfer", ElTransfer);
@@ -39,8 +35,8 @@ componentMap.set("rate", ElRate);
 componentMap.set("slider", ElSlider);
 componentMap.set("color-picker", ElColorPicker);
 
-function getComponent(component: ComponentType): Component {
-  return componentMap.get(component) || ElInput;
+function getComponent(component?: ComponentType): Component {
+  return componentMap.get(component || "input") || ElInput;
 }
 
 export { getComponent };

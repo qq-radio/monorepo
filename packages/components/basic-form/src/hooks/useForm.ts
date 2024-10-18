@@ -1,104 +1,108 @@
-import type { BasicFormProps, FormAction, FormSchema } from "../type";
-import type { FormValidateCallback, FormItemProp } from "element-plus";
+import type {
+  UseForm,
+  BasicFormProps,
+  FormMethods,
+  FormSchema,
+  UpdateSchemaParams
+} from '../types'
+import type { FormValidateCallback, FormItemProp } from 'element-plus'
 
-export type Register = (formInstance: FormAction) => void;
+import { ref, unref, watch, onUnmounted } from 'vue'
 
-type UseFormReturn = [Register, FormAction];
+export const useForm: UseForm = (props) => {
+  const instanceRef = ref<Nullable<FormMethods>>(null)
 
-export function useForm(props?: BasicFormProps): UseFormReturn {
-  const formRef = ref<Nullable<FormAction>>(null);
-
-  function getForm() {
-    const form = unref(formRef);
-    if (!form) {
+  function getInstance() {
+    const instance = unref(instanceRef)
+    if (!instance) {
       throw new Error(
-        "The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation"
-      );
+        'The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation'
+      )
     }
-    return form as FormAction;
+    return instance
   }
 
-  function register(instance: FormAction) {
+  function register(instance: FormMethods) {
     onUnmounted(() => {
-      formRef.value = null;
-    });
+      instanceRef.value = null
+    })
 
-    formRef.value = instance;
+    instanceRef.value = instance
 
     watch(
       () => props,
       () => {
-        const formProps = unref(props);
-        if (formProps) {
-          getForm().setProps(formProps);
+        const propsValue = unref(props)
+        if (propsValue) {
+          getInstance().setProps(propsValue)
         }
       },
       {
         immediate: true,
-        deep: true,
+        deep: true
       }
-    );
+    )
   }
 
-  const methods: FormAction = {
-    setProps: (formProps: Partial<BasicFormProps>) => {
-      getForm().setProps(formProps);
+  const methods: FormMethods = {
+    setProps: (props: Partial<BasicFormProps>) => {
+      getInstance().setProps(props)
+    },
+    reset: () => {
+      getInstance().reset()
+    },
+    submit: () => {
+      return getInstance().submit()
     },
 
-    updateSchema: (schemas: Partial<FormSchema> | Partial<FormSchema>[]) => {
-      getForm().updateSchema(schemas);
+    /**
+     * useFormEvent
+     */
+    updateSchema: (schemas: Arrayable<UpdateSchemaParams>) => {
+      getInstance().updateSchema(schemas)
+    },
+    removeSchema: (prop: Arrayable<string>) => {
+      getInstance().removeSchema(prop)
+    },
+    appendSchema: (schemas: Arrayable<FormSchema>, previousProp?: string) => {
+      getInstance().appendSchema(schemas, previousProp)
     },
 
-    appendSchema: (
-      schemas: FormSchema | FormSchema[],
-      previousProp?: string
-    ) => {
-      getForm().appendSchema(schemas, previousProp);
+    getFieldValue: (field: string) => {
+      return getInstance().getFieldValue(field)
     },
-
-    removeSchema: (fields: string | string[]) => {
-      getForm().removeSchema(fields);
-    },
-
     getFieldsValue: () => {
-      return getForm().getFieldsValue() || {};
+      return getInstance().getFieldsValue()
     },
-
     setFieldsValue: (values: Recordable) => {
-      getForm().setFieldsValue(values);
+      getInstance().setFieldsValue(values)
+    },
+    resetFieldsValue: () => {
+      getInstance().resetFieldsValue()
     },
 
+    /**
+     * useFormSelf
+     */
     validate: (callback?: FormValidateCallback) => {
-      getForm().validate(callback);
+      return getInstance().validate(callback)
     },
-
     validateField: (
       props?: Arrayable<FormItemProp>,
       callback?: FormValidateCallback
     ) => {
-      getForm().validateField(props, callback);
+      return getInstance().validateField(props, callback)
     },
-
     resetFields: (props?: Arrayable<FormItemProp>) => {
-      getForm().resetFields(props);
+      getInstance().resetFields(props)
     },
-
-    clearValidate: (props?: Arrayable<FormItemProp>) => {
-      getForm().clearValidate(props);
-    },
-
     scrollToField: (prop: FormItemProp) => {
-      getForm().scrollToField(prop);
+      getInstance().scrollToField(prop)
     },
+    clearValidate: (props?: Arrayable<FormItemProp>) => {
+      getInstance().clearValidate(props)
+    }
+  }
 
-    reset: () => {
-      getForm().reset();
-    },
-
-    submit: () => {
-      getForm().submit();
-    },
-  };
-
-  return [register, methods];
+  return [register, methods]
 }

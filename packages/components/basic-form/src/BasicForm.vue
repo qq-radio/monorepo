@@ -1,208 +1,212 @@
 <template>
-  <el-form
-    ref="formInstance"
-    :label-width="labelWidth"
-    :label-position="labelPosition"
-    :label-suffix="labelSuffix"
-    :model="formModel"
-  >
-    {{ formModel }} ??
-    <el-row v-bind="rowProps">
-      <template v-for="schemaItem in formSchema">
-        <template v-if="schemaItem.component === 'sub-title'">
-          <el-col :key="schemaItem.prop" class="mb-3 ml-8 font-bold text-lg">
-            {{ schemaItem.label }}
-          </el-col>
-        </template>
-        <template v-else>
-          <el-col
-            v-if="getVIf(schemaItem)"
-            v-bind="getColProps(schemaItem)"
-            :key="schemaItem.prop"
+  <el-form ref="formInstance" v-bind="getBindValues">
+    <el-row v-bind="getProps.rowProps">
+      <template v-for="schemaItem in formSchemas" :key="schemaItem.prop">
+        <FormItem
+          v-model="formModel[schemaItem.prop]"
+          v-bind="{
+            schemaItem,
+            formProps,
+            formModel,
+            formMethods
+          }"
+          @field-change="setFieldsValue"
+          @change="emitUpdateModel"
+        >
+          <template
+            v-for="slotName in Object.keys(slots)"
+            :key="slotName"
+            #[slotName]="scope"
           >
-            <el-form-item
-              v-bind="schemaItem.formItemProps"
-              :label="getLabel(schemaItem)"
-              :prop="schemaItem.prop"
-              :rules="schemaItem.rules"
-            >
-              <slot
-                v-if="schemaItem.slot"
-                :name="schemaItem.slot"
-                :model="formModel"
-                style="width: 100%"
-              />
-              <component
-                :is="getComponent(schemaItem.component)"
-                v-else
-                v-bind="schemaItem.componentProps"
-                v-model="formModel[schemaItem.prop]"
-                style="width: 100%"
-                @change="(...v: unknown[]) => onChange(v, schemaItem)"
-              />
-              <div v-if="getVIfMax(schemaItem)" style="text-align: right">
-                {{ getMaxLimitText(schemaItem) }}
-              </div>
-            </el-form-item>
-          </el-col>
-        </template>
+            <slot :name="slotName" v-bind="scope" />
+          </template>
+        </FormItem>
       </template>
     </el-row>
-    <el-form-item v-if="hasFooter">
-      <slot name="footer" v-bind="{ handleReset, handleSubmit }">
-        <el-button v-if="hasReset" @click="handleReset">
-          {{ resetText }}
+    <el-row v-if="getProps.hasFooter" v-bind="getProps.rowProps">
+      <slot name="footer" v-bind="{ reset, submit }">
+        <el-button v-if="getProps.hasReset" @click="reset">
+          {{ getProps.resetText }}
         </el-button>
-        <el-button type="primary" :loading="loading" @click="handleSubmit">
-          {{ submitText }}
+        <el-button type="primary" :loading="getProps.loading" @click="submit">
+          {{ getProps.submitText }}
         </el-button>
       </slot>
-    </el-form-item>
+    </el-row>
   </el-form>
 </template>
 
 <script lang="ts" setup>
-import type {
-  BasicFormProps,
-  BasicFormEmits,
-  FormSchema,
-  FormAction,
-} from "./type";
-import type { FormInstance } from "element-plus";
+import type { BasicFormProps, BasicFormEmits, FormMethods } from './types'
+import type { FormInstance } from 'element-plus'
 
-import { getComponent } from "./tools/component";
-import { isFunction, isUndefined } from "@center/utils";
-import { merge } from "lodash-es";
+import { useFormEvent } from './hooks/useFormEvent'
+import { useFormSelf } from './hooks/useFormSelf'
+
+import { useAttrs, useSlots, ref, computed, unref, onMounted } from 'vue'
+import { isFunction, pick } from 'lodash'
+
+import FormItem from './components/FormItem.vue'
 
 defineOptions({
-  name: "BasicForm",
-  inheritAttrs: false,
-});
+  name: 'BasicForm',
+  inheritAttrs: false
+})
+
+const attrs = useAttrs()
+const slots = useSlots()
+
+const emit = defineEmits<BasicFormEmits>()
 
 const props = withDefaults(defineProps<BasicFormProps>(), {
-  model: () => ({}),
+  modelValue: () => ({}),
   schemas: () => [],
   loading: false,
 
-  rowProps: () => ({}),
-  colProps: () => ({ span: 13 }),
+  rowProps: () => ({
+    gutter: 20
+  }),
+  colProps: () => ({ span: 24 }),
   formItemProps: () => ({}),
 
   hasLabel: true,
-  labelSuffix: ":",
-  labelWidth: "80px",
-  labelPosition: "left",
+  labelSuffix: ':',
+  labelWidth: '100px',
+  labelPosition: 'right',
 
-  hasFooter: true,
+  hasFooter: false,
   hasReset: true,
-  resetText: "重置",
-  submitText: "提交111",
+  resetText: '重置',
+  submitText: '提交',
 
-  hasErrorTip: true,
-});
+  hasErrorTip: true
+})
 
-const emits = defineEmits<BasicFormEmits>();
+const propsRef = ref<Partial<BasicFormProps>>()
 
-const formInstance = ref<FormInstance>();
-const formProps = ref<Partial<BasicFormProps>>();
-const formSchema = ref<FormSchema[]>([]);
-const formModel = ref<Recordable>({});
-const defaultFormModel = ref<Recordable>({});
+const getProps = computed<BasicFormProps>(() => {
+  return { ...props, ...unref(propsRef) }
+})
 
-const getProps = computed(() => {
-  return { ...props, ...unref(formProps) } as BasicFormProps;
-});
-
-watchEffect(() => {
-  formSchema.value = getProps.value.schemas;
-  formModel.value = getProps.value.model || {};
-  defaultFormModel.value = setDefaultFormModel(getProps.value.schemas);
-});
-
-function setProps(props: Partial<BasicFormProps>) {
-  formProps.value = merge(unref(formProps) || {}, props);
+function setProps(partialProps: Partial<BasicFormProps>) {
+  propsRef.value = { ...unref(propsRef), ...partialProps }
 }
 
-function setDefaultFormModel(schemas: FormSchema[]) {
-  return schemas.reduce(
-    (acc, cur) =>
-      cur.defaultValue
-        ? {
-            ...acc,
-            [cur.prop]: [cur.defaultValue],
-          }
-        : acc,
-    {}
-  );
-}
-
-function getVIf(schemaItem: FormSchema) {
-  const { vIf } = schemaItem;
-
-  if (isUndefined(vIf)) {
-    return true;
+const getBindValues = computed(() => {
+  const partialProps = pick(
+    getProps.value,
+    'disabled',
+    'labelWidth',
+    'labelPosition',
+    'labelSuffix',
+    'labelWidth'
+  )
+  return {
+    ...attrs,
+    ...partialProps,
+    model: formModel
   }
+})
 
-  if (isFunction(vIf)) {
-    return vIf(formModel.value, schemaItem);
+const formProps = computed(() => {
+  const partialProps = pick(
+    getProps.value,
+    'disabled',
+    'formItemProps',
+    'colProps',
+    'hasLabel',
+    'labelSuffix',
+    'labelWidth'
+  )
+  return {
+    ...partialProps
   }
-}
+})
 
-function getColProps(schemaItem: FormSchema) {
-  return schemaItem.colProps || props.colProps;
-}
+const formInstance = ref<FormInstance>()
 
-function getLabel(schemaItem: FormSchema) {
-  const hasLabel = isUndefined(schemaItem.hasLabel)
-    ? props.hasLabel
-    : schemaItem.hasLabel;
-  return hasLabel ? schemaItem.label : "";
-}
+const {
+  formSchemas,
+  formModel,
 
-function getVIfMax(schemaItem: FormSchema) {
-  return (
-    (schemaItem.component === "input" || schemaItem.component === "textarea") &&
-    schemaItem.max
-  );
-}
+  updateSchema,
+  removeSchema,
+  appendSchema,
 
-function getMaxLimitText(schemaItem: FormSchema) {
-  return (
-    ((formModel.value[schemaItem.prop] as string)?.length || 0) +
-    "/" +
-    schemaItem.max
-  );
-}
+  getFieldValue,
+  getFieldsValue,
+  setFieldsValue,
+  resetFieldsValue,
+  emitUpdateModel
+} = useFormEvent(getProps, {
+  emit
+})
 
-const onChange = (e: unknown, schemaItem: FormSchema) => {
-  emits("change", e, schemaItem);
-};
+const { validate, validateField, resetFields, scrollToField, clearValidate } =
+  useFormSelf(formInstance)
 
-const handleReset = () => {
-  formInstance.value?.clearValidate();
-};
-
-const handleSubmit = async () => {
+const submit = async () => {
+  console.log('表单填写值', formModel.value)
   try {
-    const valid = await formInstance.value?.validate();
-    if (valid) {
-      emits("submit", formModel.value);
+    const valid = await validate()
+    if (!valid) {
+      return false
+    }
+
+    if (isFunction(getProps.value.modelAdapter)) {
+      emit('submit', getProps.value.modelAdapter(formModel.value))
+    } else {
+      emit('submit', formModel.value)
     }
   } catch (error: unknown) {
-    console.error("表单提交错误", error);
+    console.error('表单提交错误', error)
   }
-  return false;
-};
+  return false
+}
 
-const formActionType: FormAction = {
+const reset = () => {
+  resetFieldsValue()
+  resetFields()
+  emitUpdateModel()
+  emit('reset')
+}
+
+const formMethods: FormMethods = {
   setProps,
-};
+  submit,
+  reset,
 
-defineExpose({
-  ...formActionType,
-});
+  /**
+   * useFormEvent
+   */
+  updateSchema,
+  removeSchema,
+  appendSchema,
+
+  getFieldValue,
+  getFieldsValue,
+  setFieldsValue,
+  resetFieldsValue,
+
+  /**
+   * useFormSelf
+   */
+  validate,
+  validateField,
+  resetFields,
+  scrollToField,
+  clearValidate
+}
 
 onMounted(() => {
-  emits("register", formActionType);
-});
+  emit('register', formMethods)
+})
+
+defineExpose({
+  ...formMethods
+})
 </script>
+
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

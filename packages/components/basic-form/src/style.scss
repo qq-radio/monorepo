@@ -2,3 +2,18 @@
 
 @include b(form) {
 }
+
+@include b(form-item) {
+  @include e(sub-title) {
+    margin-bottom: 12px;
+    margin-left: 32px;
+    font-weight: 700;
+    font-size: 18px;
+  }
+}
+
+:deep .el-row {
+  &:last-child {
+    float: right;
+  }
+}

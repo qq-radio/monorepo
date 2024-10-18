@@ -1,90 +1,136 @@
-import type { FormSchema } from "../type";
+import type { FormSchema, NormalizedFormSchema } from '../types'
 
-import { getPrefix } from "./component-prefix";
-import { normalizeRule } from "./normalize-rule";
+import { getPrefix } from './component-prefix'
+import { normalizeRule } from './normalize-rule'
 
-import { uniqBy, merge } from "@center/utils";
-import { isArray, isObject } from "@center/utils";
+import { uniqBy, merge, isArray, isObject } from 'lodash'
 
-function getPlaceholder(formItem: FormSchema) {
-  return getPrefix(formItem.component) + formItem.label;
+function addDefaultComponent(schemaItem: FormSchema) {
+  return merge(
+    {
+      component: 'input'
+    },
+    schemaItem
+  )
 }
 
-function addFormItemPlaceholder(formItem: FormSchema) {
+function getPlaceholder(schemaItem) {
+  return getPrefix(schemaItem.component) + schemaItem.label
+}
+
+function addFormItemPlaceholder(schemaItem: FormSchema) {
   return merge(
     {
       componentProps: {
-        placeholder: getPlaceholder(formItem),
-      },
+        placeholder: getPlaceholder(schemaItem)
+      }
     },
-    formItem
-  );
+    schemaItem
+  )
 }
 
-function addFormItemAllowClear(formItem: FormSchema) {
-  return merge(
-    {
-      componentProps: {
-        allowClear: true,
-      },
-    },
-    formItem
-  );
-}
-
-function addFormItemTimeFormat(formItem: FormSchema) {
-  if (formItem.component === "date-picker") {
-    return merge(
-      {
-        componentProps: {
-          format: formItem?.componentProps?.format || "YYYY-MM-DD",
-          valueFormat: formItem?.componentProps?.valueFormat || "YYYY-MM-DD",
-        },
-      },
-      formItem
-    );
+function addTimePickerPlaceholder(schemaItem: FormSchema) {
+  if (schemaItem.component !== 'time-picker') {
+    return schemaItem
   }
 
-  return formItem;
+  return merge(
+    {
+      componentProps: {
+        startPlaceholder: '开始时间',
+        endPlaceholder: '结束时间'
+      }
+    },
+    schemaItem
+  )
 }
 
-function filterSchema(schema: FormSchema[]) {
-  return schema.filter((schemaItem) => schemaItem.prop);
+function addDateRangePlaceholder(schemaItem: FormSchema) {
+  if (
+    schemaItem.component !== 'date-picker' &&
+    schemaItem.componentProps?.type !== 'daterange'
+  ) {
+    return schemaItem
+  }
+
+  return merge(
+    {
+      componentProps: {
+        startPlaceholder: '开始时间',
+        endPlaceholder: '结束时间'
+      }
+    },
+    schemaItem
+  )
 }
 
-function sortSchema(schema: FormSchema[]) {
-  return schema.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+function addFormItemAllowClear(schemaItem: FormSchema) {
+  return merge(
+    {
+      componentProps: {
+        clearable: true
+      }
+    },
+    schemaItem
+  )
 }
 
-function normalizeSchemaItem(schemaItem: FormSchema) {
+function addFormItemTimeFormat(schemaItem: FormSchema) {
+  if (schemaItem.component !== 'date-picker') {
+    return schemaItem
+  }
+
+  return merge(
+    {
+      componentProps: {
+        format: schemaItem?.componentProps?.format || 'YYYY-MM-DD',
+        valueFormat: schemaItem?.componentProps?.valueFormat || 'YYYY-MM-DD'
+      }
+    },
+    schemaItem
+  )
+}
+
+function filterSchemas(schemas: FormSchema[]) {
+  return schemas.filter((schemaItem) => schemaItem.prop)
+}
+
+function sortSchemas(schemas: FormSchema[]) {
+  return schemas.sort((a, b) => (a.sort || 0) - (b.sort || 0))
+}
+
+function normalizeSchemaItem(schemaItem: FormSchema): NormalizedFormSchema {
   return [
+    addDefaultComponent,
     addFormItemPlaceholder,
+    addTimePickerPlaceholder,
+    addDateRangePlaceholder,
     addFormItemAllowClear,
     addFormItemTimeFormat,
-    normalizeRule,
-  ].reduce((acc, func) => func(acc), schemaItem);
+    normalizeRule
+  ].reduce((acc, func) => func(acc), schemaItem) as NormalizedFormSchema
 }
 
-function normalizeSchema(schema: FormSchema[]) {
-  return filterSchema(sortSchema(schema)).map(normalizeSchemaItem);
+function normalizeSchemas(schemas: FormSchema[]) {
+  return filterSchemas(sortSchemas(schemas)).map(normalizeSchemaItem)
 }
 
-function processSchemas<T extends Required<Pick<FormSchema, "prop">>>(
+function processSchemas<T extends Required<Pick<FormSchema, 'prop'>>>(
   schemas: Arrayable<T>
 ): T[] {
-  let processedSchemas: T[] = [];
+  let processedSchemas: T[] = []
 
   if (isObject(schemas)) {
-    processedSchemas.push(schemas as T);
+    processedSchemas.push(schemas as T)
   }
 
   if (isArray(schemas)) {
-    processedSchemas = [...schemas];
+    processedSchemas = [...schemas]
   }
 
-  processedSchemas = processedSchemas.filter((item) => item.prop);
+  processedSchemas = processedSchemas.filter((item) => item.prop)
 
-  return uniqBy(processedSchemas, "prop");
+  return uniqBy(processedSchemas, 'prop')
 }
 
-export { normalizeSchema, normalizeSchemaItem, processSchemas };
+export { normalizeSchemas, normalizeSchemaItem, processSchemas }
