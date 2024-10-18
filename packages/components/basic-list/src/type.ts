@@ -1,11 +1,13 @@
-export type StatusType = "primary" | "success" | "info" | "warning" | "danger";
-
-export interface SingleStatusProps {
-  content?: string;
-  type?: StatusType;
-  color?: string;
+export interface ListItem {
+  label: string;
+  [key: string]: any;
 }
 
-export interface BasicListProps extends SingleStatusProps {
-  contents?: SingleStatusProps[];
+export type ListType = "ul" | "ol";
+
+export interface BasicListProps {
+  lists: ListItem[];
+  type?: ListType;
+  childKey?: string;
+  formatter?: (option: any) => any;
 }

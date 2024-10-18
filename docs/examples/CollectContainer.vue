@@ -8,12 +8,18 @@
       <div>Demo：</div>
       <div><slot name="default" /></div>
     </div>
-    <div class="collect-container-item">
+    <div v-if="slots.value" class="collect-container-item">
       <div>Value：</div>
       <div><slot name="value" /></div>
     </div>
   </div>
 </template>
+
+<script setup lang="tsx">
+import { useSlots } from "vue";
+
+const slots = useSlots();
+</script>
 
 <style lang="scss" scoped>
 .collect-container {

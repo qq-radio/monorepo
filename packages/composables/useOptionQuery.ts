@@ -66,13 +66,14 @@ export function useOptionQuery<T extends Option>(props: {
 
     if (isFunction(formatter)) {
       list = list.map(formatter);
+      console.log("list 这里执行了吗？？？、:", list);
     }
 
     return list;
   };
 
   const findLabel = (value: Value) =>
-    (props.options || options.value).find((s) => s.value === value)?.label;
+    options.value.find((s) => s.value === value)?.label;
 
   const findOptions = (values: Value[]) => {
     return options.value.filter((option) =>

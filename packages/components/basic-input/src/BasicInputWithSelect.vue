@@ -18,28 +18,28 @@
 <script lang="ts" setup>
 import type {
   BasicInputWithSelectProps,
-  BasicInputWithSelectEmits
-} from './type'
+  BasicInputWithSelectEmits,
+} from "./type";
 
-import { ref, watchEffect, useAttrs } from 'vue'
+import { ref, watchEffect, useAttrs } from "vue";
 
-import { Search } from '@element-plus/icons-vue'
+import { Search } from "@element-plus/icons-vue";
 
 defineOptions({
-  name: 'BasicInputWithSelect'
-})
+  name: "BasicInputWithSelect",
+});
 
-const attrs = useAttrs()
+const attrs = useAttrs();
 
 const props = withDefaults(defineProps<BasicInputWithSelectProps>(), {
-  clearable: true
-})
+  clearable: true,
+});
 
-const emit = defineEmits<BasicInputWithSelectEmits>()
+const emit = defineEmits<BasicInputWithSelectEmits>();
 
-const stateValue = ref('')
+const stateValue = ref("");
 
 watchEffect(() => {
-  stateValue.value = props.modelValue
-})
+  stateValue.value = props.modelValue;
+});
 </script>

@@ -23,6 +23,7 @@ export interface BasicRadioGroupProps {
   resultField?: string;
   labelField?: string;
   valueField?: string;
+  formatter?: (option: any) => any;
 
   render?: Render;
 }
