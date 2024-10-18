@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import { useTab } from '@/composables/useTab'
+import { useTab } from '@center/composables/useTab'
 
 const { tabs, activeTab } = useTab()
 </script>

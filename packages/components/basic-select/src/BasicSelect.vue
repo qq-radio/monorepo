@@ -50,9 +50,7 @@ import {
   ModelValue,
 } from "./type";
 
-import { useBasicNamespace } from "@center/utils";
-
-import { useOptionQuery } from "@center/composables";
+import { useOptionQuery, useBasicNamespace } from "@center/composables";
 
 import { isFunction, isString } from "@center/utils";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";

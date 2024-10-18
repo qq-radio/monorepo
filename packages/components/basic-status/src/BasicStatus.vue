@@ -20,7 +20,7 @@
 import { BasicStatusProps } from "./type";
 import { computed } from "vue";
 
-import { useBasicNamespace } from "@center/utils";
+import { useBasicNamespace } from "@center/composables";
 
 defineOptions({
   name: "BasicStatus",

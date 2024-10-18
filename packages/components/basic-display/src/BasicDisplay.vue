@@ -3,7 +3,7 @@
     <!--has slots  -->
     <component
       :is="isTagAndNoValue ? 'span' : displayComponent.component"
-      v-if="displayComponent.hasSlots"
+      v-if="displayComponent?.hasSlots"
       :class="['plus-display-item', displayComponent.class]"
       v-bind="{ ...renderParams, ...displayComponentProps }"
     >
