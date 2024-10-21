@@ -1,3 +1,4 @@
+export * from "./basic-cascader";
 export * from "./basic-checkbox";
 export * from "./basic-copy";
 export * from "./basic-dialog";
@@ -14,3 +15,4 @@ export * from "./basic-render";
 export * from "./basic-select";
 export * from "./basic-status";
 export * from "./basic-table";
+export * from "./basic-tree-select";

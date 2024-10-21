@@ -36,6 +36,8 @@ export default defineConfig({
               { text: "单选", link: "/components/basic-radio" },
               { text: "多选", link: "/components/basic-checkbox" },
               { text: "下拉选择", link: "/components/basic-select" },
+              { text: "树选择", link: "/components/basic-tree-select" },
+              { text: "级联选择", link: "/components/basic-cascader" },
             ],
           },
           {

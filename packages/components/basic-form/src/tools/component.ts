@@ -10,7 +10,6 @@ import {
   ElSwitch,
   ElRate,
   ElSlider,
-  ElTransfer,
   ElColorPicker,
 } from "element-plus";
 import { BasicRadioGroup } from "@center/components/basic-radio";
@@ -27,7 +26,6 @@ componentMap.set("checkbox", ElCheckbox);
 componentMap.set("select", BasicSelect);
 componentMap.set("tree-select", ElTreeSelect);
 componentMap.set("cascader", ElCascader);
-componentMap.set("transfer", ElTransfer);
 componentMap.set("date-picker", ElDatePicker);
 componentMap.set("time-picker", ElTimePicker);
 componentMap.set("switch", ElSwitch);

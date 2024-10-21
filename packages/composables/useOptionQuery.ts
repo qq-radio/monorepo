@@ -66,7 +66,6 @@ export function useOptionQuery<T extends Option>(props: {
 
     if (isFunction(formatter)) {
       list = list.map(formatter);
-      console.log("list 这里执行了吗？？？、:", list);
     }
 
     return list;
