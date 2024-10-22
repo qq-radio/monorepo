@@ -8,25 +8,16 @@
         :disabled="item.disabled"
         :border="item.border"
         :size="item.size"
-        @click.native.prevent="handleClick(item)"
+        @click.prevent="handleClick(item)"
       >
-        <BasicRender
-          v-if="isFunction(item.customRender)"
-          :render="item.customRender"
-          :params="getCallbackParams(item)"
+        <component
+          :is="
+            renderItem(item, {
+              fallbackContent: item.label,
+              callbackParams: getCallbackParams(item),
+            })
+          "
         />
-        <slot
-          v-else-if="isString(item.customSlot)"
-          :name="item.customSlot"
-          v-bind="getCallbackParams(item)"
-        />
-        <BasicRender
-          v-else-if="isFunction(render)"
-          :render="render"
-          :params="getCallbackParams(item)"
-        />
-        <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
-        <span v-else>{{ item.label }}</span>
       </component>
     </template>
   </el-radio-group>
@@ -38,14 +29,12 @@ import {
   BasicRadioGroupEmits,
   RadioOption,
   RadioValue,
+  RadioCallbackParams,
 } from "./type";
 
-import { useOptionQuery } from "@center/composables";
+import { useOptionQuery, useCustomRender } from "@center/composables";
 
-import { isFunction, isString } from "@center/utils";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
-
-import { BasicRender } from "@center/components/basic-render";
 
 defineOptions({
   name: "BasicRadioGroup",
@@ -67,6 +56,11 @@ const {
   init,
   findLabel,
 } = useOptionQuery<RadioOption>(props);
+
+const { renderItem } = useCustomRender({
+  render: props.render,
+  slots,
+});
 
 const stateLabel = ref<string>();
 const stateValue = ref<RadioValue>();

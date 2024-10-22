@@ -1,10 +1,10 @@
-export type RadioValue = string | number;
+export type RadioValue = undefined | string | number;
 
 export type RadioSize = "large" | "default" | "small";
 
 export interface RadioOption {
-  label?: string;
-  value?: RadioValue;
+  label: string;
+  value: RadioValue;
   disabled?: boolean;
   border?: boolean;
   size?: RadioSize;

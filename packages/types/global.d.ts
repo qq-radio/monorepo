@@ -9,5 +9,5 @@ declare global {
 
   declare type Arrayable<T> = T | T[];
 
-  declare type Render = () => VNode;
+  declare type Render = (params: any) => VNode;
 }

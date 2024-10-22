@@ -1,6 +1,4 @@
 <template>
-  <component :is="markdown.render()" />
-
   <el-checkbox
     v-if="hasCheckAll"
     v-model="isCheckAll"
@@ -57,8 +55,6 @@ import { isFunction, isString } from "@center/utils";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
 
 import { BasicRender } from "@center/components/basic-render";
-import markdown from "../why.md";
-console.log("markdown:", markdown);
 
 defineOptions({
   name: "BasicCheckboxGroup",

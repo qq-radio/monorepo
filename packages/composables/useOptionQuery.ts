@@ -8,7 +8,7 @@ import {
   mapObjectArrayFields,
 } from "@center/utils";
 
-export type Value = string | number;
+export type Value = undefined | string | number;
 
 export interface Option {
   label: string;

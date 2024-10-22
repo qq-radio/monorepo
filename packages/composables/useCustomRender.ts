@@ -1,0 +1,50 @@
+import { isFunction } from "@center/utils";
+import { Slots, VNode } from "vue";
+
+type Render = () => VNode;
+
+type Item = { customRender?: Function; customSlot?: string };
+
+type UseCustomRender = (context: {
+  render?: (params: any) => VNode;
+  slots?: Slots;
+}) => {
+  renderItem: (
+    item: Item,
+    options: {
+      fallbackContent?: string;
+      callbackParams?: { [key: string]: any };
+    }
+  ) => Render;
+};
+
+export const useCustomRender: UseCustomRender = (context) => {
+  const { render, slots } = context;
+
+  function renderItem(item: Item, { fallbackContent, callbackParams }) {
+    const customRender = item.customRender;
+    const customSlot = slots && item.customSlot && slots[item.customSlot];
+    const templateRender = render;
+    const templateSlot = slots && slots.default;
+
+    try {
+      if (isFunction(customRender)) {
+        return () => customRender(callbackParams);
+      } else if (customSlot) {
+        return () => customSlot(callbackParams);
+      } else if (isFunction(templateRender)) {
+        return () => templateRender(callbackParams);
+      } else if (templateSlot) {
+        return () => templateSlot(callbackParams);
+      } else {
+        return () => fallbackContent;
+      }
+    } catch (error) {
+      console.error("UseCustomRender renderItem error:", error);
+    }
+  }
+
+  return {
+    renderItem,
+  };
+};
