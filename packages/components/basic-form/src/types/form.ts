@@ -1,6 +1,6 @@
 import type { FormMethods, FormItemCallbackParams } from "./";
 
-import type { VNode, Component } from "vue";
+import type { VNode, Component, Slots } from "vue";
 import type {
   RowProps,
   ColProps,
@@ -44,31 +44,41 @@ export type ComponentProps = {
   timeRangeMapFields?: TimeRangeMapFields;
 } & Recordable;
 
+export type Render = () => VNode;
+
 export interface FormSchema {
+  // 跟form-item相关
   label: string;
   prop: string;
   defaultValue?: string | number;
-  component?: ComponentType;
-  componentProps?: ComponentProps;
-  componentListeners?: (actions: Partial<FormMethods>) => Recordable;
-  slot?: string;
+  hasLabel?: boolean;
   labelWidth?: string | number;
-
   sort?: number;
+  hidden?: boolean | ((parmas: FormItemCallbackParams) => boolean);
+  disabled?: boolean | ((parmas: FormItemCallbackParams) => boolean);
   colProps?: Partial<Mutable<ColProps>>;
   formItemProps?: Partial<Mutable<FormItemProps>>;
 
+  // 自定义渲染 - label
+  customLabelRender?: Render;
+  customLabelSlot?: string;
+
+  // 自定义渲染 - field
+  component?: ComponentType;
+  componentProps?: ComponentProps;
+  componentSlots?: Slots;
+  componentListeners?: (actions: Partial<FormMethods>) => Recordable;
+
+  customRender?: Render;
+  customSlot?: string;
+
+  // 这些都是rules了
   required?: boolean;
   min?: number;
   max?: number;
-  showLimitText?: boolean;
-  noWhitespace?: number;
-  rules?: FormItemRule[];
 
-  hasLabel?: boolean;
-  hidden?: boolean;
-  vIf?: boolean | ((parmas: FormItemCallbackParams) => boolean);
-  disabled?: boolean | ((parmas: FormItemCallbackParams) => boolean);
+  noWhitespace?: boolean;
+  rules?: FormItemRule[];
 }
 
 export interface BasicFormProps {
@@ -92,21 +102,12 @@ export interface BasicFormProps {
   submitText?: string;
   footerAlign?: "left" | "right" | "center";
 
-  hasErrorTip?: boolean;
+  hasErrorMessageTip?: boolean;
 
   // interface data -> form model
   modelAdaptee?: (model: Recordable<any>) => Recordable<any>;
   // form model -> interface data
   modelAdapter?: (model: Recordable<any>) => Recordable<any>;
-
-  // cardProps: Recordable;
-  // cardSlots: Recordable;
-
-  // customRender: any;
-  // customSlot: any;
-
-  // customLabelRender: any;
-  // customLabelSlot: any;
 }
 
 export interface BasicFormEmits {

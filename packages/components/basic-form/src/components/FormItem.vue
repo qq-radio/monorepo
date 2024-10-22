@@ -79,14 +79,14 @@ const callbackParams = computed<FormItemCallbackParams>(() => ({
 
 const getVIf = computed(() => {
   const {
-    schemaItem: { vIf },
+    schemaItem: { hidden },
   } = props;
 
-  if (isFunction(vIf)) {
-    return vIf(callbackParams.value);
+  if (isFunction(hidden)) {
+    return hidden(callbackParams.value);
   }
 
-  return vIf !== false;
+  return hidden !== false;
 });
 
 const getColProps = computed(() => {
@@ -112,6 +112,7 @@ const getLabel = computed(() => {
   return flag ? label : "";
 });
 
+// 这个删掉，我不需要处理这个，ele自己有处理的
 const getLabelWidth = computed(() => {
   const {
     formProps: { labelWidth: formLabelWidth },
@@ -154,6 +155,7 @@ const getDisabled = computed(() => {
   return disabled;
 });
 
+// 这个现在不是自己实现了，而是在 normalize schemas的时候 把有这个属性的自动加到compo props去
 const getVIfMax = computed(() => {
   const {
     schemaItem: { component, showLimitText, max },

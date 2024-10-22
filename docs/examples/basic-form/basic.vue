@@ -139,6 +139,25 @@ const schemas: FormSchema[] = [
     component: "color-picker",
     required: true,
   },
+  {
+    label: "input-显示max",
+    prop: "other1",
+    componentProps: {
+      maxlength: 10,
+      showWordLimit: true,
+    },
+    required: true,
+  },
+  {
+    label: "textarea-显示max",
+    prop: "other2",
+    componentProps: {
+      type: "textarea",
+      maxlength: 20,
+      showWordLimit: true,
+    },
+    required: true,
+  },
 ];
 
 const [registerForm] = useForm({
