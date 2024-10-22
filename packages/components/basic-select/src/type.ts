@@ -37,7 +37,7 @@ export interface SelectOption {
 
 export type ModelValue = string | number | boolean | string[] | number[];
 
-export interface CheckboxCallbackParams {
+export interface SelectCallbackParams {
   value?: ModelValue;
   option: SelectOption;
 }

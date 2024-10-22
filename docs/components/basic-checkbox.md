@@ -23,6 +23,12 @@ basic-checkbox/basic
 basic-checkbox/listen-change
 :::
 
+## 全选
+
+:::demo
+basic-checkbox/check-all
+:::
+
 ## 请求接口获取选项数组
 
 若选项数据来自后端接口，请传入api，且可传入resultField、labelField、valueField自动构建options

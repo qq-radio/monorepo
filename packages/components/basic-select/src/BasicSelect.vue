@@ -21,23 +21,14 @@
         :value="item.value"
         :disabled="item.disabled"
       >
-        <BasicRender
-          v-if="isFunction(item.customRender)"
-          :render="item.customRender"
-          :params="getCallbackParams(item)"
+        <component
+          :is="
+            renderItem(item, {
+              fallbackContent: item.label,
+              callbackParams: getCallbackParams(item),
+            })
+          "
         />
-        <slot
-          v-else-if="isString(item.customSlot)"
-          :name="item.customSlot"
-          v-bind="getCallbackParams(item)"
-        />
-        <BasicRender
-          v-else-if="isFunction(render)"
-          :render="render"
-          :params="getCallbackParams(item)"
-        />
-        <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
-        <span v-else>{{ item.label }}</span>
       </el-option>
     </template>
   </el-select>
@@ -48,14 +39,16 @@ import {
   BasicSelectEmits,
   SelectOption,
   ModelValue,
+  SelectCallbackParams,
 } from "./type";
 
-import { useOptionQuery, useBasicNamespace } from "@center/composables";
+import {
+  useOptionQuery,
+  useBasicNamespace,
+  useCustomRender,
+} from "@center/composables";
 
-import { isFunction, isString } from "@center/utils";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
-
-import { BasicRender } from "@center/components/basic-render";
 
 const ns = useBasicNamespace("select");
 
@@ -91,6 +84,11 @@ const {
   findOptions,
 } = useOptionQuery<SelectOption>(props);
 
+const { renderItem } = useCustomRender({
+  render: props.render,
+  slots,
+});
+
 onMounted(() => {
   init();
 });
@@ -105,7 +103,7 @@ watch(
   { immediate: true }
 );
 
-const getCallbackParams = (item: SelectOption) => ({
+const getCallbackParams = (item: SelectOption): SelectCallbackParams => ({
   value: stateValue.value,
   option: item,
 });

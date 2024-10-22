@@ -1,8 +1,8 @@
 <template>
   <BasicRadioGroup v-model="value" :options="options">
     <template #apple="{ option, value }">
-      <span style="color: red; display: flex; align-items: center">
-        <el-icon><Watermelon /></el-icon>🍏{{
+      <span style="color: green; display: flex; align-items: center">
+        🍏{{
           value === option.value
             ? option.label + option.price + "元"
             : option.label
@@ -15,7 +15,7 @@
 
 <script setup lang="tsx">
 import { BasicRadioGroup } from "@center/components";
-import { Grape, Watermelon, Orange } from "@element-plus/icons-vue";
+import { Grape, Orange } from "@element-plus/icons-vue";
 
 const value = ref();
 
