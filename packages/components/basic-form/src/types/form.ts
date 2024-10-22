@@ -73,7 +73,7 @@ export interface FormSchema {
 
 export interface BasicFormProps {
   modelValue?: Recordable;
-  schemas: FormSchema[];
+  schemas?: FormSchema[];
   loading?: boolean;
   disabled?: boolean;
 
@@ -99,14 +99,14 @@ export interface BasicFormProps {
   // form model -> interface data
   modelAdapter?: (model: Recordable<any>) => Recordable<any>;
 
-  cardProps: Recordable;
-  cardSlots: Recordable;
+  // cardProps: Recordable;
+  // cardSlots: Recordable;
 
-  customRender: any;
-  customSlot: any;
+  // customRender: any;
+  // customSlot: any;
 
-  customLabelRender: any;
-  customLabelSlot: any;
+  // customLabelRender: any;
+  // customLabelSlot: any;
 }
 
 export interface BasicFormEmits {

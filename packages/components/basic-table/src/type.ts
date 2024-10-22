@@ -8,7 +8,7 @@ export type PageMap = {
 };
 
 export interface BasicTableProps {
-  schemas: TableSchema[];
+  schemas?: TableSchema[];
   tableDatas?: Array<Recordable>;
   request?: (params: Recordable) => Promise<{
     data: {

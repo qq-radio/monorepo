@@ -35,7 +35,7 @@ const getBindValues = computed(() => ({
   clearable: props.clearable,
 }));
 
-const stateValue = ref<ModelValue>();
+const stateValue = ref<ModelValue>("");
 const treeDatas = ref<Recordable[]>([]);
 
 const init = async () => {
@@ -59,13 +59,14 @@ watch(
   () => props.modelValue,
   () => {
     if (props.modelValue) {
-      stateValue.value = props.modelValue;
+      stateValue.value = props.modelValue || "";
     }
   },
   { immediate: true }
 );
 
 const emitChange = () => {
+  console.log("emitChange : 树的这里触发了吗？？？ ", stateValue.value);
   emit("update:modelValue", stateValue.value);
   emit("change", {
     value: stateValue.value,

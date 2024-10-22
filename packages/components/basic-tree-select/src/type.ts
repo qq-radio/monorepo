@@ -17,10 +17,4 @@ export interface BasicTreeSelectEmits {
   ): void;
 }
 
-export type ModelValue =
-  | undefined
-  | string
-  | number
-  | boolean
-  | string[]
-  | number[];
+export type ModelValue = string | number | boolean | object;
