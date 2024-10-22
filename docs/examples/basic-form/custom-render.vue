@@ -122,7 +122,6 @@ const schemas: FormSchema[] = [
     prop: "joinTime",
     component: "time-picker",
     required: true,
-    disabled: computed(() => model.value.isFull),
   },
   {
     label: "switch-是否全职",
@@ -136,7 +135,6 @@ const schemas: FormSchema[] = [
     prop: "score",
     component: "rate",
     required: true,
-    hidden: computed(() => model.value.isFull),
   },
   {
     label: "slider-技能分",

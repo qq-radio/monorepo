@@ -44,7 +44,7 @@ export type ComponentProps = {
   timeRangeMapFields?: TimeRangeMapFields;
 } & Recordable;
 
-export type Render = () => VNode;
+export type Render = () => string | VNode;
 
 export interface FormSchema {
   // 跟form-item相关

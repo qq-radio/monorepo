@@ -5,7 +5,6 @@ import {
   ElDatePicker,
   ElTimePicker,
   ElCascader,
-  ElTreeSelect,
   ElSwitch,
   ElRate,
   ElSlider,

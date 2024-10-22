@@ -13,24 +13,17 @@
         :prop="schemaItem.prop"
         :rules="schemaItem.rules"
       >
-        <slot
-          v-if="schemaItem.slot"
-          :name="schemaItem.slot"
-          v-bind="callbackParams"
-          style="width: 100%"
-        />
+        <template #label>
+          <component :is="renderLabel" />
+        </template>
         <component
-          :is="getComponent(schemaItem.component)"
-          v-else
+          :is="renderField"
           v-bind="getComponentProps"
           v-model="stateValue"
           :disabled="getDisabled"
           style="width: 100%"
           @change="(...v: unknown[]) => onChange(v)"
         />
-        <div v-if="getVIfMax" style="text-align: right; width: 100%">
-          {{ getMaxLimitText }}
-        </div>
       </el-form-item>
     </el-col>
   </template>
@@ -44,12 +37,11 @@ import type {
   FieldValue,
 } from "../types";
 
-import { useBasicNamespace } from "@center/composables";
+import { useBasicNamespace, useCustomRender } from "@center/composables";
 
-import { getComponent } from "../tools/component";
 import { useFormItemHandler } from "../hooks/useFormItemHandler";
 
-import { ref, watchEffect, computed } from "vue";
+import { useSlots, ref, watchEffect, computed } from "vue";
 import { isFunction, isString, isUndefined } from "lodash";
 
 const ns = useBasicNamespace("form-item");
@@ -57,6 +49,8 @@ const ns = useBasicNamespace("form-item");
 defineOptions({
   name: "FormItem",
 });
+
+const slots = useSlots();
 
 const emit = defineEmits<FormItemEmits>();
 
@@ -155,15 +149,6 @@ const getDisabled = computed(() => {
   return disabled;
 });
 
-// 这个现在不是自己实现了，而是在 normalize schemas的时候 把有这个属性的自动加到compo props去
-const getVIfMax = computed(() => {
-  const {
-    schemaItem: { component, showLimitText, max },
-  } = props;
-
-  return ["input", "textarea"].includes(component) && showLimitText && max;
-});
-
 const getMaxLimitText = computed(() => {
   const {
     schemaItem: { max },
@@ -188,6 +173,21 @@ const onChange = (values: unknown[]) => {
   emit("update:modelValue", stateValue.value);
   emit("change", stateValue.value, schemaItem);
 };
+
+const { renderItem } = useCustomRender({ slots });
+
+const renderLabel = renderItem(
+  {
+    customRender: props.schemaItem.customLabelRender,
+    customSlot: props.schemaItem.customLabelSlot,
+  },
+  {
+    fallbackContent: props.schemaItem.label,
+    callbackParams: callbackParams,
+  }
+);
+
+const renderField = renderItem(props.schemaItem);
 </script>
 
 <style lang="scss" scoped>
