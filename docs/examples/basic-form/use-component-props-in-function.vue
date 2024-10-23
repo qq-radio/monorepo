@@ -1,5 +1,4 @@
 <template>
-  {{ formModel }}
   <BasicForm
     v-model="formModel"
     @register="registerForm"
@@ -10,31 +9,34 @@
 
 <script lang="tsx" setup>
 import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
-import department from "../../mocks/department.json";
 
 import { ref } from "vue";
 
-const formModel = ref({
-  username: "李华",
-  age: 18,
-  remark: "这是一段说明",
-});
+const formModel = ref({});
 
 const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
     component: "input",
+    required: true,
   },
   {
     label: "礼物",
     prop: "gift",
     component: "radio",
+    required: true,
     componentProps: ({
       value,
-      model,
-      schema,
-      methods: { setFieldsValue, appendSchema },
+      methods: {
+        setFieldsValue,
+        appendSchema,
+        updateSchema,
+        getFieldValue,
+        getFieldsValue,
+        validate,
+        validateField,
+      },
     }) => {
       return {
         options: [
@@ -42,28 +44,73 @@ const schemas: FormSchema[] = [
           { label: "电脑", value: "computer" },
         ],
         onClick: () => {
-          //   value === "phone"
-          //     ? setFieldsValue({
-          //         computerBrand: "",
-          //       })
-          //     : setFieldsValue({
-          //         phoneBrand: "",
-          //       });
+          value === "phone"
+            ? setFieldsValue({
+                computerBrand: "",
+              })
+            : setFieldsValue({
+                phoneBrand: "",
+              });
 
           appendSchema(
             {
-              label: "配套服务",
+              label: "充电线",
               prop: "service",
               component: "radio",
               componentProps: {
                 options: [
-                  { label: "需要吸管", value: "yes" },
-                  { label: "不需要", value: "no" },
+                  { label: "快充", value: "fast" },
+                  { label: "慢充", value: "slow" },
                 ],
               },
             },
             "gift"
           );
+
+          value === "phone"
+            ? updateSchema(
+                {
+                  label: "手机品牌11",
+                  prop: "phoneBrand",
+                  component: "select",
+                  componentProps: {
+                    options: [
+                      { label: "苹果1111", value: "iphone" },
+                      { label: "小米1111", value: "xiaomi" },
+                      { label: "华为111", value: "huawei" },
+                    ],
+                  },
+                },
+                "gift"
+              )
+            : updateSchema(
+                {
+                  label: "电脑品牌222",
+                  prop: "computerBrand",
+                  component: "select",
+                  componentProps: {
+                    options: [
+                      { label: "联想2222", value: "lenovo" },
+                      { label: "惠普2222", value: "hp" },
+                      { label: "戴尔222222", value: "dell" },
+                    ],
+                  },
+                },
+                "gift"
+              );
+
+          const gift = getFieldValue("gift");
+          const values = getFieldsValue();
+          // console.log("form gift:", gift);
+          // console.log("form values:", values);
+
+          setFieldsValue({
+            phoneBrand: "xiaomi",
+            computerBrand: "hp",
+          });
+
+          validate();
+          // validateField("username");
         },
       };
     },
@@ -79,7 +126,7 @@ const schemas: FormSchema[] = [
         { label: "华为", value: "huawei" },
       ],
     },
-    disabled: ({ model }) => !model.gift || model.gift === "computer",
+    required: true,
   },
   {
     label: "电脑品牌",
@@ -92,7 +139,7 @@ const schemas: FormSchema[] = [
         { label: "戴尔", value: "dell" },
       ],
     },
-    disabled: ({ model }) => !model.gift || model.gift === "phone",
+    required: true,
   },
 ];
 

@@ -66,6 +66,7 @@ basic-form/hidden
 :::demo
 basic-form/disabled
 ::: -->
+<!--
 
 我现在想做什么？？
 想做，
@@ -75,7 +76,7 @@ basic-form/disabled
 思路是什么 ？？
 是在 componentProps 挂上方法ma ？？ 直接在这里写onclick会怎么样 ？？？
 
-componentProps的
+componentProps的 -->
 
 :::demo
 basic-form/use-component-props-in-function

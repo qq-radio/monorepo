@@ -76,7 +76,6 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
 
   function appendSchema(schemas: Arrayable<FormSchema>, previousProp?: string) {
     const waitAppendSchemas = processSchemas(schemas);
-    console.log("waitAppendSchemas:", waitAppendSchemas);
 
     if (!waitAppendSchemas.length) {
       throw new Error(
@@ -89,7 +88,6 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
         (item) => previousProp === item.prop
       );
 
-      console.log("previousIndex:", previousIndex);
       _appendSchemaItemByIndex(previousIndex + 1, normalizeSchemaItem(schema));
     });
   }
@@ -99,23 +97,12 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     schema: NormalizedFormSchema
   ) {
     formSchemas.value.splice(index, 0, schema);
-
-    console.log(
-      "formSchemas.value: 所以这里有更新对吧？？？ ",
-      formSchemas.value,
-      formSchemas.value.length
-    );
   }
 
   watch(
     () => formSchemas.value,
-    (sc) => {
-      if (sc.length === 4) {
-        console.trace(
-          "执行是成功的，但是没有更新  不知道是哪里被改变了  sc:",
-          sc
-        );
-      }
+    (schemas) => {
+      console.log("schemas:", schemas);
     },
     {
       deep: true,

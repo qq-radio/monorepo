@@ -83,13 +83,26 @@
           style="width: 100%"
           @change="(...v: unknown[]) => onChange(v)"
         >
-          <!-- <template
-            v-for="slotName in schemaItem.componentSlots"
-            :key="slotName"
-            #[slotName]="scope"
+          <template
+            v-for="(fieldSlot, key) in schemaItem.componentSlots"
+            :key="key"
+            #[key]="data"
           >
-            <slot :name="slotName" v-bind="scope" />
-          </template> -->
+            <component
+              :is="fieldSlot"
+              v-bind="data"
+              :params="
+                look(
+                  schemaItem.componentSlots,
+
+                  fieldSlot,
+
+                  key,
+                  data
+                )
+              "
+            />
+          </template>
         </component>
       </el-form-item>
     </el-col>
@@ -249,6 +262,10 @@ const isCustomLabel = computed(
 const isCustomField = computed(
   () => props.schemaItem.customRender || props.schemaItem.customSlot
 );
+
+const look = (a, b, c, d) => {
+  console.log("a == ", a, "bbbb == ", b, "ccccccc == ", c, "dddddddd == ", d);
+};
 </script>
 
 <style lang="scss" scoped>

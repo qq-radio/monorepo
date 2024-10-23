@@ -13,6 +13,9 @@ import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 
+import { ElIcon } from "element-plus";
+import { Search } from "@element-plus/icons-vue";
+
 const model = ref({
   username: "李华",
   age: 18,
@@ -24,12 +27,17 @@ const schemas: FormSchema[] = [
     label: "用户",
     prop: "username",
     component: "input",
-    componentSlots: {},
+    componentSlots: {
+      suffix: () => h(ElIcon, null, () => h(Search)),
+      prefix: () => "提示： ",
+      prepend: () => "http://",
+      append: () => ".com",
+    },
   },
   {
     label: "用户",
     prop: "username",
-    component: "input-number",
+    component: "input",
     componentSlots: {},
   },
   {
