@@ -1,6 +1,7 @@
 <template>
   <el-form ref="formInstance" v-bind="getBindValues">
     <el-row v-bind="getProps.rowProps">
+      这里加了append之后的长度是？？？ {{ formSchemas.length }}
       <template v-for="schemaItem in formSchemas" :key="schemaItem.prop">
         <FormItem
           v-model="formModel[schemaItem.prop]"
@@ -8,7 +9,7 @@
             schemaItem,
             formProps,
             formModel,
-            formMethods
+            formMethods,
           }"
           @field-change="setFieldsValue"
           @change="emitUpdateModel"
@@ -37,26 +38,26 @@
 </template>
 
 <script lang="ts" setup>
-import type { BasicFormProps, BasicFormEmits, FormMethods } from './types'
-import type { FormInstance } from 'element-plus'
+import type { BasicFormProps, BasicFormEmits, FormMethods } from "./types";
+import type { FormInstance } from "element-plus";
 
-import { useFormEvent } from './hooks/useFormEvent'
-import { useFormSelf } from './hooks/useFormSelf'
+import { useFormEvent } from "./hooks/useFormEvent";
+import { useFormSelf } from "./hooks/useFormSelf";
 
-import { useAttrs, useSlots, ref, computed, unref, onMounted } from 'vue'
-import { isFunction, pick } from 'lodash'
+import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
+import { isFunction, pick } from "lodash";
 
-import FormItem from './components/FormItem.vue'
+import FormItem from "./components/FormItem.vue";
 
 defineOptions({
-  name: 'BasicForm',
-  inheritAttrs: false
-})
+  name: "BasicForm",
+  inheritAttrs: false,
+});
 
-const attrs = useAttrs()
-const slots = useSlots()
+const attrs = useAttrs();
+const slots = useSlots();
 
-const emit = defineEmits<BasicFormEmits>()
+const emit = defineEmits<BasicFormEmits>();
 
 const props = withDefaults(defineProps<BasicFormProps>(), {
   modelValue: () => ({}),
@@ -64,66 +65,66 @@ const props = withDefaults(defineProps<BasicFormProps>(), {
   loading: false,
 
   rowProps: () => ({
-    gutter: 20
+    gutter: 20,
   }),
   colProps: () => ({ span: 24 }),
   formItemProps: () => ({}),
 
   hasLabel: true,
-  labelSuffix: ':',
-  labelWidth: '100px',
-  labelPosition: 'right',
+  labelSuffix: ":",
+  labelWidth: "100px",
+  labelPosition: "right",
 
   hasFooter: false,
   hasReset: true,
-  resetText: '重置',
-  submitText: '提交',
+  resetText: "重置",
+  submitText: "提交",
 
-  hasErrorTip: true
-})
+  hasErrorTip: true,
+});
 
-const propsRef = ref<Partial<BasicFormProps>>()
+const propsRef = ref<Partial<BasicFormProps>>();
 
 const getProps = computed<BasicFormProps>(() => {
-  return { ...props, ...unref(propsRef) }
-})
+  return { ...props, ...unref(propsRef) };
+});
 
 function setProps(partialProps: Partial<BasicFormProps>) {
-  propsRef.value = { ...unref(propsRef), ...partialProps }
+  propsRef.value = { ...unref(propsRef), ...partialProps };
 }
 
 const getBindValues = computed(() => {
   const partialProps = pick(
     getProps.value,
-    'disabled',
-    'labelWidth',
-    'labelPosition',
-    'labelSuffix',
-    'labelWidth'
-  )
+    "disabled",
+    "labelWidth",
+    "labelPosition",
+    "labelSuffix",
+    "labelWidth"
+  );
   return {
     ...attrs,
     ...partialProps,
-    model: formModel
-  }
-})
+    model: formModel,
+  };
+});
 
 const formProps = computed(() => {
   const partialProps = pick(
     getProps.value,
-    'disabled',
-    'formItemProps',
-    'colProps',
-    'hasLabel',
-    'labelSuffix',
-    'labelWidth'
-  )
+    "disabled",
+    "formItemProps",
+    "colProps",
+    "hasLabel",
+    "labelSuffix",
+    "labelWidth"
+  );
   return {
-    ...partialProps
-  }
-})
+    ...partialProps,
+  };
+});
 
-const formInstance = ref<FormInstance>()
+const formInstance = ref<FormInstance>();
 
 const {
   formSchemas,
@@ -137,39 +138,39 @@ const {
   getFieldsValue,
   setFieldsValue,
   resetFieldsValue,
-  emitUpdateModel
+  emitUpdateModel,
 } = useFormEvent(getProps, {
-  emit
-})
+  emit,
+});
 
 const { validate, validateField, resetFields, scrollToField, clearValidate } =
-  useFormSelf(formInstance)
+  useFormSelf(formInstance);
 
 const submit = async () => {
-  console.log('表单填写值', formModel.value)
+  console.log("表单填写值", formModel.value);
   try {
-    const valid = await validate()
+    const valid = await validate();
     if (!valid) {
-      return false
+      return false;
     }
 
     if (isFunction(getProps.value.modelAdapter)) {
-      emit('submit', getProps.value.modelAdapter(formModel.value))
+      emit("submit", getProps.value.modelAdapter(formModel.value));
     } else {
-      emit('submit', formModel.value)
+      emit("submit", formModel.value);
     }
   } catch (error: unknown) {
-    console.error('表单提交错误', error)
+    console.error("表单提交错误", error);
   }
-  return false
-}
+  return false;
+};
 
 const reset = () => {
-  resetFieldsValue()
-  resetFields()
-  emitUpdateModel()
-  emit('reset')
-}
+  resetFieldsValue();
+  resetFields();
+  emitUpdateModel();
+  emit("reset");
+};
 
 const formMethods: FormMethods = {
   setProps,
@@ -195,18 +196,18 @@ const formMethods: FormMethods = {
   validateField,
   resetFields,
   scrollToField,
-  clearValidate
-}
+  clearValidate,
+};
 
 onMounted(() => {
-  emit('register', formMethods)
-})
+  emit("register", formMethods);
+});
 
 defineExpose({
-  ...formMethods
-})
+  ...formMethods,
+});
 </script>
 
 <style lang="scss" scoped>
-@import './style.scss';
+@import "./style.scss";
 </style>

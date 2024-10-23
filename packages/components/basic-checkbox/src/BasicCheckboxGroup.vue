@@ -95,10 +95,8 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   () => {
-    if (props.modelValue) {
-      stateValue.value = props.modelValue;
-      stateLabel.value = findLabels(props.modelValue);
-    }
+    stateValue.value = props.modelValue;
+    stateLabel.value = findLabels(props.modelValue);
   },
   { immediate: true }
 );

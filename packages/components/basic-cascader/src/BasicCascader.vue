@@ -60,9 +60,7 @@ init();
 watch(
   () => props.modelValue,
   () => {
-    if (props.modelValue) {
-      stateValue.value = props.modelValue;
-    }
+    stateValue.value = props.modelValue;
   },
   { immediate: true }
 );

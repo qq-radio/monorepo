@@ -1,6 +1,6 @@
 <template>
   <template v-if="schemaItem.title">
-    <el-col :class="ns.e('title')">
+    <el-col>
       <component
         v-if="isCustomTitle"
         :is="
@@ -14,12 +14,21 @@
         "
       />
       <template v-else>
-        {{ schemaItem.title }}
+        <span :class="ns.e('title')">{{ schemaItem.title }}</span>
       </template>
+      <el-tooltip
+        v-if="schemaItem.titleTooltip"
+        placement="top"
+        :content="schemaItem.titleTooltip"
+      >
+        <el-icon style="margin-left: 4px">
+          <InfoFilled />
+        </el-icon>
+      </el-tooltip>
     </el-col>
   </template>
   <template v-else>
-    <el-col v-if="getVIf" v-bind="getColProps">
+    <el-col v-if="!getHidden" v-bind="getColProps">
       <el-form-item
         v-bind="schemaItem.formItemProps"
         :label="getLabel"
@@ -41,8 +50,17 @@
             "
           />
           <template v-else>
-            {{ schemaItem.label }}
+            <span>{{ schemaItem.label }}</span>
           </template>
+          <el-tooltip
+            v-if="schemaItem.labelTooltip"
+            placement="top"
+            :content="schemaItem.labelTooltip"
+          >
+            <el-icon style="margin-left: 4px">
+              <InfoFilled />
+            </el-icon>
+          </el-tooltip>
         </template>
         <component
           v-if="isCustomField"
@@ -93,6 +111,7 @@ import { useFormItemHandler } from "../hooks/useFormItemHandler";
 
 import { useSlots, ref, watchEffect, computed } from "vue";
 import { isFunction, isUndefined } from "lodash";
+import { InfoFilled } from "@element-plus/icons-vue";
 
 const ns = useBasicNamespace("form-item");
 
@@ -123,7 +142,7 @@ const callbackParams = computed<FormItemCallbackParams>(() => ({
   schema: props.schemaItem,
 }));
 
-const getVIf = computed(() => {
+const getHidden = computed(() => {
   const {
     schemaItem: { hidden },
   } = props;
@@ -132,7 +151,7 @@ const getVIf = computed(() => {
     return hidden(callbackParams.value);
   }
 
-  return hidden !== false;
+  return hidden;
 });
 
 const getColProps = computed(() => {
@@ -178,7 +197,10 @@ const getComponentProps = computed(() => {
   } = props;
 
   if (isFunction(componentProps)) {
-    return componentProps(props.formMethods);
+    return componentProps({
+      ...callbackParams.value,
+      methods: props.formMethods,
+    });
   }
 
   return componentProps;

@@ -57,10 +57,11 @@ export interface FormSchema {
   title?: string;
   customTitleRender?: Render;
   customTitleSlot?: string;
+  titleTooltip?: string;
 
   // 跟form-item相关
-  label: string;
-  prop: string;
+  label?: string;
+  prop?: string;
   defaultValue?: string | number;
   hasLabel?: boolean;
   labelWidth?: string | number;
@@ -73,6 +74,7 @@ export interface FormSchema {
   // 自定义渲染 - label
   customLabelRender?: Render;
   customLabelSlot?: string;
+  labelTooltip?: string;
 
   // 自定义渲染 - field
   component?: ComponentType;
