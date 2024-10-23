@@ -52,7 +52,12 @@ export interface FormGroup {
   customTitleSlot?: string;
 }
 
-export interface FormSchemaItem {
+export interface FormSchema {
+  // 改动太大了  类型几乎都要改，所以先不改，用最简单的加个title 全部partial
+  title?: string;
+  customTitleRender?: Render;
+  customTitleSlot?: string;
+
   // 跟form-item相关
   label: string;
   prop: string;
@@ -87,7 +92,7 @@ export interface FormSchemaItem {
   rules?: FormItemRule[];
 }
 
-export type FormSchema = FormSchemaItem | FormGroup;
+// export type FormSchema = FormSchemaItem | FormGroup;
 
 export interface BasicFormProps {
   modelValue?: Recordable;
