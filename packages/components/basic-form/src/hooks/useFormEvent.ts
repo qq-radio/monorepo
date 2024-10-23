@@ -11,17 +11,20 @@ import {
   processSchemas,
 } from "../tools/normalize-schema";
 
-import { ref, unref, watchEffect, watch } from "vue";
+import { ref, unref, watch } from "vue";
 import { isObject, isString, cloneDeep, merge } from "lodash";
 
 export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   const formSchemas = ref<NormalizedFormSchema[]>([]);
   const formModel = ref<Recordable<any>>({});
 
-  watchEffect(() => {
-    initSchemas();
-    initModel();
-  });
+  watch(
+    () => getProps.value.schemas,
+    () => {
+      initSchemas();
+      initModel();
+    }
+  );
 
   function initSchemas() {
     formSchemas.value = normalizeSchemas(getProps.value.schemas);
