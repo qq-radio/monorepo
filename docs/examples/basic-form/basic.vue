@@ -1,16 +1,11 @@
 <template>
-  表单填写值{{ model }}
+  表单填写值{{ formModel }}
   <BasicForm
-    v-model="model"
+    v-model="formModel"
     @submit="handleSubmit"
     @register="registerForm"
     hasFooter
-  >
-    <template #slot-number> 222 </template>
-    <template #custom-age-label>
-      <el-button type="primary">年龄是18</el-button>
-    </template>
-  </BasicForm>
+  />
 </template>
 
 <script lang="tsx" setup>
@@ -19,7 +14,7 @@ import department from "../../mocks/department.json";
 
 import { ref } from "vue";
 
-const model = ref<Recordable>({
+const formModel = ref({
   username: "李华",
   age: 18,
   remark: "这是一段说明",
@@ -27,28 +22,25 @@ const model = ref<Recordable>({
 
 const schemas: FormSchema[] = [
   {
-    label: "input-用户",
+    label: "用户",
     prop: "username",
+    component: "input",
     required: true,
-    customRender: () => "11111",
-    customLabelRender: () => <div style="color:red">变了颜色</div>,
   },
   {
-    label: "input-number-年龄",
+    label: "年龄",
     prop: "age",
     component: "input-number",
     required: true,
-    customSlot: "slot-number",
-    customLabelSlot: "custom-age-label",
   },
   {
-    label: "textarea-备注",
+    label: "备注",
     prop: "remark",
     component: "textarea",
     required: true,
   },
   {
-    label: "radio-手机",
+    label: "手机",
     prop: "phone",
     component: "radio",
     componentProps: {
@@ -61,7 +53,7 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "checkbox-水果",
+    label: "水果",
     prop: "fruit",
     component: "checkbox",
     componentProps: {
@@ -74,7 +66,7 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "select-运动",
+    label: "运动",
     prop: "sport",
     component: "select",
     componentProps: {
@@ -86,18 +78,18 @@ const schemas: FormSchema[] = [
     },
     required: true,
   },
-  // {
-  //   label: "先放着 我不知道这个我为什么会有问题？？tree-select-部门",
-  //   prop: "department",
-  //   component: "tree-select",
-  //   componentProps: {
-  //     data: department,
-  //     props: { label: "name", children: "children" },
-  //   },
-  //   required: true,
-  // },
   {
-    label: "cascader-服务处",
+    label: "部门",
+    prop: "department",
+    component: "tree-select",
+    componentProps: {
+      data: department,
+      props: { value: "id", label: "name", children: "children" },
+    },
+    required: true,
+  },
+  {
+    label: "服务处",
     prop: "service",
     component: "cascader",
     componentProps: {
@@ -112,61 +104,40 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "date-picker-入职日期",
+    label: "入职日期",
     prop: "joinDay",
     component: "date-picker",
     required: true,
   },
   {
-    label: "time-picker-入职时间",
+    label: "入职时间",
     prop: "joinTime",
     component: "time-picker",
     required: true,
-    disabled: computed(() => model.value.isFull),
   },
   {
-    label: "switch-是否全职",
+    label: "是否全职",
     prop: "isFull",
     component: "switch",
     defaultValue: 0,
     required: true,
   },
   {
-    label: "rate-绩效评分",
+    label: "绩效评分",
     prop: "score",
     component: "rate",
     required: true,
-    hidden: computed(() => model.value.isFull),
   },
   {
-    label: "slider-技能分",
+    label: "技能分",
     prop: "skill",
     component: "slider",
     required: true,
   },
   {
-    label: "color-picker-喜爱颜色",
+    label: "喜爱颜色",
     prop: "color",
     component: "color-picker",
-    required: true,
-  },
-  {
-    label: "input-显示max",
-    prop: "other1",
-    componentProps: {
-      maxlength: 10,
-      showWordLimit: true,
-    },
-    required: true,
-  },
-  {
-    label: "textarea-显示max",
-    prop: "other2",
-    componentProps: {
-      type: "textarea",
-      maxlength: 20,
-      showWordLimit: true,
-    },
     required: true,
   },
 ];

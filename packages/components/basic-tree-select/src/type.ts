@@ -1,6 +1,7 @@
 export interface BasicTreeSelectProps {
   modelValue?: ModelValue;
   clearable?: boolean;
+  disabled?: boolean;
 
   data?: Recordable[];
   api?: () => Promise<Recordable[]>;

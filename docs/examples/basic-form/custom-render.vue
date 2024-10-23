@@ -19,7 +19,7 @@ import department from "../../mocks/department.json";
 
 import { ref } from "vue";
 
-const model = ref<Recordable>({
+const model = ref({
   username: "李华",
   age: 18,
   remark: "这是一段说明",
@@ -30,7 +30,7 @@ const schemas: FormSchema[] = [
     label: "input-用户",
     prop: "username",
     required: true,
-    customRender: () => "11111",
+    // customRender: () => "11111",
     customLabelRender: () => <div style="color:red">变了颜色</div>,
   },
   {

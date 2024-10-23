@@ -1,7 +1,21 @@
 <template>
-  <template v-if="schemaItem.component === 'sub-title'">
-    <el-col :class="ns.e('sub-title')">
-      {{ schemaItem.label }}
+  <template v-if="schemaItem.title">
+    <el-col :class="ns.e('title')">
+      <component
+        v-if="isCustomTitle"
+        :is="
+          renderItem(
+            {
+              customRender: schemaItem.customTitleRender,
+              customSlot: schemaItem.customTitleSlot,
+            },
+            callbackParams
+          )
+        "
+      />
+      <template v-else>
+        {{ schemaItem.title }}
+      </template>
     </el-col>
   </template>
   <template v-else>
@@ -14,16 +28,51 @@
         :rules="schemaItem.rules"
       >
         <template #label>
-          <component :is="renderLabel" />
+          <component
+            v-if="isCustomLabel"
+            :is="
+              renderItem(
+                {
+                  customRender: schemaItem.customLabelRender,
+                  customSlot: schemaItem.customLabelSlot,
+                },
+                callbackParams
+              )
+            "
+          />
+          <template v-else>
+            {{ schemaItem.label }}
+          </template>
         </template>
         <component
-          :is="renderField"
+          v-if="isCustomField"
+          :is="
+            renderItem(
+              {
+                customRender: schemaItem.customRender,
+                customSlot: schemaItem.customSlot,
+              },
+              callbackParams
+            )
+          "
+        />
+        <component
+          v-else="schemaItem.component"
+          :is="componentValue"
           v-bind="getComponentProps"
           v-model="stateValue"
           :disabled="getDisabled"
           style="width: 100%"
           @change="(...v: unknown[]) => onChange(v)"
-        />
+        >
+          <!-- <template
+            v-for="slotName in schemaItem.componentSlots"
+            :key="slotName"
+            #[slotName]="scope"
+          >
+            <slot :name="slotName" v-bind="scope" />
+          </template> -->
+        </component>
       </el-form-item>
     </el-col>
   </template>
@@ -38,11 +87,12 @@ import type {
 } from "../types";
 
 import { useBasicNamespace, useCustomRender } from "@center/composables";
+import { getComponent } from "../tools/component";
 
 import { useFormItemHandler } from "../hooks/useFormItemHandler";
 
 import { useSlots, ref, watchEffect, computed } from "vue";
-import { isFunction, isString, isUndefined } from "lodash";
+import { isFunction, isUndefined } from "lodash";
 
 const ns = useBasicNamespace("form-item");
 
@@ -58,6 +108,8 @@ const props = withDefaults(defineProps<FormItemProps>(), {
   formProps: () => ({}),
   formModel: () => ({}),
 });
+
+const componentValue = getComponent(props.schemaItem.component);
 
 const stateValue = ref<FieldValue>("");
 
@@ -149,18 +201,6 @@ const getDisabled = computed(() => {
   return disabled;
 });
 
-const getMaxLimitText = computed(() => {
-  const {
-    schemaItem: { max },
-  } = props;
-
-  if (!isString(props.modelValue)) {
-    return;
-  }
-
-  return (props.modelValue?.length || 0) + "/" + max;
-});
-
 const { handleChange } = useFormItemHandler({
   emit,
 });
@@ -176,18 +216,17 @@ const onChange = (values: unknown[]) => {
 
 const { renderItem } = useCustomRender({ slots });
 
-const renderLabel = renderItem(
-  {
-    customRender: props.schemaItem.customLabelRender,
-    customSlot: props.schemaItem.customLabelSlot,
-  },
-  {
-    fallbackContent: props.schemaItem.label,
-    callbackParams: callbackParams,
-  }
+const isCustomTitle = computed(
+  () => props.schemaItem.customTitleRender || props.schemaItem.customTitleSlot
 );
 
-const renderField = renderItem(props.schemaItem);
+const isCustomLabel = computed(
+  () => props.schemaItem.customLabelRender || props.schemaItem.customLabelSlot
+);
+
+const isCustomField = computed(
+  () => props.schemaItem.customRender || props.schemaItem.customSlot
+);
 </script>
 
 <style lang="scss" scoped>

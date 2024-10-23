@@ -4,7 +4,7 @@
 }
 
 @include b(form-item) {
-  @include e(sub-title) {
+  @include e(title) {
     margin-bottom: 12px;
     margin-left: 32px;
     font-weight: 700;

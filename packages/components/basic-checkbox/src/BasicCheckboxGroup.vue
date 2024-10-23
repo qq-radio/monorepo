@@ -21,18 +21,28 @@
         :border="item.border"
         :size="item.size"
       >
-        <component
-          :is="
-            renderItem(item, {
-              fallbackContent: item.label,
-              callbackParams: getCallbackParams(item),
-            })
-          "
+        <BasicRender
+          v-if="isFunction(item.customRender)"
+          :render="item.customRender"
+          :params="getCallbackParams(item)"
         />
+        <slot
+          v-else-if="isString(item.customSlot)"
+          :name="item.customSlot"
+          v-bind="getCallbackParams(item)"
+        />
+        <BasicRender
+          v-else-if="isFunction(render)"
+          :render="render"
+          :params="getCallbackParams(item)"
+        />
+        <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
+        <span v-else>{{ item.label }}</span>
       </component>
     </template>
   </el-checkbox-group>
 </template>
+
 <script lang="ts" setup>
 import {
   BasicCheckboxGroupProps,
@@ -41,9 +51,12 @@ import {
   CheckboxCallbackParams,
 } from "./type";
 
-import { useOptionQuery, useCustomRender } from "@center/composables";
+import { useOptionQuery } from "@center/composables";
 
+import { isFunction, isString } from "@center/utils";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
+
+import { BasicRender } from "@center/components/basic-render";
 
 defineOptions({
   name: "BasicCheckboxGroup",
@@ -74,11 +87,6 @@ const {
   findLabels,
   findValues,
 } = useOptionQuery<CheckboxOption>(props);
-
-const { renderItem } = useCustomRender({
-  render: props.render,
-  slots,
-});
 
 onMounted(() => {
   init();

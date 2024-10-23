@@ -24,7 +24,7 @@ export type ElementPlusComponentType =
   | "color-picker";
 
 export type CustomComponentType =
-  | "sub-title"
+  | "title"
   | "radio"
   | "checkbox-group"
   | "select"
@@ -46,7 +46,13 @@ export type ComponentProps = {
 
 export type Render = () => string | VNode;
 
-export interface FormSchema {
+export interface FormGroup {
+  title: string;
+  customTitleRender?: Render;
+  customTitleSlot?: string;
+}
+
+export interface FormSchemaItem {
   // 跟form-item相关
   label: string;
   prop: string;
@@ -80,6 +86,8 @@ export interface FormSchema {
   noWhitespace?: boolean;
   rules?: FormItemRule[];
 }
+
+export type FormSchema = FormSchemaItem | FormGroup;
 
 export interface BasicFormProps {
   modelValue?: Recordable;
