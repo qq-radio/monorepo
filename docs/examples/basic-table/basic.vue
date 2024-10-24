@@ -1,5 +1,6 @@
 <template>
-  <BasicTable @register="registerTable" />
+  这里一直没有生效吗````
+  <BasicTable @register="registerTable" :schemas="schemas" />
 </template>
 
 <script lang="tsx" setup>
