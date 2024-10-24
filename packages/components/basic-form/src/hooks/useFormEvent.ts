@@ -43,6 +43,14 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     );
   }
 
+  function getSchema(prop: string) {
+    return formSchemas.value.find((item) => item.prop === prop);
+  }
+
+  function getSchemaIndex(prop: string) {
+    return formSchemas.value.findIndex((item) => item.prop === prop);
+  }
+
   function updateSchema(schemas: Arrayable<UpdateSchemaParams>) {
     const waitUpdateSchemas = processSchemas(schemas);
 
@@ -53,9 +61,7 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     }
 
     waitUpdateSchemas.forEach((schema) => {
-      const updateIndex = unref(formSchemas).findIndex(
-        (item) => schema.prop === item.prop
-      );
+      const updateIndex = getSchemaIndex(schema.prop);
 
       if (updateIndex === -1) {
         return;
@@ -87,10 +93,12 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     }
 
     waitAppendSchemas.forEach((schema) => {
-      const previousIndex = unref(formSchemas).findIndex(
-        (item) => previousProp === item.prop
-      );
+      const isExist = getSchema(schema.prop);
+      if (isExist) {
+        return;
+      }
 
+      const previousIndex = previousProp ? getSchemaIndex(previousProp) : 0;
       _appendSchemaItemByIndex(previousIndex + 1, normalizeSchemaItem(schema));
     });
   }
@@ -102,16 +110,6 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     formSchemas.value.splice(index, 0, schema);
   }
 
-  watch(
-    () => formSchemas.value,
-    (schemas) => {
-      console.log("schemas:", schemas);
-    },
-    {
-      deep: true,
-    }
-  );
-
   function removeSchema(prop: Arrayable<string>) {
     const propList = (isString(prop) ? [prop] : prop) as string[];
 
@@ -121,11 +119,11 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
       );
     }
 
-    propList.forEach((p) => {
-      const removeIndex = unref(formSchemas).findIndex(
-        (item) => p === item.prop
-      );
-
+    propList.forEach((prop) => {
+      const removeIndex = getSchemaIndex(prop);
+      if (removeIndex === -1) {
+        return;
+      }
       _removeSchemaItemByIndex(removeIndex);
     });
   }

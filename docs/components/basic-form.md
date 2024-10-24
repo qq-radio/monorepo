@@ -66,18 +66,15 @@ basic-form/hidden
 :::demo
 basic-form/disabled
 ::: -->
-<!--
 
-我现在想做什么？？
-想做，
-当品牌选择 手机 清空 电脑品牌
-当品牌选择 电脑 清空 手机品牌
-
-思路是什么 ？？
-是在 componentProps 挂上方法ma ？？ 直接在这里写onclick会怎么样 ？？？
-
-componentProps的 -->
+<!-- 在schemas中使用form提供的方法
 
 :::demo
-basic-form/use-component-props-in-function
+basic-form/use-form-methods-with-component-props
+::: -->
+
+在vue中使用form提供的方法
+
+:::demo
+basic-form/use-form-methods-with-hook
 :::

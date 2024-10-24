@@ -14,6 +14,7 @@ import { BasicRadioGroup } from "@center/components/basic-radio";
 import { BasicCheckboxGroup } from "@center/components/basic-checkbox";
 import { BasicSelect } from "@center/components/basic-select";
 import { BasicTreeSelect } from "@center/components/basic-tree-select";
+import { BasicCascader } from "@center/components/basic-cascader";
 import type { Component } from "vue";
 
 const componentMap = new Map<ComponentType, Component>();
@@ -25,7 +26,7 @@ componentMap.set("radio", BasicRadioGroup);
 componentMap.set("checkbox", BasicCheckboxGroup);
 componentMap.set("select", BasicSelect);
 componentMap.set("tree-select", BasicTreeSelect);
-componentMap.set("cascader", ElCascader);
+componentMap.set("cascader", BasicCascader);
 componentMap.set("date-picker", ElDatePicker);
 componentMap.set("time-picker", ElTimePicker);
 componentMap.set("switch", ElSwitch);

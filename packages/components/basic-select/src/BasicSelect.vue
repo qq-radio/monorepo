@@ -40,6 +40,13 @@
         <span v-else>{{ item.label }}</span>
       </el-option>
     </template>
+    <template
+      v-for="slotName in Object.keys(slots)"
+      :key="slotName"
+      #[slotName]="scope"
+    >
+      <slot :name="slotName" v-bind="scope" />
+    </template>
   </el-select>
 </template>
 

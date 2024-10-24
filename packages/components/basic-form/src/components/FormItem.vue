@@ -263,8 +263,24 @@ const isCustomField = computed(
   () => props.schemaItem.customRender || props.schemaItem.customSlot
 );
 
-const look = (a, b, c, d) => {
-  console.log("a == ", a, "bbbb == ", b, "ccccccc == ", c, "dddddddd == ", d);
+const look = (
+  componentSlots,
+
+  fieldSlot,
+
+  key,
+  data
+) => {
+  console.log(
+    "componentSlots == ",
+    componentSlots,
+    "fieldSlot == ",
+    fieldSlot,
+    "key == ",
+    key,
+    "data == ",
+    data
+  );
 };
 </script>
 
