@@ -1,7 +1,6 @@
 <template>
   <el-form ref="formInstance" v-bind="getBindValues">
     <el-row v-bind="getProps.rowProps">
-      这里加了append之后的长度是？？？ {{ formSchemas.length }}
       <template v-for="schemaItem in formSchemas" :key="schemaItem.prop">
         <FormItem
           v-model="formModel[schemaItem.prop]"

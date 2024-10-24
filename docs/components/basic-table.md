@@ -1,3 +1,5 @@
+这里是表格对吧？？
+
 :::demo
-components/basic-table
+basic-table/basic
 :::

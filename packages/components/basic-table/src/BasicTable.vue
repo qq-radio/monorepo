@@ -1,48 +1,81 @@
 <template>
-  <div class="basic-table">
-    <BasicForm
-      v-if="searchSchemas.length"
-      v-bind="searchProps"
-      v-model="searchParams"
-      :schemas="searchSchemas"
-      :search-loading="isLoading"
-      @search="onSearch"
-      @reset="onReset"
-    />
-    <TableBody
-      v-bind="tableProps"
-      :schemas="tableSchemas"
-      :data="tableDatas"
-      :loading="isLoading"
-    >
-      <template v-for="(_, key) in getSlots" :key="key" #[key]="scope">
-        <slot :name="key" v-bind="scope" />
-      </template>
-    </TableBody>
-    <BasicPagination
-      v-if="pagination"
-      v-bind="paginationProps"
-      v-model="page"
-      @change="onPageChange"
-    />
+  <div :class="ns.b()">
+    <div :class="ns.e('search')">
+      <BasicForm
+        v-if="getSearchSchemas?.length"
+        v-bind="getSearchProps"
+        v-model="searchParams"
+        :schemas="getSearchSchemas"
+        :loading="isLoading"
+        submitText="查询"
+        labelPosition="left"
+        hasFooter
+        @submit="reQuery"
+        @reset="reQuery"
+      />
+      <div>
+        <slot name="operation" />
+        <TableOperation :buttons="getProps.operations" @success="reQuery" />
+      </div>
+    </div>
+    <div :class="ns.e('body')">
+      <TableBody
+        v-bind="getBindValues"
+        :schemas="tableSchemas"
+        :datas="tableDatas"
+        :loading="isLoading"
+        @selection-change="handleSelectionChange"
+        @row-click="handleRadioSelectionChange"
+      >
+        <template
+          v-for="slotName in Object.keys(slots)"
+          :key="slotName"
+          #[slotName]="scope"
+        >
+          <slot :name="slotName" v-bind="scope" />
+        </template>
+      </TableBody>
+    </div>
+    <div :class="ns.e('page')">
+      <BasicPagination
+        v-bind="getPaginationProps"
+        v-model="page"
+        @current-change="query"
+        @size-change="query"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { BasicTableProps, BasicTableEmits } from "./type";
-import type { Page } from "@center/components";
-import type { Slots } from "vue";
+import type { BasicTableProps, BasicTableEmits, TableMethods } from "./types";
 
-import { DefaultPaginationSettings } from "../../../settings/index";
-import { isFunction, isObject } from "@center/utils";
-import { cloneDeep } from "@center/utils";
+import { useBasicNamespace } from "@center/composables";
+
+import { useTableSearch } from "./hooks/useTableSearch";
+import { useTablePagination } from "./hooks/useTablePagination";
+import { useTableData } from "./hooks/useTableData";
+import { useTableSelection } from "./hooks/useTableSelection";
+import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
+
+import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
 
 import TableBody from "./components/TableBody.vue";
-import { BasicPagination } from "@center/components";
+import TableOperation from "./components/TableOperation.vue";
+import { BasicPagination } from "@center/components/basic-pagination";
+import { BasicForm } from "@center/components/basic-form";
+
+const ns = useBasicNamespace("table");
 
 defineOptions({
   name: "BasicTable",
+  inheritAttrs: false,
 });
+
+const attrs = useAttrs();
+const slots = useSlots();
+
+const emit = defineEmits<BasicTableEmits>();
 
 const props = withDefaults(defineProps<BasicTableProps>(), {
   schemas: () => [],
@@ -50,103 +83,81 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
   immediate: true,
   loading: false,
   ellipsis: false,
-  pageMap: () => DefaultPaginationSettings.default.pageMap,
-  searchProps: () => ({}),
-  tableProps: () => ({}),
-  paginationProps: () => ({}),
 });
 
-const emits = defineEmits<BasicTableEmits>();
+const propsRef = ref<Partial<BasicTableProps>>();
 
-const getSlots = useSlots();
-
-const searchSchemas = computed(() => {
-  return props.schemas
-    .filter((item) => isObject(item.searchConfig))
-    .map((item) => item.searchConfig);
+const getProps = computed<BasicTableProps>(() => {
+  return { ...props, ...unref(propsRef) };
 });
 
-const searchParams = ref<Recordable>({});
-
-const tableSchemas = computed(() => {
-  return props.schemas.filter((item) => item.visible !== false);
-});
-
-const tableDatas = ref<Recordable[]>([]);
-
-const isLoading = ref(false);
-
-const page = ref<Page>({
-  currentPage: 1,
-  pageSize: 10,
-  total: 0,
-});
-
-const getPageParams = () => ({
-  [props.pageMap.currentPage || "currentPage"]: page.value.currentPage,
-  [props.pageMap.pageSize || "pageSize"]: page.value.pageSize,
-});
-
-const getRequestParams = () => {
-  const params = {
-    ...props.extraParams,
-    ...searchParams.value,
-    ...getPageParams(),
-  };
-
-  return isFunction(props.paramsFormatter)
-    ? props.paramsFormatter(cloneDeep(params))
-    : params;
-};
-
-const formatResponse = (records: Recordable[]) =>
-  isFunction(props.dataFormatter) ? props.dataFormatter(records) : records;
-
-const query = async () => {
-  try {
-    if (!isFunction(props.request)) {
-      return;
-    }
-
-    isLoading.value = true;
-
-    const requestParams = getRequestParams();
-
-    const response = await props.request(requestParams);
-
-    tableDatas.value = formatResponse(response?.data?.records);
-    page.value.total = response?.data?.total;
-
-    emits("request-complete", tableDatas.value);
-  } catch (error: unknown) {
-    emits("request-error", error);
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-const reQuery = () => {
-  page.value.currentPage = 1;
-  query();
-};
-
-if (props.immediate || isFunction(props.request)) {
-  query();
+function setProps(partialProps: Partial<BasicTableProps>) {
+  propsRef.value = { ...unref(propsRef), ...partialProps };
 }
 
-const onPageChange = (p: Page) => {
-  page.value.currentPage = p.currentPage;
-  query();
-  emits("pagination-change", p);
+const getBindValues = computed(() => ({
+  ...attrs,
+  ...getProps.value,
+}));
+
+const { getSearchProps, getSearchSchemas, searchParams } = useTableSearch(
+  getProps,
+  { slots }
+);
+
+const { getPaginationProps, page, setPagination } =
+  useTablePagination(getProps);
+
+const {
+  isLoading,
+  tableDatas,
+  tableSchemas,
+  query,
+  reQuery,
+  getRequestParams,
+} = useTableData(getProps, { searchParams, page, setPagination });
+
+const {
+  getSelectedRows,
+  getSelectedIds,
+  checkHasSelection,
+  handleSelectionChange,
+  validateHasSelection,
+} = useTableSelection(getProps, { slots });
+
+const {
+  getRadioSelectedRow,
+  handleRadioSelectionChange,
+  cleanRadioSelectedRow,
+} = useTableRadioSelection(getProps);
+
+const tableMethods: TableMethods = {
+  setProps,
+
+  // useTableData
+  reQuery,
+  getRequestParams,
+
+  // useTableSelection
+  getSelectedRows,
+  getSelectedIds,
+  checkHasSelection,
+  validateHasSelection,
+
+  // useTableRadioSelection
+  cleanRadioSelectedRow,
+  getRadioSelectedRow,
 };
 
-const onSearch = (params: Recordable) => {
-  searchParams.value = params;
-  reQuery();
-  emits("search", params);
-};
+onMounted(() => {
+  emit("register", tableMethods);
+});
 
-const onReset = (params: Recordable) => {
-  emits("reset", params);
-};
+defineExpose({
+  ...tableMethods,
+});
 </script>
+
+<style lang="scss">
+@import "./style.scss";
+</style>

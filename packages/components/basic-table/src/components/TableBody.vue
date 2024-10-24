@@ -1,15 +1,27 @@
 <template>
   <div>
     <el-table
+      v-loading="loading"
       v-bind="$attrs"
-      :data="tableDatas"
+      :data="datas"
       :border="true"
       highlight-current-row
       scrollbar-always-on
+      header-cell-class-name="custom-header"
+      @row-click="handleRowClick"
     >
       <template #default>
         <slot name="default">
-          <!-- 选择栏 -->
+          <el-table-column v-if="hasRadioSelection" width="54" align="center">
+            <template #default="scope">
+              <el-radio
+                v-model="radioValue"
+                :label="scope.row[radioSelectionKey]"
+                >&nbsp;</el-radio
+              >
+            </template>
+          </el-table-column>
+
           <el-table-column
             v-if="hasSelection"
             key="selection"
@@ -17,15 +29,15 @@
             v-bind="selectionColumnProps"
           />
 
-          <!-- 序号栏 -->
           <el-table-column
             v-if="hasIndex"
             key="index"
+            label="序号"
             type="index"
+            width="60"
             v-bind="indexColumnProps"
           />
 
-          <!-- 展开栏 -->
           <el-table-column
             v-if="hasExpand"
             key="expand"
@@ -39,10 +51,37 @@
             </template>
           </el-table-column>
 
-          <!--数据渲染栏  -->
-          <template v-for="column in columns" :key="column.prop">
-            <TableColumn :column="column" />
+          <template v-for="schema in schemas" :key="schema.prop">
+            <el-table-column
+              v-if="schema"
+              v-bind="schema.columnProps"
+              :label="schema.label"
+              :prop="schema.prop"
+              :fixed="schema.fixed"
+              :minWidth="schema.width || columnWidth"
+            >
+              <template #default="{ row, $index, column }">
+                <TableColumn
+                  type="default"
+                  v-bind="{ row, rowIndex: $index, column, schema }"
+                >
+                  <template
+                    v-for="slotName in Object.keys(slots)"
+                    :key="slotName"
+                    #[slotName]="scope"
+                  >
+                    <slot :name="slotName" v-bind="scope" />
+                  </template>
+                </TableColumn>
+              </template>
+            </el-table-column>
           </template>
+
+          <TableAction
+            v-if="hasAction || actions?.length"
+            v-bind="actionColumnProps"
+            :buttons="actions || []"
+          />
         </slot>
       </template>
 
@@ -58,27 +97,34 @@
 </template>
 
 <script lang="ts" setup>
-import type { BasicTableBodyProps, TableSchema } from "../type";
+import type { TableBodyProps } from "../types";
+
+import { ref, useSlots } from "vue";
 
 import TableColumn from "./TableColumn.vue";
+import TableAction from "./TableAction.vue";
 
 defineOptions({
   name: "TableBody",
-  inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<BasicTableBodyProps>(), {
-  data: () => [],
+const slots = useSlots();
+
+const props = withDefaults(defineProps<TableBodyProps>(), {
+  datas: () => [],
+  radioSelectionKey: "id",
   selectionColumnProps: () => ({}),
   indexColumnProps: () => ({}),
   expandColumnProps: () => ({}),
 });
 
-const columns = ref<TableSchema[]>([]);
-const tableDatas = ref<TableSchema[]>([]);
+const radioValue = ref();
 
-watchEffect(() => {
-  columns.value = props.schemas.filter((s) => s.visible === true);
-  tableDatas.value = props.data;
-});
+const handleRowClick = (row: Recordable) => {
+  radioValue.value = row[props.radioSelectionKey];
+};
 </script>
+
+<style lang="scss" scoped>
+@import "../style.scss";
+</style>
