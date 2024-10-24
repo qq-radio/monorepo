@@ -1,8 +1,8 @@
 你要在大改之前写出1个可以运行的例子
 
-<!-- 基本使用
+基本使用
 
-:::demo
+<!-- :::demo
 basic-form/basic
 ::: -->
 
@@ -42,11 +42,11 @@ basic-form/group-form-with-custom-render
 basic-form/group-form-with-custom-slot
 ::: -->
 
-<!-- 文字提示
+文字提示
 
 :::demo
 basic-form/tooltip
-::: -->
+:::
 
 <!-- 表单重置
 
@@ -73,8 +73,8 @@ basic-form/disabled
 basic-form/use-form-methods-with-component-props
 ::: -->
 
-在vue中使用form提供的方法
+<!-- 在vue中使用form提供的方法
 
 :::demo
 basic-form/use-form-methods-with-hook
-:::
+::: -->

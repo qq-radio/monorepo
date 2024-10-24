@@ -16,15 +16,7 @@
       <template v-else>
         <span :class="ns.e('title')">{{ schemaItem.title }}</span>
       </template>
-      <el-tooltip
-        v-if="schemaItem.titleTooltip"
-        placement="top"
-        :content="schemaItem.titleTooltip"
-      >
-        <el-icon style="margin-left: 4px">
-          <InfoFilled />
-        </el-icon>
-      </el-tooltip>
+      <component :is="renderTooltip(schemaItem.titleTooltip)" />
     </el-col>
   </template>
   <template v-else>
@@ -52,15 +44,7 @@
           <template v-else>
             <span>{{ schemaItem.label }}</span>
           </template>
-          <el-tooltip
-            v-if="schemaItem.labelTooltip"
-            placement="top"
-            :content="schemaItem.labelTooltip"
-          >
-            <el-icon style="margin-left: 4px">
-              <InfoFilled />
-            </el-icon>
-          </el-tooltip>
+          <component :is="renderTooltip(schemaItem.labelTooltip)" />
         </template>
         <component
           v-if="isCustomField"
@@ -109,7 +93,7 @@
   </template>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type {
   FormItemProps,
   FormItemEmits,
@@ -282,6 +266,15 @@ const look = (
     data
   );
 };
+
+const renderTooltip = (content) =>
+  content && (
+    <el-tooltip placement="top" content={content}>
+      <el-icon style="margin-left: 4px">
+        <InfoFilled />
+      </el-icon>
+    </el-tooltip>
+  );
 </script>
 
 <style lang="scss" scoped>

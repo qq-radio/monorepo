@@ -23,6 +23,7 @@ const schemas: FormSchema[] = [
     label: "用户",
     prop: "username",
     component: "input",
+    labelTooltip: "名称至少2个文字",
     required: true,
   },
   {
