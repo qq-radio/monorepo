@@ -48,7 +48,8 @@ export interface BasicTableProps {
   expandColumnProps?: Recordable;
 
   hasAction?: boolean;
-  actionColumnProps?: Partial<TableActionProps>;
+  actionColumnProps?: Pick<TableSchema, "label" | "fixed" | "width">;
+  actionProps?: Pick<TableActionProps, "type" | "showNumber">;
   actions?: ActionButton[];
 
   operations?: OperationButton[];
