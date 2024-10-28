@@ -51,25 +51,25 @@ basic-table/custom-header
 自定义列模板 - render/h
 
 :::demo
-basic-table/custom-column
+basic-table/custom-column-h
 :::
 
 自定义列模板 - render/jsx
 
 :::demo
-basic-table/custom-column
+basic-table/custom-column-jsx
 :::
 
 自定义列模板 - slot
 
 :::demo
-basic-table/custom-column
+basic-table/custom-column-slot
 :::
 
 自定义列模板 - display type
 
 :::demo
-basic-table/custom-display
+basic-table/custom-column-display
 :::
 
 格式化数据 - display type
