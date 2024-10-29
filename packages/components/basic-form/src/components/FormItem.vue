@@ -1,22 +1,12 @@
 <template>
   <template v-if="schemaItem.title">
     <el-col>
+      <component v-if="isCustomTitle" :is="renderCustomTitle" />
+      <span v-else :class="ns.e('title')">{{ schemaItem.title }}</span>
       <component
-        v-if="isCustomTitle"
-        :is="
-          renderItem(
-            {
-              customRender: schemaItem.customTitleRender,
-              customSlot: schemaItem.customTitleSlot,
-            },
-            callbackParams
-          )
-        "
+        v-if="schemaItem.titleTooltip"
+        :is="renderTooltip(schemaItem.titleTooltip)"
       />
-      <template v-else>
-        <span :class="ns.e('title')">{{ schemaItem.title }}</span>
-      </template>
-      <component :is="renderTooltip(schemaItem.titleTooltip)" />
     </el-col>
   </template>
   <template v-else>
@@ -24,70 +14,37 @@
       <el-form-item
         v-bind="schemaItem.formItemProps"
         :label="getLabel"
-        :label-width="getLabelWidth"
         :prop="schemaItem.prop"
         :rules="schemaItem.rules"
       >
         <template #label>
+          <component v-if="isCustomLabel" :is="renderLabelTitle" />
+          <span v-else>{{ schemaItem.label }}</span>
           <component
-            v-if="isCustomLabel"
-            :is="
-              renderItem(
-                {
-                  customRender: schemaItem.customLabelRender,
-                  customSlot: schemaItem.customLabelSlot,
-                },
-                callbackParams
-              )
-            "
+            v-if="schemaItem.labelTooltip"
+            :is="renderTooltip(schemaItem.labelTooltip)"
           />
-          <template v-else>
-            <span>{{ schemaItem.label }}</span>
-          </template>
-          <component :is="renderTooltip(schemaItem.labelTooltip)" />
         </template>
-        <component
-          v-if="isCustomField"
-          :is="
-            renderItem(
-              {
-                customRender: schemaItem.customRender,
-                customSlot: schemaItem.customSlot,
-              },
-              callbackParams
-            )
-          "
-        />
-        <component
-          v-else="schemaItem.component"
-          :is="componentValue"
-          v-bind="getComponentProps"
-          v-model="stateValue"
-          :disabled="getDisabled"
-          style="width: 100%"
-          @change="(...v: unknown[]) => onChange(v)"
-        >
-          <template
-            v-for="(fieldSlot, key) in schemaItem.componentSlots"
-            :key="key"
-            #[key]="data"
+        <template #default>
+          <component v-if="isCustomField" :is="renderLabelField" />
+          <component
+            v-else="schemaItem.component"
+            :is="renderComponent"
+            v-bind="getComponentProps"
+            v-model="stateValue"
+            :disabled="getDisabled"
+            style="width: 100%"
+            @change="(...v: unknown[]) => onChange(v)"
           >
-            <component
-              :is="fieldSlot"
-              v-bind="data"
-              :params="
-                look(
-                  schemaItem.componentSlots,
-
-                  fieldSlot,
-
-                  key,
-                  data
-                )
-              "
-            />
-          </template>
-        </component>
+            <template
+              v-for="(fieldSlot, key) in schemaItem.componentSlots"
+              :key="key"
+              #[key]="data"
+            >
+              <component :is="fieldSlot" v-bind="data" />
+            </template>
+          </component>
+        </template>
       </el-form-item>
     </el-col>
   </template>
@@ -106,8 +63,9 @@ import { getComponent } from "../tools/component";
 
 import { useFormItemHandler } from "../hooks/useFormItemHandler";
 
+import { isFalse } from "@center/utils";
 import { useSlots, ref, watchEffect, computed } from "vue";
-import { isFunction, isUndefined } from "lodash";
+import { isFunction, isUndefined, merge } from "lodash";
 import { InfoFilled } from "@element-plus/icons-vue";
 
 const ns = useBasicNamespace("form-item");
@@ -118,14 +76,12 @@ defineOptions({
 
 const slots = useSlots();
 
-const emit = defineEmits<FormItemEmits>();
-
 const props = withDefaults(defineProps<FormItemProps>(), {
   formProps: () => ({}),
   formModel: () => ({}),
 });
 
-const componentValue = getComponent(props.schemaItem.component);
+const emit = defineEmits<FormItemEmits>();
 
 const stateValue = ref<FieldValue>("");
 
@@ -144,49 +100,18 @@ const getHidden = computed(() => {
     schemaItem: { hidden },
   } = props;
 
-  if (isFunction(hidden)) {
-    return hidden(callbackParams.value);
-  }
-
-  return hidden;
+  return isFunction(hidden) ? hidden(callbackParams.value) : hidden;
 });
 
-const getColProps = computed(() => {
-  const {
-    formProps: { colProps: formColProps },
-    schemaItem: { colProps },
-  } = props;
+const getColProps = computed(() =>
+  merge(props.formProps.colProps, props.schemaItem.colProps)
+);
 
-  if (isUndefined(colProps)) {
-    return formColProps;
-  }
-
-  return colProps;
-});
-
-const getLabel = computed(() => {
-  const {
-    formProps: { hasLabel: formHasLabel },
-    schemaItem: { hasLabel, label },
-  } = props;
-
-  const flag = isUndefined(hasLabel) ? formHasLabel : hasLabel;
-  return flag ? label : "";
-});
-
-// 这个删掉，我不需要处理这个，ele自己有处理的
-const getLabelWidth = computed(() => {
-  const {
-    formProps: { labelWidth: formLabelWidth },
-    schemaItem: { labelWidth },
-  } = props;
-
-  if (isUndefined(labelWidth)) {
-    return formLabelWidth;
-  }
-
-  return labelWidth;
-});
+const getLabel = computed(() =>
+  isFalse(props.schemaItem.hasLabel) || isFalse(props.formProps.hasLabel)
+    ? props.schemaItem.label
+    : ""
+);
 
 const getComponentProps = computed(() => {
   const {
@@ -235,37 +160,40 @@ const onChange = (values: unknown[]) => {
 
 const { renderItem } = useCustomRender({ slots });
 
-const isCustomTitle = computed(
-  () => props.schemaItem.customTitleRender || props.schemaItem.customTitleSlot
+const isCustomTitle =
+  props.schemaItem.customTitleRender || props.schemaItem.customTitleSlot;
+
+const renderCustomTitle = renderItem(
+  {
+    customRender: props.schemaItem.customTitleRender,
+    customSlot: props.schemaItem.customTitleSlot,
+  },
+  callbackParams.value
 );
 
-const isCustomLabel = computed(
-  () => props.schemaItem.customLabelRender || props.schemaItem.customLabelSlot
+const isCustomLabel =
+  props.schemaItem.customLabelRender || props.schemaItem.customLabelSlot;
+
+const renderLabelTitle = renderItem(
+  {
+    customRender: props.schemaItem.customLabelRender,
+    customSlot: props.schemaItem.customLabelSlot,
+  },
+  callbackParams.value
 );
 
-const isCustomField = computed(
-  () => props.schemaItem.customRender || props.schemaItem.customSlot
+const isCustomField =
+  props.schemaItem.customRender || props.schemaItem.customSlot;
+
+const renderLabelField = renderItem(
+  {
+    customRender: props.schemaItem.customRender,
+    customSlot: props.schemaItem.customSlot,
+  },
+  callbackParams.value
 );
 
-const look = (
-  componentSlots,
-
-  fieldSlot,
-
-  key,
-  data
-) => {
-  console.log(
-    "componentSlots == ",
-    componentSlots,
-    "fieldSlot == ",
-    fieldSlot,
-    "key == ",
-    key,
-    "data == ",
-    data
-  );
-};
+const renderComponent = getComponent(props.schemaItem.component);
 
 const renderTooltip = (content) =>
   content && (

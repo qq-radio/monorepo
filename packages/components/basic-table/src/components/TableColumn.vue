@@ -1,15 +1,7 @@
 <template>
   <div>
-    <BasicRender
-      v-if="isFunction(schema.render)"
-      :render="schema.render"
-      :params="params"
-    />
-    <slot
-      v-else-if="isString(schema.slot)"
-      :name="schema.slot"
-      v-bind="params"
-    />
+    <component v-if="isCustomCell" :is="renderLabelField" />
+
     <BasicDisplay
       v-else-if="isString(schema.display)"
       :type="schema.display"
@@ -68,4 +60,6 @@ const formattedValue = computed(() => {
     ? formatter({ ...params.value })
     : params.value.value;
 });
+
+const isCustomCell = props.schema.customRender || props.schema.customSlot;
 </script>

@@ -23,3 +23,7 @@ export function isObject(o: unknown) {
 export function isString(o: unknown) {
   return lodash.isString(o);
 }
+
+export function isFalse(o: unknown) {
+  return o === false;
+}
