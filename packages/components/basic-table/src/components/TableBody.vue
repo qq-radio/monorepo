@@ -32,8 +32,8 @@
           <el-table-column
             v-if="hasIndex"
             key="index"
-            label="序号"
             type="index"
+            label="序号"
             width="60"
             v-bind="indexColumnProps"
           />

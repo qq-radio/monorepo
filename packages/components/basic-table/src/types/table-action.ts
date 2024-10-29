@@ -4,6 +4,7 @@ import type { VNode } from "vue";
 
 export interface TableActionProps extends TableColumnParams {
   type?: "button" | "link";
+  confirmType?: "message-box" | "pop-confirm";
   showNumber?: number;
   buttons: ActionButton[];
 }

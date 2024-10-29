@@ -33,9 +33,10 @@ import type {
   OperationButton,
 } from "../types";
 
-// import store from "@/store";
+import { usePermission } from "@center/composables";
+
 import { computed } from "vue";
-import { isFunction, isUndefined } from "lodash";
+import { isFunction } from "lodash";
 
 import { BasicImport } from "@center/components/basic-import";
 import { BasicExport } from "@center/components/basic-export";
@@ -50,20 +51,10 @@ const props = withDefaults(defineProps<TableOperationProps>(), {
 
 const emit = defineEmits<TableOperationEmits>();
 
-const checkHasPermission = (permission) => {
-  // if (isUndefined(permission)) {
-  //   return true;
-  // }
-
-  // const buttonPermissions = store.getters.permissions;
-
-  // return buttonPermissions[permission];
-
-  return true;
-};
+const { checkButtonPermission } = usePermission();
 
 const getButtons = computed(() =>
-  props.buttons.filter((item) => checkHasPermission(item.permission))
+  props.buttons.filter((item) => checkButtonPermission(item.permission))
 );
 
 const handleClick = (button: OperationButton) => {

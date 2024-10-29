@@ -14,8 +14,10 @@ export interface TableOperationEmits {
   (e: "success"): void;
 }
 
-export interface OperationButtonBase {
-  text: string | (() => string);
+export type OperationButton = DefaultButton | ImportButton | ExportButton;
+
+interface OperationButtonBase {
+  text: string | (() => string);  
   permission?: string;
   show?: boolean | (() => boolean);
   disabled?: boolean | (() => boolean) | ComputedRef<boolean>;
@@ -23,8 +25,6 @@ export interface OperationButtonBase {
   onConfirm?: () => void;
   onCancel?: () => void;
 }
-
-export type OperationButton = DefaultButton | ImportButton | ExportButton;
 
 interface DefaultButton extends OperationButtonBase {
   type?: "default";

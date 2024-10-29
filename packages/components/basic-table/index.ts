@@ -1,5 +1,5 @@
-export * from './src/types'
+export * from "./src/types";
 
-export { useTable } from './src/hooks/useTable'
+export { useTable } from "./src/hooks/useTable";
 
-export { default as BasicTable } from './src/BasicTable.vue'
+export { default as BasicTable } from "./src/BasicTable.vue";

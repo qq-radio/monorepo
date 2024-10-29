@@ -36,7 +36,7 @@ basic-table/selection
 basic-table/index
 :::
 
-展开
+展开，与expand插槽
 
 :::demo
 basic-table/expand
@@ -103,6 +103,12 @@ basic-table/map-page-field
 :::
 
 搜索的布局，与省略
+
+:::demo
+basic-table/search
+:::
+
+搜索的布局 inline-search-button
 
 :::demo
 basic-table/search

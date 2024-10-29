@@ -1,5 +1,4 @@
 <template>
-  这里一直没有生效吗````
   <BasicTable @register="registerTable" :schemas="schemas" />
 </template>
 
@@ -17,19 +16,8 @@ import MockDepartment from "../../mocks/department.json";
 const operations: OperationButton[] = [
   {
     text: "新增",
-    permission: true,
     onClick: () => {
       console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量删除",
-    permission: true,
-    props: {
-      type: "danger",
-    },
-    onConfirm: ({ row }) => {
-      console.log("点击了批量删除");
     },
   },
 ];
@@ -37,23 +25,14 @@ const operations: OperationButton[] = [
 const actions: ActionButton[] = [
   {
     text: "编辑",
-    permission: true,
     onClick: () => {
       console.log("点击了编辑");
     },
   },
   {
     text: "删除",
-    permission: true,
     onConfirm: ({ row }) => {
       console.log("点击了删除");
-    },
-  },
-  {
-    text: "详情",
-    permission: true,
-    onClick: ({ row }) => {
-      console.log("点击了详情");
     },
   },
 ];
