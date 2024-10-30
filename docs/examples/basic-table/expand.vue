@@ -1,62 +1,26 @@
 <template>
-  这里一直没有生效吗````
-  <BasicTable @register="registerTable" :schemas="schemas" />
+  <BasicTable @register="registerTable" hasExpand>
+    <template #expand="{ row, rowIndex }">
+      <div style="margin-left: 60px">
+        <div style="margin-bottom: 10px">
+          详细部门：{{ row.departmentLevelOneName }}/{{
+            row.departmentLevelTwoName
+          }}/{{ row.departmentLevelThreeName }}
+        </div>
+        <div>
+          详细地址：{{ row.provinceName }}/{{ row.cityName }}/{{
+            row.regionName
+          }}
+        </div>
+      </div>
+    </template>
+  </BasicTable>
 </template>
 
 <script lang="tsx" setup>
-import {
-  BasicTable,
-  useTable,
-  TableSchema,
-  OperationButton,
-  ActionButton,
-} from "@center/components";
+import { BasicTable, useTable, TableSchema } from "@center/components";
 import MockUserList from "../../mocks/user-list.json";
 import MockDepartment from "../../mocks/department.json";
-
-const operations: OperationButton[] = [
-  {
-    text: "新增",
-    permission: true,
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量删除",
-    permission: true,
-    props: {
-      type: "danger",
-    },
-    onConfirm: ({ row }) => {
-      console.log("点击了批量删除");
-    },
-  },
-];
-
-const actions: ActionButton[] = [
-  {
-    text: "编辑",
-    permission: true,
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "删除",
-    permission: true,
-    onConfirm: ({ row }) => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "详情",
-    permission: true,
-    onClick: ({ row }) => {
-      console.log("点击了详情");
-    },
-  },
-];
 
 const schemas: TableSchema[] = [
   {
@@ -83,7 +47,6 @@ const schemas: TableSchema[] = [
         data: MockDepartment,
         props: { value: "id", label: "name", children: "children" },
       },
-      required: true,
     },
   },
   {
@@ -134,7 +97,5 @@ const userListApi = () => {
 const [registerTable] = useTable({
   request: userListApi,
   schemas,
-  operations,
-  actions,
 });
 </script>

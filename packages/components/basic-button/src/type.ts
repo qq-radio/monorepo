@@ -1,4 +1,4 @@
-import type { ButtonProps, LinkProps } from "element-plus";
+import type { ButtonProps } from "element-plus";
 import type { VNode } from "vue";
 
 export interface BasicButtonGroupProps<T = Recordable> {
@@ -26,7 +26,7 @@ export interface Button<T = Recordable> {
   permission?: string;
   show?: boolean | ((params: ButtonCallbackParams<T>) => boolean);
   message?: string;
-  props?: Partial<ButtonProps & LinkProps>;
+  props?: Partial<ButtonProps>;
   onClick?: (params: ButtonCallbackParams<T>) => void;
   onConfirm?: (params: ButtonCallbackParams<T>) => void;
   onCancel?: (params: ButtonCallbackParams<T>) => void;

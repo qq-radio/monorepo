@@ -1,10 +1,9 @@
+import type { TableCellCallbackParams, TableMethods } from "./";
 import type {
-  TableCellCallbackParams,
-  TableMethods,
-  TableActionProps,
-  ActionButton,
-  OperationButton,
-} from "./";
+  BasicButtonGroupProps,
+  Button,
+} from "@center/components/basic-button";
+
 import type {
   BasicFormProps,
   FormSchema,
@@ -34,6 +33,12 @@ export interface BasicTableProps {
   tableProps?: Partial<TableProps<unknown>>;
   paginationProps?: Partial<PaginationProps>;
 
+  operationProps?: Pick<
+    BasicButtonGroupProps,
+    "confirmType" | "showNumber" | "callbackParams" | "buttonProps"
+  >;
+  operations?: Button[];
+
   hasRadioSelection?: boolean;
   radioSelectionKey?: string;
 
@@ -48,11 +53,15 @@ export interface BasicTableProps {
   expandColumnProps?: Recordable;
 
   hasAction?: boolean;
-  actionColumnProps?: Pick<TableSchema, "label" | "fixed" | "width">;
-  actionProps?: Pick<TableActionProps, "type" | "showNumber">;
-  actions?: ActionButton[];
-
-  operations?: OperationButton[];
+  actionColumnProps?: Pick<
+    TableSchema,
+    "label" | "width" | "minWidth" | "fixed"
+  >;
+  actionProps?: Pick<
+    BasicButtonGroupProps,
+    "confirmType" | "showNumber" | "callbackParams" | "buttonProps"
+  >;
+  actions?: Button[];
 }
 
 export interface BasicTableEmits {

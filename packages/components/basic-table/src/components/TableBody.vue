@@ -44,10 +44,8 @@
             type="expand"
             v-bind="expandColumnProps"
           >
-            <template #default="scoped">
-              <div>
-                <slot name="expand" :index="scoped.$index" v-bind="scoped" />
-              </div>
+            <template #default="{ row, $index }">
+              <slot name="expand" v-bind="{ row, rowIndex: $index }" />
             </template>
           </el-table-column>
 
@@ -90,8 +88,13 @@
             v-bind="getActionColumnProps"
           >
             <template #default="{ row, $index, column }">
-              <TableAction
-                v-bind="{ row, rowIndex: $index, column, ...actionProps }"
+              <BasicButtonGroup
+                v-bind="{
+                  row,
+                  rowIndex: $index,
+                  column,
+                  ...actionProps,
+                }"
                 :buttons="actions || []"
               />
             </template>
@@ -115,9 +118,9 @@ import type { TableBodyProps } from "../types";
 
 import { computed, ref, useSlots } from "vue";
 
+import { BasicButtonGroup } from "@center/components";
 import TableHeader from "./TableHeader.vue";
 import TableCell from "./TableCell.vue";
-import TableAction from "./TableAction.vue";
 
 import {
   filterTableHeaderSlots,
@@ -137,10 +140,23 @@ const props = withDefaults(defineProps<TableBodyProps>(), {
   indexColumnProps: () => ({}),
   expandColumnProps: () => ({}),
   actionColumnProps: () => ({}),
+  actionProps: () => ({
+    confirmType: "pop-confirm",
+    showNumber: 4,
+    buttonProps: {
+      link: true,
+      type: "primary",
+    },
+  }),
 });
 
-const tableHeaderSlots = filterTableHeaderSlots(slots, props.schemas);
-const tableCellSlots = filterTableCellSlots(slots, props.schemas);
+const tableHeaderSlots = computed(() =>
+  filterTableHeaderSlots(slots, props.schemas)
+);
+
+const tableCellSlots = computed(() =>
+  filterTableCellSlots(slots, props.schemas)
+);
 
 const getActionColumnProps = computed(() => ({
   label: "操作",

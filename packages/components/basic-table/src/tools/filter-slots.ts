@@ -15,9 +15,7 @@ export const filterTableHeaderSlots = (
 };
 
 export const filterTableCellSlots = (slots: Slots, schemas: TableSchema[]) => {
-  const keys = schemas
-    .filter((s) => s.customHeaderSlot)
-    .map((s) => s.customHeaderSlot);
+  const keys = schemas.filter((s) => s.customSlot).map((s) => s.customSlot);
 
   return isEmpty(keys) ? {} : pick(slots, keys);
 };

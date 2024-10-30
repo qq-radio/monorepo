@@ -14,8 +14,9 @@
         @reset="reQuery"
       />
       <div>
-        <slot name="operation" />
-        <TableOperation :buttons="getProps.operations" @success="reQuery" />
+        <slot name="operation-before" />
+        <BasicButtonGroup :buttons="getProps.operations" @success="reQuery" />
+        <slot name="operation-after" />
       </div>
     </div>
     <div :class="ns.e('body')">
@@ -60,10 +61,10 @@ import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
 
 import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
 
-import TableBody from "./components/TableBody.vue";
-import TableOperation from "./components/TableOperation.vue";
 import { BasicPagination } from "@center/components/basic-pagination";
 import { BasicForm } from "@center/components/basic-form";
+import { BasicButtonGroup } from "@center/components/basic-button";
+import TableBody from "./components/TableBody.vue";
 
 const ns = useBasicNamespace("table");
 

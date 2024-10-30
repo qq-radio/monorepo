@@ -9,7 +9,7 @@
       style="margin-left: 10px; cursor: pointer"
     >
       <span style="color: #69a9ff">
-        <span>更多</span>
+        <span style="margin-right: 2px">更多</span>
         <el-icon><ArrowDownBold /></el-icon>
       </span>
       <template #dropdown>
@@ -43,10 +43,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<BasicButtonGroupProps>(), {
   confirmType: "message-box",
-  showNumber: 4,
   buttonProps: () => ({
     type: "primary",
-    size: "small",
+    size: "default",
     round: false,
   }),
   buttons: () => [],

@@ -23,6 +23,9 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     () => {
       initSchemas();
       initModel();
+    },
+    {
+      deep: true,
     }
   );
 
