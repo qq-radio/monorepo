@@ -21,6 +21,8 @@ const toggle = () => {
 };
 
 const hidePhohe = (value) => {
+  console.log("value: 你不先写出来  我怎么知道有没有性能问题？？？？？", value);
+
   return value.slice(4) + "******";
 };
 
