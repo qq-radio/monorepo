@@ -1,30 +1,67 @@
 <template>
   <BasicTable @register="registerTable">
     <template #header-phone="{ schema }">
-      <div @click="toggle">{{ schema.label }}??? 你以为简单啊???</div>
+      <div>
+        {{ schema.label }}
+        <el-icon style="cursor: pointer" @click="toggleHide">
+          <Hide v-if="isHide" /><View v-else />
+        </el-icon>
+      </div>
     </template>
     <template #phone="{ value }">
-      {{ isShowAllPhone ? value : hidePhohe(value) }}
+      {{ isHide ? value : hideFullPhoneNumber(value) }}
     </template>
-    <template #header-status> </template>
+    <template #header-status="schema">
+      <BasicSelect
+        v-model="statusValue"
+        :options="statusOptions"
+        v-bind="{
+          labelField: 'text',
+          placeholder: '请选择状态',
+        }"
+        @change="reQuery"
+      />
+    </template>
   </BasicTable>
 </template>
 
 <script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema, Button } from "@center/components";
+import {
+  BasicTable,
+  useTable,
+  TableSchema,
+  Button,
+  BasicSelect,
+} from "@center/components";
+
 import MockUserList from "../../mocks/user-list.json";
 
-const isShowAllPhone = ref(false);
+import { Hide, View } from "@element-plus/icons-vue";
 
-const toggle = () => {
-  isShowAllPhone.value = !isShowAllPhone.value;
+const isHide = ref(false);
+
+const toggleHide = () => {
+  isHide.value = !isHide.value;
 };
 
-const hidePhohe = (value) => {
-  console.log("value: 你不先写出来  我怎么知道有没有性能问题？？？？？", value);
+const hidePhohe = (value) => value.slice(0, 3) + "****" + value.slice(7);
 
-  return value.slice(4) + "******";
-};
+const hideFullPhoneNumber = computed(() => (value) => hidePhohe(value));
+
+const statusValue = ref();
+
+const statusOptions = [
+  {
+    type: "success",
+    text: "在职中",
+    value: 1,
+  },
+  {
+    type: "danger",
+    text: "已离职",
+    value: 2,
+  },
+];
 
 const operations: Button[] = [
   {
@@ -138,7 +175,18 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     display: "status",
+    formatter: ({ value }) =>
+      value === 1
+        ? {
+            type: "success",
+            text: "在职中",
+          }
+        : {
+            type: "danger",
+            text: "已离职",
+          },
     customHeaderSlot: "header-status",
+    width: 180,
   },
   {
     label: "创建时间",
@@ -147,7 +195,7 @@ const schemas: TableSchema[] = [
 ];
 
 const userListApi = () => {
-  return new Promise((resolve) => {
+  const result_1 = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         total: MockUserList.length,
@@ -155,9 +203,20 @@ const userListApi = () => {
       });
     }, 1000);
   });
+
+  const result_2 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        total: MockUserList.length,
+        records: MockUserList.filter((u) => u.status === statusValue.value),
+      });
+    }, 1000);
+  });
+
+  return statusValue.value ? result_2 : result_1;
 };
 
-const [registerTable] = useTable({
+const [registerTable, { reQuery }] = useTable({
   request: userListApi,
   schemas,
   operations,

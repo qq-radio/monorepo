@@ -18,7 +18,7 @@ defineOptions({
   name: "BasicDisplay",
 });
 
-const attrs = useAttrs;
+const attrs = useAttrs();
 
 const props = withDefaults(defineProps<BasicDisplayProps>(), {
   value: "",

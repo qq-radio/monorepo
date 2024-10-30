@@ -1,45 +1,45 @@
 <template>
   <span
-    :class="ns.b()"
-    v-for="({ type, color, content }, index) in getContents"
+    v-for="({ type, color, text }, index) in getContents"
     :key="index"
+    :class="ns.b()"
   >
-    <div
+    <span
       :class="[ns.e('circle'), ns.em('circle', type)]"
       :style="{
         backgroundColor: color,
       }"
     />
     <span :class="ns.e('text')">
-      <slot>{{ content }}</slot>
+      <slot>{{ text }}</slot>
     </span>
   </span>
 </template>
 
 <script lang="ts" setup>
-import { BasicStatusProps } from "./type";
-import { computed } from "vue";
+import type { BasicStatusProps } from "./type";
 
 import { useBasicNamespace } from "@center/composables";
+import { computed } from "vue";
+
+const ns = useBasicNamespace("status");
 
 defineOptions({
   name: "BasicStatus",
 });
 
 const props = withDefaults(defineProps<BasicStatusProps>(), {
-  content: "",
+  text: "",
   type: "primary",
 });
-
-const ns = useBasicNamespace("status");
 
 const getContents = computed(() =>
   Array.isArray(props.contents)
     ? props.contents
-    : [{ content: props.content, type: props.type, color: props.color }]
+    : [{ text: props.text, type: props.type, color: props.color }]
 );
 </script>
 
 <style lang="scss" scoped>
-@use "./style.scss";
+@import "./style.scss";
 </style>

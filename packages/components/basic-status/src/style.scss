@@ -1,30 +1,36 @@
 @use "../../../theme/index.scss" as *;
 
 @include b(status) {
+  margin-right: 12px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
   @include e(circle) {
     display: inline-block;
     width: 8px;
     height: 8px;
     border-radius: 50%;
 
-    &--primary {
-      background-color: $color-primary;
+    @include m(primary) {
+      background-color: #409eff;
     }
 
-    &--success {
-      background-color: $color-success;
+    @include m(success) {
+      background-color: #67c23a;
     }
 
-    &--info {
-      background-color: $color-info;
+    @include m(info) {
+      background-color: #909399;
     }
 
-    &--warning {
-      background-color: $color-warning;
+    @include m(warning) {
+      background-color: #e6a23c;
     }
 
-    &--danger {
-      background-color: $color-danger;
+    @include m(danger) {
+      background-color: #f56c6c;
     }
   }
 

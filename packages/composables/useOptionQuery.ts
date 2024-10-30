@@ -57,10 +57,10 @@ export function useOptionQuery<T extends Option>(props: {
       return [];
     }
 
-    if (labelField && valueField) {
+    if (labelField || valueField) {
       list = mapObjectArrayFields(list, {
-        label: labelField,
-        value: valueField,
+        label: labelField ?? "label",
+        value: valueField ?? "value",
       });
     }
 
@@ -78,6 +78,10 @@ export function useOptionQuery<T extends Option>(props: {
     return options.value.filter((option) =>
       values.includes(option.value || "")
     );
+  };
+
+  const findOption = (value: Value) => {
+    return options.value.filter((option) => option.value === value);
   };
 
   const findLabels = (values?: Value[]) => {
@@ -105,6 +109,7 @@ export function useOptionQuery<T extends Option>(props: {
     init,
     findLabel,
     findOptions,
+    findOption,
     findLabels,
     findValues,
     getAllValues,

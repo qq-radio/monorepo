@@ -1,19 +1,23 @@
-<!-- 数据的收集
-
-先解决 checkbox 的错 -->
+单个使用
 
 :::demo
-components/basic-select
+basic-status/basic
 :::
+
+内置类型
 
 :::demo
-components/basic-checkbox
+basic-status/type
 :::
 
-## 终于把这3个最重要的写了吧
+自定义颜色
 
 :::demo
-components/basic-radio
+basic-status/color
 :::
 
-## 这是耳机标题吗？？ 222？ 55 5
+多个使用
+
+:::demo
+basic-status/multiple
+:::

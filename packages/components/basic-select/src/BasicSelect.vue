@@ -98,6 +98,7 @@ const {
   findLabels,
   getAllValues,
   findOptions,
+  findOption,
 } = useOptionQuery<SelectOption>(props);
 
 onMounted(() => {
@@ -138,7 +139,9 @@ const emitChange = () => {
   emit("change", {
     values: stateValue.value,
     labels: findLabels(stateValue.value),
-    options: findOptions(stateValue.value),
+    options: props.multiple
+      ? findOptions(stateValue.value)
+      : findOption(stateValue.value),
   });
 };
 </script>

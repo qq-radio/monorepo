@@ -46,11 +46,11 @@ basic-table/custom-header-h
 basic-table/custom-header-jsx
 ::: -->
 
-自定义表头 - render/slot
+<!-- 自定义表头 - render/slot
 
 :::demo
 basic-table/custom-header-slot
-:::
+::: -->
 
 <!--
 自定义列模板 - render/h

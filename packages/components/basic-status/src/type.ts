@@ -1,7 +1,7 @@
 export type StatusType = "primary" | "success" | "info" | "warning" | "danger";
 
 export interface SingleStatusProps {
-  content?: string;
+  text?: string;
   type?: StatusType;
   color?: string;
 }
