@@ -2,29 +2,30 @@
   <component
     :is="getComponent(props.type)"
     v-if="hasComponent(type)"
-    v-bind="displayProps"
+    v-bind="getBindValues"
   />
 </template>
 
 <script lang="ts" setup>
-import type { BasicDisplayProps } from './type'
+import type { BasicDisplayProps } from "./type";
 
-import { hasComponent, getComponent } from './tools/component'
-import { mergeComponentProps } from './tools/component-props'
+import { hasComponent, getComponent } from "./tools/component";
+import { mergeComponentProps } from "./tools/component-props";
 
-import { computed } from 'vue'
+import { useAttrs, computed } from "vue";
 
 defineOptions({
-  name: 'BasicDisplay'
-})
+  name: "BasicDisplay",
+});
+
+const attrs = useAttrs;
 
 const props = withDefaults(defineProps<BasicDisplayProps>(), {
-  value: '',
-  customProps: () => ({})
-})
+  value: "",
+});
 
-const displayProps = computed(() => ({
-  ...mergeComponentProps(props.type, props.value, props.customProps),
-  value: props.value
-}))
+const getBindValues = computed(() => ({
+  ...mergeComponentProps(props.type, props.value, attrs),
+  value: props.value,
+}));
 </script>

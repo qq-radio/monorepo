@@ -1,5 +1,5 @@
 import type {
-  TableColumnCallbackParams,
+  TableCellCallbackParams,
   TableMethods,
   TableActionProps,
   ActionButton,
@@ -31,7 +31,7 @@ export interface BasicTableProps {
   ellipsis?: boolean;
 
   searchProps?: Partial<BasicFormProps>;
-  tableProps?: Partial<TableProps<unknown>> & { columnWidth: number };
+  tableProps?: Partial<TableProps<unknown>>;
   paginationProps?: Partial<PaginationProps>;
 
   hasRadioSelection?: boolean;
@@ -74,7 +74,7 @@ export interface TableSchema {
   fixed?: "left" | "right" | boolean;
   visible?: boolean;
   tooltip?: string;
-  formatter?: (params: TableColumnCallbackParams) => any;
+  formatter?: (params: TableCellCallbackParams) => any;
 
   searchable?: boolean;
   searchConfig?: FormSchema;
@@ -82,14 +82,14 @@ export interface TableSchema {
   columnProps?: Recordable;
   columnSlots?: Recordable;
 
-  renderHeader?: (label: string, props: TableSchema) => RenderType;
-  slotHeader?: string;
+  customHeaderRender?: (label: string, props: TableSchema) => RenderType;
+  customHeaderSlot?: string;
 
-  render?: (
+  customRender?: (
     value: any,
     data: { row: Recordable; column: TableSchema; index: number }
   ) => RenderType;
-  slot?: string;
+  customSlot?: string;
   display?: DisplayType;
   displayProps?: Recordable;
 }

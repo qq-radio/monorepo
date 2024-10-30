@@ -1,13 +1,12 @@
 export type DisplayType =
-  | 'image'
-  | 'link'
-  | 'tag'
-  | 'progress'
-  | 'copy'
-  | 'status'
+  | "image"
+  | "link"
+  | "tag"
+  | "progress"
+  | "copy"
+  | "status";
 
 export interface BasicDisplayProps {
-  type: DisplayType
-  value: any
-  customProps?: Recordable
+  type: DisplayType;
+  value: any;
 }

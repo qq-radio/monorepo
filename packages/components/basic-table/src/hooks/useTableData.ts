@@ -12,12 +12,7 @@ export const useTableData: UseTableData = (getProps, context) => {
   const tableDatas = ref<Recordable[]>([]);
 
   const getTableProps = computed(() => {
-    return merge(
-      {
-        columnWidth: 130,
-      },
-      getProps.value.tableProps
-    );
+    return merge({}, getProps.value.tableProps);
   });
 
   const tableSchemas = computed(() => {

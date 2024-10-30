@@ -44,7 +44,7 @@ declare module "vue" {
     ElTooltip: (typeof import("element-plus/es"))["ElTooltip"];
     Src: (typeof import("./src/components/basic-pagination/src/index.vue"))["default"];
     TableBody: (typeof import("./src/components/basic-table/src/components/TableBody.vue"))["default"];
-    TableColumn: (typeof import("./src/components/basic-table/src/components/TableColumn.vue"))["default"];
+    TableCell: (typeof import("./src/components/basic-table/src/components/TableCell.vue"))["default"];
     TableColumnDisplay: (typeof import("./src/components/basic-table/src/components/TableColumnDisplay.vue"))["default"];
   }
 }

@@ -58,21 +58,29 @@
               :label="schema.label"
               :prop="schema.prop"
               :fixed="schema.fixed"
-              :minWidth="schema.width || columnWidth"
+              :minWidth="schema.width"
             >
-              <template #default="{ row, $index, column }">
-                <TableColumn
-                  type="default"
-                  v-bind="{ row, rowIndex: $index, column, schema }"
-                >
+              <template #header="{ $index, column }">
+                <TableHeader v-bind="{ rowIndex: $index, column, schema }">
                   <template
-                    v-for="slotName in Object.keys(slots)"
+                    v-for="slotName in Object.keys(tableHeaderSlots)"
                     :key="slotName"
                     #[slotName]="scope"
                   >
                     <slot :name="slotName" v-bind="scope" />
                   </template>
-                </TableColumn>
+                </TableHeader>
+              </template>
+              <template #default="{ row, $index, column }">
+                <TableCell v-bind="{ row, rowIndex: $index, column, schema }">
+                  <template
+                    v-for="slotName in Object.keys(tableCellSlots)"
+                    :key="slotName"
+                    #[slotName]="scope"
+                  >
+                    <slot :name="slotName" v-bind="scope" />
+                  </template>
+                </TableCell>
               </template>
             </el-table-column>
           </template>
@@ -107,8 +115,14 @@ import type { TableBodyProps } from "../types";
 
 import { computed, ref, useSlots } from "vue";
 
-import TableColumn from "./TableColumn.vue";
+import TableHeader from "./TableHeader.vue";
+import TableCell from "./TableCell.vue";
 import TableAction from "./TableAction.vue";
+
+import {
+  filterTableHeaderSlots,
+  filterTableCellSlots,
+} from "../tools/filter-slots";
 
 defineOptions({
   name: "TableBody",
@@ -124,6 +138,9 @@ const props = withDefaults(defineProps<TableBodyProps>(), {
   expandColumnProps: () => ({}),
   actionColumnProps: () => ({}),
 });
+
+const tableHeaderSlots = filterTableHeaderSlots(slots, props.schemas);
+const tableCellSlots = filterTableCellSlots(slots, props.schemas);
 
 const getActionColumnProps = computed(() => ({
   label: "操作",

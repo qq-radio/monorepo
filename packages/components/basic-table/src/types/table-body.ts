@@ -18,7 +18,7 @@ export type TableBodyProps = Pick<
   | "actionColumnProps"
   | "actionProps"
   | "actions"
-> & { columnWidth?: number };
+>;
 
 export interface TableColumnParams {
   row: Recordable<any>;
