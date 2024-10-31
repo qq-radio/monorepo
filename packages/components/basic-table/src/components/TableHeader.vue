@@ -8,7 +8,7 @@
     :content="schema.headerTooltip"
     placement="top"
   >
-    <el-icon :size="16" style="vertical-align: middle">
+    <el-icon :size="16" style="vertical-align: middle; margin-left: 4px">
       <WarningFilled />
     </el-icon>
   </el-tooltip>

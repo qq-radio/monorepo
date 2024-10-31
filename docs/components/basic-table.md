@@ -22,11 +22,11 @@ basic-table/radio-selection
 basic-table/selection
 ::: -->
 
-<!-- 序号
+序号
 
 :::demo
 basic-table/index
-::: -->
+:::
 
 <!-- 展开，与expand插槽
 
@@ -87,12 +87,12 @@ basic-table/custom-column-display
 :::demo
 basic-table/formatter
 ::: -->
-
+<!--
 表头提示语 - headerTooltip
 
 :::demo
 basic-table/header-tooltip
-:::
+::: -->
 
 <!-- 使用hook - useTableData
 
