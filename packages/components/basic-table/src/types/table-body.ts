@@ -14,7 +14,6 @@ export type TableBodyProps = Pick<
   | "indexColumnProps"
   | "hasExpand"
   | "expandColumnProps"
-  | "hasAction"
   | "actionColumnProps"
   | "actionProps"
   | "actions"

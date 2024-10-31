@@ -83,10 +83,7 @@
             </el-table-column>
           </template>
 
-          <el-table-column
-            v-if="hasAction || actions?.length"
-            v-bind="getActionColumnProps"
-          >
+          <el-table-column v-if="actions?.length" v-bind="getActionColumnProps">
             <template #default="{ row, $index, column }">
               <BasicButtonGroup
                 v-bind="{

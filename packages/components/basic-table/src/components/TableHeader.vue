@@ -3,8 +3,14 @@
   <span v-else>
     {{ schema.label }}
   </span>
-  <el-tooltip v-if="schema.tooltip" :content="schema.tooltip" placement="top">
-    <el-icon :size="16"><QuestionFilled /></el-icon>
+  <el-tooltip
+    v-if="schema.headerTooltip"
+    :content="schema.headerTooltip"
+    placement="top"
+  >
+    <el-icon :size="16" style="vertical-align: middle">
+      <WarningFilled />
+    </el-icon>
   </el-tooltip>
 </template>
 
@@ -15,7 +21,7 @@ import { useCustomRender } from "@center/composables";
 
 import { useSlots, computed } from "vue";
 
-import { QuestionFilled } from "@element-plus/icons-vue";
+import { WarningFilled } from "@element-plus/icons-vue";
 
 defineOptions({
   name: "TableHeader",

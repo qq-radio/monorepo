@@ -198,7 +198,7 @@ const renderComponent = getComponent(props.schemaItem.component);
 const renderTooltip = (content) =>
   content && (
     <el-tooltip placement="top" content={content}>
-      <el-icon style="margin-left: 4px">
+      <el-icon style="margin-left: 4px; vertical-align: middle">
         <InfoFilled />
       </el-icon>
     </el-tooltip>

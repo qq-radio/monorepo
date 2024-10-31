@@ -11,7 +11,7 @@ import type {
 import { DisplayType } from "@center/components/basic-display";
 import type { Page } from "@center/components/basic-pagination";
 
-import type { TableProps, PaginationProps } from "element-plus";
+import type { TableProps, PaginationProps, TableColumnCtx } from "element-plus";
 import type { VNode } from "vue";
 
 export interface BasicTableProps {
@@ -40,23 +40,20 @@ export interface BasicTableProps {
   operations?: Button[];
 
   hasRadioSelection?: boolean;
+  radioSelectionColumnProps?: Partial<TableColumnCtx<any>>;
   radioSelectionKey?: string;
 
   hasSelection?: boolean;
-  selectionColumnProps?: Recordable;
+  selectionColumnProps?: Partial<TableColumnCtx<any>>;
   selectionValue?: string[] | number[];
 
   hasIndex?: boolean;
-  indexColumnProps?: Recordable;
+  indexColumnProps?: Partial<TableColumnCtx<any>>;
 
   hasExpand?: boolean;
-  expandColumnProps?: Recordable;
+  expandColumnProps?: Partial<TableColumnCtx<any>>;
 
-  hasAction?: boolean;
-  actionColumnProps?: Pick<
-    TableSchema,
-    "label" | "width" | "minWidth" | "fixed"
-  >;
+  actionColumnProps?: Partial<TableColumnCtx<any>>;
   actionProps?: Pick<
     BasicButtonGroupProps,
     "confirmType" | "showNumber" | "callbackParams" | "buttonProps"
@@ -82,15 +79,15 @@ export interface TableSchema {
   minWidth?: string | number;
   fixed?: "left" | "right" | boolean;
   visible?: boolean;
-  tooltip?: string;
   formatter?: (params: TableCellCallbackParams) => any;
 
   searchable?: boolean;
   searchConfig?: FormSchema;
 
-  columnProps?: Recordable;
+  columnProps?: Partial<TableColumnCtx<any>>;
   columnSlots?: Recordable;
 
+  headerTooltip?: string;
   customHeaderRender?: (label: string, props: TableSchema) => RenderType;
   customHeaderSlot?: string;
 
