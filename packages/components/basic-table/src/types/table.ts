@@ -1,4 +1,8 @@
-import type { TableCellCallbackParams, TableMethods } from "./";
+import type {
+  TableHeaderCallbackParams,
+  TableCellCallbackParams,
+  TableMethods,
+} from "./";
 import type {
   BasicButtonGroupProps,
   Button,
@@ -85,13 +89,10 @@ export interface TableSchema {
   columnSlots?: Recordable;
 
   headerTooltip?: string;
-  customHeaderRender?: (label: string, props: TableSchema) => RenderType;
+  customHeaderRender?: (params: TableHeaderCallbackParams) => RenderType;
   customHeaderSlot?: string;
 
-  customRender?: (
-    value: any,
-    data: { row: Recordable; column: TableSchema; index: number }
-  ) => RenderType;
+  customRender?: (params: TableCellCallbackParams) => RenderType;
   customSlot?: string;
   display?: DisplayType;
   displayProps?: Recordable;

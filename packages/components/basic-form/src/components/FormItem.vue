@@ -111,11 +111,12 @@ const getColProps = computed(() =>
   merge(props.formProps.colProps, props.schemaItem.colProps)
 );
 
-const getLabel = computed(() =>
-  isFalse(props.schemaItem.hasLabel) || isFalse(props.formProps.hasLabel)
-    ? props.schemaItem.label
-    : ""
-);
+const getLabel = computed(() => {
+  const hasLabel = isUndefined(props.schemaItem.hasLabel)
+    ? props.formProps.hasLabel
+    : props.schemaItem.hasLabel;
+  return hasLabel ? props.schemaItem.label : "";
+});
 
 const getComponentProps = computed(() => {
   const {

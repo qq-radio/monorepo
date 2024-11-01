@@ -48,11 +48,13 @@ basic-table/index
 basic-table/expand
 ::: -->
 
-<!-- 自定义表头 - render/h
+自定义表头 - render/h
+
+也没有很难啊 现在header只剩下h了
 
 :::demo
 basic-table/custom-header-h
-::: -->
+:::
 
 <!-- 自定义表头 - render/jsx
 
@@ -60,7 +62,8 @@ basic-table/custom-header-h
 basic-table/custom-header-jsx
 ::: -->
 
-<!-- 自定义表头 - render/slot
+<!--
+自定义表头 - render/slot
 
 :::demo
 basic-table/custom-header-slot

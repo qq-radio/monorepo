@@ -83,6 +83,7 @@ basic-form/use-form-methods-with-hook
 
 不知道为什么 但是表单按钮的布局就是做不好
 
+<!--
 表单布局
 
 默认布局，水平方向`{span: 24}`
@@ -101,4 +102,10 @@ basic-form/layout-inline
 
 :::demo
 basic-form/layout-group-form
+::: -->
+
+表单布局 那你气死好了
+
+:::demo
+basic-form/layout-row
 :::

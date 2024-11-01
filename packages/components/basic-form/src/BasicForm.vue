@@ -65,6 +65,7 @@ const props = withDefaults(defineProps<BasicFormProps>(), {
 
   rowProps: () => ({
     gutter: 20,
+    justify: "start",
   }),
   colProps: () => ({ span: 24 }),
   formItemProps: () => ({}),

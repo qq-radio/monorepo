@@ -1,4 +1,5 @@
 <template>
+  我不知道为什么这个的search布局一直不对 应该是我还没有理解好布局 也没有设计好
   <BasicTable @register="registerTable">
     <template #header-phone="{ schema }">
       <div>
@@ -60,90 +61,6 @@ const statusOptions = [
     type: "danger",
     text: "已离职",
     value: 2,
-  },
-];
-
-const operations: Button[] = [
-  {
-    text: "新增",
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量启用",
-    onConfirm: () => {
-      console.log("点击了批量启用");
-    },
-  },
-  {
-    text: "批量禁用",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了批量禁用");
-    },
-  },
-  {
-    text: "批量删除",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了批量删除");
-    },
-  },
-];
-
-const actions: Button[] = [
-  {
-    text: "编辑",
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "启用",
-    onConfirm: () => {
-      console.log("点击了启用");
-    },
-  },
-  {
-    text: "禁用",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了禁用");
-    },
-  },
-  {
-    text: "删除",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "复制",
-    onClick: () => {
-      console.log("点击了复制");
-    },
-  },
-  {
-    text: "查看详情",
-    onClick: () => {
-      console.log("点击了查看详情");
-    },
-  },
-  {
-    text: "查看明细",
-    onClick: () => {
-      console.log("点击了查看明细");
-    },
   },
 ];
 
@@ -219,8 +136,6 @@ const userListApi = () => {
 const [registerTable, { reQuery }] = useTable({
   request: userListApi,
   schemas,
-  operations,
-  actions,
   actionColumnProps: {
     width: 280,
   },

@@ -3,90 +3,40 @@
 </template>
 
 <script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema, Button } from "@center/components";
+import {
+  BasicTable,
+  useTable,
+  TableSchema,
+  BasicSelect,
+} from "@center/components";
+import { Hide, View } from "@element-plus/icons-vue";
+import { ElIcon } from "element-plus";
+
+import { h } from "vue";
 import MockUserList from "../../mocks/user-list.json";
 
-const operations: Button[] = [
-  {
-    text: "新增",
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量启用",
-    onConfirm: () => {
-      console.log("点击了批量启用");
-    },
-  },
-  {
-    text: "批量禁用",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了批量禁用");
-    },
-  },
-  {
-    text: "批量删除",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了批量删除");
-    },
-  },
-];
+const isHide = ref(false);
 
-const actions: Button[] = [
+const toggleHide = () => {
+  isHide.value = !isHide.value;
+};
+
+const hidePhohe = (value) => value.slice(0, 3) + "****" + value.slice(7);
+
+const hideFullPhoneNumber = (value) => hidePhohe(value);
+
+const statusValue = ref();
+
+const statusOptions = [
   {
-    text: "编辑",
-    onClick: () => {
-      console.log("点击了编辑");
-    },
+    type: "success",
+    text: "在职中",
+    value: 1,
   },
   {
-    text: "启用",
-    onConfirm: () => {
-      console.log("点击了启用");
-    },
-  },
-  {
-    text: "禁用",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了禁用");
-    },
-  },
-  {
-    text: "删除",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "复制",
-    onClick: () => {
-      console.log("点击了复制");
-    },
-  },
-  {
-    text: "查看详情",
-    onClick: () => {
-      console.log("点击了查看详情");
-    },
-  },
-  {
-    text: "查看明细",
-    onClick: () => {
-      console.log("点击了查看明细");
-    },
+    type: "danger",
+    text: "已离职",
+    value: 2,
   },
 ];
 
@@ -94,15 +44,34 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
+    // searchConfig: {
+    //   label: "用户名",
+    //   prop: "username",
+    //   component: "input",
+    // },
   },
   {
     label: "手机号",
     prop: "phone",
+    customHeaderRender: ({ schema }) =>
+      h("div", [
+        schema.label,
+        h(
+          ElIcon,
+          {
+            style: {
+              cursor: "pointer",
+              marginLeft: "4px",
+              verticalAlign: "middle",
+            },
+            onClick: toggleHide,
+          },
+          isHide.value ? h(Hide) : h(View)
+        ),
+      ]),
+    customRender: ({ value }) =>
+      isHide.value ? value : hideFullPhoneNumber(value),
+    width: 120,
   },
   {
     label: "部门",
@@ -116,6 +85,26 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     display: "status",
+    formatter: ({ value }) =>
+      value === 1
+        ? {
+            type: "success",
+            text: "在职中",
+          }
+        : {
+            type: "danger",
+            text: "已离职",
+          },
+    customHeaderRender: () =>
+      h(BasicSelect, {
+        modelValue: statusValue.value,
+        options: statusOptions,
+        labelField: "text",
+        placeholder: "请选择状态",
+        "onUpdate:modelValue": (value) => (statusValue.value = value),
+        onChange: reQuery,
+      }),
+    width: 180,
   },
   {
     label: "创建时间",
@@ -124,7 +113,7 @@ const schemas: TableSchema[] = [
 ];
 
 const userListApi = () => {
-  return new Promise((resolve) => {
+  const result_1 = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         total: MockUserList.length,
@@ -132,13 +121,22 @@ const userListApi = () => {
       });
     }, 1000);
   });
+
+  const result_2 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        total: MockUserList.length,
+        records: MockUserList.filter((u) => u.status === statusValue.value),
+      });
+    }, 1000);
+  });
+
+  return statusValue.value ? result_2 : result_1;
 };
 
-const [registerTable] = useTable({
+const [registerTable, { reQuery }] = useTable({
   request: userListApi,
   schemas,
-  operations,
-  actions,
   actionColumnProps: {
     width: 280,
   },

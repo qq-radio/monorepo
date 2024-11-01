@@ -27,8 +27,8 @@ export interface BasicSelectEmits {
 }
 
 export interface SelectOption {
-  label: string;
-  value: string | number;
+  label?: string;
+  value?: string | number;
   disabled?: boolean;
 
   customRender?: Render;
