@@ -1,6 +1,6 @@
 <template>
   <template v-if="schemaItem.title">
-    <el-col>
+    <el-col v-bind="getTitleColProps">
       <component v-if="isCustomTitle" :is="renderCustomTitle" />
       <span v-else :class="ns.e('title')">{{ schemaItem.title }}</span>
       <component
@@ -102,6 +102,10 @@ const getHidden = computed(() => {
 
   return isFunction(hidden) ? hidden(callbackParams.value) : hidden;
 });
+
+const getTitleColProps = computed(() =>
+  merge(props.formProps.titleColProps, props.schemaItem.titleColProps)
+);
 
 const getColProps = computed(() =>
   merge(props.formProps.colProps, props.schemaItem.colProps)

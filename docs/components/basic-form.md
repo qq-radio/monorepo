@@ -1,4 +1,4 @@
-你要在大改之前写出1个可以运行的例子
+<!-- 你要在大改之前写出1个可以运行的例子
 
 基本使用
 
@@ -42,6 +42,9 @@ basic-form/group-form-with-custom-render
 basic-form/group-form-with-custom-slot
 :::
 
+
+
+
 文字提示
 
 :::demo
@@ -76,4 +79,26 @@ basic-form/use-form-methods-with-component-props
 
 :::demo
 basic-form/use-form-methods-with-hook
+::: -->
+
+不知道为什么 但是表单按钮的布局就是做不好
+
+表单布局
+
+默认布局，水平方向`{span: 24}`
+
+:::demo
+basic-form/layout-vertical
+:::
+
+表单布局
+
+:::demo
+basic-form/layout-inline
+:::
+
+分组表单布局
+
+:::demo
+basic-form/layout-group-form
 :::

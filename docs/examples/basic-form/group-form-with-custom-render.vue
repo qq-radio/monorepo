@@ -1,6 +1,7 @@
 <template>
   <BasicForm
     v-model="model"
+    :colProps="{ span: 10 }"
     @submit="submit"
     @register="registerForm"
     hasFooter

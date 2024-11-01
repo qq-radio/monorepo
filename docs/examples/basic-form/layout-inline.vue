@@ -1,24 +1,11 @@
 <template>
-  <BasicForm
-    v-model="model"
-    :colProps="{ span: 10 }"
-    @submit="submit"
-    @register="registerForm"
-    hasFooter
-  />
+  <BasicForm @submit="handleSubmit" @register="registerForm" hasFooter />
 </template>
 
 <script lang="tsx" setup>
 import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
 
-import { ref } from "vue";
-
-const model = ref({});
-
 const schemas: FormSchema[] = [
-  {
-    title: "基本信息",
-  },
   {
     label: "用户",
     prop: "username",
@@ -32,9 +19,6 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    title: "喜好",
-  },
-  {
     label: "手机",
     prop: "phone",
     component: "radio",
@@ -45,7 +29,6 @@ const schemas: FormSchema[] = [
         { label: "华为", value: "huawei" },
       ],
     },
-    required: true,
   },
   {
     label: "水果",
@@ -58,15 +41,40 @@ const schemas: FormSchema[] = [
         { label: "橘子", value: "orange" },
       ],
     },
+  },
+  {
+    label: "运动",
+    prop: "sport",
+    component: "select",
+    componentProps: {
+      options: [
+        { label: "足球", value: "football" },
+        { label: "篮球", value: "basketball" },
+        { label: "羽毛球", value: "badminton" },
+      ],
+    },
+  },
+  {
+    label: "绩效评分",
+    prop: "score",
+    component: "rate",
+    required: true,
+  },
+  {
+    label: "技能分",
+    prop: "skill",
+    component: "slider",
     required: true,
   },
 ];
 
 const [registerForm] = useForm({
   schemas,
+  labelWidth: "80px",
+  colProps: {
+    span: 8,
+  },
 });
 
-const submit = (values) => {
-  console.log("表单提交值:", values);
-};
+const handleSubmit = () => {};
 </script>

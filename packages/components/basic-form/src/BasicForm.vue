@@ -22,16 +22,16 @@
           </template>
         </FormItem>
       </template>
-    </el-row>
-    <el-row v-if="getProps.hasFooter" v-bind="getProps.rowProps">
-      <slot name="footer" v-bind="{ reset, submit }">
-        <el-button v-if="getProps.hasReset" @click="reset">
-          {{ getProps.resetText }}
-        </el-button>
-        <el-button type="primary" :loading="getProps.loading" @click="submit">
-          {{ getProps.submitText }}
-        </el-button>
-      </slot>
+      <el-col v-if="getProps.hasFooter" v-bind="getProps.buttonColProps">
+        <slot name="footer" v-bind="{ reset, submit }">
+          <el-button v-if="getProps.hasReset" @click="reset">
+            {{ getProps.resetText }}
+          </el-button>
+          <el-button type="primary" :loading="getProps.loading" @click="submit">
+            {{ getProps.submitText }}
+          </el-button>
+        </slot>
+      </el-col>
     </el-row>
   </el-form>
 </template>

@@ -23,8 +23,9 @@ export interface FormItemEmits {
 
 type FormProps = Pick<
   BasicFormProps,
-  | "formItemProps"
   | "colProps"
+  | "titleColProps"
+  | "formItemProps"
   | "disabled"
   | "hasLabel"
   | "labelSuffix"

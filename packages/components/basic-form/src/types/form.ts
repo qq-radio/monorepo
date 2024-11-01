@@ -53,7 +53,6 @@ export interface FormGroup {
 }
 
 export interface FormSchema {
-  // 改动太大了  类型几乎都要改，所以先不改，用最简单的加个title 全部partial
   title?: string;
   customTitleRender?: Render;
   customTitleSlot?: string;
@@ -69,6 +68,7 @@ export interface FormSchema {
   hidden?: boolean | ((parmas: FormItemCallbackParams) => boolean);
   disabled?: boolean | ((parmas: FormItemCallbackParams) => boolean);
   colProps?: Partial<Mutable<ColProps>>;
+  titleColProps?: Partial<Mutable<ColProps>>;
   formItemProps?: Partial<Mutable<FormItemProps>>;
 
   // 自定义渲染 - label
@@ -104,6 +104,8 @@ export interface BasicFormProps {
 
   rowProps?: Partial<Mutable<RowProps>>;
   colProps?: Partial<Mutable<ColProps>>;
+  titleColProps?: Partial<Mutable<ColProps>>;
+  buttonColProps?: Partial<Mutable<ColProps>>;
   formItemProps?: Partial<Mutable<FormItemProps>>;
 
   hasLabel?: boolean;
