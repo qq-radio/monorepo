@@ -6,6 +6,7 @@
     hasSelection
     hasIndex
     hasExpand
+    rowKey="createTime"
     :indexColumnProps="{
       align: 'center',
     }"

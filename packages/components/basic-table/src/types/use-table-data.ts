@@ -5,7 +5,6 @@ import type { Page } from "@center/components/basic-pagination";
 export interface UseTableDataReturn {
   isLoading: Ref<boolean>;
   tableDatas: Ref<Recordable[]>;
-  getTableProps: ComputedRef<Recordable>;
   tableSchemas: ComputedRef<TableSchema[]>;
   getRequestParams: () => Recordable;
   query: () => Promise<void>;

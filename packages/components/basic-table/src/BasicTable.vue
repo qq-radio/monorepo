@@ -23,7 +23,7 @@
       <TableBody
         v-bind="getBindValues"
         :schemas="tableSchemas"
-        :datas="tableDatas"
+        :tableDatas="tableDatas"
         :loading="isLoading"
         @selection-change="handleSelectionChange"
         @row-click="handleRadioSelectionChange"

@@ -11,12 +11,11 @@ import type {
 import { DisplayType } from "@center/components/basic-display";
 import type { Page } from "@center/components/basic-pagination";
 
-import type { TableProps, PaginationProps, TableColumnCtx } from "element-plus";
+import type { PaginationProps, TableColumnCtx } from "element-plus";
 import type { VNode } from "vue";
 
 export interface BasicTableProps {
   schemas: TableSchema[];
-  datas?: Recordable[];
   tableDatas?: Array<Recordable>;
   request?: (params: Recordable) => Promise<{
     records: Array<Recordable>;
@@ -25,12 +24,12 @@ export interface BasicTableProps {
   extraParams?: Recordable;
   paramsFormatter?: (params: Recordable) => Recordable;
   dataFormatter?: (tableDatas: Array<Recordable>) => Array<Recordable>;
+  rowKey: string;
   immediate?: boolean;
   loading?: boolean;
   ellipsis?: boolean;
 
   searchProps?: Partial<BasicFormProps>;
-  tableProps?: Partial<TableProps<unknown>>;
   paginationProps?: Partial<PaginationProps>;
 
   operationProps?: Pick<
@@ -41,7 +40,6 @@ export interface BasicTableProps {
 
   hasRadioSelection?: boolean;
   radioSelectionColumnProps?: Partial<TableColumnCtx<any>>;
-  radioSelectionKey?: string;
 
   hasSelection?: boolean;
   selectionColumnProps?: Partial<TableColumnCtx<any>>;

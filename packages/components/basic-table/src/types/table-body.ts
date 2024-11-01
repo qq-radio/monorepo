@@ -4,10 +4,11 @@ import type { TableColumnCtx } from "element-plus";
 export type TableBodyProps = Pick<
   BasicTableProps,
   | "schemas"
-  | "datas"
+  | "tableDatas"
   | "loading"
+  | "rowKey"
   | "hasRadioSelection"
-  | "radioSelectionKey"
+  | "radioSelectionColumnProps"
   | "hasSelection"
   | "selectionColumnProps"
   | "hasIndex"

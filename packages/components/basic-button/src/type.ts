@@ -1,8 +1,10 @@
 import type { ButtonProps } from "element-plus";
 import type { VNode } from "vue";
 
+export type ConfirmType = "message-box" | "pop-confirm";
+
 export interface BasicButtonGroupProps<T = Recordable> {
-  confirmType?: "message-box" | "pop-confirm";
+  confirmType?: ConfirmType;
   showNumber?: number;
   callbackParams?: T;
   buttonProps?: Recordable;

@@ -11,10 +11,6 @@ export const useTableData: UseTableData = (getProps, context) => {
   const isLoading = ref(false);
   const tableDatas = ref<Recordable[]>([]);
 
-  const getTableProps = computed(() => {
-    return merge({}, getProps.value.tableProps);
-  });
-
   const tableSchemas = computed(() => {
     return normalizeTableSchemas(getProps.value.schemas);
   });
@@ -75,7 +71,6 @@ export const useTableData: UseTableData = (getProps, context) => {
   return {
     tableDatas,
     isLoading,
-    getTableProps,
     tableSchemas,
     getRequestParams,
     query,
