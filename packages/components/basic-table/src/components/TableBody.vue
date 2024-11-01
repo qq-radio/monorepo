@@ -107,7 +107,7 @@ const attrs = useAttrs();
 const slots = useSlots();
 
 const props = withDefaults(defineProps<TableBodyProps>(), {
-  rowKey: "id",
+  rowKey: "",
 });
 
 const getBindValues = computed(() => ({

@@ -24,7 +24,7 @@ export interface BasicTableProps {
   extraParams?: Recordable;
   paramsFormatter?: (params: Recordable) => Recordable;
   dataFormatter?: (tableDatas: Array<Recordable>) => Array<Recordable>;
-  rowKey: string;
+  rowKey?: string;
   immediate?: boolean;
   loading?: boolean;
   ellipsis?: boolean;
@@ -43,7 +43,6 @@ export interface BasicTableProps {
 
   hasSelection?: boolean;
   selectionColumnProps?: Partial<TableColumnCtx<any>>;
-  selectionValue?: string[] | number[];
 
   hasIndex?: boolean;
   indexColumnProps?: Partial<TableColumnCtx<any>>;

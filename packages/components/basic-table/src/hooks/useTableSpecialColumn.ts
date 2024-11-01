@@ -7,13 +7,15 @@ export const useTableSpecialColumn: UseTableSpecialColumn = (getProps) => {
   const getRadioSelectionColumnProps = computed(() => ({
     key: "radio-selection",
     align: "center",
-    width: 54,
+    width: 50,
     ...getProps.value.radioSelectionColumnProps,
   }));
 
   const getSelectionColumnProps = computed(() => ({
     key: "selection",
     type: "selection",
+    align: "center",
+    width: 50,
     ...getProps.value.selectionColumnProps,
   }));
 

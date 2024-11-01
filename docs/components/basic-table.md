@@ -12,21 +12,35 @@ basic-table/operations-with-actions
 
 <!-- 表格数据单选
 
+若需要使用表格数据单选功能，仅需传入`hasRadioSelection`，若需要设置单选列属性，传入`radioSelectionColumnProps`，单选列默认的属性为`align: "center"`和`width: 50`。
+
+使用单选时，需要指定唯一的`rowKey`，默认为`id`
+
+您可以搭配`BasicTable`提供的单选hook（详见），也可以直接在`BasicTable`上监听
+
 :::demo
 basic-table/radio-selection
 ::: -->
 
-<!-- 表格数据多选
+<!-- 这个我认为有问题 之后要重写 主要是usetableselection这个hook有问题 表格数据多选
+
+若需要使用表格数据多选功能，仅需传入`hasSelection`，若需要设置多选列属性，传入`selectionColumnProps`，多选列默认的属性为`align: "center"`和`width: 50`。
+
+使用多选时，需要指定唯一的`rowKey`，默认为`id`
+
+您可以搭配`BasicTable`提供的多选hook（详见），也可以直接在`BasicTable`上监听
 
 :::demo
 basic-table/selection
 ::: -->
 
-序号
+<!-- 序号
+
+若需要展示序号列，仅需传入`hasIndex`，若需要设置序号列属性，传入`indexColumnProps`，序号列默认属性为`label: "序号"`和`width: "60"`
 
 :::demo
 basic-table/index
-:::
+::: -->
 
 <!-- 展开，与expand插槽
 

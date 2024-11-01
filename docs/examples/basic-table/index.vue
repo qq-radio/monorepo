@@ -1,15 +1,11 @@
 <template>
-  我现在希望在这里测试 没事的 累了就休息 不要伤害自己 不要伤害我
   <BasicTable
-    @register="registerTable"
-    hasRadioSelection
-    hasSelection
     hasIndex
-    hasExpand
-    rowKey="createTime"
     :indexColumnProps="{
-      align: 'center',
+      'class-name': 'custom-style',
+      fixed: true,
     }"
+    @register="registerTable"
   />
 </template>
 
@@ -31,13 +27,10 @@ const schemas: TableSchema[] = [
   {
     label: "手机号",
     prop: "phone",
-    formatter: ({ value }) => value.slice(0, 3) + "****" + value.slice(7),
   },
   {
     label: "部门",
     prop: "departmentName",
-    formatter: ({ row }) =>
-      `${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`,
   },
   {
     label: "岗位",
@@ -82,7 +75,7 @@ const [registerTable] = useTable({
 </script>
 
 <style lang="scss">
-.c-header {
-  background-color: pink;
+.custom-style {
+  background: pink !important;
 }
 </style>
