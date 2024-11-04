@@ -1,5 +1,6 @@
 <template>
-  这里一直没有生效吗````
+  你不是不知道怎么写，你是不知道demo的灵感该是什么
+  这不是难的事情，只要你先用2分钟冷静并重新思考
   <BasicTable @register="registerTable" :schemas="schemas" />
 </template>
 

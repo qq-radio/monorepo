@@ -48,13 +48,13 @@ basic-table/index
 basic-table/expand
 ::: -->
 
-自定义表头 - render/h
+<!-- 自定义表头 - render/h
 
 也没有很难啊 现在header只剩下h了
 
 :::demo
 basic-table/custom-header-h
-:::
+::: -->
 
 <!-- 自定义表头 - render/jsx
 
@@ -73,25 +73,25 @@ basic-table/custom-header-slot
 自定义列模板 - render/h
 
 :::demo
-basic-table/custom-column-h
+basic-table/custom-cell-h
 ::: -->
 
 <!-- 自定义列模板 - render/jsx
 
 :::demo
-basic-table/custom-column-jsx
+basic-table/custom-cell-jsx
 ::: -->
 
 <!-- 自定义列模板 - slot
 
 :::demo
-basic-table/custom-column-slot
+basic-table/custom-cell-slot
 ::: -->
 
 <!-- 自定义列模板 - display type
 
 :::demo
-basic-table/custom-column-display
+basic-table/custom-cell-display
 ::: -->
 <!--
 格式化数据 - formatter
