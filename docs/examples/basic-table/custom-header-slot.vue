@@ -12,7 +12,7 @@
     <template #phone="{ value }">
       {{ isHide ? value : hideFullPhoneNumber(value) }}
     </template>
-    <template #header-status="schema">
+    <template #header-status>
       <BasicSelect
         v-model="statusValue"
         :options="statusOptions"

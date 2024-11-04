@@ -47,8 +47,8 @@ basic-table/index
 :::demo
 basic-table/expand
 ::: -->
-
-<!-- 自定义表头 - render/h
+<!--
+自定义表头 - render/h
 
 也没有很难啊 现在header只剩下h了
 
@@ -69,8 +69,9 @@ basic-table/custom-header-jsx
 basic-table/custom-header-slot
 ::: -->
 
-<!--
-自定义列模板 - render/h
+<!-- 自定义列模板 - render/h
+
+你没有什么其它更重要的事情吗
 
 :::demo
 basic-table/custom-cell-h
@@ -84,15 +85,30 @@ basic-table/custom-cell-jsx
 
 <!-- 自定义列模板 - slot
 
+为什么vertical-align: center不生效
+
 :::demo
 basic-table/custom-cell-slot
 ::: -->
 
-<!-- 自定义列模板 - display type
+这个不好写，并不是不会写
+是要想好怎么例子
+
+那想好了吗 例子应该是什么？
+
+| "image" 用户头像， 阿凡达
+| "link" 部门column
+| "tag" 岗位
+| "progress" 绩效
+| "copy" 工号
+| "status"; 状态 已离职 在职中
+
+自定义列模板 - display type
 
 :::demo
 basic-table/custom-cell-display
-::: -->
+:::
+
 <!--
 格式化数据 - formatter
 

@@ -1,62 +1,18 @@
 <template>
-  这里一直没有生效吗````
-  <BasicTable @register="registerTable" :schemas="schemas" />
+  现在在测试这个
+  <BasicTable @register="registerTable" />
 </template>
 
 <script lang="tsx" setup>
-import {
-  BasicTable,
-  useTable,
-  TableSchema,
-  OperationButton,
-  ActionButton,
-} from "@center/components";
+import { BasicTable, useTable, TableSchema } from "@center/components";
+
 import MockUserList from "../../mocks/user-list.json";
-import MockDepartment from "../../mocks/department.json";
 
-const operations: OperationButton[] = [
-  {
-    text: "新增",
-    permission: true,
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量删除",
-    permission: true,
-    props: {
-      type: "danger",
-    },
-    onConfirm: ({ row }) => {
-      console.log("点击了批量删除");
-    },
-  },
-];
-
-const actions: ActionButton[] = [
-  {
-    text: "编辑",
-    permission: true,
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "删除",
-    permission: true,
-    onConfirm: ({ row }) => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "详情",
-    permission: true,
-    onClick: ({ row }) => {
-      console.log("点击了详情");
-    },
-  },
-];
+import {
+  Phone,
+  CircleCheckFilled,
+  CircleCloseFilled,
+} from "@element-plus/icons-vue";
 
 const schemas: TableSchema[] = [
   {
@@ -71,48 +27,43 @@ const schemas: TableSchema[] = [
   {
     label: "手机号",
     prop: "phone",
+    customRender: ({ value }) => (
+      <>
+        <el-icon style="color: #25a6e7; margin-right: 4px;">
+          <Phone />
+        </el-icon>
+        {value}
+      </>
+    ),
   },
   {
     label: "部门",
     prop: "departmentName",
-    searchConfig: {
-      label: "部门",
-      prop: "departmentId",
-      component: "tree-select",
-      componentProps: {
-        data: MockDepartment,
-        props: { value: "id", label: "name", children: "children" },
-      },
-      required: true,
-    },
+    customRender: ({ row }) => (
+      <>
+        {`${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`}
+      </>
+    ),
   },
   {
     label: "岗位",
     prop: "job",
-    searchConfig: {
-      label: "岗位",
-      prop: "job",
-      component: "select",
-      componentProps: {
-        options: [],
-      },
-    },
   },
   {
     label: "状态",
     prop: "status",
-    display: "status",
-    searchConfig: {
-      label: "状态",
-      prop: "status",
-      component: "select",
-      componentProps: {
-        options: [
-          { label: "正常", value: 1 },
-          { label: "异常", value: 0 },
-        ],
-      },
-    },
+    customRender: ({ value }) => (
+      <>
+        <el-icon style="margin-right: 4px;">
+          {value === 1 ? (
+            <CircleCheckFilled style="color: #8dd35f" />
+          ) : (
+            <CircleCloseFilled style="color: #ca5555" />
+          )}
+        </el-icon>
+        {value === 1 ? "在职中" : "已离职"}
+      </>
+    ),
   },
   {
     label: "创建时间",
@@ -134,7 +85,5 @@ const userListApi = () => {
 const [registerTable] = useTable({
   request: userListApi,
   schemas,
-  operations,
-  actions,
 });
 </script>

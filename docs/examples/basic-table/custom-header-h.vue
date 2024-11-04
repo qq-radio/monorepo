@@ -9,8 +9,8 @@ import {
   TableSchema,
   BasicSelect,
 } from "@center/components";
-import { Hide, View } from "@element-plus/icons-vue";
 import { ElIcon } from "element-plus";
+import { Hide, View } from "@element-plus/icons-vue";
 
 import { h } from "vue";
 import MockUserList from "../../mocks/user-list.json";

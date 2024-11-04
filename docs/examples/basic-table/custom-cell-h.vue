@@ -1,63 +1,20 @@
 <template>
-  你不是不知道怎么写，你是不知道demo的灵感该是什么
-  这不是难的事情，只要你先用2分钟冷静并重新思考
-  <BasicTable @register="registerTable" :schemas="schemas" />
+  <BasicTable @register="registerTable" />
 </template>
 
 <script lang="tsx" setup>
-import {
-  BasicTable,
-  useTable,
-  TableSchema,
-  OperationButton,
-  ActionButton,
-} from "@center/components";
+import { BasicTable, useTable, TableSchema } from "@center/components";
+
 import MockUserList from "../../mocks/user-list.json";
-import MockDepartment from "../../mocks/department.json";
 
-const operations: OperationButton[] = [
-  {
-    text: "新增",
-    permission: true,
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量删除",
-    permission: true,
-    props: {
-      type: "danger",
-    },
-    onConfirm: ({ row }) => {
-      console.log("点击了批量删除");
-    },
-  },
-];
+import { h } from "vue";
 
-const actions: ActionButton[] = [
-  {
-    text: "编辑",
-    permission: true,
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "删除",
-    permission: true,
-    onConfirm: ({ row }) => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "详情",
-    permission: true,
-    onClick: ({ row }) => {
-      console.log("点击了详情");
-    },
-  },
-];
+import { ElIcon } from "element-plus";
+import {
+  Phone,
+  CircleCheckFilled,
+  CircleCloseFilled,
+} from "@element-plus/icons-vue";
 
 const schemas: TableSchema[] = [
   {
@@ -72,47 +29,49 @@ const schemas: TableSchema[] = [
   {
     label: "手机号",
     prop: "phone",
+    customRender: ({ value }) => {
+      return h("span", [
+        h(
+          ElIcon,
+          {
+            style: {
+              color: "#25a6e7",
+              marginRight: "4px",
+            },
+          },
+          h(Phone)
+        ),
+        value,
+      ]);
+    },
   },
   {
     label: "部门",
     prop: "departmentName",
-    searchConfig: {
-      label: "部门",
-      prop: "departmentId",
-      component: "tree-select",
-      componentProps: {
-        data: MockDepartment,
-        props: { value: "id", label: "name", children: "children" },
-      },
-      required: true,
+    customRender: ({ row }) => {
+      return h("span", [
+        `${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`,
+      ]);
     },
   },
   {
     label: "岗位",
     prop: "job",
-    searchConfig: {
-      label: "岗位",
-      prop: "job",
-      component: "select",
-      componentProps: {
-        options: [],
-      },
-    },
   },
   {
     label: "状态",
     prop: "status",
-    display: "status",
-    searchConfig: {
-      label: "状态",
-      prop: "status",
-      component: "select",
-      componentProps: {
-        options: [
-          { label: "正常", value: 1 },
-          { label: "异常", value: 0 },
-        ],
-      },
+    customRender: ({ value }) => {
+      return h("span", [
+        h(
+          ElIcon,
+          { style: { verticalAlign: "center" } },
+          value === 1
+            ? h(CircleCheckFilled, { style: { color: "#8dd35f" } })
+            : h(CircleCloseFilled, { style: { color: "#ca5555" } })
+        ),
+        value === 1 ? "在职中" : "已离职",
+      ]);
     },
   },
   {
@@ -135,7 +94,5 @@ const userListApi = () => {
 const [registerTable] = useTable({
   request: userListApi,
   schemas,
-  operations,
-  actions,
 });
 </script>
