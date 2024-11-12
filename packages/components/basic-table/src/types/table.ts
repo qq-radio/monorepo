@@ -6,7 +6,7 @@ import type {
 import type {
   BasicButtonGroupProps,
   Button,
-} from "@center/components/basic-button";
+} from "@center/components/basic-button-group";
 
 import type {
   BasicFormProps,

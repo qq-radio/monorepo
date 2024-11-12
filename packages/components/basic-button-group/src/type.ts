@@ -11,13 +11,13 @@ export interface BasicButtonGroupProps<T = Recordable> {
   buttons: Button<T>[];
 }
 
-type FF<T> = {
+type Params<T> = {
   [K in keyof T]: T[K];
 };
 
 export type ButtonCallbackParams<T = Recordable<string>> = {
   button?: Button<T>;
-} & FF<T>;
+} & Params<T>;
 
 export interface RenderButton {
   (params: ButtonCallbackParams): VNode;
@@ -27,6 +27,11 @@ export interface Button<T = Recordable> {
   text: string | ((params: ButtonCallbackParams<T>) => string);
   permission?: string;
   show?: boolean | ((params: ButtonCallbackParams<T>) => boolean);
+  disabled?:
+    | boolean
+    | Ref<boolean>
+    | ComputedRef<boolean>
+    | ((params: ButtonCallbackParams<T>) => boolean);
   message?: string;
   props?: Partial<ButtonProps>;
   onClick?: (params: ButtonCallbackParams<T>) => void;

@@ -1,18 +1,17 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: 'Schema Driven Development'
-  text: 'A VitePress Site'
-  tagline: My great project tagline
+  name: Schema Driven Development
+  text:
+  tagline: Base On Vue3 TypeScript ElementPlus
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: 开始
+      link: /guide/design-principle
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: 组件
+      link: /guide/component-overview
 
 features:
   - title: Feature A

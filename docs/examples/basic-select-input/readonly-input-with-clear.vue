@@ -1,5 +1,5 @@
 <template>
-  <BasicInputWithSelect
+  <BasicSelectInput
     v-model="value"
     placeholder="请选择"
     @click="clickInput"
@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicInputWithSelect } from "@center/components";
+import { BasicSelectInput } from "@center/components";
 
 const value = ref([]);
 

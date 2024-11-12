@@ -9,12 +9,12 @@
 ### 基本使用
 
 :::demo
-basic-input/readonly-input-with-clear
+basic-select-input/readonly-input-with-clear
 :::
 
 ### 禁用
 
 禁用时自动隐藏search和clear图标
 :::demo
-basic-input/readonly-input-disabled
+basic-select-input/readonly-input-disabled
 :::

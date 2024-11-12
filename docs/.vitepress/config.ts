@@ -2,32 +2,36 @@ import { defineConfig } from "vitepress";
 import { mdPlugin } from "./plugins/mdPlugin";
 
 export default defineConfig({
-  title: "Schema Driven Development",
-  description: "A VitePress Site",
+  base: "/",
+  head: [["link", { rel: "icon", href: "/favicon.ico" }]],
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
+      { text: "组件", link: "/guide/component-overview" },
     ],
     sidebar: [
       {
-        text: "Examples??",
+        text: "简介",
         items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
-          { text: "Overview", link: "/overview" },
+          { text: "设计总则", link: "/guide/design-principle" },
+          { text: "组件总览", link: "/guide/component-overview" },
         ],
       },
       {
-        text: "表单",
-        link: "/components/basic-form",
-      },
-      {
-        text: "表格",
-        link: "/components/basic-table",
-      },
-      {
         text: "基本",
+        items: [
+          {
+            text: "表单",
+            link: "/components/basic-form",
+          },
+          {
+            text: "表格",
+            link: "/components/basic-table",
+          },
+        ],
+      },
+      {
+        text: "内置",
         items: [
           {
             text: "数据收集",
@@ -56,7 +60,7 @@ export default defineConfig({
             items: [
               { text: "弹窗", link: "/components/basic-dialog" },
               { text: "分页器", link: "/components/basic-pagination" },
-              { text: "按钮", link: "/components/basic-button" },
+              { text: "按钮", link: "/components/basic-button-group" },
               { text: "导入", link: "/components/basic-import" },
               { text: "导出", link: "/components/basic-export" },
             ],
@@ -65,7 +69,7 @@ export default defineConfig({
       },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
+      { icon: "github", link: "https://github.com/qq-radio/monorepo" },
     ],
   },
   markdown: {

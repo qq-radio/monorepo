@@ -10,6 +10,8 @@ const buttons: Button[] = [
     text: "新增",
     props: {
       type: "primary",
+      // 请结合您项目的权限控制逻辑自行实现permission控制
+      // permission: ""
     },
   },
   {

@@ -26,7 +26,7 @@ import { ref, watchEffect, useAttrs } from "vue";
 import { Search } from "@element-plus/icons-vue";
 
 defineOptions({
-  name: "BasicInputWithSelect",
+  name: "BasicSelectInput",
 });
 
 const attrs = useAttrs();

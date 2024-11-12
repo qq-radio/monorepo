@@ -1,5 +1,5 @@
 import type { UseTableSpecialColumn } from "../types";
-import type { ConfirmType } from "@center/components/basic-button";
+import type { ConfirmType } from "@center/components/basic-button-group";
 
 import { computed } from "vue";
 

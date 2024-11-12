@@ -1,5 +1,5 @@
 import type { TableBodyProps } from "./";
-import type { BasicButtonGroupProps } from "@center/components/basic-button";
+import type { BasicButtonGroupProps } from "@center/components/basic-button-group";
 import type { ComputedRef, Ref } from "vue";
 import type { TableColumnCtx } from "element-plus";
 

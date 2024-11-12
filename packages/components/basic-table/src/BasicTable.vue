@@ -63,7 +63,7 @@ import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
 
 import { BasicPagination } from "@center/components/basic-pagination";
 import { BasicForm } from "@center/components/basic-form";
-import { BasicButtonGroup } from "@center/components/basic-button";
+import { BasicButtonGroup } from "@center/components/basic-button-group";
 import TableBody from "./components/TableBody.vue";
 
 const ns = useBasicNamespace("table");

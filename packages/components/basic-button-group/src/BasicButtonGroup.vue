@@ -1,41 +1,45 @@
 <template>
-  <div class="actions">
-    <template v-for="(button, index) in preButtons" :key="index">
-      <component :is="() => render(button)" />
-    </template>
-    <el-dropdown
-      v-if="hasDropdown"
-      trigger="click"
-      style="margin-left: 10px; cursor: pointer"
-    >
-      <span style="color: #69a9ff">
-        <span style="margin-right: 2px">更多</span>
-        <el-icon><ArrowDownBold /></el-icon>
-      </span>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="button in dropdownButtons"
-            :key="button.text"
-          >
-            <component :is="() => render(button)" />
-          </el-dropdown-item>
-        </el-dropdown-menu>
+  <div :class="ns.b()">
+    <div :class="ns.e('content')">
+      <template v-for="(button, index) in preButtons" :key="index">
+        <component :is="() => render(button)" />
       </template>
-    </el-dropdown>
+      <el-dropdown
+        v-if="hasDropdown"
+        trigger="click"
+        style="margin-left: 10px; cursor: pointer"
+      >
+        <span style="color: #69a9ff">
+          <span style="margin-right: 2px">更多</span>
+          <el-icon><ArrowDownBold /></el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="button in dropdownButtons"
+              :key="button.text"
+            >
+              <component :is="() => render(button)" />
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { BasicButtonGroupProps, Button } from "./type";
 
-import { usePermission } from "@center/composables";
+import { useBasicNamespace, usePermission } from "@center/composables";
 
 import { h, computed } from "vue";
 import { isFunction } from "lodash";
 
 import { ElButton, ElIcon, ElPopconfirm, ElMessageBox } from "element-plus";
 import { ArrowDownBold } from "@element-plus/icons-vue";
+
+const ns = useBasicNamespace("button-group");
 
 defineOptions({
   name: "BasicButtonGroup",
@@ -67,7 +71,9 @@ const getButtons = computed(() =>
   )
 );
 const preButtons = computed(() => getButtons.value.slice(0, props.showNumber));
-const hasDropdown = computed(() => getButtons.value.length > props.showNumber);
+const hasDropdown = computed(
+  () => props.showNumber && props.showNumber < getButtons.value.length
+);
 const dropdownButtons = computed(() =>
   hasDropdown.value ? getButtons.value.slice(props.showNumber) : []
 );
@@ -79,6 +85,7 @@ const render = (button: Button) => {
   const tagProps = {
     ...props.buttonProps,
     ...(button.props || {}),
+    disabled: unref(button.disabled),
   };
 
   const text = isFunction(button.text)
@@ -167,3 +174,7 @@ const handleBoxConfirm = (button: Button) => {
     });
 };
 </script>
+
+<style lang="scss" scoped>
+@import "./style.scss";
+</style>
