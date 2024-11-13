@@ -47,4 +47,14 @@ export const mdPlugin = (md: MarkdownIt) => {
       }
     },
   } as ContainerOpts);
+
+  md.use(mdContainer, "note", {
+    render(tokens, idx) {
+      if (tokens[idx].nesting === 1) {
+        return '<div class="note">\n';
+      } else {
+        return "</div>\n";
+      }
+    },
+  });
 };

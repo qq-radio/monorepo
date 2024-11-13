@@ -1,19 +1,11 @@
-<!-- 数据的收集
+BasicPagination 分页器
 
-先解决 checkbox 的错 -->
+# 简介
 
-:::demo
-components/basic-select
+- 该组件仅为了统一项目的分页器配置，无其它新增功能
+
+# 基本使用
+
+::: demo
+basic-pagination/basic
 :::
-
-:::demo
-components/basic-checkbox
-:::
-
-## 终于把这3个最重要的写了吧
-
-:::demo
-components/basic-radio
-:::
-
-## 这是耳机标题吗？？ 222？ 55 5

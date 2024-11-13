@@ -1,4 +1,4 @@
-@import './code';
+@import "./code";
 
 $primaryColor: #0072ff;
 
@@ -153,4 +153,12 @@ $primaryColor: #0072ff;
   height: 80vh;
   border: 0;
   margin-top: 20px;
+}
+
+.vp-doc .note {
+  background-color: #e0f7fa; /* 设置背景色 */
+  border-left: 4px solid #00acc1; /* 设置左侧边框颜色 */
+  padding: 1em;
+  border-radius: 4px;
+  color: #006064;
 }
