@@ -50,8 +50,10 @@ export const mdPlugin = (md: MarkdownIt) => {
 
   md.use(mdContainer, "note", {
     render(tokens, idx) {
+      const m = tokens[idx].info.trim().match(/^note\s+(.*)$/);
       if (tokens[idx].nesting === 1) {
-        return '<div class="note">\n';
+        const title = m && m[1] ? m[1] : "提示";
+        return `<div class="note"><strong>${title}</strong>\n`;
       } else {
         return "</div>\n";
       }

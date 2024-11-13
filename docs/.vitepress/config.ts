@@ -37,8 +37,8 @@ export default defineConfig({
             text: "数据收集",
             items: [
               { text: "输入框", link: "/components/basic-input" },
-              { text: "单选", link: "/components/basic-radio" },
-              { text: "多选", link: "/components/basic-checkbox" },
+              { text: "单选", link: "/components/basic-radio-group" },
+              { text: "多选", link: "/components/basic-checkbox-group" },
               { text: "下拉选择", link: "/components/basic-select" },
               { text: "树选择", link: "/components/basic-tree-select" },
               { text: "级联选择", link: "/components/basic-cascader" },
@@ -47,7 +47,6 @@ export default defineConfig({
           {
             text: "数据展示",
             items: [
-              { text: "渲染", link: "/components/basic-render" },
               { text: "显示", link: "/components/basic-display" },
               { text: "列表", link: "/components/basic-list" },
               { text: "图片", link: "/components/basic-image" },

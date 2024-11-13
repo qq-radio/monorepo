@@ -1,11 +1,15 @@
-# 单选框
+# BasicRadioGroup 单选框组
 
-## Why
+## 简介
 
-1. 解决`ElPlus`的`el-radio`在选中后再次点击无法取消选中
-2. `ElPlus`需要手动v-for渲染单选项组时，`BasicRadioGroup`只需传入options即可
-3. `el-radio`的绑定值使用`value`而非`label`
-4. 提供灵活的渲染方式，渲染的优先级遵循组件的设计总则：各个选项的`customRender` > 各个选项的`customSlot` > 模板的`render` > 模板的默认插槽 > 普通的label渲染
+- 解决`ElPlus`的`el-radio`在选中后再次点击无法取消选中
+- 使用`value`而非`label`作为组件的改变监听值
+- 支持传入数组后渲染所有选项
+- 提供灵活的渲染方式，渲染的优先级为：各个选项的`customRender` > 各个选项的`customSlot` > 模板的`render` > 模板的默认插槽 > 普通的`label`渲染
+
+::: note Note
+`BasicRadioGroup`选项渲染优先级与`BasicCheckboxGroup`、`BasicSelect`选项渲染优先级一致
+:::
 
 ## 基本使用
 

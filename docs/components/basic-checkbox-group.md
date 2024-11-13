@@ -2,10 +2,10 @@
 
 ## Why
 
-1. 解决`ElPlus`的`el-radio`在选中后再次点击无法取消选中
-2. `ElPlus`需要手动v-for渲染单选项组时，`BasicRadioGroup`只需传入options即可
-3. `el-radio`的绑定值使用`value`而非`label`
-4. 提供灵活的渲染方式，渲染的优先级遵循组件的设计总则：各个选项的`customRender` > 各个选项的`customSlot` > 模板的`render` > 模板的默认插槽 > 普通的label渲染
+- 解决`ElPlus`的`el-radio`在选中后再次点击无法取消选中
+- `ElPlus`需要手动v-for渲染单选项组时，`BasicRadioGroup`只需传入options即可
+- `el-radio`的绑定值使用`value`而非`label`
+- 提供灵活的渲染方式，渲染的优先级遵循组件的设计总则：各个选项的`customRender` > 各个选项的`customSlot` > 模板的`render` > 模板的默认插槽 > 普通的label渲染
 
 ## 基本使用
 

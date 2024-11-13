@@ -15,7 +15,6 @@ declare module "vue" {
     BasicDisplay: (typeof import("./src/components/basic-display/src/BasicDisplay.vue"))["default"];
     BasicForm: (typeof import("./src/components/basic-form/src/BasicForm.vue"))["default"];
     BasicRadioGroup: (typeof import("./src/components/basic-radio/BasicRadioGroup.vue"))["default"];
-    BasicRender: (typeof import("./src/components/basic-render/src/BasicRender.vue"))["default"];
     BasicSelect: (typeof import("./src/components/basic-select/BasicSelect.vue"))["default"];
     BasicTable: (typeof import("./src/components/basic-table/src/BasicTable.vue"))["default"];
     BasicUpload: (typeof import("./src/components/basic-upload/BasicUpload.vue"))["default"];

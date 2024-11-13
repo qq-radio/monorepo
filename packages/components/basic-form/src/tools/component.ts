@@ -10,7 +10,7 @@ import {
   ElSlider,
   ElColorPicker,
 } from "element-plus";
-import { BasicRadioGroup } from "@center/components/basic-radio";
+import { BasicRadioGroup } from "@center/components/basic-radio-group";
 import { BasicCheckboxGroup } from "@center/components/basic-checkbox-group";
 import { BasicSelect } from "@center/components/basic-select";
 import { BasicTreeSelect } from "@center/components/basic-tree-select";

@@ -21,20 +21,18 @@
         :value="item.value"
         :disabled="item.disabled"
       >
-        <BasicRender
+        <component
           v-if="isFunction(item.customRender)"
-          :render="item.customRender"
-          :params="getCallbackParams(item)"
+          :is="item.customRender(getCallbackParams(item))"
         />
         <slot
           v-else-if="isString(item.customSlot)"
           :name="item.customSlot"
           v-bind="getCallbackParams(item)"
         />
-        <BasicRender
+        <component
           v-else-if="isFunction(render)"
-          :render="render"
-          :params="getCallbackParams(item)"
+          :is="render(getCallbackParams(item))"
         />
         <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
         <span v-else>{{ item.label }}</span>
@@ -63,8 +61,6 @@ import { useOptionQuery, useBasicNamespace } from "@center/composables";
 
 import { isFunction, isString } from "@center/utils";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
-
-import { BasicRender } from "@center/components/basic-render";
 
 const ns = useBasicNamespace("select");
 
