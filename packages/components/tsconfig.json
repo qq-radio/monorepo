@@ -27,7 +27,7 @@
     "components/**/*.vue",
     "./components.d.ts",
     "./global.d.ts",
-    "./types",
+    "./types/**",
     "composables/useOptionQuery.ts"
   ]
 }

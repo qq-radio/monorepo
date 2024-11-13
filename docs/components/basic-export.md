@@ -1,19 +1,7 @@
-<!-- 数据的收集
+# BasicExport 导出
 
-先解决 checkbox 的错 -->
-
-:::demo
-components/basic-select
-:::
+# 基本使用
 
 :::demo
-components/basic-checkbox
+basic-export/basic
 :::
-
-## 终于把这3个最重要的写了吧
-
-:::demo
-components/basic-radio
-:::
-
-## 这是耳机标题吗？？ 222？ 55 5

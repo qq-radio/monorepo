@@ -69,7 +69,7 @@ export default defineConfig({
                 ],
               },
               { text: "分页器", link: "/components/basic-pagination" },
-              { text: "按钮", link: "/components/basic-button-group" },
+              { text: "按钮组", link: "/components/basic-button-group" },
               { text: "导入", link: "/components/basic-import" },
               { text: "导出", link: "/components/basic-export" },
             ],

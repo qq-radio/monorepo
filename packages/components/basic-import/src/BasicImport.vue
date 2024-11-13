@@ -48,7 +48,7 @@ import type { VNode } from "vue";
 
 import { useBasicNamespace } from "@center/composables";
 
-import { ref, reactive, toRaw, computed, h } from "vue";
+import { ref, reactive, toRaw, h } from "vue";
 import { ElMessage } from "element-plus";
 import { Upload } from "@element-plus/icons-vue";
 
