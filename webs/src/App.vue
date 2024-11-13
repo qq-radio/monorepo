@@ -39,7 +39,6 @@
           @submit="handleSubmit"
           @reset="handleReset"
         /> -->
-        <!-- <BasicRender :schemas="schemasTable" /> -->
       </div>
     </div>
   </el-config-provider>
@@ -48,7 +47,6 @@
 <script setup lang="ts">
 // import { FormSchema, useForm } from "@/components/basic-form";
 // import { TableSchema } from "@/components/basic-table";
-// import { BasicRender } from "@/components/basic-render";
 import { BasicStatus } from "@center/components";
 
 const formModel = ref({
