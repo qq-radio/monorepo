@@ -18,7 +18,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "基本",
+        text: "高级",
         items: [
           {
             text: "表单",
@@ -58,7 +58,16 @@ export default defineConfig({
           {
             text: "功能组件",
             items: [
-              { text: "弹窗", link: "/components/basic-dialog" },
+              {
+                text: "弹窗",
+                items: [
+                  { text: "基本", link: "/components/basic-dialog" },
+                  {
+                    text: "组合式函数",
+                    link: "/components/basic-dialog-composable",
+                  },
+                ],
+              },
               { text: "分页器", link: "/components/basic-pagination" },
               { text: "按钮", link: "/components/basic-button-group" },
               { text: "导入", link: "/components/basic-import" },

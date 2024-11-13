@@ -33,7 +33,7 @@ import type { BasicButtonGroupProps, Button } from "./type";
 
 import { useBasicNamespace, usePermission } from "@center/composables";
 
-import { h, computed } from "vue";
+import { h, computed, unref } from "vue";
 import { isFunction } from "lodash";
 
 import { ElButton, ElIcon, ElPopconfirm, ElMessageBox } from "element-plus";

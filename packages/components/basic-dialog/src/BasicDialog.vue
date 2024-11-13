@@ -17,7 +17,9 @@
         <el-button
           type="primary"
           :loading="confirmLoading"
-          @click="handleThrottleConfirm"
+          @click="
+            getProps.hasDebounce ? handleDebounceConfirm() : handleConfirm()
+          "
         >
           {{ getProps.confirmText }}
         </el-button>
@@ -32,7 +34,7 @@ import { BasicDialogProps, BasicDialogEmits, DialogMethods } from "./type";
 import { useBasicNamespace } from "@center/composables";
 
 import { ref, watchEffect, computed, useAttrs, onMounted, unref } from "vue";
-import { throttle } from "lodash";
+import { debounce } from "lodash";
 
 const ns = useBasicNamespace("dialog");
 
@@ -103,7 +105,7 @@ const handleConfirm = () => {
   emit("confirm");
 };
 
-const handleThrottleConfirm = throttle(handleConfirm, 2000);
+const handleDebounceConfirm = debounce(handleConfirm, 2000);
 
 const handleCancel = () => {
   closeDialog();

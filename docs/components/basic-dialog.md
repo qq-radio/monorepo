@@ -1,19 +1,23 @@
-<!-- 数据的收集
+# BasicDialog 弹窗
 
-先解决 checkbox 的错 -->
-
-:::demo
-components/basic-select
-:::
+## 基本使用
 
 :::demo
-components/basic-checkbox
+basic-dialog/basic
 :::
 
-## 终于把这3个最重要的写了吧
+## 自定义`footer`
+
+您可以通过插槽`footer`自定义按钮
 
 :::demo
-components/basic-radio
+basic-dialog/custom-footer
 :::
 
-## 这是耳机标题吗？？ 222？ 55 5
+## 防抖
+
+在新增、编辑等需要与后端接口交互的弹窗中，对提交按钮进行防抖处理防止重复提交是个高频的场景，您只需传入`hasDebounce`便可实现防抖处理，默认防抖时间为`2s`
+
+:::demo
+basic-dialog/has-debounce
+:::
