@@ -1,19 +1,21 @@
-<!-- 数据的收集
+# BasicImage 图片
 
-先解决 checkbox 的错 -->
+## 简介
 
-:::demo
-components/basic-select
-:::
+- 支持渲染单张或多张图片，且当为多张图片时带有图片数量提示文字
 
-:::demo
-components/basic-checkbox
-:::
+## 单张图片
 
-## 终于把这3个最重要的写了吧
+单张图片的使用方法与`el-image`一致
 
 :::demo
-components/basic-radio
+basic-image/basic
 :::
 
-## 这是耳机标题吗？？ 222？ 55 5
+## 多张图片
+
+若需要渲染多张图片，`src`传入图片数组即可，且在图片的底部显示图片数量提示文字
+
+:::demo
+basic-image/multiple
+:::

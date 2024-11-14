@@ -1,3 +1,3 @@
 export interface BasicImageProps {
-  value : string | string[]
+  src: string | string[];
 }
