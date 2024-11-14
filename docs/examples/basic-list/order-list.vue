@@ -7,44 +7,43 @@ import { BasicList } from "@center/components";
 
 const lists = [
   {
-    label: "电子产品",
+    label: "欧洲",
     childrenList: [
       {
-        label: "手机",
-        childrenList: [
-          {
-            label: "智能手机",
-            childrenList: [{ label: "安卓手机" }, { label: "苹果手机" }],
-          },
-        ],
+        label: "法国",
+        childrenList: [{ label: "巴黎" }, { label: "尼斯" }],
       },
       {
-        label: "电脑",
-        childrenList: [
-          {
-            label: "笔记本",
-            childrenList: [{ label: "游戏本" }, { label: "商务本" }],
-          },
-          { label: "台式机" },
-        ],
+        label: "德国",
+        childrenList: [{ label: "柏林" }, { label: "慕尼黑" }],
       },
     ],
   },
   {
-    label: "家用电器",
+    label: "北美洲",
     childrenList: [
       {
-        label: "厨房电器",
-        childrenList: [
-          {
-            label: "冰箱",
-            childrenList: [{ label: "双开门冰箱" }, { label: "单开门冰箱" }],
-          },
-          { label: "微波炉" },
-        ],
+        label: "美国",
+        childrenList: [{ label: "纽约" }, { label: "芝加哥" }],
+      },
+      {
+        label: "加拿大",
+        childrenList: [{ label: "多伦多" }, { label: "温哥华" }],
       },
     ],
   },
-  { label: "家具" },
+  {
+    label: "亚洲",
+    childrenList: [
+      {
+        label: "中国",
+        childrenList: [{ label: "北京" }, { label: "上海" }],
+      },
+      {
+        label: "日本",
+        childrenList: [{ label: "东京" }, { label: "大阪" }],
+      },
+    ],
+  },
 ];
 </script>

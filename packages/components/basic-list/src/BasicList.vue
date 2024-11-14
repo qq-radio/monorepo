@@ -2,10 +2,7 @@
   <component :is="type">
     <li v-for="item in lists" :key="item.label">
       {{ formatLabel(item) }}
-      <component
-        :is="type"
-        v-if="childKey && item[childKey] && item[childKey].length > 0"
-      >
+      <component :is="type" v-if="item[childKey]?.length">
         <BasicList
           v-bind="{
             lists: item[childKey],
@@ -22,7 +19,7 @@
 <script setup lang="ts">
 import { BasicListProps } from "./type";
 
-import { defineProps, watchEffect } from "vue";
+import { defineProps } from "vue";
 import { isFunction } from "lodash";
 
 defineOptions({
@@ -32,7 +29,7 @@ defineOptions({
 const props = withDefaults(defineProps<BasicListProps>(), {
   type: "ul",
   childKey: "children",
-  lists: () => ({}),
+  lists: () => [],
 });
 
 const formatLabel = (item) =>

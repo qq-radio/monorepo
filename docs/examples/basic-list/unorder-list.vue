@@ -7,36 +7,43 @@ import { BasicList } from "@center/components";
 
 const lists = [
   {
-    label: "公司总部",
+    label: "欧洲",
     children: [
       {
-        label: "人力资源部",
-        children: [{ label: "招聘组" }, { label: "培训组" }],
+        label: "法国",
+        children: [{ label: "巴黎" }, { label: "尼斯" }],
       },
       {
-        label: "技术部",
-        children: [
-          {
-            label: "前端开发组",
-            children: [{ label: "UI/UX设计组" }, { label: "UI/UX设计组=???" }],
-          },
-          { label: "后端开发组" },
-        ],
+        label: "德国",
+        children: [{ label: "柏林" }, { label: "慕尼黑" }],
       },
-      { label: "财务部" },
     ],
   },
   {
-    label: "分公司 A",
+    label: "北美洲",
     children: [
       {
-        label: "销售部",
-        children: [
-          { label: "区域销售组", children: [{ label: "华东销售小组" }] },
-        ],
+        label: "美国",
+        children: [{ label: "纽约" }, { label: "芝加哥" }],
+      },
+      {
+        label: "加拿大",
+        children: [{ label: "多伦多" }, { label: "温哥华" }],
       },
     ],
   },
-  { label: "分公司 B" },
+  {
+    label: "亚洲",
+    children: [
+      {
+        label: "中国",
+        children: [{ label: "北京" }, { label: "上海" }],
+      },
+      {
+        label: "日本",
+        children: [{ label: "东京" }, { label: "大阪" }],
+      },
+    ],
+  },
 ];
 </script>

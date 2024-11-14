@@ -9,5 +9,5 @@ export interface BasicListProps {
   lists: ListItem[];
   type?: ListType;
   childKey?: string;
-  formatter?: (option: any) => any;
+  formatter?: (item: any) => string;
 }
