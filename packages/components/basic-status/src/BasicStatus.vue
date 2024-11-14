@@ -1,6 +1,6 @@
 <template>
   <span
-    v-for="({ type, color, text }, index) in getContents"
+    v-for="({ text, type, color }, index) in getContents"
     :key="index"
     :class="ns.b()"
   >

@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <BasicStatus>示例-1</BasicStatus>
-    <BasicStatus text="示例-2" type="warning" />
-  </div>
+  <BasicStatus>状态</BasicStatus>
+  <BasicStatus type="danger">禁用</BasicStatus>
+  <BasicStatus type="success">启用</BasicStatus>
 </template>
 
 <script setup lang="ts">

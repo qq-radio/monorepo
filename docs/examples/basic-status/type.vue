@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <BasicStatus text="示例-1" type="primary" />
-    <BasicStatus text="示例-2" type="success" />
-    <BasicStatus text="示例-3" type="info" />
-    <BasicStatus text="示例-4" type="warning" />
-    <BasicStatus text="示例-4" type="danger" />
-  </div>
+  <BasicStatus>初始化</BasicStatus>
+  <BasicStatus type="success">已生效</BasicStatus>
+  <BasicStatus type="info">计算中</BasicStatus>
+  <BasicStatus type="warning">生效中</BasicStatus>
+  <BasicStatus type="danger">未生效</BasicStatus>
 </template>
 
 <script setup lang="ts">

@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <BasicStatus text="示例-2" color="#de7a5f" />
-    <BasicStatus text="示例-1" color="#b7cbc2" />
-    <BasicStatus text="示例-3" color="#484686" />
-  </div>
+  <BasicStatus color="#484686">审核通过</BasicStatus>
+  <BasicStatus color="#5b1f1f">已驳回</BasicStatus>
 </template>
 
 <script setup lang="ts">
