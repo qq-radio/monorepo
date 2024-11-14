@@ -15,7 +15,7 @@
   </el-input>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type {
   BasicInputWithSelectProps,
   BasicInputWithSelectEmits,

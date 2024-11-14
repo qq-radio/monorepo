@@ -48,7 +48,7 @@
   </el-select>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import {
   BasicSelectProps,
   BasicSelectEmits,

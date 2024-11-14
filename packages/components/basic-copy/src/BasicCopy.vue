@@ -1,14 +1,14 @@
 <template>
   <div :class="ns.b()">
-    <span>{{ value }}</span>
+    <span>{{ text }}</span>
     <el-icon :class="ns.e('icon')" @click="copyToClipboard">
       <DocumentCopy />
     </el-icon>
-    <span v-if="showAnimation" :class="ns.e('animation')">复制成功！</span>
+    <span v-if="showAnimation" :class="ns.e('animation')">复制成功!</span>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicCopyProps } from "./type";
 
 import { useBasicNamespace } from "@center/composables";
@@ -23,14 +23,12 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const props = withDefaults(defineProps<BasicCopyProps>(), {
-  value: "",
-});
+const props = withDefaults(defineProps<BasicCopyProps>(), {});
 
 const showAnimation = ref(false);
 
 const copyToClipboard = async () => {
-  await navigator.clipboard.writeText(props.value);
+  await navigator.clipboard.writeText(props.text);
   showAnimation.value = true;
   setTimeout(() => {
     showAnimation.value = false;

@@ -8,7 +8,7 @@
   </BasicDialog>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicDialog } from "@center/components";
 
 const dialogVisible = ref(false);

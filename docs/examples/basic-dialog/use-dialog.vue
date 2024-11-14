@@ -5,7 +5,7 @@
   </BasicDialog>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicDialog, useDialog } from "@center/components";
 
 const [registerDialog, { openDialog, closeDialog, setDialogTitle }] =

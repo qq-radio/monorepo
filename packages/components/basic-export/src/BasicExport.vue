@@ -4,7 +4,7 @@
   </el-button>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicExportProps, BasicExportEmits } from "./type";
 
 import { isFunction, isUndefined } from "lodash";

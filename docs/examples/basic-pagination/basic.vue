@@ -9,7 +9,7 @@
   page改变值：{{ page }}
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicPagination } from "@center/components";
 
 const page = ref({

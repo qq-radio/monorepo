@@ -28,7 +28,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicDialogProps, BasicDialogEmits, DialogMethods } from "./type";
 
 import { useBasicNamespace } from "@center/composables";

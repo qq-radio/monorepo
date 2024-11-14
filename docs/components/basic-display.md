@@ -1,19 +1,15 @@
-<!-- 数据的收集
+# BasicDisplay 显示
 
-先解决 checkbox 的错 -->
+## 简介
 
-:::demo
-components/basic-select
+- 整合"数据展示"章节里的组件
+
+:::info
+该组件整合"数据展示"章节里的组件，主要用于`BasicTable`列配置指定`display`时使用。一般情况下您不会直接使用该组件，可直接跳过阅读
 :::
 
-:::demo
-components/basic-checkbox
-:::
-
-## 终于把这3个最重要的写了吧
+## 基本使用
 
 :::demo
-components/basic-radio
+basic-display/basic
 :::
-
-## 这是耳机标题吗？？ 222？ 55 5

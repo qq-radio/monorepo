@@ -16,7 +16,7 @@
   </span>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicStatusProps } from "./type";
 
 import { useBasicNamespace } from "@center/composables";

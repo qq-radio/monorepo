@@ -36,7 +36,7 @@
   </el-form>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicFormProps, BasicFormEmits, FormMethods } from "./types";
 import type { FormInstance } from "element-plus";
 

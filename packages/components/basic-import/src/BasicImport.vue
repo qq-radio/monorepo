@@ -42,7 +42,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicImportProps, BasicImportEmits, UploadResult } from "./type";
 import type { VNode } from "vue";
 

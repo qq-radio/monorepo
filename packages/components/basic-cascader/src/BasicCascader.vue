@@ -12,7 +12,7 @@
   </el-cascader>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicCascaderProps, BasicCascaderEmits, ModelValue } from "./type";
 
 import { isFunction, isArray } from "lodash";

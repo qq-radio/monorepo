@@ -1,6 +1,6 @@
 <template>Please select project token: <a-radio-group v-model:value="value" :options="options" /></template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { mapObjectArrayFields } from '@/utils'
 
 const modules: Record<string, Config> = import.meta.glob('/privacy-token.json', {

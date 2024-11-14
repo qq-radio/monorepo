@@ -11,7 +11,7 @@
   </span>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { TableCellProps, TableCellCallbackParams } from "../types";
 
 import { useCustomRender } from "@center/composables";

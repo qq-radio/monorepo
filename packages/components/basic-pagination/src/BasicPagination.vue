@@ -10,7 +10,7 @@
   />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicPaginationProps, BasicPaginationEmits, Page } from "./type";
 
 import { ref, computed, watchEffect, useAttrs } from "vue";

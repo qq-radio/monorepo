@@ -2,7 +2,7 @@
   <a-tree-select v-bind="$attrs" v-model="inputValue" :treeData="datas" style="width: 100%" @change="emitChange" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { isFunction, pathOr, stringToPath } from 'remeda'
 
 const props = defineProps<{

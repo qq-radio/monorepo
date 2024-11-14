@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicTableProps, BasicTableEmits, TableMethods } from "./types";
 
 import { useBasicNamespace } from "@center/composables";

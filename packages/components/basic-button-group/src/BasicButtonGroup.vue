@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicButtonGroupProps, Button } from "./type";
 
 import { useBasicNamespace, usePermission } from "@center/composables";

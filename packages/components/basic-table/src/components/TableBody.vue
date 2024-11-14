@@ -87,7 +87,7 @@
   </el-table>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { TableBodyProps } from "../types";
 
 import { useTableSpecialColumn } from "../hooks/useTableSpecialColumn";

@@ -16,7 +16,7 @@ export default {
   name: 'HuskyTestIndex'
 }
 </script>
-<script lang="ts" setup>
+<script setup lang="ts">
 const a = ref({
   b: 'bbbb'
 })

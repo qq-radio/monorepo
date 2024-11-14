@@ -1,3 +1,3 @@
 export interface BasicCopyProps {
-  value: string
+  text: string;
 }

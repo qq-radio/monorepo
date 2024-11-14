@@ -30,7 +30,7 @@
   </el-radio-group>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import {
   BasicRadioGroupProps,
   BasicRadioGroupEmits,

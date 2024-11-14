@@ -6,7 +6,7 @@
   />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { BasicDisplayProps } from "./type";
 
 import { hasComponent, getComponent } from "./tools/component";

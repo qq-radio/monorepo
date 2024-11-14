@@ -1,15 +1,7 @@
 <template>
-  <BasicStatus>状态</BasicStatus>
-  <BasicStatus type="danger">禁用</BasicStatus>
-  <BasicStatus type="success">启用</BasicStatus>
+  <BasicCopy text="这是一段文字，您可以点击右侧图标复制它" />
 </template>
 
 <script setup lang="ts">
-import { BasicStatus } from "@center/components";
+import { BasicCopy } from "@center/components";
 </script>
-
-<style lang="scss" scoped>
-:deep(.basic-status) {
-  margin-right: 30px;
-}
-</style>

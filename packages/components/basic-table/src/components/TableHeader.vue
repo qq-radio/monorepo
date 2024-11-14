@@ -14,7 +14,7 @@
   </el-tooltip>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { TableHeaderProps, TableHeaderCallbackParams } from "../types";
 
 import { useCustomRender } from "@center/composables";
