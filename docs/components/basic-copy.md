@@ -1,19 +1,11 @@
-<!-- 数据的收集
+# BasicCopy 复制
 
-先解决 checkbox 的错 -->
+## 简介
 
-:::demo
-components/basic-select
-:::
+- 提供复制组件方便使用
 
-:::demo
-components/basic-checkbox
-:::
-
-## 终于把这3个最重要的写了吧
+## 基本使用
 
 :::demo
-components/basic-radio
+basic-copy/basic
 :::
-
-## 这是耳机标题吗？？ 222？ 55 5

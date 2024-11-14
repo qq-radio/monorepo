@@ -1,0 +1,15 @@
+<template>
+  <BasicStatus>状态</BasicStatus>
+  <BasicStatus type="danger">禁用</BasicStatus>
+  <BasicStatus type="success">启用</BasicStatus>
+</template>
+
+<script setup lang="ts">
+import { BasicStatus } from "@center/components";
+</script>
+
+<style lang="scss" scoped>
+:deep(.basic-status) {
+  margin-right: 30px;
+}
+</style>

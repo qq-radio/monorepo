@@ -18,6 +18,11 @@ import { DocumentCopy } from "@element-plus/icons-vue";
 
 const ns = useBasicNamespace("copy");
 
+defineOptions({
+  name: "BasicCopy",
+  inheritAttrs: false,
+});
+
 const props = withDefaults(defineProps<BasicCopyProps>(), {
   value: "",
 });
