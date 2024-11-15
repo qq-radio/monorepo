@@ -36,7 +36,19 @@ export default defineConfig({
           {
             text: "数据收集",
             items: [
-              { text: "输入框", link: "/components/basic-input" },
+              {
+                text: "输入框",
+                items: [
+                  {
+                    text: "只读选择输入框",
+                    link: "/components/basic-select-input",
+                  },
+                  {
+                    text: "数字范围输入框",
+                    link: "/components/basic-number-range",
+                  },
+                ],
+              },
               { text: "单选", link: "/components/basic-radio-group" },
               { text: "多选", link: "/components/basic-checkbox-group" },
               { text: "下拉选择", link: "/components/basic-select" },

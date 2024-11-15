@@ -17,6 +17,6 @@ const clickInput = () => {
 };
 
 const clearInput = () => {
-  console.log("清空input");
+  console.log("清空");
 };
 </script>
