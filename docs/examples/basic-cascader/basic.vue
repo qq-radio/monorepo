@@ -2,6 +2,7 @@
   <BasicCascader
     v-model="value"
     :api="api"
+    result-field="data"
     node-key="id"
     :props="{
       value: 'id',
@@ -11,7 +12,6 @@
     }"
     default-expand-all
     checkStrictly
-    @change="onChange"
   />
   <div>当前选中值：{{ value }}</div>
 </template>
@@ -21,7 +21,7 @@ import { BasicCascader } from "@center/components";
 
 const value = ref();
 
-const request = () => {
+const api = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -29,62 +29,52 @@ const request = () => {
         message: "响应成功",
         data: [
           {
-            id: 6706,
-            parentId: 1,
-            name: "全国营销本部",
-            deptCode: "00010001",
+            id: 7874,
+            parentId: 6707,
+            name: "广东事业部",
             children: [
               {
-                id: 8531,
-                parentId: 6706,
-                name: "西南事业部",
-                deptCode: "000100010002",
+                id: 8687,
+                parentId: 7874,
+                name: "佛山大区",
                 children: [
-                  {
-                    id: 13411,
-                    parentId: 8531,
-                    name: "黔北大区",
-                    deptCode: "0001000100020006",
-                    children: [
-                      {
-                        id: 13412,
-                        parentId: 13411,
-                        name: "贵阳服务处",
-                        deptCode: "00010001000200060001",
-                      },
-                      {
-                        id: 13419,
-                        parentId: 13411,
-                        name: "遵义服务处",
-                        deptCode: "00010001000200060002",
-                      },
-                      {
-                        id: 13423,
-                        parentId: 13411,
-                        name: "毕节服务处",
-                        deptCode: "00010001000200060003",
-                      },
-                      {
-                        id: 13427,
-                        parentId: 13411,
-                        name: "铜仁服务处",
-                        deptCode: "00010001000200060004",
-                      },
-                      {
-                        id: 13843,
-                        parentId: 13411,
-                        name: "凤冈服务处",
-                        deptCode: "00010001000200060005",
-                      },
-                    ],
-                  },
+                  { id: 9537, parentId: 8687, name: "三海服务处" },
+                  { id: 9548, parentId: 8687, name: "顺德北服务处" },
                 ],
               },
               {
-                id: 10873,
-                parentId: 6706,
-                name: "华中事业部",
-                deptCode: "000100010004",
+                id: 8757,
+                parentId: 7874,
+                name: "深圳大区",
+                children: [
+                  { id: 9613, parentId: 8757, name: "龙岗服务处" },
+                  { id: 9627, parentId: 8757, name: "龙华服务处" },
+                ],
+              },
+            ],
+          },
+          {
+            id: 10874,
+            parentId: 6706,
+            name: "广西事业部",
+            children: [
+              {
+                id: 10904,
+                parentId: 10874,
+                name: "南宁大区",
+                children: [
+                  { id: 10905, parentId: 10904, name: "百色服务处" },
+                  { id: 10909, parentId: 10904, name: "田东服务处" },
+                ],
+              },
+              {
+                id: 10925,
+                parentId: 10874,
+                name: "桂北大区",
+                children: [
+                  { id: 10931, parentId: 10925, name: "贺州服务处" },
+                  { id: 10934, parentId: 10925, name: "梧州服务处" },
+                ],
               },
             ],
           },
@@ -92,14 +82,5 @@ const request = () => {
       });
     }, 1000);
   });
-};
-
-const api = async () => {
-  const result = await request();
-  return result.data;
-};
-
-const onChange = ({ value, node }) => {
-  console.log("value, node:", value, node);
 };
 </script>

@@ -1,20 +1,26 @@
 export interface BasicCascaderProps {
-  modelValue?: ModelValue;
+  modelValue?: CascaderModelValue;
   clearable?: boolean;
 
   data?: Recordable[];
-  api?: () => Promise<Recordable[]>;
+  api?: () => Promise<any>;
+  resultField?: string;
 }
 
 export interface BasicCascaderEmits {
-  (e: "update:modelValue", value: ModelValue): void;
+  (e: "update:modelValue", value: CascaderModelValue): void;
   (
     e: "change",
     params: {
-      value: ModelValue;
+      value: CascaderModelValue;
       node: Recordable | Recordable[];
     }
   ): void;
 }
 
-export type ModelValue = undefined | string | number | string[] | number[];
+export type CascaderModelValue =
+  | undefined
+  | string
+  | number
+  | string[]
+  | number[];

@@ -1,25 +1,30 @@
 <template>
   <el-cascader
-    ref="cascaderRef"
+    ref="instanceRef"
     v-bind="getBindValues"
     v-model="stateValue"
     :options="cascaderDatas"
     @change="emitChange"
   >
-    <template v-for="(_, key) in slots" :key="key" #[key]="scope">
-      <slot :name="key" v-bind="scope" />
+    <template v-for="name in Object.keys(slots)" :key="name" #[name]="scope">
+      <slot :name="name" v-bind="scope" />
     </template>
   </el-cascader>
 </template>
 
 <script setup lang="ts">
-import { BasicCascaderProps, BasicCascaderEmits, ModelValue } from "./type";
+import {
+  BasicCascaderProps,
+  BasicCascaderEmits,
+  CascaderModelValue,
+} from "./type";
 
-import { isFunction, isArray } from "lodash";
+import { isFunction, isArray, get } from "lodash";
 import { useAttrs, useSlots, computed, ref, watch } from "vue";
 
 defineOptions({
   name: "BasicCascader",
+  inheritAttrs: false,
 });
 
 const attrs = useAttrs();
@@ -36,26 +41,9 @@ const getBindValues = computed(() => ({
   clearable: props.clearable,
 }));
 
-const cascaderRef = ref();
-const stateValue = ref<ModelValue>();
+const instanceRef = ref();
+const stateValue = ref<CascaderModelValue>();
 const cascaderDatas = ref<Recordable[]>([]);
-
-const init = async () => {
-  try {
-    if (isArray(props.data)) {
-      cascaderDatas.value = props.data;
-      return;
-    }
-
-    if (isFunction(props.api)) {
-      cascaderDatas.value = await props.api();
-    }
-  } catch (error) {
-    console.error("BasicCascader init error:", error);
-  }
-};
-
-init();
 
 watch(
   () => props.modelValue,
@@ -65,11 +53,31 @@ watch(
   { immediate: true }
 );
 
+const init = async () => {
+  try {
+    if (isArray(props.data)) {
+      cascaderDatas.value = props.data;
+      return;
+    }
+
+    if (isFunction(props.api)) {
+      const result = await props.api();
+      cascaderDatas.value = props.resultField
+        ? get(result, props.resultField)
+        : result;
+    }
+  } catch (error) {
+    console.error("BasicCascader init error:", error);
+  }
+};
+
+init();
+
 const emitChange = () => {
   emit("update:modelValue", stateValue.value);
   emit("change", {
     value: stateValue.value,
-    node: cascaderRef.value.getCheckedNodes(),
+    node: instanceRef.value.getCheckedNodes(),
   });
 };
 </script>

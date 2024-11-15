@@ -5,20 +5,25 @@
     :data="treeDatas"
     @change="emitChange"
   >
-    <template v-for="(_, key) in slots" :key="key" #[key]="scope">
-      <slot :name="key" v-bind="scope" />
+    <template v-for="name in Object.keys(slots)" :key="name" #[name]="scope">
+      <slot :name="name" v-bind="scope" />
     </template>
   </el-tree-select>
 </template>
 
 <script setup lang="ts">
-import { BasicTreeSelectProps, BasicTreeSelectEmits, ModelValue } from "./type";
+import {
+  BasicTreeSelectProps,
+  BasicTreeSelectEmits,
+  TreeSelectModelValue,
+} from "./type";
 
-import { isFunction, isArray } from "lodash";
+import { isFunction, isArray, get } from "lodash";
 import { useAttrs, useSlots, computed, ref, watch } from "vue";
 
 defineOptions({
   name: "BasicTreeSelect",
+  inheritAttrs: false,
 });
 
 const attrs = useAttrs();
@@ -35,25 +40,8 @@ const getBindValues = computed(() => ({
   clearable: props.clearable,
 }));
 
-const stateValue = ref<ModelValue>("");
+const stateValue = ref<TreeSelectModelValue>("");
 const treeDatas = ref<Recordable[]>([]);
-
-const init = async () => {
-  try {
-    if (isArray(props.data)) {
-      treeDatas.value = props.data;
-      return;
-    }
-
-    if (isFunction(props.api)) {
-      treeDatas.value = await props.api();
-    }
-  } catch (error) {
-    console.error("BasicTreeSelect init error:", error);
-  }
-};
-
-init();
 
 watch(
   () => props.modelValue,
@@ -63,8 +51,27 @@ watch(
   { immediate: true }
 );
 
+const init = async () => {
+  try {
+    if (isArray(props.data)) {
+      treeDatas.value = props.data;
+      return;
+    }
+
+    if (isFunction(props.api)) {
+      const result = await props.api();
+      treeDatas.value = props.resultField
+        ? get(result, props.resultField)
+        : result;
+    }
+  } catch (error) {
+    console.error("BasicTreeSelect init error:", error);
+  }
+};
+
+init();
+
 const emitChange = () => {
-  console.log("emitChange : 树的这里触发了吗？？？ ", stateValue.value);
   emit("update:modelValue", stateValue.value);
   emit("change", {
     value: stateValue.value,

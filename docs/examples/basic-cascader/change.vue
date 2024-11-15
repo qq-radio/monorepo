@@ -1,20 +1,28 @@
 <template>
-  <BasicTreeSelect
+  <BasicCascader
     v-model="value"
     :api="api"
     result-field="data"
     node-key="id"
-    :props="{ label: 'name', children: 'children' }"
-    multiple
+    :props="{
+      value: 'id',
+      label: 'name',
+      children: 'children',
+      multiple: true,
+    }"
     default-expand-all
+    checkStrictly
+    @change="onChange"
   />
   <div>当前选中值：{{ value }}</div>
+  <div>选中值详细信息：{{ valueDetails }}</div>
 </template>
 
 <script setup lang="ts">
-import { BasicTreeSelect } from "@center/components";
+import { BasicCascader } from "@center/components";
 
 const value = ref();
+const valueDetails = ref();
 
 const api = () => {
   return new Promise((resolve) => {
@@ -77,5 +85,8 @@ const api = () => {
       });
     }, 1000);
   });
+};
+const onChange = ({ _value, node }) => {
+  valueDetails.value = node.map((n) => n.data);
 };
 </script>
