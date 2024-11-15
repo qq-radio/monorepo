@@ -1,21 +1,11 @@
 <template>
-  <BasicRadioGroup v-model="value" :options="options">
-    <template #apple="{ option, value }">
-      <span style="color: green; display: flex; align-items: center">
-        🍏{{
-          value === option.value
-            ? option.label + option.price + "元"
-            : option.label
-        }}
-      </span>
-    </template>
-  </BasicRadioGroup>
+  <BasicRadioGroup v-model="value" :options="options" />
   <div>当前选中值：{{ value }}</div>
 </template>
 
 <script setup lang="tsx">
 import { BasicRadioGroup } from "@center/components";
-import { Grape, Orange } from "@element-plus/icons-vue";
+import { Grape, Cherry, Orange } from "@element-plus/icons-vue";
 
 const value = ref();
 
@@ -23,36 +13,36 @@ const options = [
   {
     label: "葡萄",
     value: "grape",
-    price: 7,
-    customRender: ({ option, value }) => (
-      <span style="color: purple;display:flex; align-items:center">
-        <el-icon>
+    customRender: ({ option }) => (
+      <span style="color: purple; display: flex; align-items: center">
+        <el-icon style="margin-right: 4px">
           <Grape />
         </el-icon>
-        {value === option.value
-          ? option.label + option.price + "元"
-          : option.label}
+        {option.label}
       </span>
     ),
   },
   {
-    label: "苹果",
-    value: "apple",
-    price: 8,
-    customSlot: "apple",
+    label: "樱桃",
+    value: "cherry",
+    customRender: ({ option }) => (
+      <span style="color: red; display: flex; align-items: center">
+        <el-icon style="margin-right: 4px">
+          <Cherry />
+        </el-icon>
+        {option.label}
+      </span>
+    ),
   },
   {
     label: "橘子",
     value: "orange",
-    price: 9,
-    customRender: ({ option, value }) => (
-      <span style="color:orange;display:flex; align-items:center">
-        <el-icon>
+    customRender: ({ option }) => (
+      <span style="color: orange; display: flex; align-items: center">
+        <el-icon style="margin-right: 4px">
           <Orange />
         </el-icon>
-        {value === option.value
-          ? option.label + option.price + "元"
-          : option.label}
+        {option.label}
       </span>
     ),
   },

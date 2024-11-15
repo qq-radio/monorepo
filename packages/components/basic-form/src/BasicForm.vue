@@ -14,11 +14,11 @@
           @change="emitUpdateModel"
         >
           <template
-            v-for="slotName in Object.keys(slots)"
-            :key="slotName"
-            #[slotName]="scope"
+            v-for="name in Object.keys(slots)"
+            :key="name"
+            #[name]="scope"
           >
-            <slot :name="slotName" v-bind="scope" />
+            <slot :name="name" v-bind="scope" />
           </template>
         </FormItem>
       </template>

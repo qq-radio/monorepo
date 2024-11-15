@@ -39,22 +39,22 @@
             <template #header="{ $index, column }">
               <TableHeader v-bind="{ rowIndex: $index, column, schema }">
                 <template
-                  v-for="slotName in Object.keys(tableHeaderSlots)"
-                  :key="slotName"
-                  #[slotName]="scope"
+                  v-for="name in Object.keys(tableHeaderSlots)"
+                  :key="name"
+                  #[name]="scope"
                 >
-                  <slot :name="slotName" v-bind="scope" />
+                  <slot :name="name" v-bind="scope" />
                 </template>
               </TableHeader>
             </template>
             <template #default="{ row, $index, column }">
               <TableCell v-bind="{ row, rowIndex: $index, column, schema }">
                 <template
-                  v-for="slotName in Object.keys(tableCellSlots)"
-                  :key="slotName"
-                  #[slotName]="scope"
+                  v-for="name in Object.keys(tableCellSlots)"
+                  :key="name"
+                  #[name]="scope"
                 >
-                  <slot :name="slotName" v-bind="scope" />
+                  <slot :name="name" v-bind="scope" />
                 </template>
               </TableCell>
             </template>

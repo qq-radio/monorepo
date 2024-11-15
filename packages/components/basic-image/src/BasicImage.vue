@@ -1,12 +1,8 @@
 <template>
   <div :class="ns.b()">
     <el-image v-bind="getBindValues">
-      <template
-        v-for="slotName in Object.keys(slots)"
-        :key="slotName"
-        #[slotName]="scope"
-      >
-        <slot :name="slotName" v-bind="scope" />
+      <template v-for="name in Object.keys(slots)" :key="name" #[name]="scope">
+        <slot :name="name" v-bind="scope" />
       </template>
     </el-image>
     <div v-if="isMultiple" :class="ns.e('total')">

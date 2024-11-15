@@ -14,17 +14,17 @@ import { IceDrink } from "@element-plus/icons-vue";
 const value = ref();
 
 const options = [
-  { label: "咖啡", value: "coffee", price: 10 },
-  { label: "牛奶", value: "milk_tea", price: 5 },
-  { label: "果汁", value: "juice", price: 8 },
+  { label: "牛奶", value: "milk", price: 6 },
+  { label: "咖啡", value: "coffee", price: 8 },
+  { label: "果汁", value: "juice", price: 10 },
 ];
 
 const customDrinkRender = ({ option }) => (
   <span style="display: flex; align-items: center">
-    <el-icon>
+    <el-icon style="color: #70adf9">
       <IceDrink />
     </el-icon>
-    <span style="margin-left: 8px">
+    <span style="margin-left: 4px">
       {option.label}({option.price}元)
     </span>
   </span>

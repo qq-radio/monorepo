@@ -1,19 +1,3 @@
-export type RadioValue = undefined | string | number;
-
-export type RadioSize = "large" | "default" | "small";
-
-export interface RadioOption {
-  label: string;
-  value: RadioValue;
-  disabled?: boolean;
-  border?: boolean;
-  size?: RadioSize;
-
-  isButton?: boolean;
-  customRender?: Render;
-  customSlot?: string;
-}
-
 export interface BasicRadioGroupProps {
   modelValue?: RadioValue;
   isButton?: boolean;
@@ -33,15 +17,29 @@ export interface BasicRadioGroupEmits {
   (
     e: "change",
     params: {
-      label: string | undefined;
+      label: string;
       value: RadioValue;
-      option?: RadioOption;
+      option: RadioOption;
     }
   ): void;
 }
 
+export type RadioValue = undefined | string | number;
+
+export interface RadioOption {
+  label: string;
+  value: string | number;
+  disabled?: boolean;
+  border?: boolean;
+  size?: OptionSize;
+
+  isButton?: boolean;
+  customRender?: Render;
+  customSlot?: string;
+}
+
 export interface RadioCallbackParams {
-  label?: string;
-  value?: RadioValue;
+  label: string;
+  value: RadioValue;
   option: RadioOption;
 }

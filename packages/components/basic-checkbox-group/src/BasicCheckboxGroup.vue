@@ -46,6 +46,7 @@ import {
   BasicCheckboxGroupProps,
   BasicCheckboxGroupEmits,
   CheckboxOption,
+  CheckboxValue,
   CheckboxCallbackParams,
 } from "./type";
 
@@ -74,11 +75,12 @@ const isCheckAll = ref(false);
 const isIndeterminate = ref(false);
 
 const stateLabel = ref<string[]>();
-const stateValue = ref<(string | number)[]>([]);
+const stateValue = ref<CheckboxValue>([]);
 
 const {
   options: stateOptions,
   init,
+  getAllLabels,
   findOptions,
   findLabels,
   findValues,
@@ -101,16 +103,14 @@ const getComponent = (isButton?: boolean) =>
   isButton || props.isButton ? "el-checkbox-button" : "el-checkbox";
 
 const getCallbackParams = (item: CheckboxOption): CheckboxCallbackParams => ({
-  value: stateValue.value,
+  labels: stateLabel.value,
+  values: stateValue.value,
   option: item,
 });
-
-const getAllLabels = () => stateOptions.value.map((i) => i.label) || [];
 
 const handleCheckAllChange = (checkAll: boolean) => {
   stateLabel.value = checkAll ? getAllLabels() : [];
   isIndeterminate.value = false;
-
   emitChange();
 };
 
@@ -119,7 +119,6 @@ const handleCheckChange = (values: string[]) => {
   isCheckAll.value = checkedCount === stateOptions.value.length;
   isIndeterminate.value =
     checkedCount > 0 && checkedCount < stateOptions.value.length;
-
   emitChange();
 };
 

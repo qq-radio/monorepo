@@ -2,13 +2,7 @@
   <BasicSelect
     v-model="value"
     multiple
-    :formatter="
-      (option) => ({
-        ...option,
-        label: `${option.province}/${option.city}/${option.region}`,
-        value: option.code,
-      })
-    "
+    :formatter="formatter"
     :options="options"
   />
   <div>当前选中值：{{ value }}</div>
@@ -20,8 +14,14 @@ import { BasicSelect } from "@center/components";
 const value = ref();
 
 const options = [
-  { province: "福建", city: "泉州", region: "鲤城区", code: "li_cheng" },
+  { province: "广东", city: "佛山", region: "顺德区", code: "shun_de" },
+  { province: "广东", city: "汕头", region: "金平区", code: "jin_ping" },
   { province: "广东", city: "深圳", region: "南山区", code: "nan_shan" },
-  { province: "广东", city: "深圳", region: "龙岗区", code: "long_gang" },
 ];
+
+const formatter = (option) => ({
+  ...option,
+  label: `${option.province}/${option.city}/${option.region}`,
+  value: option.code,
+});
 </script>

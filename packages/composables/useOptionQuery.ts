@@ -35,20 +35,20 @@ export function useOptionQuery<T extends Option>(props: {
   const init = async () => {
     try {
       if (isArray(props.options)) {
-        options.value = handleOptions(props.options);
+        options.value = normalizeOptions(props.options);
         return;
       }
 
       if (isFunction(props.api)) {
         const result = await props.api();
-        options.value = handleOptions(result);
+        options.value = normalizeOptions(result);
       }
     } catch (error) {
       console.error("UseOptionQuery init error:", error);
     }
   };
 
-  const handleOptions = (result: unknown) => {
+  const normalizeOptions = (result) => {
     const { resultField, labelField, valueField, formatter } = props;
 
     let list = resultField ? getValue(result, resultField) : result;
@@ -71,48 +71,38 @@ export function useOptionQuery<T extends Option>(props: {
     return list;
   };
 
-  const findLabel = (value: Value) =>
-    options.value.find((s) => s.value === value)?.label;
-
-  const findOptions = (values: Value[]) => {
-    return options.value.filter((option) =>
-      values.includes(option.value || "")
-    );
-  };
-
-  const findOption = (value: Value) => {
-    return options.value.filter((option) => option.value === value);
-  };
-
-  const findLabels = (values?: Value[]) => {
-    return values?.length
-      ? options.value
-          .filter((option) => values.includes(option.value || ""))
-          .map((i) => i.label)
-      : [];
-  };
-
-  const findValues = (labels?: string[]) => {
-    return labels?.length
-      ? options.value
-          .filter((option) => labels.includes(option.label || ""))
-          .map((i) => i.value)
-      : [];
-  };
+  const getAllLabels = () => options.value.map((i) => i.label) || [];
 
   const getAllValues = () => options.value.map((i) => i.value) || [];
 
-  const getAllLabels = () => options.value.map((i) => i.label) || [];
+  const findOption = (value: Value) => {
+    return options.value.find((option) => option.value === value);
+  };
+
+  const findLabel = (value: Value) => findOption(value)?.label;
+
+  const findOptions = (values: Value[]) =>
+    options.value.filter((option) => values.includes(option.value));
+
+  const findLabels = (values: Value[]) =>
+    values?.length ? findOptions(values).map((i) => i.label) : [];
+
+  const findValues = (labels: string[]) =>
+    labels?.length
+      ? options.value
+          .filter((option) => labels.includes(option.label))
+          .map((i) => i.value)
+      : [];
 
   return {
     options,
     init,
+    getAllLabels,
+    getAllValues,
+    findOption,
     findLabel,
     findOptions,
-    findOption,
     findLabels,
     findValues,
-    getAllValues,
-    getAllLabels,
   };
 }

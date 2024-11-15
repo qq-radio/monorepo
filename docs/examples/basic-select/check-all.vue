@@ -9,8 +9,8 @@ import { BasicSelect } from "@center/components";
 const value = ref();
 
 const options = [
-  { label: "苹果", value: "iphone" },
-  { label: "小米", value: "xiaomi" },
-  { label: "华为", value: "huawei" },
+  { label: "面包", value: "bread" },
+  { label: "饼干", value: "cookies" },
+  { label: "糖果", value: "candy" },
 ];
 </script>

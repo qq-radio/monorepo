@@ -46,6 +46,7 @@ import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
 
 defineOptions({
   name: "BasicRadioGroup",
+  inheritAttrs: false,
 });
 
 const attrs = useAttrs();
@@ -59,14 +60,19 @@ const getBindValues = computed(() => ({
   ...attrs,
 }));
 
+const stateLabel = ref<string>();
+const stateValue = ref<RadioValue>();
+
 const {
   options: stateOptions,
   init,
   findLabel,
+  findOption,
 } = useOptionQuery<RadioOption>(props);
 
-const stateLabel = ref<string>();
-const stateValue = ref<RadioValue>();
+onMounted(() => {
+  init();
+});
 
 watch(
   () => props.modelValue,
@@ -98,15 +104,15 @@ const handleClick = (option: RadioOption) => {
   stateLabel.value = flag ? undefined : label;
   stateValue.value = flag ? "" : value;
 
-  emit("update:modelValue", stateValue.value);
-  emit("change", {
-    value,
-    label,
-    option: flag ? undefined : option,
-  });
+  emitChange();
 };
 
-onMounted(() => {
-  init();
-});
+const emitChange = () => {
+  emit("update:modelValue", stateValue.value);
+  emit("change", {
+    value: stateValue.value,
+    label: stateLabel.value,
+    option: findOption(stateValue.value),
+  });
+};
 </script>

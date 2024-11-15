@@ -38,12 +38,8 @@
         <span v-else>{{ item.label }}</span>
       </el-option>
     </template>
-    <template
-      v-for="slotName in Object.keys(slots)"
-      :key="slotName"
-      #[slotName]="scope"
-    >
-      <slot :name="slotName" v-bind="scope" />
+    <template v-for="name in inheritSlots" :key="name" #[name]="scope">
+      <slot :name="name" v-bind="scope" />
     </template>
   </el-select>
 </template>
@@ -53,7 +49,7 @@ import {
   BasicSelectProps,
   BasicSelectEmits,
   SelectOption,
-  ModelValue,
+  SelectValue,
   SelectCallbackParams,
 } from "./type";
 
@@ -66,10 +62,12 @@ const ns = useBasicNamespace("select");
 
 defineOptions({
   name: "BasicSelect",
+  inheritAttrs: false,
 });
 
 const attrs = useAttrs();
 const slots = useSlots();
+const inheritSlots = () => Object.keys(slots).filter((k) => k !== "default");
 
 const props = withDefaults(defineProps<BasicSelectProps>(), {
   clearable: true,
@@ -86,14 +84,14 @@ const getBindValues = computed(() => ({
 const isCheckAll = ref(false);
 const isIndeterminate = ref(false);
 
-const stateValue = ref<ModelValue>();
+const stateValue = ref<SelectValue>();
 
 const {
   options: stateOptions,
   init,
-  findLabels,
   getAllValues,
   findOptions,
+  findLabels,
   findOption,
 } = useOptionQuery<SelectOption>(props);
 
@@ -110,14 +108,14 @@ watch(
 );
 
 const getCallbackParams = (item: SelectOption): SelectCallbackParams => ({
-  value: stateValue.value,
+  labels: findLabels(stateValue.value),
+  values: stateValue.value,
   option: item,
 });
 
 const handleCheckAllChange = (checkAll: boolean) => {
   stateValue.value = checkAll ? getAllValues() : [];
   isIndeterminate.value = false;
-
   emitChange();
 };
 
@@ -126,7 +124,6 @@ const handleChange = (values: string[]) => {
   isCheckAll.value = checkedCount === stateOptions.value.length;
   isIndeterminate.value =
     checkedCount > 0 && checkedCount < stateOptions.value.length;
-
   emitChange();
 };
 

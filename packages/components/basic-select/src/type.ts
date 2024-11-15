@@ -1,5 +1,5 @@
 export interface BasicSelectProps {
-  modelValue?: ModelValue;
+  modelValue?: SelectValue;
   hasCheckAll?: boolean;
   multiple?: boolean;
   clearable?: boolean;
@@ -15,29 +15,36 @@ export interface BasicSelectProps {
 }
 
 export interface BasicSelectEmits {
-  (e: "update:modelValue", value: ModelValue): void;
+  (e: "update:modelValue", value: SelectValue): void;
   (
     e: "change",
     params: {
-      value: ModelValue;
-      label: string[];
+      labels: string[];
+      values: SelectValue;
       options: SelectOption[];
     }
   ): void;
 }
 
+export type SelectValue =
+  | undefined
+  | string
+  | number
+  | boolean
+  | string[]
+  | number[];
+
 export interface SelectOption {
-  label?: string;
-  value?: string | number;
+  label: string;
+  value: string | number;
   disabled?: boolean;
 
   customRender?: Render;
   customSlot?: string;
 }
 
-export type ModelValue = string | number | boolean | string[] | number[];
-
 export interface SelectCallbackParams {
-  value?: ModelValue;
+  labels: string[];
+  values: SelectValue;
   option: SelectOption;
 }

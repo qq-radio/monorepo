@@ -2,11 +2,11 @@
   <BasicRadioGroup
     v-model="value"
     v-bind="{
-      resultField: 'result',
+      resultField: 'data',
       labelField: 'province',
       valueField: 'name',
     }"
-    :api="options"
+    :api="api"
   />
   <div>当前选中值：{{ value }}</div>
 </template>
@@ -16,13 +16,13 @@ import { BasicRadioGroup } from "@center/components";
 
 const value = ref();
 
-const options = () => {
+const api = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         code: 200,
         message: "响应成功",
-        result: [
+        data: [
           { province: "北京", name: "beijing" },
           { province: "上海", name: "shanghai" },
           { province: "广州", name: "guangzhou" },

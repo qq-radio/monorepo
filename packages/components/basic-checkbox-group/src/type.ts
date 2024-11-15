@@ -1,5 +1,5 @@
 export interface BasicCheckboxGroupProps {
-  modelValue?: ModelValue;
+  modelValue?: CheckboxValue;
   isButton?: boolean;
   hasCheckAll?: boolean;
 
@@ -8,21 +8,24 @@ export interface BasicCheckboxGroupProps {
   resultField?: string;
   labelField?: string;
   valueField?: string;
+  formatter?: (option: any) => any;
 
   render?: Render;
 }
 
 export interface BasicCheckboxGroupEmits {
-  (e: "update:modelValue", value: ModelValue): void;
+  (e: "update:modelValue", value: CheckboxValue): void;
   (
     e: "change",
     params: {
-      value: ModelValue;
       labels: string[];
+      values: CheckboxValue;
       options: CheckboxOption[];
     }
   ): void;
 }
+
+export type CheckboxValue = (string | number)[];
 
 export interface CheckboxOption {
   label: string;
@@ -36,9 +39,8 @@ export interface CheckboxOption {
   customSlot?: string;
 }
 
-export type ModelValue = (string | number)[];
-
 export interface CheckboxCallbackParams {
-  value?: ModelValue;
+  labels: string[];
+  values: CheckboxValue;
   option: CheckboxOption;
 }
