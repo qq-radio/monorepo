@@ -14,6 +14,22 @@ function addDefaultComponent(schemaItem: FormSchema) {
   );
 }
 
+function addTextareaProps(schemaItem: FormSchema) {
+  if (schemaItem.component === "textarea") {
+    return merge(
+      {
+        componentProps: {
+          type: "textarea",
+          showWordLimit: true,
+        },
+      },
+      schemaItem
+    );
+  }
+
+  return schemaItem;
+}
+
 function addFormItemStyle(schemaItem: FormSchema) {
   if (
     ["input-number", "select", "tree-select", "cascader"].includes(
@@ -135,6 +151,7 @@ function sortSchemas(schemas: FormSchema[]) {
 function normalizeSchemaItem(schemaItem: FormSchema): NormalizedFormSchema {
   return [
     addDefaultComponent,
+    addTextareaProps,
     addFormItemStyle,
     addFormItemPlaceholder,
     addTimePickerPlaceholder,

@@ -7,13 +7,19 @@
 
 ## 基本使用
 
-您可以传入`schemas`数组渲染一组表单项，替代手动`v-for`渲染`el-form-item`，并使用`component`字段设置各表单项渲染的组件类型，若未设置`component`则默认为`input`。以下示例列出了目前支持的15种表单项组件类型
+您可以传入`schemas`数组渲染一组表单项，替代手动`v-for`渲染`el-form-item`，并使用`component`字段设置各表单项渲染的组件类型，若未设置`component`则默认为`input`。以下示例列出了已支持的15种表单项组件类型
 
 :::demo
 basic-form/basic
 :::
 
 ## 透传组件属性
+
+您可以通过`componentProps`传递表单项`component`组件所需的属性
+
+:::warning
+若`componentProps`透传属性未生效，请参考
+:::
 
 :::demo
 basic-form/passing-props

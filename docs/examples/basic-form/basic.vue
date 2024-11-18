@@ -137,12 +137,12 @@ const schemas: FormSchema[] = [
     prop: "work",
     component: "checkbox-group",
     componentProps: {
-      hasCheckAll: true,
       options: [
         { label: "前端开发", value: "front_end_dev" },
         { label: "后端开发", value: "back_end_dev" },
         { label: "全栈", value: "full_dev" },
       ],
+      hasCheckAll: true,
     },
     required: true,
   },
