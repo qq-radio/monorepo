@@ -16,23 +16,86 @@
 
 <script lang="tsx" setup>
 import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
-import department from "../../mocks/department.json";
 
 import { ref } from "vue";
 
 const activeNames = ref(["example"]);
 
+const options = [
+  {
+    id: 7001,
+    name: "广东",
+    children: [
+      {
+        id: 7101,
+        parentId: 7001,
+        name: "佛山",
+        children: [
+          { id: 9001, parentId: 7101, name: "南海" },
+          { id: 9002, parentId: 7101, name: "顺德" },
+        ],
+      },
+      {
+        id: 7102,
+        parentId: 7001,
+        name: "深圳",
+        children: [
+          { id: 9003, parentId: 7102, name: "龙岗" },
+          { id: 9004, parentId: 7102, name: "龙华" },
+        ],
+      },
+    ],
+  },
+  {
+    id: 8001,
+    name: "广西",
+    children: [
+      {
+        id: 8101,
+        parentId: 8001,
+        name: "南宁",
+        children: [
+          { id: 9005, parentId: 8101, name: "兴宁" },
+          { id: 9006, parentId: 8101, name: "青秀" },
+        ],
+      },
+      {
+        id: 8102,
+        parentId: 8001,
+        name: "桂林",
+        children: [
+          { id: 9007, parentId: 8102, name: "秀峰" },
+          { id: 9008, parentId: 8102, name: "雁山" },
+        ],
+      },
+    ],
+  },
+];
+
+function filterTreeByDepth(data, depth) {
+  if (depth < 1) return [];
+
+  return data.map(({ children, ...rest }) => {
+    if (depth === 1) {
+      return rest;
+    }
+
+    return {
+      ...rest,
+      children: children ? filterTreeByDepth(children, depth - 1) : undefined,
+    };
+  });
+}
+
 const formModel = ref({
-  username: "李华",
-  age: 18,
-  remark: "这是一段说明",
+  isEnable: true,
+  isFull: true,
 });
 
 const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-    component: "input",
     required: true,
   },
   {
@@ -48,66 +111,72 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "手机",
-    prop: "phone",
+    label: "岗位",
+    prop: "job",
     component: "radio-group",
     componentProps: {
       options: [
-        { label: "苹果", value: "iphone" },
-        { label: "小米", value: "xiaomi" },
-        { label: "华为", value: "huawei" },
+        { label: "产品经理", value: "product_manager" },
+        { label: "开发", value: "developer" },
+        { label: "测试", value: "tester" },
       ],
     },
     required: true,
   },
   {
-    label: "是否全职",
-    prop: "fruit",
+    label: "是否生效",
+    prop: "isEnable",
     component: "checkbox",
+    componentSlots: {
+      default: () => "已生效",
+    },
     required: true,
   },
   {
-    label: "水果",
-    prop: "fruit",
+    label: "工作",
+    prop: "work",
     component: "checkbox-group",
     componentProps: {
+      hasCheckAll: true,
       options: [
-        { label: "葡萄", value: "grape" },
-        { label: "苹果", value: "apple" },
-        { label: "橘子", value: "orange" },
+        { label: "前端开发", value: "front_end_dev" },
+        { label: "后端开发", value: "back_end_dev" },
+        { label: "全栈", value: "full_dev" },
       ],
     },
     required: true,
   },
   {
-    label: "运动",
-    prop: "sport",
+    label: "省份",
+    prop: "provinceId",
     component: "select",
     componentProps: {
-      options: [
-        { label: "足球", value: "football" },
-        { label: "篮球", value: "basketball" },
-        { label: "羽毛球", value: "badminton" },
-      ],
+      options: filterTreeByDepth(options, 1),
+      labelField: "name",
+      valueField: "id",
     },
     required: true,
   },
   {
-    label: "部门",
-    prop: "department",
+    label: "城市",
+    prop: "cityId",
     component: "tree-select",
     componentProps: {
-      data: department,
-      props: { value: "id", label: "name", children: "children" },
+      data: filterTreeByDepth(options, 2),
+      props: {
+        value: "id",
+        label: "name",
+        children: "children",
+      },
     },
     required: true,
   },
   {
-    label: "服务处",
-    prop: "service",
+    label: "区域",
+    prop: "regionId",
     component: "cascader",
     componentProps: {
-      options: department,
+      options: filterTreeByDepth(options, 3),
       props: {
         value: "id",
         label: "name",
@@ -138,18 +207,18 @@ const schemas: FormSchema[] = [
   },
   {
     label: "绩效评分",
-    prop: "score",
+    prop: "performanceScore",
     component: "rate",
     required: true,
   },
   {
     label: "技能分",
-    prop: "skill",
+    prop: "skillScore",
     component: "slider",
     required: true,
   },
   {
-    label: "喜爱颜色",
+    label: "颜色",
     prop: "color",
     component: "color-picker",
     required: true,
@@ -158,8 +227,9 @@ const schemas: FormSchema[] = [
 
 const [registerForm] = useForm({
   schemas,
-  labelWidth: "180px",
 });
 
-const handleSubmit = () => {};
+const handleSubmit = (values) => {
+  console.log("表单填写值:", values);
+};
 </script>

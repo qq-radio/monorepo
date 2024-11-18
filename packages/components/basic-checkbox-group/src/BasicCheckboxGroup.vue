@@ -1,12 +1,14 @@
 <template>
-  <el-checkbox
-    v-if="hasCheckAll"
-    v-model="isCheckAll"
-    :indeterminate="isIndeterminate"
-    @change="handleCheckAllChange"
-  >
-    全选
-  </el-checkbox>
+  <div style="width: 100%">
+    <el-checkbox
+      v-if="hasCheckAll"
+      v-model="isCheckAll"
+      :indeterminate="isIndeterminate"
+      @change="handleCheckAllChange"
+    >
+      全选
+    </el-checkbox>
+  </div>
   <el-checkbox-group
     v-bind="getBindValues"
     v-model="stateLabel"

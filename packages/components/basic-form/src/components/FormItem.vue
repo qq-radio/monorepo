@@ -33,7 +33,6 @@
             v-bind="getComponentProps"
             v-model="stateValue"
             :disabled="getDisabled"
-            style="width: 100%"
             @change="(...v: unknown[]) => onChange(v)"
           >
             <template
@@ -63,7 +62,6 @@ import { getComponent } from "../tools/component";
 
 import { useFormItemHandler } from "../hooks/useFormItemHandler";
 
-import { isFalse } from "@center/utils";
 import { useSlots, ref, watchEffect, computed } from "vue";
 import { isFunction, isUndefined, merge } from "lodash";
 import { InfoFilled } from "@element-plus/icons-vue";

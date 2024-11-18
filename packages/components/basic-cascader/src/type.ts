@@ -2,7 +2,7 @@ export interface BasicCascaderProps {
   modelValue?: CascaderModelValue;
   clearable?: boolean;
 
-  data?: Recordable[];
+  options?: Recordable[];
   api?: () => Promise<any>;
   resultField?: string;
 }

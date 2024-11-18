@@ -14,6 +14,27 @@ function addDefaultComponent(schemaItem: FormSchema) {
   );
 }
 
+function addFormItemStyle(schemaItem: FormSchema) {
+  if (
+    ["input-number", "select", "tree-select", "cascader"].includes(
+      schemaItem.component
+    )
+  ) {
+    return merge(
+      {
+        componentProps: {
+          style: {
+            width: "100%",
+          },
+        },
+      },
+      schemaItem
+    );
+  }
+
+  return schemaItem;
+}
+
 function getPlaceholder(schemaItem) {
   return getPrefix(schemaItem.component) + schemaItem.label;
 }
@@ -76,19 +97,31 @@ function addFormItemAllowClear(schemaItem: FormSchema) {
 }
 
 function addFormItemTimeFormat(schemaItem: FormSchema) {
-  if (schemaItem.component !== "date-picker") {
-    return schemaItem;
+  if (schemaItem.component === "date-picker") {
+    return merge(
+      {
+        componentProps: {
+          format: schemaItem?.componentProps?.format || "YYYY-MM-DD",
+          valueFormat: schemaItem?.componentProps?.valueFormat || "YYYY-MM-DD",
+        },
+      },
+      schemaItem
+    );
   }
 
-  return merge(
-    {
-      componentProps: {
-        format: schemaItem?.componentProps?.format || "YYYY-MM-DD",
-        valueFormat: schemaItem?.componentProps?.valueFormat || "YYYY-MM-DD",
+  if (schemaItem.component === "time-picker") {
+    return merge(
+      {
+        componentProps: {
+          format: schemaItem?.componentProps?.format || "HH:mm:ss",
+          valueFormat: schemaItem?.componentProps?.valueFormat || "HH:mm:ss",
+        },
       },
-    },
-    schemaItem
-  );
+      schemaItem
+    );
+  }
+
+  return schemaItem;
 }
 
 function filterSchemas(schemas: FormSchema[]) {
@@ -102,6 +135,7 @@ function sortSchemas(schemas: FormSchema[]) {
 function normalizeSchemaItem(schemaItem: FormSchema): NormalizedFormSchema {
   return [
     addDefaultComponent,
+    addFormItemStyle,
     addFormItemPlaceholder,
     addTimePickerPlaceholder,
     addDateRangePlaceholder,

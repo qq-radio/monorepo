@@ -55,8 +55,8 @@ watch(
 
 const init = async () => {
   try {
-    if (isArray(props.data)) {
-      cascaderDatas.value = props.data;
+    if (isArray(props.options)) {
+      cascaderDatas.value = props.options;
       return;
     }
 

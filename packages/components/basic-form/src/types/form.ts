@@ -8,6 +8,7 @@ import type {
   FormItemRule,
 } from "element-plus";
 import type { Mutable } from "element-plus/es/utils";
+import { Recordable } from "global";
 
 export type ElementPlusComponentType =
   | "input"
@@ -78,7 +79,7 @@ export interface FormSchema {
   // 自定义渲染 - field
   component?: ComponentType;
   componentProps?: ComponentProps;
-  componentSlots?: Slots;
+  componentSlots?: Recordable<Slots>;
   componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
   customRender?: Render;
