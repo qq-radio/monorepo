@@ -50,7 +50,7 @@ const schemas: FormSchema[] = [
   {
     label: "radio-手机",
     prop: "phone",
-    component: "radio",
+    component: "radio-group",
     componentProps: {
       options: [
         { label: "苹果", value: "iphone" },
@@ -63,7 +63,7 @@ const schemas: FormSchema[] = [
   {
     label: "checkbox-水果",
     prop: "fruit",
-    component: "checkbox",
+    component: "checkbox-group",
     componentProps: {
       options: [
         { label: "葡萄", value: "grape" },

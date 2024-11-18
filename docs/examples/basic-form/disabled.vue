@@ -29,7 +29,7 @@ const schemas: FormSchema[] = [
   {
     label: "礼物",
     prop: "gift",
-    component: "radio",
+    component: "radio-group",
     componentProps: {
       options: [
         { label: "手机", value: "phone" },

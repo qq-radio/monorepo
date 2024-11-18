@@ -1,6 +1,14 @@
-<!-- 你要在大改之前写出1个可以运行的例子
+# BasicForm 表单
 
-基本使用
+# 简介
+
+- 通过`schemas`配置渲染一组表单项
+- 支持表单联动
+- 使用`composables`封装可复用逻辑
+
+# 基本使用
+
+您可以传入`schemas`数组渲染一组表单项，替代手动`v-for`渲染`el-form-item`，并使用`component`字段设置各表单项渲染的组件类型。以下示例列出了目前支持的15种表单项组件类型
 
 :::demo
 basic-form/basic
@@ -16,12 +24,6 @@ basic-form/passing-props
 
 :::demo
 basic-form/passing-slots
-:::
-
-表单布局
-
-:::demo
-basic-form/layout
 :::
 
 分组表单
@@ -41,9 +43,6 @@ basic-form/group-form-with-custom-render
 :::demo
 basic-form/group-form-with-custom-slot
 :::
-
-
-
 
 文字提示
 
@@ -81,9 +80,6 @@ basic-form/use-form-methods-with-component-props
 basic-form/use-form-methods-with-hook
 ::: -->
 
-不知道为什么 但是表单按钮的布局就是做不好
-
-<!--
 表单布局
 
 默认布局，水平方向`{span: 24}`
@@ -102,9 +98,7 @@ basic-form/layout-inline
 
 :::demo
 basic-form/layout-group-form
-::: -->
-
-表单布局 那你气死好了
+:::
 
 :::demo
 basic-form/layout-row

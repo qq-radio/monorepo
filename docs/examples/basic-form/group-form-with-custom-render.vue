@@ -58,7 +58,7 @@ const schemas: FormSchema[] = [
   {
     label: "水果",
     prop: "fruit",
-    component: "checkbox",
+    component: "checkbox-group",
     componentProps: {
       options: [
         { label: "葡萄", value: "grape" },

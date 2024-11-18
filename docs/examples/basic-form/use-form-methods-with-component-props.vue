@@ -24,7 +24,7 @@ const schemas: FormSchema[] = [
   {
     label: "礼物",
     prop: "gift",
-    component: "radio",
+    component: "radio-group",
     required: true,
     componentProps: ({
       value,
@@ -56,7 +56,7 @@ const schemas: FormSchema[] = [
             {
               label: "充电线",
               prop: "service",
-              component: "radio",
+              component: "radio-group",
               componentProps: {
                 options: [
                   { label: "快充", value: "fast" },

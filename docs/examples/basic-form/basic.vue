@@ -1,11 +1,17 @@
 <template>
-  表单填写值{{ formModel }}
-  <BasicForm
-    v-model="formModel"
-    @submit="handleSubmit"
-    @register="registerForm"
-    hasFooter
-  />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="示例" name="example">
+      <BasicForm
+        v-model="formModel"
+        @register="registerForm"
+        @submit="handleSubmit"
+        hasFooter
+      />
+    </el-collapse-item>
+    <el-collapse-item title="表单值" name="data">
+      {{ formModel }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script lang="tsx" setup>
@@ -13,6 +19,8 @@ import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
 import department from "../../mocks/department.json";
 
 import { ref } from "vue";
+
+const activeNames = ref(["example"]);
 
 const formModel = ref({
   username: "李华",
@@ -42,7 +50,7 @@ const schemas: FormSchema[] = [
   {
     label: "手机",
     prop: "phone",
-    component: "radio",
+    component: "radio-group",
     componentProps: {
       options: [
         { label: "苹果", value: "iphone" },
@@ -53,9 +61,15 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "水果",
+    label: "是否全职",
     prop: "fruit",
     component: "checkbox",
+    required: true,
+  },
+  {
+    label: "水果",
+    prop: "fruit",
+    component: "checkbox-group",
     componentProps: {
       options: [
         { label: "葡萄", value: "grape" },

@@ -2,9 +2,9 @@ import type { ComponentType } from "../types";
 import {
   ElInput,
   ElInputNumber,
+  ElCheckbox,
   ElDatePicker,
   ElTimePicker,
-  ElCascader,
   ElSwitch,
   ElRate,
   ElSlider,
@@ -22,17 +22,19 @@ const componentMap = new Map<ComponentType, Component>();
 componentMap.set("input", ElInput);
 componentMap.set("input-number", ElInputNumber);
 componentMap.set("textarea", ElInput);
-componentMap.set("radio", BasicRadioGroup);
-componentMap.set("checkbox", BasicCheckboxGroup);
-componentMap.set("select", BasicSelect);
-componentMap.set("tree-select", BasicTreeSelect);
-componentMap.set("cascader", BasicCascader);
+componentMap.set("checkbox", ElCheckbox);
 componentMap.set("date-picker", ElDatePicker);
 componentMap.set("time-picker", ElTimePicker);
 componentMap.set("switch", ElSwitch);
 componentMap.set("rate", ElRate);
 componentMap.set("slider", ElSlider);
 componentMap.set("color-picker", ElColorPicker);
+
+componentMap.set("radio-group", BasicRadioGroup);
+componentMap.set("checkbox-group", BasicCheckboxGroup);
+componentMap.set("select", BasicSelect);
+componentMap.set("tree-select", BasicTreeSelect);
+componentMap.set("cascader", BasicCascader);
 
 function getComponent(component?: ComponentType): Component {
   return componentMap.get(component || "input") || ElInput;

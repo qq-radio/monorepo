@@ -147,7 +147,7 @@ const schemas: FormSchema[] = [
   {
     label: "√要求",
     prop: "demand",
-    component: "checkbox",
+    component: "checkbox-group",
     componentProps: {
       options: [
         {
@@ -168,7 +168,7 @@ const schemas: FormSchema[] = [
   {
     label: "梦想",
     prop: "gift",
-    component: "radio",
+    component: "radio-group",
     componentProps: {
       options: [
         {

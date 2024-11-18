@@ -34,7 +34,7 @@ const schemas: FormSchema[] = [
   {
     label: "手机",
     prop: "phone",
-    component: "radio",
+    component: "radio-group",
     componentProps: {
       options: [
         { label: "苹果", value: "iphone" },

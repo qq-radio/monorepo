@@ -14,8 +14,6 @@ export type ElementPlusComponentType =
   | "input-number"
   | "textarea"
   | "checkbox"
-  | "tree-select"
-  | "cascader"
   | "date-picker"
   | "time-picker"
   | "switch"
@@ -24,10 +22,11 @@ export type ElementPlusComponentType =
   | "color-picker";
 
 export type CustomComponentType =
-  | "title"
-  | "radio"
+  | "radio-group"
   | "checkbox-group"
   | "select"
+  | "tree-select"
+  | "cascader"
   | "upload";
 
 export type ComponentType = ElementPlusComponentType | CustomComponentType;
