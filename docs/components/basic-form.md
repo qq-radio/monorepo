@@ -61,9 +61,9 @@ basic-form/disabled
 basic-form/tooltip
 :::
 
-## 重置/清空
+## 重置
 
-当点击重置按钮时，重置各表单项的值为对应的`defaultValue`，需要注意，重置是将表单值恢复为`defaultValue`而非清空，若您希望清空表单所有的值，应当使用清空按钮
+当点击重置按钮时，重置各表单项的值为对应的`defaultValue`，需要注意，重置是将表单值恢复为`defaultValue`而非清空
 
 :::demo
 basic-form/reset
@@ -71,7 +71,7 @@ basic-form/reset
 
 ## 表单布局 - 垂直
 
-默认布局，水平方向`{span: 24}`
+表单采用`el-row`和`el-col`结合的栅格布局，您可以通过`rowProps`传递`el-row`需要的属性，可以通过`colProps`传递`el-col`需要的属性。其中表单中的各项采用`el-col`作为`el-form-item`的布局容器，默认各项栅格占据列数为24，当`el-col`默认为`{span: 24}`时便等同于表单默认垂直布局
 
 :::demo
 basic-form/layout-vertical
@@ -79,29 +79,55 @@ basic-form/layout-vertical
 
 ## 表单布局 - 内联
 
+若您希望采用水平布局或内联布局，可全局设置`colProps`或单独设置表单项的`colProps`
+
 :::demo
 basic-form/layout-inline
 :::
 
-## 自定义渲染 - `customRender`
+## 自定义渲染 - `customRender`/`tsx`
+
+可以通过`customRender`/`tsx`自定义渲染表单项
 
 :::demo
-basic-form/custom-render
+basic-form/custom-render-tsx
+:::
+
+## 自定义渲染 - `customRender`/`h`
+
+可以通过`customRender`/`h`自定义渲染表单项
+
+:::demo
+basic-form/custom-render-h
 :::
 
 ## 自定义渲染 - `customSlot`
+
+可以通过`customSlot`自定义渲染表单项
 
 :::demo
 basic-form/custom-slot
 :::
 
-## 自定义渲染 - `customLabelRender`
+## 自定义渲染 - `customLabelRender`/`tsx`
+
+可以通过`customLabelRender`/`tsx`自定义渲染表单项的`label`
 
 :::demo
-basic-form/custom-label-render
+basic-form/custom-label-render-tsx
+:::
+
+## 自定义渲染 - `customLabelRender`/`h`
+
+可以通过`customLabelRender`/`h`自定义渲染表单项的`label`
+
+:::demo
+basic-form/custom-label-render-h
 :::
 
 ## 自定义渲染 - `customLabelSlot`
+
+可以通过`customLabelSlot`自定义渲染表单项的`label`
 
 :::demo
 basic-form/custom-label-slot

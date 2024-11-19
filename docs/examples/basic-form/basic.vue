@@ -212,7 +212,7 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "技能分",
+    label: "技能评分",
     prop: "skillScore",
     component: "slider",
     required: true,

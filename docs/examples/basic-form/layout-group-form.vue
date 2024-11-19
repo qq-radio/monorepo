@@ -30,7 +30,7 @@ const schemas: FormSchema[] = [
     component: "radio-group",
     componentProps: {
       options: [
-        { label: "苹果", value: "iphone" },
+        { label: "樱桃", value: "iphone" },
         { label: "小米", value: "xiaomi" },
         { label: "华为", value: "huawei" },
       ],
@@ -43,7 +43,7 @@ const schemas: FormSchema[] = [
     componentProps: {
       options: [
         { label: "葡萄", value: "grape" },
-        { label: "苹果", value: "apple" },
+        { label: "樱桃", value: "cherry" },
         { label: "橘子", value: "orange" },
       ],
     },
@@ -70,7 +70,7 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "技能分",
+    label: "技能评分",
     prop: "skill",
     component: "slider",
     required: true,

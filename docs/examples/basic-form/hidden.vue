@@ -42,7 +42,7 @@ const schemas: FormSchema[] = [
     component: "select",
     componentProps: {
       options: [
-        { label: "苹果", value: "iphone" },
+        { label: "樱桃", value: "iphone" },
         { label: "小米", value: "xiaomi" },
         { label: "华为", value: "huawei" },
       ],

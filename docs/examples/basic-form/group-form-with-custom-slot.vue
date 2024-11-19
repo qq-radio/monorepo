@@ -74,7 +74,7 @@ const schemas: FormSchema[] = [
     componentProps: {
       options: [
         { label: "葡萄", value: "grape" },
-        { label: "苹果", value: "apple" },
+        { label: "樱桃", value: "cherry" },
         { label: "橘子", value: "orange" },
       ],
     },

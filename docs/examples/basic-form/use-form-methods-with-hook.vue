@@ -76,7 +76,7 @@ const schemas: FormSchema[] = [
                   component: "select",
                   componentProps: {
                     options: [
-                      { label: "苹果1111", value: "iphone" },
+                      { label: "樱桃1111", value: "iphone" },
                       { label: "小米1111", value: "xiaomi" },
                       { label: "华为111", value: "huawei" },
                     ],
@@ -122,7 +122,7 @@ const schemas: FormSchema[] = [
     component: "select",
     componentProps: {
       options: [
-        { label: "苹果", value: "iphone" },
+        { label: "樱桃", value: "iphone" },
         { label: "小米", value: "xiaomi" },
         { label: "华为", value: "huawei" },
       ],
@@ -167,7 +167,7 @@ const updateItem = () => {
     component: "select",
     componentProps: {
       options: [
-        { label: "22222222222222苹果", value: "iphone" },
+        { label: "22222222222222樱桃", value: "iphone" },
         { label: "22222222222222小米", value: "xiaomi" },
         { label: "22222222222222华为", value: "huawei" },
       ],
