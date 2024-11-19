@@ -1,10 +1,30 @@
 <template>
-  <BasicForm @submit="handleSubmit" @register="registerForm" hasFooter />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="示例" name="example">
+      <BasicForm
+        v-model="model"
+        :schemas="schemas"
+        @clear="handleClear"
+        @reset="handleReset"
+        @submit="handleSubmit"
+        hasFooter
+        hasClear
+      />
+    </el-collapse-item>
+    <el-collapse-item title="表单值" name="data">
+      {{ model }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script lang="tsx" setup>
-import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
-import department from "../../mocks/department.json";
+import { BasicForm, FormSchema } from "@center/components/basic-form";
+
+import { ref } from "vue";
+
+const activeNames = ref(["example"]);
+
+const model = ref({});
 
 const schemas: FormSchema[] = [
   {
@@ -24,40 +44,24 @@ const schemas: FormSchema[] = [
         { label: "羽毛球", value: "badminton" },
       ],
     },
-    defaultValue: "football",
+    defaultValue: "basketball",
   },
   {
     label: "入职日期",
     prop: "joinDay",
     component: "date-picker",
   },
-  {
-    label: "手机",
-    prop: "phone",
-    component: "radio-group",
-    componentProps: {
-      options: [
-        { label: "苹果", value: "iphone" },
-        { label: "小米", value: "xiaomi" },
-        { label: "华为", value: "huawei" },
-      ],
-    },
-  },
-  {
-    label: "部门",
-    prop: "department",
-    component: "tree-select",
-    componentProps: {
-      data: department,
-      props: { value: "id", label: "name", children: "children" },
-    },
-  },
 ];
 
-const [registerForm] = useForm({
-  schemas,
-  labelWidth: "180px",
-});
+const handleClear = () => {
+  console.log("清空成功");
+};
 
-const handleSubmit = () => {};
+const handleReset = () => {
+  console.log("重置成功");
+};
+
+const handleSubmit = () => {
+  console.log("提交成功");
+};
 </script>

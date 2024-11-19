@@ -61,7 +61,9 @@ basic-form/disabled
 basic-form/tooltip
 :::
 
-## 重置
+## 重置/清空
+
+当点击重置按钮时，重置各表单项的值为对应的`defaultValue`，需要注意，重置是将表单值恢复为`defaultValue`而非清空，若您希望清空表单所有的值，应当使用清空按钮
 
 :::demo
 basic-form/reset
