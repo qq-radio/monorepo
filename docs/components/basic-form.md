@@ -27,15 +27,19 @@ basic-form/passing-props
 
 ## 透传组件插槽
 
-:::demo
-basic-form/passing-slots
-:::
+您可以通过`componentSlots`传递表单项`component`组件所需的插槽
 
 :::warning
 若`componentSlots`透传插槽未生效，请参考<链接连转>
 :::
 
+:::demo
+basic-form/passing-slots
+:::
+
 ## 表单项隐藏
+
+您可以通过`hidden`设置表单项是否隐藏
 
 :::demo
 basic-form/hidden
@@ -43,11 +47,15 @@ basic-form/hidden
 
 ## 表单项禁用
 
+您可以通过`disabled`设置表单项是否禁用
+
 :::demo
 basic-form/disabled
 :::
 
 ## 文字提示
+
+您可以通过`titleTooltip`设置分组表单标题`title`的提示语，也可以通过`labelTooltip`设置表单项`label`的提示语
 
 :::demo
 basic-form/tooltip
@@ -56,7 +64,7 @@ basic-form/tooltip
 ## 重置
 
 :::demo
-basic-form/default-value-and-reset
+basic-form/reset
 :::
 
 ## 表单布局 - 垂直
@@ -76,25 +84,25 @@ basic-form/layout-inline
 ## 自定义渲染 - `customRender`
 
 :::demo
-basic-form/layout-inline
+basic-form/custom-render
 :::
 
 ## 自定义渲染 - `customSlot`
 
 :::demo
-basic-form/layout-inline
+basic-form/custom-slot
 :::
 
 ## 自定义渲染 - `customLabelRender`
 
 :::demo
-basic-form/layout-inline
+basic-form/custom-label-render
 :::
 
 ## 自定义渲染 - `customLabelSlot`
 
 :::demo
-basic-form/layout-inline
+basic-form/custom-label-slot
 :::
 
 ## 分组表单
@@ -106,21 +114,23 @@ basic-form/group-form
 ## 分组表单 - 布局
 
 :::demo
-basic-form/layout-group-form
-:::
-
-:::demo
-basic-form/layout-row
+basic-form/group-form-layout
 :::
 
 ## 分组表单 - 自定义渲染 customTitleRender
 
 :::demo
-basic-form/group-form-with-custom-render
+basic-form/group-form-custom-title-render
 :::
 
 ## 分组表单 - 自定义渲染 customTitleSlot
 
 :::demo
-basic-form/group-form-with-custom-slot
+basic-form/group-form-custom-title-slot
+:::
+
+这个要干嘛？
+
+:::demo
+basic-form/layout-row
 :::

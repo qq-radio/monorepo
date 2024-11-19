@@ -1,12 +1,18 @@
 <template>
   <template v-if="schemaItem.title">
     <el-col v-bind="getTitleColProps">
-      <component v-if="isCustomTitle" :is="renderCustomTitle" />
-      <span v-else :class="ns.e('title')">{{ schemaItem.title }}</span>
-      <component
-        v-if="schemaItem.titleTooltip"
-        :is="renderTooltip(schemaItem.titleTooltip)"
-      />
+      <div :class="ns.e('title')">
+        <div>
+          <component v-if="isCustomTitle" :is="renderCustomTitle" />
+          <span v-else :class="ns.e('title-text')">{{ schemaItem.title }}</span>
+        </div>
+        <div>
+          <component
+            v-if="schemaItem.titleTooltip"
+            :is="renderTooltip(schemaItem.titleTooltip)"
+          />
+        </div>
+      </div>
     </el-col>
   </template>
   <template v-else>
@@ -18,12 +24,18 @@
         :rules="schemaItem.rules"
       >
         <template #label>
-          <component v-if="isCustomLabel" :is="renderLabelTitle" />
-          <span v-else>{{ schemaItem.label }}</span>
-          <component
-            v-if="schemaItem.labelTooltip"
-            :is="renderTooltip(schemaItem.labelTooltip)"
-          />
+          <div :class="ns.e('label')">
+            <div>
+              <component v-if="isCustomLabel" :is="renderLabelTitle" />
+              <span v-else>{{ schemaItem.label }}</span>
+            </div>
+            <div>
+              <component
+                v-if="schemaItem.labelTooltip"
+                :is="renderTooltip(schemaItem.labelTooltip)"
+              />
+            </div>
+          </div>
         </template>
         <template #default>
           <component v-if="isCustomField" :is="renderLabelField" />
@@ -201,7 +213,7 @@ const renderComponent = getComponent(props.schemaItem.component);
 const renderTooltip = (content) =>
   content && (
     <el-tooltip placement="top" content={content}>
-      <el-icon style="margin-left: 4px; vertical-align: middle">
+      <el-icon>
         <InfoFilled />
       </el-icon>
     </el-tooltip>

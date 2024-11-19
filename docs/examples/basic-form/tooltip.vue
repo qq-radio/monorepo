@@ -1,23 +1,26 @@
 <template>
-  <BasicForm
-    v-model="model"
-    @submit="submit"
-    @register="registerForm"
-    hasFooter
-  />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="示例" name="example">
+      <BasicForm v-model="model" :schemas="schemas" hasFooter />
+    </el-collapse-item>
+    <el-collapse-item title="表单值" name="data">
+      {{ model }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
-
 <script lang="tsx" setup>
 import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
+
+const activeNames = ref(["example"]);
 
 const model = ref({});
 
 const schemas: FormSchema[] = [
   {
     title: "基本信息",
-    titleTooltip: "数据仅用于会员套餐定制，不会透露您的隐私，请放心填写",
+    titleTooltip: "数据收集将会保密，不会透露您的隐私，请放心填写",
   },
   {
     label: "用户",
@@ -27,36 +30,22 @@ const schemas: FormSchema[] = [
     required: true,
   },
   {
-    label: "年龄",
-    prop: "age",
-    component: "input-number",
-    required: true,
+    title: "技能",
+    titleTooltip: "请根据实际情况选择您熟悉的技能",
   },
   {
-    title: "喜好",
-    titleTooltip: "根据您的喜好量身定制健身计划",
-  },
-  {
-    label: "运动",
-    prop: "sport",
-    component: "select",
+    label: "工作",
+    prop: "work",
+    component: "checkbox-group",
     componentProps: {
       options: [
-        { label: "足球", value: "football" },
-        { label: "篮球", value: "basketball" },
-        { label: "羽毛球", value: "badminton" },
+        { label: "前端开发", value: "front_end_dev" },
+        { label: "后端开发", value: "back_end_dev" },
+        { label: "全栈", value: "full_dev" },
       ],
     },
-    labelTooltip: "您可以选择多项，但请至少选择一项",
+    labelTooltip: "可以选择多项，但请至少选择一项",
     required: true,
   },
 ];
-
-const [registerForm] = useForm({
-  schemas,
-});
-
-const submit = (values) => {
-  console.log("表单提交值:", values);
-};
 </script>

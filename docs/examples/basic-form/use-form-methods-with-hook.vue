@@ -1,7 +1,7 @@
 <template>
   <el-button type="primary" @click="updateItem"> update </el-button>
   <BasicForm
-    v-model="formModel"
+    v-model="model"
     @register="registerForm"
     @submit="submit"
     hasFooter
@@ -13,7 +13,7 @@ import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 
-const formModel = ref({});
+const model = ref({});
 
 const schemas: FormSchema[] = [
   {

@@ -3,7 +3,7 @@
     <el-collapse-item title="示例" name="example">
       <BasicForm
         v-model="model"
-        :schemas="schemas"
+        @register="registerForm"
         @submit="handleSubmit"
         hasFooter
       />
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { BasicForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 
@@ -224,6 +224,10 @@ const schemas: FormSchema[] = [
     required: true,
   },
 ];
+
+const [registerForm] = useForm({
+  schemas,
+});
 
 const handleSubmit = (values) => {
   console.log("表单填写值:", values);

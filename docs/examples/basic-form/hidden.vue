@@ -1,30 +1,29 @@
 <template>
-  {{ formModel }}
-  <BasicForm
-    v-model="formModel"
-    @register="registerForm"
-    @submit="submit"
-    hasFooter
-  />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="示例" name="example">
+      <BasicForm v-model="model" :schemas="schemas" hasFooter />
+    </el-collapse-item>
+    <el-collapse-item title="表单值" name="data">
+      {{ model }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script lang="tsx" setup>
-import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
-import department from "../../mocks/department.json";
+import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 
-const formModel = ref({
+const activeNames = ref(["example"]);
+
+const model = ref({
   username: "李华",
-  age: 18,
-  remark: "这是一段说明",
 });
 
 const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-    component: "input",
   },
   {
     label: "礼物",
@@ -64,11 +63,4 @@ const schemas: FormSchema[] = [
     hidden: ({ model }) => !model.gift || model.gift === "phone",
   },
 ];
-
-const [registerForm] = useForm({
-  schemas,
-  labelWidth: "180px",
-});
-
-const submit = () => {};
 </script>
