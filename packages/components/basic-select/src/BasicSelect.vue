@@ -67,7 +67,7 @@ defineOptions({
 
 const attrs = useAttrs();
 const slots = useSlots();
-const inheritSlots = () => Object.keys(slots).filter((k) => k !== "default");
+const inheritSlots = Object.keys(slots).filter((k) => k !== "default");
 
 const props = withDefaults(defineProps<BasicSelectProps>(), {
   clearable: true,
