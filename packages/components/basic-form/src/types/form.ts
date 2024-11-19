@@ -79,7 +79,7 @@ export interface FormSchema {
   // 自定义渲染 - field
   component?: ComponentType;
   componentProps?: ComponentProps;
-  componentSlots?: Recordable<Slots>;
+  componentSlots?: Recordable<any>;
   componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
   customRender?: Render;

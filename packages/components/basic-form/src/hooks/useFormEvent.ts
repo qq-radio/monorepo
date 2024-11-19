@@ -26,6 +26,7 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     },
     {
       deep: true,
+      immediate: true,
     }
   );
 
