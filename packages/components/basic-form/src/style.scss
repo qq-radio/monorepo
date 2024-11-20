@@ -29,3 +29,10 @@
   margin-left: 4px;
   vertical-align: middle;
 }
+
+:deep .el-row {
+  &:last-child {
+    float: right;
+    margin-bottom: 20px;
+  }
+}

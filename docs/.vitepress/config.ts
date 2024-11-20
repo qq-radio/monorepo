@@ -3,6 +3,7 @@ import { mdPlugin } from "./plugins/mdPlugin";
 
 export default defineConfig({
   base: "/",
+  title: "SchemaDriven",
   head: [["link", { rel: "icon", href: "/favicon.ico" }]],
   themeConfig: {
     nav: [
@@ -25,12 +26,18 @@ export default defineConfig({
             text: "表单",
             items: [
               { text: "基本使用", link: "/components/basic-form" },
-              { text: "动态表单", link: "/components/dynamic-form" },
+              { text: "组合式函数", link: "/components/basic-form-composable" },
             ],
           },
           {
             text: "表格",
-            link: "/components/basic-table",
+            items: [
+              { text: "基本使用", link: "/components/basic-table" },
+              {
+                text: "组合式函数",
+                link: "/components/basic-table-composable",
+              },
+            ],
           },
         ],
       },
@@ -76,7 +83,7 @@ export default defineConfig({
               {
                 text: "弹窗",
                 items: [
-                  { text: "基本", link: "/components/basic-dialog" },
+                  { text: "基本使用", link: "/components/basic-dialog" },
                   {
                     text: "组合式函数",
                     link: "/components/basic-dialog-composable",

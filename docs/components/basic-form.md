@@ -37,7 +37,7 @@ basic-form/passing-props
 basic-form/passing-slots
 :::
 
-## 表单项隐藏
+## 隐藏
 
 您可以通过`hidden`设置表单项是否隐藏
 
@@ -45,7 +45,7 @@ basic-form/passing-slots
 basic-form/hidden
 :::
 
-## 表单项禁用
+## 禁用
 
 您可以通过`disabled`设置表单项是否禁用
 
