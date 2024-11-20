@@ -7,7 +7,7 @@
 - 传入数组渲染选项组替代手动`v-for`渲染
 - 提供灵活的渲染方式，渲染的优先级为：各个选项的`customRender` > 各个选项的`customSlot` > 模板的`render` > 模板的默认插槽 > 普通的`label`渲染
 
-::: note Note
+::: note
 `BasicCheckboxGroup`选项渲染优先级与`BasicRadioGroup`、`BasicSelect`选项渲染优先级一致
 :::
 

@@ -23,7 +23,10 @@ export default defineConfig({
         items: [
           {
             text: "表单",
-            link: "/components/basic-form",
+            items: [
+              { text: "基本使用", link: "/components/basic-form" },
+              { text: "动态表单", link: "/components/dynamic-form" },
+            ],
           },
           {
             text: "表格",
