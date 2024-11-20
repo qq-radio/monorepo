@@ -1,17 +1,20 @@
 <template>
-  <BasicForm
-    v-model="model"
-    :colProps="{ span: 10 }"
-    @submit="submit"
-    @register="registerForm"
-    hasFooter
-  />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="示例" name="example">
+      <BasicForm v-model="model" :schemas="schemas" hasFooter />
+    </el-collapse-item>
+    <el-collapse-item title="表单值" name="data">
+      {{ model }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
-<script lang="tsx" setup>
-import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
+<script lang="ts" setup>
+import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
+
+const activeNames = ref(["example"]);
 
 const model = ref({});
 
@@ -22,7 +25,6 @@ const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-    component: "input",
     required: true,
   },
   {
@@ -33,24 +35,54 @@ const schemas: FormSchema[] = [
   },
   {
     title: "喜好",
+    titleProps: {
+      style: {
+        color: "#409eff",
+        fontWeight: "bold",
+        borderBottom: "1px solid #409eff",
+      },
+    },
   },
   {
-    label: "手机",
-    prop: "phone",
+    label: "咖啡",
+    prop: "coffee",
     component: "radio-group",
     componentProps: {
       options: [
-        { label: "苹果", value: "iphone" },
-        { label: "小米", value: "xiaomi" },
-        { label: "华为", value: "huawei" },
+        { label: "拿铁", value: "latte" },
+        { label: "卡布奇诺", value: "cappuccino" },
+        { label: "美式", value: "americano" },
       ],
     },
     required: true,
   },
   {
+    label: "运动",
+    prop: "sport",
+    component: "checkbox-group",
+    componentProps: {
+      options: [
+        { label: "足球", value: "football" },
+        { label: "篮球", value: "basketball" },
+        { label: "羽毛球", value: "badminton" },
+      ],
+    },
+    required: true,
+  },
+  {
+    title: "饮食",
+    titleProps: {
+      style: {
+        color: "#409eff",
+        fontWeight: "bold",
+        borderBottom: "1px solid #409eff",
+      },
+    },
+  },
+  {
     label: "水果",
     prop: "fruit",
-    component: "checkbox-group",
+    component: "radio-group",
     componentProps: {
       options: [
         { label: "葡萄", value: "grape" },
@@ -60,13 +92,54 @@ const schemas: FormSchema[] = [
     },
     required: true,
   },
+  {
+    label: "早餐",
+    prop: "breakfast",
+    component: "select",
+    componentProps: {
+      options: [
+        { label: "鸡蛋", value: "egg" },
+        { label: "面包", value: "bread" },
+        { label: "培根", value: "bacon" },
+      ],
+    },
+    required: true,
+  },
+  {
+    title: "兴趣",
+    titleProps: {
+      style: {
+        color: "#409eff",
+        fontWeight: "bold",
+        borderBottom: "1px solid #409eff",
+      },
+    },
+  },
+  {
+    label: "电影",
+    prop: "movie",
+    component: "checkbox-group",
+    componentProps: {
+      options: [
+        { label: "动作", value: "action" },
+        { label: "喜剧", value: "comedy" },
+        { label: "恐怖", value: "horror" },
+      ],
+    },
+    required: true,
+  },
+  {
+    label: "音乐",
+    prop: "music",
+    component: "select",
+    componentProps: {
+      options: [
+        { label: "古典乐", value: "classical" },
+        { label: "蓝调", value: "blues" },
+        { label: "摇滚", value: "rock" },
+      ],
+    },
+    required: true,
+  },
 ];
-
-const [registerForm] = useForm({
-  schemas,
-});
-
-const submit = (values) => {
-  console.log("表单提交值:", values);
-};
 </script>

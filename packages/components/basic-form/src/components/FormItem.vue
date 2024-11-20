@@ -1,7 +1,7 @@
 <template>
   <template v-if="schemaItem.title">
     <el-col v-bind="getTitleColProps">
-      <div :class="ns.e('title')">
+      <div :class="ns.e('title')" v-bind="schemaItem.titleProps">
         <div>
           <component v-if="isCustomTitle" :is="renderCustomTitle" />
           <span v-else :class="ns.e('title-text')">{{ schemaItem.title }}</span>

@@ -30,7 +30,7 @@ const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-    component: "input",
+
     defaultValue: "李华",
   },
   {

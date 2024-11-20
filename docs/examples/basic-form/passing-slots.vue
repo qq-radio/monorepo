@@ -80,7 +80,7 @@ const schemas: FormSchema[] = [
   {
     label: "网址",
     prop: "website",
-    component: "input",
+
     componentSlots: {
       prefix: () => "提示：",
       suffix: () => h(ElIcon, null, () => h(Search)),

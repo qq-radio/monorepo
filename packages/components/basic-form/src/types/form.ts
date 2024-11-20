@@ -57,6 +57,7 @@ export interface FormSchema {
   customTitleRender?: Render;
   customTitleSlot?: string;
   titleTooltip?: string;
+  titleProps?: Recordable;
 
   // 跟form-item相关
   label?: string;

@@ -71,7 +71,7 @@ basic-form/reset
 
 ## 表单布局 - 垂直
 
-表单采用`el-row`和`el-col`结合的栅格布局，您可以通过`rowProps`传递`el-row`需要的属性，可以通过`colProps`传递`el-col`需要的属性。其中表单中的各项采用`el-col`作为`el-form-item`的布局容器，默认各项栅格占据列数为24，当`el-col`默认为`{span: 24}`时便等同于表单默认垂直布局
+表单采用`el-row`和`el-col`结合的栅格布局，您可以通过`rowProps`传递`el-row`自定义属性，可以通过`colProps`传递`el-col`自定义属性。其中表单中的各项采用`el-col`作为`el-form-item`的布局容器，默认各项栅格占据列数为24，当`el-col`默认为`{span: 24}`时便等同于表单默认垂直布局
 
 :::demo
 basic-form/layout-vertical
@@ -135,30 +135,38 @@ basic-form/custom-label-slot
 
 ## 分组表单
 
+若您希望实现分组表单，`schemas`数组里配置项字段设置为`title`即可，且可通过`titleProps`传递自定义属性
+
+:::warning
+分组表单其实可以直接当做一个含有特殊样式的文本类型表单项，因此它在实际应用上可能会有局限性。若无法完全满足您的要求，更建议您手动实现分组表单，在外部多次调用`BasicForm`的方法实现
+:::
+
 :::demo
 basic-form/group-form
 :::
 
 ## 分组表单 - 布局
 
+分组表单与`el-form-item`一样，采用`el-col`作为布局容器，默认栅格占据列数为24。若您希望自定义分组表单布局，可全局设置`titleColProps`或单独设置配置项的`titleColProps`
+
 :::demo
 basic-form/group-form-layout
 :::
 
-## 分组表单 - 自定义渲染 customTitleRender
+## 分组表单 - 自定义渲染 - `customTitleRender`/`tsx`
 
 :::demo
-basic-form/group-form-custom-title-render
+basic-form/group-form-custom-title-render-tsx
 :::
 
-## 分组表单 - 自定义渲染 customTitleSlot
+## 分组表单 - 自定义渲染 - `customTitleRender`/`h`
+
+:::demo
+basic-form/group-form-custom-title-render-h
+:::
+
+## 分组表单 - 自定义渲染 - `customTitleSlot`
 
 :::demo
 basic-form/group-form-custom-title-slot
-:::
-
-这个要干嘛？
-
-:::demo
-basic-form/layout-row
 :::

@@ -6,12 +6,7 @@ import { normalizeRule } from "./normalize-rule";
 import { uniqBy, merge, isArray, isObject } from "lodash";
 
 function addDefaultComponent(schemaItem: FormSchema) {
-  return merge(
-    {
-      component: "input",
-    },
-    schemaItem
-  );
+  return merge({}, schemaItem);
 }
 
 function addTextareaProps(schemaItem: FormSchema) {

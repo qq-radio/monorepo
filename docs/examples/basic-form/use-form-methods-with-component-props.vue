@@ -18,7 +18,7 @@ const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-    component: "input",
+
     required: true,
   },
   {
