@@ -96,4 +96,5 @@ export interface TableSchema {
   customSlot?: string;
   display?: DisplayType;
   displayProps?: Recordable;
+  displaySlots?: Recordable;
 }

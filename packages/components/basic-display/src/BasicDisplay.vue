@@ -2,30 +2,22 @@
   <component
     :is="getComponent(props.type)"
     v-if="hasComponent(type)"
-    v-bind="getBindValues"
-  />
+    v-bind="displayProps"
+  >
+    <template v-for="(fieldSlot, key) in displaySlots" :key="key" #[key]="data">
+      <component :is="fieldSlot" v-bind="data" />
+    </template>
+  </component>
 </template>
 
 <script setup lang="ts">
 import type { BasicDisplayProps } from "./type";
 
 import { hasComponent, getComponent } from "./tools/component";
-import { mergeComponentProps } from "./tools/component-props";
-
-import { useAttrs, computed } from "vue";
 
 defineOptions({
   name: "BasicDisplay",
 });
 
-const attrs = useAttrs();
-
-const props = withDefaults(defineProps<BasicDisplayProps>(), {
-  value: "",
-});
-
-const getBindValues = computed(() => ({
-  ...mergeComponentProps(props.type, props.value, attrs),
-  value: props.value,
-}));
+const props = withDefaults(defineProps<BasicDisplayProps>(), {});
 </script>

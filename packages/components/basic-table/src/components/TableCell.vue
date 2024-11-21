@@ -2,10 +2,12 @@
   <component v-if="isCustomCell" :is="renderCustomCell" />
   <BasicDisplay
     v-else-if="schema.display && hasComponent(schema.display)"
-    v-bind="schema.displayProps"
     :type="schema.display"
     :value="formattedValue"
-  />
+    :displayProps="getDisplayProps"
+    :displaySlots="getDisplaySlots"
+  >
+  </BasicDisplay>
   <span v-else>
     {{ formattedValue }}
   </span>
@@ -54,6 +56,26 @@ const formattedValue = computed(() => {
   return isFunction(formatter)
     ? formatter({ ...params.value })
     : params.value.value;
+});
+
+const getDisplayProps = computed(() => {
+  const {
+    schema: { displayProps },
+  } = props;
+
+  return isFunction(displayProps)
+    ? displayProps({ ...params.value })
+    : displayProps;
+});
+
+const getDisplaySlots = computed(() => {
+  const {
+    schema: { displaySlots },
+  } = props;
+
+  return isFunction(displaySlots)
+    ? displaySlots({ ...params.value })
+    : displaySlots;
 });
 
 const { renderItem } = useCustomRender({ slots });

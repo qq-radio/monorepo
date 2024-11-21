@@ -1,7 +1,7 @@
 import type { DisplayType as ComponentType } from "../type";
 import type { Component } from "vue";
 
-import { ElLink, ElTag, ElProgress } from "element-plus";
+import { ElLink, ElTag, ElProgress, ElAvatar } from "element-plus";
 
 import { BasicImage } from "@center/components/basic-image";
 import { BasicCopy } from "@center/components/basic-copy";
@@ -13,6 +13,7 @@ componentMap.set("image", BasicImage);
 componentMap.set("link", ElLink);
 componentMap.set("tag", ElTag);
 componentMap.set("progress", ElProgress);
+componentMap.set("avatar", ElAvatar);
 componentMap.set("copy", BasicCopy);
 componentMap.set("status", BasicStatus);
 

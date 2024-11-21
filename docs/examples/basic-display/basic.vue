@@ -1,11 +1,14 @@
 <template>
   <div v-for="item in array" :key="item.label">
-    {{ item.label }}:
-    <BasicDisplay
-      :type="item.type"
-      v-bind="item.props"
-      :value="row[item.prop]"
-    />
+    <div style="display: flex">
+      <span style="margin-right: 10px">{{ item.label }}:</span>
+      <BasicDisplay
+        :type="item.type"
+        :value="row[item.prop]"
+        :displayProps="item.displayProps"
+        :displaySlots="item.displaySlots"
+      />
+    </div>
     <el-divider style="margin: 10px 0" />
   </div>
 </template>
@@ -18,19 +21,27 @@ const array: DisplaySchema[] = [
     label: "链接",
     prop: "link",
     type: "link",
-    props: {},
+    displayProps: {
+      type: "success",
+      href: "/components/basic-list",
+    },
   },
   {
     label: "标签",
     prop: "tag",
     type: "tag",
-    props: {},
+    displayProps: {
+      type: "warning",
+    },
+    displaySlots: {
+      default: () => "跳转下一章节",
+    },
   },
   {
     label: "进度条",
     prop: "progress",
     type: "progress",
-    props: {
+    displayProps: {
       style: {
         width: "100px",
       },
@@ -40,13 +51,13 @@ const array: DisplaySchema[] = [
     label: "头像",
     prop: "avatar",
     type: "avatar",
-    props: {},
+    displayProps: {},
   },
   {
     label: "图片",
     prop: "image",
     type: "image",
-    props: {},
+    displayProps: {},
   },
   {
     label: "复制",
