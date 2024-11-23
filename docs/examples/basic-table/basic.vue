@@ -10,8 +10,9 @@ import {
   OperationButton,
   ActionButton,
 } from "@center/components";
-import MockUserList from "../../mocks/user-list.json";
-import MockDepartment from "../../mocks/department.json";
+import userListMockData from "@mocks/user-list.json";
+
+import departmentTreeMockData from "@mocks/department.json";
 
 const operations: OperationButton[] = [
   {
@@ -59,7 +60,7 @@ const schemas: TableSchema[] = [
       prop: "departmentId",
       component: "tree-select",
       componentProps: {
-        data: MockDepartment,
+        data: departmentTreeMockData,
         props: { value: "id", label: "name", children: "children" },
       },
       required: true,
@@ -103,8 +104,8 @@ const userListApi = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: MockUserList.length,
-        records: MockUserList,
+        total: userListMockData.length,
+        records: userListMockData,
       });
     }, 1000);
   });

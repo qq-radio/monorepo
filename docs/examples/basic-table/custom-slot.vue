@@ -24,7 +24,7 @@
 <script lang="tsx" setup>
 import { BasicTable, useTable, TableSchema } from "@center/components";
 
-import MockUserList from "../../mocks/user-list.json";
+import userListMockData from "@mocks/user-list.json";
 
 import {
   Phone,
@@ -71,8 +71,8 @@ const userListApi = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: MockUserList.length,
-        records: MockUserList,
+        total: userListMockData.length,
+        records: userListMockData,
       });
     }, 1000);
   });

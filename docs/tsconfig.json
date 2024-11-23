@@ -12,7 +12,10 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "paths": {
+      "@mocks/*": ["./mocks/*"]
+    }
   },
   "vueCompilerOptions": {
     "target": 3

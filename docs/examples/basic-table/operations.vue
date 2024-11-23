@@ -4,7 +4,7 @@
 
 <script lang="tsx" setup>
 import { BasicTable, useTable, TableSchema, Button } from "@center/components";
-import MockUserList from "../../mocks/user-list.json";
+import userListMockData from "@mocks/user-list.json";
 
 const operations: Button[] = [
   {
@@ -127,8 +127,8 @@ const userListApi = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: MockUserList.length,
-        records: MockUserList,
+        total: userListMockData.length,
+        records: userListMockData,
       });
     }, 1000);
   });

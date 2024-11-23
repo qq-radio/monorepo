@@ -15,4 +15,5 @@ export * from "./basic-select";
 export * from "./basic-select-input";
 export * from "./basic-status";
 export * from "./basic-table";
+export * from "./basic-time";
 export * from "./basic-tree-select";

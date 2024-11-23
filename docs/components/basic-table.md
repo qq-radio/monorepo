@@ -1,5 +1,14 @@
 # BasicTable 表格
 
+## 简介
+
+- 通过`schemas`配置渲染表格
+- 使用`composables`封装可复用逻辑
+
+:::danger
+为了方便数据的统一维护，该页面的所有表格数据均来自`docs/mocks/user-list.json`文件，因此当您复制页面代码时，需要同`user-list.json`文件一起复制，才能保证demo的正常运行
+:::
+
 ## 基本使用
 
 :::demo
@@ -66,6 +75,12 @@ basic-table/custom-slot
 :::
 
 ## 自定义渲染列 - `display`
+
+您可以指定`display`类型来自定义渲染列
+
+:::note
+更多的`display`用法请参考[BasicDisplay](/components/basic-display)
+:::
 
 :::demo
 basic-table/custom-display

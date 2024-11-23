@@ -1,10 +1,7 @@
-import { Recordable } from "global";
-
 export interface BasicDisplayProps {
   type: DisplayType;
-  value: any;
-  displayProps: Recordable;
-  displaySlots: Recordable;
+  displayProps?: Recordable;
+  displaySlots?: Recordable;
 }
 
 export type ElementPlusDisplayType = "link" | "tag" | "progress" | "avatar";

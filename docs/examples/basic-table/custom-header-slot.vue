@@ -35,7 +35,7 @@ import {
   BasicSelect,
 } from "@center/components";
 
-import MockUserList from "../../mocks/user-list.json";
+import userListMockData from "@mocks/user-list.json";
 
 import { Hide, View } from "@element-plus/icons-vue";
 
@@ -115,8 +115,8 @@ const userListApi = () => {
   const result_1 = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: MockUserList.length,
-        records: MockUserList,
+        total: userListMockData.length,
+        records: userListMockData,
       });
     }, 1000);
   });
@@ -124,8 +124,8 @@ const userListApi = () => {
   const result_2 = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: MockUserList.length,
-        records: MockUserList.filter((u) => u.status === statusValue.value),
+        total: userListMockData.length,
+        records: userListMockData.filter((u) => u.status === statusValue.value),
       });
     }, 1000);
   });

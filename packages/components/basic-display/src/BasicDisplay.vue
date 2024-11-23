@@ -4,8 +4,8 @@
     v-if="hasComponent(type)"
     v-bind="displayProps"
   >
-    <template v-for="(fieldSlot, key) in displaySlots" :key="key" #[key]="data">
-      <component :is="fieldSlot" v-bind="data" />
+    <template v-for="(slot, key) in displaySlots" :key="key" #[key]="data">
+      <component :is="slot" v-bind="data" />
     </template>
   </component>
 </template>
@@ -13,11 +13,14 @@
 <script setup lang="ts">
 import type { BasicDisplayProps } from "./type";
 
-import { hasComponent, getComponent } from "./tools/component";
+import { hasComponent, getComponent } from "./component";
 
 defineOptions({
   name: "BasicDisplay",
 });
 
-const props = withDefaults(defineProps<BasicDisplayProps>(), {});
+const props = withDefaults(defineProps<BasicDisplayProps>(), {
+  displayProps: {},
+  displaySlots: {},
+});
 </script>

@@ -9,6 +9,7 @@ const pathResolve = (dir: string): string =>
 
 const alias: AliasOptions = {
   "@components": pathResolve("../src/components"),
+  "@mocks": pathResolve("./mocks"),
 };
 
 export default defineConfig(() => {
