@@ -84,7 +84,6 @@ const schemas: TableSchema[] = [
         data: departmentTreeMockData,
         props: { value: "id", label: "name", children: "children" },
       },
-      required: true,
     },
   },
   {

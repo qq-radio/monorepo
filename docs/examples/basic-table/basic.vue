@@ -1,17 +1,21 @@
 <template>
-  <BasicTable @register="registerTable" :schemas="schemas" />
+  <BasicTable
+    :request="userListApi"
+    :schemas="schemas"
+    :operations="operations"
+    :actions="actions"
+  />
 </template>
 
 <script lang="tsx" setup>
 import {
   BasicTable,
-  useTable,
   TableSchema,
   OperationButton,
   ActionButton,
 } from "@center/components";
-import userListMockData from "@mocks/user-list.json";
 
+import userListMockData from "@mocks/user-list.json";
 import departmentTreeMockData from "@mocks/department.json";
 
 const operations: OperationButton[] = [
@@ -61,9 +65,12 @@ const schemas: TableSchema[] = [
       component: "tree-select",
       componentProps: {
         data: departmentTreeMockData,
-        props: { value: "id", label: "name", children: "children" },
+        props: {
+          value: "id",
+          label: "name",
+          children: "children",
+        },
       },
-      required: true,
     },
   },
   {
@@ -110,11 +117,4 @@ const userListApi = () => {
     }, 1000);
   });
 };
-
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-  operations,
-  actions,
-});
 </script>

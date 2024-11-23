@@ -1,4 +1,4 @@
 export interface BasicTimeProps {
-  time: string | number;
+  time: string | number | Date;
   format?: string;
 }

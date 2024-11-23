@@ -1,4 +1,4 @@
-import type { DisplayType as ComponentType } from "../type";
+import type { DisplayType as ComponentType } from "./type";
 import type { Component } from "vue";
 
 import { ElLink, ElTag, ElProgress, ElAvatar } from "element-plus";

@@ -75,6 +75,7 @@ export default defineConfig({
               { text: "图片", link: "/components/basic-image" },
               { text: "状态", link: "/components/basic-status" },
               { text: "复制", link: "/components/basic-copy" },
+              { text: "时间", link: "/components/basic-time" },
             ],
           },
           {

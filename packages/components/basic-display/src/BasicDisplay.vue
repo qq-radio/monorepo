@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="getComponent(props.type)"
+    :is="getComponent(type)"
     v-if="hasComponent(type)"
     v-bind="displayProps"
   >
@@ -19,7 +19,7 @@ defineOptions({
   name: "BasicDisplay",
 });
 
-const props = withDefaults(defineProps<BasicDisplayProps>(), {
+withDefaults(defineProps<BasicDisplayProps>(), {
   displayProps: {},
   displaySlots: {},
 });

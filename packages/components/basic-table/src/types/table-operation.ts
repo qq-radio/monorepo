@@ -17,7 +17,7 @@ export interface TableOperationEmits {
 export type OperationButton = DefaultButton | ImportButton | ExportButton;
 
 interface OperationButtonBase {
-  text: string | (() => string);  
+  text: string | (() => string);
   permission?: string;
   show?: boolean | (() => boolean);
   disabled?: boolean | (() => boolean) | ComputedRef<boolean>;

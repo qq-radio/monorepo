@@ -6,10 +6,16 @@
 - 使用`composables`封装可复用逻辑
 
 :::danger
-为了方便数据的统一维护，该页面的所有表格数据均来自`docs/mocks/user-list.json`文件，因此当您复制页面代码时，需要同`user-list.json`文件一起复制，才能保证demo的正常运行
+为了方便数据的统一维护，该页面的所有表格数据均来自`docs/mocks/user-list.json`文件，因此当您复制代码时，需同`user-list.json`文件一起复制，才能保证demo的正常运行
+:::
+
+:::note
+该页面的demo采用`props`传参的写法，若您更喜欢`composables`写法，请查看下一章节[组合式函数](/components/basic-table-composable)
 :::
 
 ## 基本使用
+
+您可以传入`schemas`数组快速渲染表格，以下是最常见的表格使用示例
 
 :::demo
 basic-table/basic
