@@ -19,7 +19,7 @@ import {
 
 const templateConfig: TemplateConfig = {
   url: "mock-url",
-  fileName: "模板",
+  fileName: "导入模板",
 };
 
 const uploadConfig: UploadConfig = {

@@ -30,8 +30,6 @@ basic-button-group/message-box
 basic-button-group/pop-confirm
 :::
 
-## 二次确认提示文字
-
 ## 超过时隐藏
 
 若您希望按钮超过一定数量时隐藏，可传入`showNumber`。按钮数量超过`showNumber`时自动隐藏，点击`更多`可展示全部按钮
@@ -56,6 +54,14 @@ basic-button-group/disabled
 
 :::demo
 basic-button-group/permission
+:::
+
+## 特殊`type`
+
+`BasicButtonGroup`内置了导入和导出按钮，您只需设置`type=import`、`type=export`，并传入相应的配置即可
+
+:::demo
+basic-button-group/type
 :::
 
 ## 回调参数类型

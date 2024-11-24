@@ -8,39 +8,25 @@
 </template>
 
 <script lang="tsx" setup>
-import {
-  BasicTable,
-  TableSchema,
-  OperationButton,
-  ActionButton,
-} from "@center/components";
+import { BasicTable, TableSchema, Button } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
-import departmentTreeMockData from "@mocks/department.json";
 
-const operations: OperationButton[] = [
-  {
-    text: "新增",
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-];
+interface ApiResponse {
+  total: number;
+  records: any[];
+}
 
-const actions: ActionButton[] = [
-  {
-    text: "编辑",
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "删除",
-    onConfirm: ({ row }) => {
-      console.log("点击了删除");
-    },
-  },
-];
+const userListApi = (): Promise<ApiResponse> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        total: userListMockData.length,
+        records: userListMockData,
+      });
+    }, 1000);
+  });
+};
 
 const schemas: TableSchema[] = [
   {
@@ -59,31 +45,10 @@ const schemas: TableSchema[] = [
   {
     label: "部门",
     prop: "departmentName",
-    searchConfig: {
-      label: "部门",
-      prop: "departmentId",
-      component: "tree-select",
-      componentProps: {
-        data: departmentTreeMockData,
-        props: {
-          value: "id",
-          label: "name",
-          children: "children",
-        },
-      },
-    },
   },
   {
     label: "岗位",
     prop: "job",
-    searchConfig: {
-      label: "岗位",
-      prop: "job",
-      component: "select",
-      componentProps: {
-        options: [],
-      },
-    },
   },
   {
     label: "状态",
@@ -107,14 +72,27 @@ const schemas: TableSchema[] = [
   },
 ];
 
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 1000);
-  });
-};
+const operations: Button[] = [
+  {
+    text: "新增",
+    onClick: () => {
+      console.log("点击了新增");
+    },
+  },
+];
+
+const actions: Button[] = [
+  {
+    text: "编辑",
+    onClick: () => {
+      console.log("点击了编辑");
+    },
+  },
+  {
+    text: "删除",
+    onConfirm: ({ row }) => {
+      console.log("点击了删除");
+    },
+  },
+];
 </script>

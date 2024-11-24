@@ -2,7 +2,7 @@
   <div :class="ns.b()">
     <div :class="ns.e('content')">
       <template v-for="(button, index) in preButtons" :key="index">
-        <component :is="() => render(button)" />
+        <component :is="renderButton(button)" />
       </template>
       <el-dropdown
         v-if="hasDropdown"
@@ -19,7 +19,7 @@
               v-for="button in dropdownButtons"
               :key="button.text"
             >
-              <component :is="() => render(button)" />
+              <component :is="renderButton(button)" />
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -35,6 +35,9 @@ import { useBasicNamespace, usePermission } from "@center/composables";
 
 import { h, computed, unref } from "vue";
 import { isFunction } from "lodash";
+
+import { BasicImport } from "@center/components/basic-import";
+import { BasicExport } from "@center/components/basic-export";
 
 import { ElButton, ElIcon, ElPopconfirm, ElMessageBox } from "element-plus";
 import { ArrowDownBold } from "@element-plus/icons-vue";
@@ -81,8 +84,36 @@ const dropdownButtons = computed(() =>
 const getConfirmTip = (button: Button) =>
   button.message || `确认${button.text}吗？` || "确定执行此操作吗？";
 
-const render = (button: Button) => {
+const renderButton = (button: Button) => {
+  if (button.type === "import") {
+    return () =>
+      h(BasicImport, {
+        style: {
+          marginRight: "12px",
+        },
+        ...button.props,
+        disabled: unref(button.disabled),
+      });
+  } else if (button.type === "export") {
+    return () =>
+      h(BasicExport, {
+        ...button.props,
+        disabled: unref(button.disabled),
+        style: {
+          marginRight: "12px",
+        },
+      });
+  } else {
+    return () => renderDefaultButton(button);
+  }
+};
+
+const renderDefaultButton = (button: Button) => {
   const tagProps = {
+    style: {
+      marginRight: "12px",
+      marginLeft: 0,
+    },
     ...props.buttonProps,
     ...(button.props || {}),
     disabled: unref(button.disabled),
