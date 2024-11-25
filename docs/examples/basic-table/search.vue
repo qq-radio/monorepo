@@ -1,63 +1,46 @@
 <template>
-  这里一直没有生效吗````
-  <BasicTable @register="registerTable" :schemas="schemas" />
+  <BasicTable
+    :request="userListApi"
+    :schemas="schemas"
+    :operations="operations"
+    :actions="actions"
+  />
 </template>
 
-<script lang="tsx" setup>
-import {
-  BasicTable,
-  useTable,
-  TableSchema,
-  OperationButton,
-  ActionButton,
-} from "@center/components";
+<script lang="ts" setup>
+import { BasicTable, TableSchema, Button } from "@center/components";
+
 import userListMockData from "@mocks/user-list.json";
 
-import departmentTreeMockData from "@mocks/department.json";
+interface ApiResponse {
+  total: number;
+  records: any[];
+}
 
-const operations: OperationButton[] = [
-  {
-    text: "新增",
-    permission: true,
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量删除",
-    permission: true,
-    props: {
-      type: "danger",
-    },
-    onConfirm: ({ row }) => {
-      console.log("点击了批量删除");
-    },
-  },
-];
-
-const actions: ActionButton[] = [
-  {
-    text: "编辑",
-    permission: true,
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "删除",
-    permission: true,
-    onConfirm: ({ row }) => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "详情",
-    permission: true,
-    onClick: ({ row }) => {
-      console.log("点击了详情");
-    },
-  },
-];
+// 该api简单模拟查询接口数据的过滤
+const userListApi = (params): Promise<ApiResponse> => {
+  let response = <Array<any>>[...userListMockData];
+  const { username, status } = params;
+  if (username && status) {
+    response = userListMockData.filter(
+      (user) => user.username === username && user.status === status
+    );
+  }
+  if (username) {
+    response = userListMockData.filter((user) => user.username === username);
+  }
+  if (status) {
+    response = userListMockData.filter((user) => user.status === status);
+  }
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        total: response.length,
+        records: response,
+      });
+    }, 500);
+  });
+};
 
 const schemas: TableSchema[] = [
   {
@@ -74,42 +57,25 @@ const schemas: TableSchema[] = [
     prop: "phone",
   },
   {
-    label: "部门",
-    prop: "departmentName",
-    searchConfig: {
-      label: "部门",
-      prop: "departmentId",
-      component: "tree-select",
-      componentProps: {
-        data: departmentTreeMockData,
-        props: { value: "id", label: "name", children: "children" },
-      },
-    },
-  },
-  {
     label: "岗位",
     prop: "job",
-    searchConfig: {
-      label: "岗位",
-      prop: "job",
-      component: "select",
-      componentProps: {
-        options: [],
-      },
-    },
   },
   {
     label: "状态",
     prop: "status",
     display: "status",
+    displayProps: ({ value }) => ({
+      text: value === 1 ? "在职中" : "已离职",
+      type: value === 1 ? "success" : "danger",
+    }),
     searchConfig: {
       label: "状态",
       prop: "status",
       component: "select",
       componentProps: {
         options: [
-          { label: "正常", value: 1 },
-          { label: "异常", value: 0 },
+          { label: "在职中", value: 1 },
+          { label: "已离职", value: 2 },
         ],
       },
     },
@@ -120,21 +86,27 @@ const schemas: TableSchema[] = [
   },
 ];
 
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 500);
-  });
-};
+const operations: Button[] = [
+  {
+    text: "新增",
+    onClick: () => {
+      console.log("点击了新增");
+    },
+  },
+];
 
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-  operations,
-  actions,
-});
+const actions: Button[] = [
+  {
+    text: "编辑",
+    onClick: ({ row, rowIndex, column, button }) => {
+      console.log("点击了编辑", row, rowIndex, column, button);
+    },
+  },
+  {
+    text: "删除",
+    onConfirm: ({ row, rowIndex, column, button }) => {
+      console.log("点击了删除", row, rowIndex, column, button);
+    },
+  },
+];
 </script>
