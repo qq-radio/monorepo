@@ -27,7 +27,7 @@ basic-table/basic
 basic-table/search
 :::
 
-## 隐藏
+## 显示或隐藏
 
 您可以通过`visible`控制列的显示或隐藏
 
@@ -43,9 +43,9 @@ basic-table/visible
 basic-table/tooltip
 :::
 
-## 操作栏
+## 操作栏按钮组
 
-您可以通过配置`operations`渲染表格操作栏的按钮组，并通过`operationProps`传入按钮组自定义属性
+您可以通过配置`operations`渲染表格操作栏按钮组，并通过`operationProps`传入按钮组自定义属性
 
 :::note
 操作栏按钮组`operations`与操作列按钮组`actions`均采用`BasicButtonGroup`渲染，更多用法请参考[BasicButtonGroup](/components/basic-button-group)
@@ -55,9 +55,9 @@ basic-table/tooltip
 basic-table/operations
 :::
 
-## 操作列
+## 操作列按钮组
 
-您可以通过配置`actions`渲染表格操作列的按钮组，并通过`actionProps`传入按钮组自定义属性，且可通过`actionColumnProps`传入操作列的自定义属性
+您可以通过配置`actions`渲染表格操作列按钮组，并通过`actionProps`传入按钮组自定义属性，且可通过`actionColumnProps`传入操作列的自定义属性
 
 :::note
 操作列按钮组`actions`与操作栏按钮组`operations`均采用`BasicButtonGroup`渲染，更多用法请参考[BasicButtonGroup](/components/basic-button-group)
