@@ -7,7 +7,7 @@
   />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { BasicTable, TableSchema, Button } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
@@ -17,14 +17,28 @@ interface ApiResponse {
   records: any[];
 }
 
-const userListApi = (): Promise<ApiResponse> => {
+// 该api简单模拟查询接口数据的过滤
+const userListApi = (params): Promise<ApiResponse> => {
+  let response = <Array<any>>[...userListMockData];
+  const { username, status } = params;
+  if (username && status) {
+    response = userListMockData.filter(
+      (user) => user.username === username && user.status === status
+    );
+  }
+  if (username) {
+    response = userListMockData.filter((user) => user.username === username);
+  }
+  if (status) {
+    response = userListMockData.filter((user) => user.status === status);
+  }
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: userListMockData.length,
-        records: userListMockData,
+        total: response.length,
+        records: response,
       });
-    }, 1000);
+    }, 500);
   });
 };
 
@@ -43,10 +57,6 @@ const schemas: TableSchema[] = [
     prop: "phone",
   },
   {
-    label: "部门",
-    prop: "departmentName",
-  },
-  {
     label: "岗位",
     prop: "job",
   },
@@ -54,14 +64,18 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     display: "status",
+    displayProps: ({ value }) => ({
+      text: value === 1 ? "在职中" : "已离职",
+      type: value === 1 ? "success" : "danger",
+    }),
     searchConfig: {
       label: "状态",
       prop: "status",
       component: "select",
       componentProps: {
         options: [
-          { label: "正常", value: 1 },
-          { label: "异常", value: 0 },
+          { label: "在职中", value: 1 },
+          { label: "已离职", value: 2 },
         ],
       },
     },
@@ -84,14 +98,14 @@ const operations: Button[] = [
 const actions: Button[] = [
   {
     text: "编辑",
-    onClick: () => {
-      console.log("点击了编辑");
+    onClick: ({ row, rowIndex, column, button }) => {
+      console.log("点击了编辑", row, rowIndex, column, button);
     },
   },
   {
     text: "删除",
-    onConfirm: ({ row }) => {
-      console.log("点击了删除");
+    onConfirm: ({ row, rowIndex, column, button }) => {
+      console.log("点击了删除", row, rowIndex, column, button);
     },
   },
 ];

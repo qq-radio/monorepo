@@ -29,7 +29,7 @@ const api = () => {
           { province: "深圳", name: "shenzhen" },
         ],
       });
-    }, 1000);
+    }, 500);
   });
 };
 </script>

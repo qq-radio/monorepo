@@ -120,7 +120,7 @@ const userListApi = () => {
         total: userListMockData.length,
         records: userListMockData,
       });
-    }, 1000);
+    }, 500);
   });
 
   const result_2 = new Promise((resolve) => {
@@ -129,7 +129,7 @@ const userListApi = () => {
         total: userListMockData.length,
         records: userListMockData.filter((u) => u.status === statusValue.value),
       });
-    }, 1000);
+    }, 500);
   });
 
   return statusValue.value ? result_2 : result_1;

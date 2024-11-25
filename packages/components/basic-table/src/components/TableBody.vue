@@ -64,11 +64,11 @@
         <el-table-column v-if="actions?.length" v-bind="getActionColumnProps">
           <template #default="{ row, $index, column }">
             <BasicButtonGroup
-              v-bind="{
+              v-bind="getActionProps"
+              :callbackParams="{
                 row,
                 rowIndex: $index,
                 column,
-                ...getActionProps,
               }"
               :buttons="actions || []"
             />
