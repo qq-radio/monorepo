@@ -14,15 +14,13 @@ import userListMockData from "@mocks/user-list.json";
 
 import { Hide, View } from "@element-plus/icons-vue";
 
-const isHide = ref(false);
+const isShowFullPhone = ref(false);
 
 const toggleHide = () => {
-  isHide.value = !isHide.value;
+  isShowFullPhone.value = !isShowFullPhone.value;
 };
 
-const hidePhohe = (value) => value.slice(0, 3) + "****" + value.slice(7);
-
-const hideFullPhoneNumber = (value) => hidePhohe(value);
+const hidePhone = (value) => value.slice(0, 3) + "****" + value.slice(7);
 
 const statusValue = ref();
 
@@ -43,11 +41,6 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    // searchConfig: {
-    //   label: "用户名",
-    //   prop: "username",
-    //   component: "input",
-    // },
   },
   {
     label: "手机号",
@@ -64,18 +57,14 @@ const schemas: TableSchema[] = [
             }}
             onClick={toggleHide}
           >
-            {isHide.value ? <Hide /> : <View />}
+            {isShowFullPhone.value ? <Hide /> : <View />}
           </el-icon>
         </div>
       );
     },
     customRender: ({ value }) =>
-      isHide.value ? value : hideFullPhoneNumber(value),
+      isShowFullPhone.value ? value : hidePhone(value),
     width: 120,
-  },
-  {
-    label: "部门",
-    prop: "departmentName",
   },
   {
     label: "岗位",
@@ -85,16 +74,10 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     display: "status",
-    formatter: ({ value }) =>
-      value === 1
-        ? {
-            type: "success",
-            text: "在职中",
-          }
-        : {
-            type: "danger",
-            text: "已离职",
-          },
+    displayProps: ({ value }) => ({
+      text: value === 1 ? "在职中" : "已离职",
+      type: value === 1 ? "success" : "danger",
+    }),
     customHeaderRender: () => (
       <BasicSelect
         modelValue={statusValue.value}
@@ -105,7 +88,7 @@ const schemas: TableSchema[] = [
         onChange={reQuery}
       />
     ),
-    width: 180,
+    width: 140,
   },
   {
     label: "创建时间",
@@ -113,33 +96,31 @@ const schemas: TableSchema[] = [
   },
 ];
 
-const userListApi = () => {
-  const result_1 = new Promise((resolve) => {
+interface ApiResponse {
+  total: number;
+  records: any[];
+}
+
+// 该api简单模拟查询接口数据的过滤
+const userListApi = (): Promise<ApiResponse> => {
+  let response = [...userListMockData];
+  if (statusValue.value) {
+    response = userListMockData.filter(
+      (user) => user.status === statusValue.value
+    );
+  }
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        total: userListMockData.length,
-        records: userListMockData,
+        total: response.length,
+        records: response,
       });
-    }, 500);
+    }, 300);
   });
-
-  const result_2 = new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData.filter((u) => u.status === statusValue.value),
-      });
-    }, 500);
-  });
-
-  return statusValue.value ? result_2 : result_1;
 };
 
 const [registerTable, { reQuery }] = useTable({
   request: userListApi,
   schemas,
-  actionColumnProps: {
-    width: 280,
-  },
 });
 </script>

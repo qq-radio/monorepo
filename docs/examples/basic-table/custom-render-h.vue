@@ -1,9 +1,9 @@
 <template>
-  <BasicTable @register="registerTable" />
+  <BasicTable :data="userListMockData" :schemas="schemas" />
 </template>
 
-<script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema } from "@center/components";
+<script lang="ts" setup>
+import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -20,11 +20,6 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
@@ -37,6 +32,7 @@ const schemas: TableSchema[] = [
             style: {
               color: "#25a6e7",
               marginRight: "4px",
+              verticalAlign: "middle",
             },
           },
           h(Phone)
@@ -46,17 +42,17 @@ const schemas: TableSchema[] = [
     },
   },
   {
-    label: "部门",
-    prop: "departmentName",
-    customRender: ({ row }) => {
-      return h("span", [
-        `${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`,
-      ]);
-    },
-  },
-  {
     label: "岗位",
     prop: "job",
+  },
+  {
+    label: "地址",
+    prop: "address",
+    customRender: ({ row }) => {
+      return h("span", [
+        `${row.provinceName}/${row.cityName}/${row.regionName}`,
+      ]);
+    },
   },
   {
     label: "状态",
@@ -65,7 +61,12 @@ const schemas: TableSchema[] = [
       return h("span", [
         h(
           ElIcon,
-          { style: { verticalAlign: "center" } },
+          {
+            style: {
+              marginRight: "4px",
+              verticalAlign: "middle",
+            },
+          },
           value === 1
             ? h(CircleCheckFilled, { style: { color: "#8dd35f" } })
             : h(CircleCloseFilled, { style: { color: "#ca5555" } })
@@ -79,20 +80,4 @@ const schemas: TableSchema[] = [
     prop: "createTime",
   },
 ];
-
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 500);
-  });
-};
-
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-});
 </script>

@@ -90,8 +90,6 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     width: 120,
-    headerTooltip:
-      "该页面只是demo，请不要在真实项目中也用value === 1去判断，凡是枚举值都应放置在对应的后端服务的domain层下",
     display: "status",
     displayProps: ({ value }) => ({
       text: value === 1 ? "在职中" : "已离职",
@@ -116,7 +114,7 @@ const userListApi = () => {
         total: userListMockData.length,
         records: userListMockData,
       });
-    }, 500);
+    }, 300);
   });
 };
 

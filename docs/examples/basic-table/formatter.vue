@@ -1,9 +1,9 @@
 <template>
-  <BasicTable @register="registerTable" />
+  <BasicTable :data="userListMockData" :schemas="schemas" />
 </template>
 
-<script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema } from "@center/components";
+<script lang="ts" setup>
+import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -11,11 +11,6 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
@@ -23,49 +18,28 @@ const schemas: TableSchema[] = [
     formatter: ({ value }) => value.slice(0, 3) + "****" + value.slice(7),
   },
   {
-    label: "部门",
-    prop: "departmentName",
-    formatter: ({ row }) =>
-      `${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`,
-  },
-  {
     label: "岗位",
     prop: "job",
+  },
+  {
+    label: "地址",
+    prop: "address",
+    formatter: ({ row }) =>
+      `${row.provinceName}/${row.cityName}/${row.regionName}`,
   },
   {
     label: "状态",
     prop: "status",
     display: "status",
-    formatter: ({ value }) =>
-      value === 1
-        ? {
-            type: "success",
-            text: "在职中",
-          }
-        : {
-            type: "danger",
-            text: "已离职",
-          },
+    displayProps: ({ value }) => ({
+      text: value === 1 ? "在职中" : "已离职",
+      type: value === 1 ? "success" : "danger",
+    }),
   },
+
   {
     label: "创建时间",
     prop: "createTime",
   },
 ];
-
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 500);
-  });
-};
-
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-});
 </script>

@@ -1,112 +1,25 @@
 <template>
-  <BasicTable @register="registerTable" />
+  <BasicTable
+    :data="userListMockData"
+    :schemas="schemas"
+    :actions="actions"
+    :actionColumnProps="{ width: 300 }"
+  />
 </template>
 
-<script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema, Button } from "@center/components";
+<script lang="ts" setup>
+import { BasicTable, TableSchema, Button } from "@center/components";
+
 import userListMockData from "@mocks/user-list.json";
-
-const operations: Button[] = [
-  {
-    text: "新增",
-    onClick: () => {
-      console.log("点击了新增");
-    },
-  },
-  {
-    text: "批量启用",
-    onConfirm: () => {
-      console.log("点击了批量启用");
-    },
-  },
-  {
-    text: "批量禁用",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了批量禁用");
-    },
-  },
-  {
-    text: "批量删除",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了批量删除");
-    },
-  },
-];
-
-const actions: Button[] = [
-  {
-    text: "编辑",
-    onClick: () => {
-      console.log("点击了编辑");
-    },
-  },
-  {
-    text: "启用",
-    onConfirm: () => {
-      console.log("点击了启用");
-    },
-  },
-  {
-    text: "禁用",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了禁用");
-    },
-  },
-  {
-    text: "删除",
-    props: {
-      type: "danger",
-    },
-    onConfirm: () => {
-      console.log("点击了删除");
-    },
-  },
-  {
-    text: "复制",
-    onClick: () => {
-      console.log("点击了复制");
-    },
-  },
-  {
-    text: "查看详情",
-    onClick: () => {
-      console.log("点击了查看详情");
-    },
-  },
-  {
-    text: "查看明细",
-    onClick: () => {
-      console.log("点击了查看明细");
-    },
-  },
-];
 
 const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
     prop: "phone",
-  },
-  {
-    label: "部门",
-    prop: "departmentName",
   },
   {
     label: "岗位",
@@ -116,6 +29,10 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     display: "status",
+    displayProps: ({ value }) => ({
+      text: value === 1 ? "在职中" : "已离职",
+      type: value === 1 ? "success" : "danger",
+    }),
   },
   {
     label: "创建时间",
@@ -123,24 +40,54 @@ const schemas: TableSchema[] = [
   },
 ];
 
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 500);
-  });
-};
-
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-  operations,
-  actions,
-  actionColumnProps: {
-    width: 280,
+const actions: Button[] = [
+  {
+    text: "编辑",
+    onClick: ({ row, rowIndex, column, button }) => {
+      console.log("点击了编辑", row, rowIndex, column, button);
+    },
   },
-});
+  {
+    text: "启用",
+    onConfirm: ({ row, rowIndex, column, button }) => {
+      console.log("确认了启用", row, rowIndex, column, button);
+    },
+  },
+  {
+    text: "禁用",
+    props: {
+      type: "danger",
+    },
+    onConfirm: ({ row, rowIndex, column, button }) => {
+      console.log("确认了禁用", row, rowIndex, column, button);
+    },
+  },
+  {
+    text: "删除",
+    props: {
+      type: "danger",
+    },
+    onConfirm: ({ row, rowIndex, column, button }) => {
+      console.log("确认了删除", row, rowIndex, column, button);
+    },
+  },
+  {
+    text: "复制",
+    onClick: ({ row, rowIndex, column, button }) => {
+      console.log("点击了复制", row, rowIndex, column, button);
+    },
+  },
+  {
+    text: "查看详情",
+    onClick: ({ row, rowIndex, column, button }) => {
+      console.log("点击了查看详情", row, rowIndex, column, button);
+    },
+  },
+  {
+    text: "查看明细",
+    onClick: ({ row, rowIndex, column, button }) => {
+      console.log("点击了查看明细", row, rowIndex, column, button);
+    },
+  },
+];
 </script>

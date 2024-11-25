@@ -29,11 +29,15 @@ basic-table/search
 
 ## 隐藏
 
+您可以通过`visible`控制列的显示或隐藏
+
 :::demo
 basic-table/visible
 :::
 
 ## 文字提示
+
+您可以通过`headerTooltip`设置列的表头提示语
 
 :::demo
 basic-table/tooltip
@@ -41,11 +45,23 @@ basic-table/tooltip
 
 ## 操作栏
 
+您可以通过配置`operations`渲染表格操作栏的按钮组，并通过`operationProps`传入按钮组自定义属性
+
+:::note
+操作栏按钮组`operations`与操作列按钮组`actions`均采用`BasicButtonGroup`渲染，更多用法请参考[BasicButtonGroup](/components/basic-button-group)
+:::
+
 :::demo
 basic-table/operations
 :::
 
 ## 操作列
+
+您可以通过配置`actions`渲染表格操作列的按钮组，并通过`actionProps`传入按钮组自定义属性，且可通过`actionColumnProps`传入操作列的自定义属性
+
+:::note
+操作列按钮组`actions`与操作栏按钮组`operations`均采用`BasicButtonGroup`渲染，更多用法请参考[BasicButtonGroup](/components/basic-button-group)
+:::
 
 :::demo
 basic-table/actions
@@ -53,16 +69,24 @@ basic-table/actions
 
 ## 格式化数据
 
-您可以传入`formatter`格式化单元格数据，请注意`formatter`也是`ElPlus`的table组件提供的属性，但原`formatter`的回调参数为`(row: any, column: any, cellValue: any, index: number)`，
-这不是一个好的函数传参形式，参数多于2个的情况下，应将函数参数定义为一个对象，使用时使用解构得到想要的参数，因此`formatter`在`BasicTable`里被重写了，以下为对比
-原`formatter`的回调参数为`(row: any, column: any, cellValue: any, index: number)`
-`BasicTable`的回调参数为`( params : { row: any, column: any, value: any, rowIndex: number ,   schema: TableSchema ,})`
-`formatter`函数的执行结果除了作为单元格数据的渲染内容外，若您传入了`display`，也会作为`display`对应组件的value值传入组件内部，例如下例中的状态栏
+您可以传入`formatter`格式化单元格数据，`formatter`的属性名称与`el-table`的`formatter`属性名称保持一致，但是函数的回调参数区别如下：
+
+- `el-table`的回调参数为`(row: any, column: any, cellValue: any, index: number)`
+- `BasicTable`的回调参数为`(params:{ row: any, column: any, value: any, rowIndex: number, schema: TableSchema})`
+
+重写回调参数的目的有3点：
+
+- 注入当前列配置`schema`
+- 用对象解构替换数组解构，避免数组解构时存在未使用的变量
+- 使用更具语义化的变量名称
+
 :::demo
 basic-table/formatter
 :::
 
 ## 自定义渲染列 - `customRender`/`tsx`
+
+您可以通过`customRender`/`tsx`自定义渲染列
 
 :::demo
 basic-table/custom-render-tsx
@@ -70,11 +94,15 @@ basic-table/custom-render-tsx
 
 ## 自定义渲染列 - `customRender`/`h`
 
+您可以通过`customRender`/`h`自定义渲染列
+
 :::demo
 basic-table/custom-render-h
 :::
 
 ## 自定义渲染列 - `customSlot`
+
+您可以通过`customSlot`自定义渲染列
 
 :::demo
 basic-table/custom-slot
@@ -94,13 +122,15 @@ basic-table/custom-display
 
 ## 自定义渲染表头 - `customHeaderRender`/`tsx`
 
+您可以通过`customHeaderRender`/`tsx`自定义渲染列
+
 :::demo
 basic-table/custom-header-tsx
 :::
 
 ## 自定义渲染表头 - `customHeaderRender`/`h`
 
-也没有很难啊 现在header只剩下h了
+您可以通过`customHeaderRender`/`h`自定义渲染列
 
 :::demo
 basic-table/custom-header-h
@@ -108,13 +138,15 @@ basic-table/custom-header-h
 
 ## 自定义渲染表头 - `customHeaderSlot`
 
+您可以通过`customHeaderSlot`自定义渲染列
+
 :::demo
 basic-table/custom-header-slot
 :::
 
 ## 序号
 
-若需要展示序号列，仅需传入`hasIndex`，若需要设置序号列属性，传入`indexColumnProps`，序号列默认属性为`label: "序号"`和`width: "60"`
+若需要展示序号列，仅需传入`hasIndex`，且可通过`indexColumnProps`自定义序号列属性
 
 :::demo
 basic-table/index

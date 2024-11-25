@@ -1,6 +1,7 @@
 import type { TableSchema } from "../types";
 import type { FormSchema } from "@center/components/basic-form";
 
+import { unref } from "vue";
 import { merge, isObject } from "lodash";
 
 function addColumnItemMinWidth(columnItem: TableSchema) {
@@ -13,7 +14,7 @@ function addColumnItemMinWidth(columnItem: TableSchema) {
 }
 
 function filterSchemas(schemas: TableSchema[]) {
-  return schemas.filter((item) => item.visible !== false);
+  return schemas.filter((item) => unref(item.visible) !== false);
 }
 
 function normalizecolumnItem(columnItem: TableSchema) {
@@ -21,7 +22,7 @@ function normalizecolumnItem(columnItem: TableSchema) {
 }
 
 function normalizeTableSchemas(schemas: TableSchema[]) {
-  return filterSchemas(schemas).map(normalizecolumnItem); 
+  return filterSchemas(schemas).map(normalizecolumnItem);
 }
 
 function normalizeSearchSchemas(schemas: TableSchema[]) {

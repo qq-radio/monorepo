@@ -19,7 +19,7 @@ interface ApiResponse {
 
 // 该api简单模拟查询接口数据的过滤
 const userListApi = (params): Promise<ApiResponse> => {
-  let response = <Array<any>>[...userListMockData];
+  let response = [...userListMockData];
   const { username, status } = params;
   if (username && status) {
     response = userListMockData.filter(
@@ -38,7 +38,7 @@ const userListApi = (params): Promise<ApiResponse> => {
         total: response.length,
         records: response,
       });
-    }, 500);
+    }, 300);
   });
 };
 

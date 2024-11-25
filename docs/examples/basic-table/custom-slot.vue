@@ -1,16 +1,17 @@
 <template>
-  <BasicTable @register="registerTable">
+  <BasicTable :data="userListMockData" :schemas="schemas">
     <template #phone="{ value }">
-      <el-icon style="color: #25a6e7; margin-right: 4px"><Phone /></el-icon
+      <el-icon
+        style="color: #25a6e7; margin-right: 4px; vertical-align: middle"
+      >
+        <Phone /></el-icon
       >{{ value }}
     </template>
-    <template #department="{ row }">
-      {{
-        `${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`
-      }}
+    <template #address="{ row }">
+      {{ `${row.provinceName}/${row.cityName}/${row.regionName}` }}
     </template>
     <template #status="{ value }">
-      <el-icon>
+      <el-icon style="margin-right: 4px; vertical-align: middle">
         <CircleCheckFilled
           v-if="value === 1"
           style="color: #8dd35f"
@@ -21,8 +22,8 @@
   </BasicTable>
 </template>
 
-<script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema } from "@center/components";
+<script lang="ts" setup>
+import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -36,11 +37,6 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
@@ -48,13 +44,13 @@ const schemas: TableSchema[] = [
     customSlot: "phone",
   },
   {
-    label: "部门",
-    prop: "departmentName",
-    customSlot: "department",
-  },
-  {
     label: "岗位",
     prop: "job",
+  },
+  {
+    label: "地址",
+    prop: "address",
+    customSlot: "address",
   },
   {
     label: "状态",
@@ -66,20 +62,4 @@ const schemas: TableSchema[] = [
     prop: "createTime",
   },
 ];
-
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 500);
-  });
-};
-
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-});
 </script>

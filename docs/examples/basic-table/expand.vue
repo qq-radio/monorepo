@@ -91,7 +91,7 @@ const userListApi = () => {
         total: userListMockData.length,
         records: userListMockData,
       });
-    }, 500);
+    }, 300);
   });
 };
 

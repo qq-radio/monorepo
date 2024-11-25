@@ -79,7 +79,7 @@ export interface TableSchema {
   width?: string | number;
   minWidth?: string | number;
   fixed?: "left" | "right" | boolean;
-  visible?: boolean;
+  visible?: boolean | ComputedRef<boolean>;
   formatter?: (params: TableCellCallbackParams) => any;
 
   searchable?: boolean;

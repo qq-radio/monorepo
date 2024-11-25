@@ -1,10 +1,9 @@
 <template>
-  现在在测试这个
-  <BasicTable @register="registerTable" />
+  <BasicTable :data="userListMockData" :schemas="schemas" />
 </template>
 
 <script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema } from "@center/components";
+import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -18,30 +17,16 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
     prop: "phone",
     customRender: ({ value }) => (
       <>
-        <el-icon style="color: #25a6e7; margin-right: 4px;">
+        <el-icon style="color: #25a6e7; margin-right: 4px; vertical-align: middle">
           <Phone />
         </el-icon>
         {value}
-      </>
-    ),
-  },
-  {
-    label: "部门",
-    prop: "departmentName",
-    customRender: ({ row }) => (
-      <>
-        {`${row.departmentLevelOneName}/${row.departmentLevelTwoName}/${row.departmentLevelThreeName}/${row.departmentName}`}
       </>
     ),
   },
@@ -50,11 +35,17 @@ const schemas: TableSchema[] = [
     prop: "job",
   },
   {
+    label: "地址",
+    prop: "address",
+    customRender: ({ row }) =>
+      `${row.provinceName}/${row.cityName}/${row.regionName}`,
+  },
+  {
     label: "状态",
     prop: "status",
     customRender: ({ value }) => (
       <>
-        <el-icon style="margin-right: 4px;">
+        <el-icon style="margin-right: 4px; vertical-align: middle">
           {value === 1 ? (
             <CircleCheckFilled style="color: #8dd35f" />
           ) : (
@@ -70,20 +61,4 @@ const schemas: TableSchema[] = [
     prop: "createTime",
   },
 ];
-
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 500);
-  });
-};
-
-const [registerTable] = useTable({
-  request: userListApi,
-  schemas,
-});
 </script>
