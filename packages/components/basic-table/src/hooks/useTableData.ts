@@ -1,9 +1,7 @@
-import type { UseTableData } from "../types";
+import type { UseTableData, TableSchema } from "../types";
 
-import { ref, computed, onMounted } from "vue";
-import { isFunction, cloneDeep, merge } from "lodash";
-
-import { normalizeTableSchemas } from "../tools/normalize-schema";
+import { ref, computed, watch, unref, onMounted } from "vue";
+import { isFunction, cloneDeep, isArray, merge } from "lodash";
 
 export const useTableData: UseTableData = (getProps, context) => {
   const { searchParams, page, setPagination } = context;
@@ -11,9 +9,20 @@ export const useTableData: UseTableData = (getProps, context) => {
   const isLoading = ref(false);
   const tableDatas = ref<Recordable[]>([]);
 
+  const isCustomTableDatas = computed(() => isArray(getProps.value.data));
+
   const tableSchemas = computed(() => {
     return normalizeTableSchemas(getProps.value.schemas);
   });
+
+  watch(
+    () => getProps.value.data,
+    (data) => {
+      if (isCustomTableDatas.value) {
+        tableDatas.value = data;
+      }
+    }
+  );
 
   const getRequestParams = () => {
     const params = {
@@ -35,7 +44,7 @@ export const useTableData: UseTableData = (getProps, context) => {
 
   const query = async () => {
     try {
-      if (!isFunction(getProps.value.request)) {
+      if (!isCustomTableDatas.value || !isFunction(getProps.value.request)) {
         return;
       }
 
@@ -62,7 +71,7 @@ export const useTableData: UseTableData = (getProps, context) => {
 
   onMounted(() => {
     setTimeout(() => {
-      if (getProps.value.immediate || isFunction(getProps.value.request)) {
+      if (getProps.value.immediate) {
         query();
       }
     });
@@ -77,3 +86,20 @@ export const useTableData: UseTableData = (getProps, context) => {
     reQuery,
   };
 };
+
+function filterSchemas(schemas: TableSchema[]) {
+  return schemas.filter((item) => unref(item.visible) !== false);
+}
+
+function addColumnMinWidth(schemaItem: TableSchema) {
+  return merge(
+    {
+      minWidth: schemaItem.width,
+    },
+    schemaItem
+  );
+}
+
+function normalizeTableSchemas(schemas: TableSchema[]) {
+  return filterSchemas(schemas).map(addColumnMinWidth);
+}

@@ -1,9 +1,13 @@
 <template>
-  <BasicTable :request="userListApi" :schemas="schemas" />
+  <BasicTable
+    :request="userListApi"
+    :searchSchemas="searchSchemas"
+    :schemas="schemas"
+  />
 </template>
 
 <script lang="ts" setup>
-import { BasicTable, TableSchema } from "@center/components";
+import { BasicTable, FormSchema, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -37,15 +41,29 @@ const userListApi = (params): Promise<ApiResponse> => {
   });
 };
 
+const searchSchemas: FormSchema[] = [
+  {
+    label: "用户名",
+    prop: "username",
+    component: "input",
+  },
+  {
+    label: "状态",
+    prop: "status",
+    component: "select",
+    componentProps: {
+      options: [
+        { label: "在职中", value: 1 },
+        { label: "已离职", value: 2 },
+      ],
+    },
+  },
+];
+
 const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
@@ -63,17 +81,6 @@ const schemas: TableSchema[] = [
       text: value === 1 ? "在职中" : "已离职",
       type: value === 1 ? "success" : "danger",
     }),
-    searchConfig: {
-      label: "状态",
-      prop: "status",
-      component: "select",
-      componentProps: {
-        options: [
-          { label: "在职中", value: 1 },
-          { label: "已离职", value: 2 },
-        ],
-      },
-    },
   },
   {
     label: "创建时间",

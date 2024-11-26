@@ -1,5 +1,29 @@
 <template>
-  <BasicTable :request="userListApi" :schemas="schemas" />
+  <BasicTable
+    :request="userListApi"
+    :schemas="schemas"
+    :searchProps="{
+      labelWidth: 60,
+      labelPosition: 'left',
+      rowProps: {
+        gutter: 40,
+      },
+      colProps: {
+        span: 6,
+      },
+    }"
+  >
+    <template #search-username="model">
+      <el-input v-model="model.username" placeholder="请输入用户名" />
+    </template>
+    <template #search-status="model">
+      <BasicSelect
+        v-model="model.status"
+        :options="statusOptions"
+        placeholder="请选择状态"
+      />
+    </template>
+  </BasicTable>
 </template>
 
 <script lang="ts" setup>
@@ -37,6 +61,12 @@ const userListApi = (params): Promise<ApiResponse> => {
   });
 };
 
+const statusOptions = [
+  { label: "在职中", value: 1 },
+  { label: "已离职", value: 2 },
+  { label: "全部", value: 3 },
+];
+
 const schemas: TableSchema[] = [
   {
     label: "用户名",
@@ -44,7 +74,7 @@ const schemas: TableSchema[] = [
     searchConfig: {
       label: "用户名",
       prop: "username",
-      component: "input",
+      customSlot: "search-username",
     },
   },
   {
@@ -66,13 +96,9 @@ const schemas: TableSchema[] = [
     searchConfig: {
       label: "状态",
       prop: "status",
-      component: "select",
-      componentProps: {
-        options: [
-          { label: "在职中", value: 1 },
-          { label: "已离职", value: 2 },
-        ],
-      },
+      customSlot: "search-status",
+      defaultValue: 3,
+      required: true,
     },
   },
   {

@@ -1,9 +1,9 @@
-import type { UseTableSearch } from "../types";
+import type { UseTableSearch, TableSchema } from "../types";
 
-import { normalizeSearchSchemas } from "../tools/normalize-schema";
+import type { FormSchema } from "@center/components/basic-form/src/types";
 
 import { ref, computed } from "vue";
-import { merge } from "lodash";
+import { merge, isArray, isObject } from "lodash";
 
 export const useTableSearch: UseTableSearch = (getProps) => {
   const getSearchProps = computed(() => {
@@ -20,7 +20,9 @@ export const useTableSearch: UseTableSearch = (getProps) => {
   });
 
   const getSearchSchemas = computed(() =>
-    normalizeSearchSchemas(getProps.value.schemas)
+    isArray(getProps.value.searchSchemas)
+      ? getProps.value.searchSchemas
+      : normalizeSearchSchemas(getProps.value.schemas)
   );
 
   const searchParams = ref<Recordable>({});
@@ -31,3 +33,31 @@ export const useTableSearch: UseTableSearch = (getProps) => {
     searchParams,
   };
 };
+
+function normalizeSearchSchemas(schemas: TableSchema[]) {
+  const searchSchemas: FormSchema[] = [];
+
+  schemas
+    .filter((item) => item.searchable || isObject(item.searchConfig))
+    .forEach((item) => {
+      if (item.searchable) {
+        searchSchemas.push({
+          label: item.label,
+          prop: item.prop,
+          component: "input",
+        });
+      } else {
+        searchSchemas.push({
+          ...item.searchConfig,
+          label: item.searchConfig?.label || item.label,
+          prop: item.searchConfig?.prop || item.prop,
+        });
+      }
+    });
+
+  if (!searchSchemas.length) {
+    return [];
+  }
+
+  return searchSchemas;
+}

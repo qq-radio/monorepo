@@ -20,7 +20,8 @@ import type { VNode } from "vue";
 
 export interface BasicTableProps {
   schemas: TableSchema[];
-  tableDatas?: Array<Recordable>;
+  searchSchemas: FormSchema[];
+  data?: Array<Recordable>;
   request?: (params: Recordable) => Promise<{
     records: Array<Recordable>;
     total: number;

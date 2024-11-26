@@ -23,8 +23,42 @@ basic-table/basic
 
 ## 搜索
 
+您可以通过`searchConfig`设置表格的搜索项
+
 :::demo
 basic-table/search
+:::
+
+## 搜索 - 透传属性与插槽
+
+表格的搜索采用`BasicForm`渲染，每一项搜索配置`searchConfig`相当于`BasicForm`里的一个表单项`FormItem`。您可以通过`searchProps`透传`BasicForm`属性，以及通过`searchConfig`透传每一个表单项`FormItem`属性
+
+:::demo
+basic-table/search-passing-props-slots
+:::
+
+## 搜索 - 自动构建搜索配置
+
+您可以在`searchConfig`里配置搜索表单项的完整属性，若有以下情况也可省略部分配置
+
+- 若搜索项的`label`、`prop`与表格里的`label`、`prop`一致，可直接省略
+- 若搜索项的`label`、`prop`与表格里的`label`、`prop`一致，且`component=input`，则可以直接使用`searchable: true`替代`searchConfig`配置
+
+:::demo
+basic-table/search-searchable
+:::
+
+## 搜索 - 自定义搜索配置
+
+`BasicTable`更推荐您在表格列配置里添加`searchConfig`当做表单的搜索配置，原因：
+
+- 使数据、业务逻辑更加集中
+- 当字段名称一致，可以省略部分配置
+
+当然，若有特殊情况，您也可以自定义`searchSchemas`，当配置`searchSchemas`时，表格列里的每一项`searchConfig`则不生效
+
+:::demo
+basic-table/search-schemas
 :::
 
 ## 显示或隐藏

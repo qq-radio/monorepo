@@ -4,7 +4,6 @@ import type { TableColumnCtx } from "element-plus";
 export type TableBodyProps = Pick<
   BasicTableProps,
   | "schemas"
-  | "tableDatas"
   | "loading"
   | "rowKey"
   | "hasRadioSelection"
@@ -18,7 +17,9 @@ export type TableBodyProps = Pick<
   | "actionColumnProps"
   | "actionProps"
   | "actions"
->;
+> & {
+  tableDatas: Array<Recordable>;
+};
 
 export interface TableColumnParams {
   row: Recordable<any>;

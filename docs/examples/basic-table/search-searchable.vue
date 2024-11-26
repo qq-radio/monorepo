@@ -41,15 +41,12 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
+    searchable: true,
   },
   {
     label: "手机号",
     prop: "phone",
+    searchable: true,
   },
   {
     label: "岗位",
@@ -64,8 +61,6 @@ const schemas: TableSchema[] = [
       type: value === 1 ? "success" : "danger",
     }),
     searchConfig: {
-      label: "状态",
-      prop: "status",
       component: "select",
       componentProps: {
         options: [
