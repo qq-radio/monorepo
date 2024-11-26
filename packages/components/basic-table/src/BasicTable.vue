@@ -60,6 +60,7 @@ import { useTableSelection } from "./hooks/useTableSelection";
 import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
 
 import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
+import { pick } from "lodash";
 
 import { BasicPagination } from "@center/components/basic-pagination";
 import { BasicForm } from "@center/components/basic-form";
@@ -98,7 +99,20 @@ function setProps(partialProps: Partial<BasicTableProps>) {
 
 const getBindValues = computed(() => ({
   ...attrs,
-  ...getProps.value,
+  ...pick(getProps.value, [
+    "rowKey",
+    "hasRadioSelection",
+    "radioSelectionColumnProps",
+    "hasSelection",
+    "selectionColumnProps",
+    "hasIndex",
+    "indexColumnProps",
+    "hasExpand",
+    "expandColumnProps",
+    "actionColumnProps",
+    "actionProps",
+    "actions",
+  ]),
 }));
 
 const { getSearchProps, getSearchSchemas, searchParams } = useTableSearch(

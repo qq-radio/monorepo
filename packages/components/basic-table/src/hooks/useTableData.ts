@@ -21,7 +21,8 @@ export const useTableData: UseTableData = (getProps, context) => {
       if (isCustomTableDatas.value) {
         tableDatas.value = data;
       }
-    }
+    },
+    { immediate: true }
   );
 
   const getRequestParams = () => {
@@ -44,7 +45,7 @@ export const useTableData: UseTableData = (getProps, context) => {
 
   const query = async () => {
     try {
-      if (!isCustomTableDatas.value || !isFunction(getProps.value.request)) {
+      if (!isFunction(getProps.value.request)) {
         return;
       }
 
