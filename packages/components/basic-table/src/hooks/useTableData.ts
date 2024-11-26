@@ -20,6 +20,7 @@ export const useTableData: UseTableData = (getProps, context) => {
     (data) => {
       if (isCustomTableDatas.value) {
         tableDatas.value = data;
+        setPagination({ total: data?.length });
       }
     },
     { immediate: true }

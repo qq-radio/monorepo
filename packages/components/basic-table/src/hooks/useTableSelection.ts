@@ -15,7 +15,7 @@ export const useTableSelection: UseTableSelection = () => {
   }
 
   function getSelectedIds() {
-    return unref(selectedIds);   
+    return unref(selectedIds);
   }
 
   function handleSelectionChange(rows: Recordable[]) {
@@ -28,7 +28,7 @@ export const useTableSelection: UseTableSelection = () => {
 
   function validateHasSelection() {
     if (selectedRows.value.length) {
-      return 
+      return;
     }
 
     const message = "请至少选择一条数据后再操作";

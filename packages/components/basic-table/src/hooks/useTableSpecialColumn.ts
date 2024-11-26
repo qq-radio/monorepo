@@ -29,8 +29,8 @@ export const useTableSpecialColumn: UseTableSpecialColumn = (getProps) => {
 
   const getExpandColumnProps = computed(() => ({
     key: "expand",
-    label: "展开",
-    width: "300",
+    label: "",
+    width: "60",
     type: "expand",
     ...getProps.value.expandColumnProps,
   }));

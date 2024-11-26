@@ -25,7 +25,11 @@
 
         <el-table-column v-if="hasIndex" v-bind="getIndexColumnProps" />
 
-        <el-table-column v-if="hasExpand" v-bind="getExpandColumnProps" />
+        <el-table-column v-if="hasExpand" v-bind="getExpandColumnProps">
+          <template #default="{ row, $index, expanded }">
+            <slot name="expand" v-bind="{ row, rowIndex: $index, expanded }" />
+          </template>
+        </el-table-column>
 
         <template v-for="schema in schemas" :key="schema.prop">
           <el-table-column
