@@ -16,7 +16,7 @@ import { isObject, isString, cloneDeep, merge } from "lodash";
 
 export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   const formSchemas = ref<NormalizedFormSchema[]>([]);
-  const formModel = ref<Recordable<any>>({});
+  const formModel = ref<Recordable>({});
 
   watch(
     () => getProps.value.schemas,
@@ -144,7 +144,7 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     return formModel.value;
   }
 
-  function setFieldsValue(values: Recordable<any>) {
+  function setFieldsValue(values: Recordable) {
     if (!isObject(values)) {
       return;
     }

@@ -1,8 +1,11 @@
 <template>
+  <el-button @click="setRadioSelectedRowTow"> set 张伟</el-button>
+  <el-button @click="getRadioSelectedRowTow"> get 张伟</el-button>
+  <el-button @click="clearRadioSelectedRowTow"> cleder rrr 张伟</el-button>
+
   <BasicTable
     hasRadioSelection
     :radioSelectionColumnProps="{
-      'class-name': 'custom-style',
       fixed: true,
     }"
     @register="registerTable"
@@ -69,7 +72,10 @@ const userListApi = () => {
   });
 };
 
-const [registerTable] = useTable({
+const [
+  registerTable,
+  { setRadioSelectedRow, clearRadioSelectedRow, getRadioSelectedRow },
+] = useTable({
   request: userListApi,
   schemas,
 });
@@ -78,6 +84,23 @@ const handleRowClick = (row, column, event) => {
   console.log("表格单选 row:", row);
   console.log("表格单选 column:", column);
   console.log("表格单选 event:", event);
+};
+
+const setRadioSelectedRowTow = () => {
+  console.log(
+    "setRadioSelectedRow: 先看下我能 拿到这个radio 函数吗",
+    setRadioSelectedRow
+  );
+  setRadioSelectedRow("132989030188923");
+  console.log("set 张伟:");
+};
+
+const getRadioSelectedRowTow = () => {
+  console.log("get 张伟:", getRadioSelectedRow());
+};
+
+const clearRadioSelectedRowTow = () => {
+  console.log("cleder rrr 张伟:", clearRadioSelectedRow());
 };
 </script>
 

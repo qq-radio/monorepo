@@ -4,7 +4,7 @@ import { ref, computed, unref } from "vue";
 import { ElMessage } from "element-plus";
 
 export const useTableSelection: UseTableSelection = () => {
-  const selectedRows = ref<Array<Recordable<any>>>([]);
+  const selectedRows = ref<Array<Recordable>>([]);
 
   const selectedIds = computed<Array<number | string>>(() =>
     selectedRows.value.map((i) => i.id)

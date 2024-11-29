@@ -1,5 +1,6 @@
 <template>
   <div :class="ns.b()">
+    单选值被set 成功了吗？？、 {{ radioSelectedRow }}
     <div :class="ns.e('search')">
       <BasicForm
         v-if="getSearchSchemas?.length"
@@ -35,7 +36,7 @@
             >
               <template #default="scope">
                 <el-radio
-                  v-model="radioValue"
+                  v-model="radioSelectedRow"
                   :label="scope.row[getBindValues.rowKey]"
                 >
                   &nbsp;
@@ -228,12 +229,6 @@ const {
   getRequestParams,
 } = useTableData(getProps, { searchParams, page, setPagination });
 
-const radioValue = ref();
-
-// const handleRowClick = (row) => {
-//   radioValue.value = row[getBindValues.value.rowKey];
-// };
-
 const {
   getRadioSelectionColumnProps,
   getSelectionColumnProps,
@@ -256,9 +251,11 @@ const {
 } = useTableSelection(getProps, { slots });
 
 const {
-  getRadioSelectedRow,
+  radioSelectedRow,
   handleRadioSelectionChange,
-  cleanRadioSelectedRow,
+  setRadioSelectedRow,
+  getRadioSelectedRow,
+  clearRadioSelectedRow,
 } = useTableRadioSelection(getProps);
 
 const tableMethods: TableMethods = {
@@ -275,7 +272,8 @@ const tableMethods: TableMethods = {
   validateHasSelection,
 
   // useTableRadioSelection
-  cleanRadioSelectedRow,
+  setRadioSelectedRow,
+  clearRadioSelectedRow,
   getRadioSelectedRow,
 };
 

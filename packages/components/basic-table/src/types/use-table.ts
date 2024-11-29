@@ -2,27 +2,27 @@ import type {
   BasicTableProps,
   UseTableDataReturn,
   UseTableSelectionReturn,
-  UseTableRadioSelectionReturn
-} from './'
+  UseTableRadioSelectionReturn,
+} from "./";
 
 export interface TableMethods
-  extends Pick<UseTableDataReturn, 'reQuery' | 'getRequestParams'>,
+  extends Pick<UseTableDataReturn, "reQuery" | "getRequestParams">,
     Pick<
       UseTableSelectionReturn,
-      | 'getSelectedRows'
-      | 'getSelectedIds'
-      | 'checkHasSelection'
-      | 'validateHasSelection'
+      | "getSelectedRows"
+      | "getSelectedIds"
+      | "checkHasSelection"
+      | "validateHasSelection"
     >,
     Pick<
       UseTableRadioSelectionReturn,
-      'getRadioSelectedRow' | 'cleanRadioSelectedRow'
+      "getRadioSelectedRow" | "clearRadioSelectedRow"
     > {
-  setProps: (props: Partial<BasicTableProps>) => void
+  setProps: (props: Partial<BasicTableProps>) => void;
 }
 
-type UseTableReturn = [(instance: TableMethods) => void, TableMethods]
+type UseTableReturn = [(instance: TableMethods) => void, TableMethods];
 
 export interface UseTable {
-  (props?: Partial<BasicTableProps>): UseTableReturn
+  (props?: Partial<BasicTableProps>): UseTableReturn;
 }

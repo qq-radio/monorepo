@@ -80,7 +80,7 @@ export interface FormSchema {
   // 自定义渲染 - field
   component?: ComponentType;
   componentProps?: ComponentProps;
-  componentSlots?: Recordable<any>;
+  componentSlots?: Recordable;
   componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
   customRender?: Render;
@@ -123,9 +123,9 @@ export interface BasicFormProps {
   hasErrorMessageTip?: boolean;
 
   // interface data -> form model
-  modelAdaptee?: (model: Recordable<any>) => Recordable<any>;
+  modelAdaptee?: (model: Recordable) => Recordable;
   // form model -> interface data
-  modelAdapter?: (model: Recordable<any>) => Recordable<any>;
+  modelAdapter?: (model: Recordable) => Recordable;
 }
 
 export interface BasicFormEmits {

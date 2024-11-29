@@ -1,26 +1,32 @@
-import type { UseTableRadioSelection } from '../types'
+import type { UseTableRadioSelection } from "../types";
 
-import { ref, unref } from 'vue'
+import { ref, unref } from "vue";
 
-// 这个的思路不对 应该要放到 body去而不是table 之后要改 思路要模仿useformself
 export const useTableRadioSelection: UseTableRadioSelection = () => {
-  const selectedRow = ref<Recordable<any>>({})
+  const radioSelectedRow = ref<Recordable>({});
+
+  function handleRadioSelectionChange(row: Recordable) {
+    radioSelectedRow.value = row;
+  }
+
+  function setRadioSelectedRow(row: Recordable) {
+    console.log("setRadioSelectedRow:  这里会被调用，才是对的 之类", row);
+    radioSelectedRow.value = row;
+  }
 
   function getRadioSelectedRow() {
-    return unref(selectedRow)
+    return unref(radioSelectedRow);
   }
 
-  function cleanRadioSelectedRow() {
-    selectedRow.value = {}
-  }
-
-  function handleRadioSelectionChange(row: Recordable<any>) {
-    selectedRow.value = row
+  function clearRadioSelectedRow() {
+    radioSelectedRow.value = {};
   }
 
   return {
+    radioSelectedRow,
+    handleRadioSelectionChange,
+    setRadioSelectedRow,
     getRadioSelectedRow,
-    cleanRadioSelectedRow,
-    handleRadioSelectionChange
-  }
-}
+    clearRadioSelectedRow,
+  };
+};

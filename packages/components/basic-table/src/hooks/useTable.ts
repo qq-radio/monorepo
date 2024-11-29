@@ -65,11 +65,14 @@ export const useTable: UseTable = (props) => {
     },
 
     // useTableRadioSelection
+    setRadioSelectedRow: (value) => {
+      return getInstance().setRadioSelectedRow(value);
+    },
     getRadioSelectedRow: () => {
       return getInstance().getRadioSelectedRow();
     },
-    cleanRadioSelectedRow: () => {
-      return getInstance().cleanRadioSelectedRow();
+    clearRadioSelectedRow: () => {
+      return getInstance().clearRadioSelectedRow();
     },
   };
 

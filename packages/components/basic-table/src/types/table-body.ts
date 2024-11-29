@@ -22,7 +22,7 @@ export type TableBodyProps = Pick<
 };
 
 export interface TableColumnParams {
-  row: Recordable<any>;
+  row: Recordable;
   rowIndex: number;
   column: TableColumnCtx<any>;
 }

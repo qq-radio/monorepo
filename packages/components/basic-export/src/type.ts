@@ -1,18 +1,18 @@
-export type Params = Recordable | (() => Recordable<any>)
+export type Params = Recordable | (() => Recordable);
 
 export interface ExportConfig {
-  url: string
-  params: Params
-  beforeExport?: (params: Recordable) => boolean
-  fileName?: string
+  url: string;
+  params: Params;
+  beforeExport?: (params: Recordable) => boolean;
+  fileName?: string;
 }
 
 export interface BasicExportProps {
-  config: ExportConfig
+  config: ExportConfig;
 }
 
 export interface BasicExportEmits {
-  (e: 'success'): void
-  (e: 'fail'): void
-  (e: 'complete'): void
+  (e: "success"): void;
+  (e: "fail"): void;
+  (e: "complete"): void;
 }
