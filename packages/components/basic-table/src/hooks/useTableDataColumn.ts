@@ -1,24 +1,30 @@
 import type { UseTableDataColumn } from "../types";
-import { isEmpty, pick } from "lodash";
+import { isArray, isEmpty, pick } from "lodash";
 
-import { computed } from "vue";
+import { shallowRef, watch } from "vue";
 
 export const useTableDataColumn: UseTableDataColumn = (getProps, { slots }) => {
-  const tableHeaderSlots = computed(() => {
-    const keys = getProps.value.schemas
-      .filter((s) => s.customHeaderSlot)
-      .map((s) => s.customHeaderSlot);
+  const tableHeaderSlots = shallowRef({});
+  const tableCellSlots = shallowRef({});
 
-    return isEmpty(keys) ? {} : pick(slots, keys);
-  });
+  watch(
+    () => getProps.value.tableSchemas,
+    (tableSchemas) => {
+      if (isArray(tableSchemas)) {
+        const a = tableSchemas
+          ?.filter((s) => s.customHeaderSlot)
+          ?.map((s) => s.customHeaderSlot);
+        tableHeaderSlots.value = isEmpty(a) ? {} : pick(slots, a);
+        console.log("tableHeaderSlots:", tableHeaderSlots);
 
-  const tableCellSlots = computed(() => {
-    const keys = getProps.value.schemas
-      .filter((s) => s.customSlot)
-      .map((s) => s.customSlot);
-
-    return isEmpty(keys) ? {} : pick(slots, keys);
-  });
+        const b = tableSchemas
+          ?.filter((s) => s.customSlot)
+          ?.map((s) => s.customSlot);
+        tableCellSlots.value = isEmpty(b) ? {} : pick(slots, b);
+      }
+    },
+    { immediate: true, deep: true }
+  );
 
   return {
     tableHeaderSlots,
