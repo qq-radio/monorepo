@@ -1,179 +1,204 @@
 <template>
-  <el-button type="primary" @click="updateItem"> update </el-button>
-  <BasicForm
-    v-model="model"
-    @register="registerForm"
-    @submit="submit"
-    hasFooter
-  />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="示例" name="example">
+      <BasicButtonGroup
+        :buttons="buttons"
+        :buttonProps="{ type: 'default' }"
+        style="margin-bottom: 20px"
+      />
+      <BasicForm
+        ref="basicFormRef"
+        v-model="model"
+        :schemas="schemas"
+        hasFooter
+      />
+    </el-collapse-item>
+    <el-collapse-item title="表单值" name="data">
+      {{ model }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script lang="tsx" setup>
-import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
+import {
+  BasicForm,
+  FormSchema,
+  BasicButtonGroup,
+  Button,
+} from "@center/components";
 
 import { ref } from "vue";
 
-const model = ref({});
+const activeNames = ref(["example"]);
+
+const basicFormRef = ref();
+
+const model = ref({
+  username: "韩梅梅",
+});
 
 const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-
     required: true,
   },
   {
-    label: "礼物",
-    prop: "gift",
+    label: "语言",
+    prop: "language",
     component: "radio-group",
-    required: true,
-    componentProps: ({
-      value,
-      methods: {
-        setFieldsValue,
-        appendSchema,
-        updateSchema,
-        getFieldValue,
-        getFieldsValue,
-        validate,
-        validateField,
-      },
-    }) => {
-      return {
-        options: [
-          { label: "手机", value: "phone" },
-          { label: "电脑", value: "computer" },
-        ],
-        onClick: () => {
-          value === "phone"
-            ? setFieldsValue({
-                computerBrand: "",
-              })
-            : setFieldsValue({
-                phoneBrand: "",
-              });
-
-          appendSchema(
-            {
-              label: "充电线",
-              prop: "service",
-              component: "radio-group",
-              componentProps: {
-                options: [
-                  { label: "快充", value: "fast" },
-                  { label: "慢充", value: "slow" },
-                ],
-              },
-            },
-            "gift"
-          );
-
-          value === "phone"
-            ? updateSchema(
-                {
-                  label: "手机品牌11",
-                  prop: "phoneBrand",
-                  component: "select",
-                  componentProps: {
-                    options: [
-                      { label: "樱桃1111", value: "iphone" },
-                      { label: "小米1111", value: "xiaomi" },
-                      { label: "华为111", value: "huawei" },
-                    ],
-                  },
-                },
-                "gift"
-              )
-            : updateSchema(
-                {
-                  label: "电脑品牌222",
-                  prop: "computerBrand",
-                  component: "select",
-                  componentProps: {
-                    options: [
-                      { label: "联想2222", value: "lenovo" },
-                      { label: "惠普2222", value: "hp" },
-                      { label: "戴尔222222", value: "dell" },
-                    ],
-                  },
-                },
-                "gift"
-              );
-
-          const gift = getFieldValue("gift");
-          const values = getFieldsValue();
-          // console.log("form gift:", gift);
-          // console.log("form values:", values);
-
-          setFieldsValue({
-            phoneBrand: "xiaomi",
-            computerBrand: "hp",
-          });
-
-          validate();
-          // validateField("username");
-        },
-      };
-    },
-  },
-  {
-    label: "手机品牌",
-    prop: "phoneBrand",
-    component: "select",
     componentProps: {
       options: [
-        { label: "樱桃", value: "iphone" },
-        { label: "小米", value: "xiaomi" },
-        { label: "华为", value: "huawei" },
+        { label: "前端", value: "frontend" },
+        { label: "后端", value: "backend" },
       ],
     },
     required: true,
   },
   {
-    label: "电脑品牌",
-    prop: "computerBrand",
-    component: "select",
+    label: "前端语言",
+    prop: "frontendLanguage",
+    component: "checkbox-group",
     componentProps: {
       options: [
-        { label: "联想", value: "lenovo" },
-        { label: "惠普", value: "hp" },
-        { label: "戴尔", value: "dell" },
+        { label: "JavaScript", value: "javaScript" },
+        { label: "TypeScript", value: "typescript" },
+      ],
+    },
+    required: true,
+  },
+  {
+    label: "后端语言",
+    prop: "backendLanguage",
+    component: "checkbox-group",
+    componentProps: {
+      options: [
+        { label: "Python", value: "python" },
+        { label: "Go", value: "go" },
+        { label: "Java", value: "java" },
       ],
     },
     required: true,
   },
 ];
 
-const [
-  registerForm,
+const buttons: Button[] = [
   {
-    setFieldsValue,
-    appendSchema,
-    updateSchema,
-    getFieldValue,
-    getFieldsValue,
-    validate,
-    validateField,
-  },
-] = useForm({
-  schemas,
-  labelWidth: "180px",
-});
-
-const updateItem = () => {
-  updateSchema({
-    label: "手机品牌222222222222222222222",
-    prop: "phoneBrand",
-    component: "select",
-    componentProps: {
-      options: [
-        { label: "22222222222222樱桃", value: "iphone" },
-        { label: "22222222222222小米", value: "xiaomi" },
-        { label: "22222222222222华为", value: "huawei" },
-      ],
+    text: "setProps",
+    onClick: () => {
+      basicFormRef.value.setProps({
+        colProps: {
+          span: 10,
+        },
+      });
     },
-  });
-};
-
-const submit = () => {};
+  },
+  {
+    text: "submit",
+    onClick: () => {
+      basicFormRef.value.submit();
+    },
+  },
+  {
+    text: "reset",
+    onClick: () => {
+      basicFormRef.value.reset();
+    },
+  },
+  {
+    text: "updateSchema",
+    onClick: () => {
+      basicFormRef.value.updateSchema({
+        prop: "backendLanguage",
+        componentProps: {
+          options: [
+            { label: "C", value: "c" },
+            { label: "C++", value: "c++" },
+            { label: "Ruby", value: "ruby" },
+          ],
+        },
+      });
+    },
+  },
+  {
+    text: "removeSchema",
+    onClick: () => {
+      basicFormRef.value.removeSchema("tool");
+    },
+  },
+  {
+    text: "appendSchema",
+    onClick: () => {
+      basicFormRef.value.appendSchema(
+        {
+          label: "工具",
+          prop: "tool",
+          component: "select",
+          componentProps: {
+            options: [
+              { label: "Visual Studio", value: "vscode" },
+              { label: "IntelliJ IDEA", value: "idea" },
+              { label: "Eclipse", value: "eclipse" },
+            ],
+          },
+        },
+        "backendLanguage"
+      );
+    },
+  },
+  {
+    text: "getFieldValue",
+    onClick: () => {
+      const language = basicFormRef.value.getFieldValue("tool");
+      console.log("getFieldValue language:", language);
+    },
+  },
+  {
+    text: "getFieldsValue",
+    onClick: () => {
+      const values = basicFormRef.value.getFieldsValue();
+      console.log("getFieldsValue values:", values);
+    },
+  },
+  {
+    text: "setFieldsValue",
+    onClick: () => {
+      basicFormRef.value.setFieldsValue({ language: "frontend" });
+    },
+  },
+  {
+    text: "resetFieldsValue",
+    onClick: () => {
+      basicFormRef.value.resetFieldsValue();
+    },
+  },
+  {
+    text: "validate",
+    onClick: () => {
+      basicFormRef.value.validate();
+    },
+  },
+  {
+    text: "validateField",
+    onClick: () => {
+      basicFormRef.value.validateField("language");
+    },
+  },
+  {
+    text: "resetFields",
+    onClick: () => {
+      basicFormRef.value.resetFields();
+    },
+  },
+  {
+    text: "scrollToField",
+    onClick: () => {},
+  },
+  {
+    text: "clearValidate",
+    onClick: () => {
+      basicFormRef.value.clearValidate();
+    },
+  },
+];
 </script>

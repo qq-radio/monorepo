@@ -111,8 +111,7 @@ const renderButton = (button: Button) => {
 const renderDefaultButton = (button: Button) => {
   const tagProps = {
     style: {
-      marginRight: "12px",
-      marginLeft: 0,
+      margin: "0 10px 10px 0",
     },
     ...props.buttonProps,
     ...(button.props || {}),

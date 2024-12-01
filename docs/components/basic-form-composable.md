@@ -8,6 +8,8 @@
 - 通过`componentProps`使用
   :::
 
+## 表单联动
+
 :::demo
-basic-form-composable/instance
+basic-form/use-form-methods-with-hook
 :::

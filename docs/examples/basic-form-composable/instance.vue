@@ -124,6 +124,7 @@ const schemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
+    required: true,
   },
   {
     label: "礼物",
@@ -135,6 +136,7 @@ const schemas: FormSchema[] = [
         { label: "电脑", value: "computer" },
       ],
     },
+    required: true,
   },
   {
     label: "手机品牌",
