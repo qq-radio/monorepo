@@ -1,6 +1,5 @@
 <template>
   <div :class="ns.b()">
-    单选值被set 成功了吗？？、 {{ radioSelectedRow }}
     <div :class="ns.e('search')">
       <BasicForm
         v-if="getSearchSchemas?.length"
@@ -36,7 +35,7 @@
             >
               <template #default="scope">
                 <el-radio
-                  v-model="radioSelectedRow"
+                  v-model="radioSelectedValue"
                   :label="scope.row[getBindValues.rowKey]"
                 >
                   &nbsp;
@@ -142,8 +141,8 @@ import { useTableSearch } from "./hooks/useTableSearch";
 import { useTableData } from "./hooks/useTableData";
 import { useTableSpecialColumn } from "./hooks/useTableSpecialColumn";
 import { useTableDataColumn } from "./hooks/useTableDataColumn";
-import { useTableSelection } from "./hooks/useTableSelection";
 import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
+import { useTableSelection } from "./hooks/useTableSelection";
 import { useTablePagination } from "./hooks/useTablePagination";
 
 import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
@@ -243,20 +242,22 @@ const { tableHeaderSlots, tableCellSlots } = useTableDataColumn(getBindValues, {
 });
 
 const {
-  getSelectedRows,
-  getSelectedIds,
-  checkHasSelection,
-  handleSelectionChange,
-  validateHasSelection,
-} = useTableSelection(getProps, { slots });
-
-const {
-  radioSelectedRow,
+  radioSelectedValue,
   handleRadioSelectionChange,
   setRadioSelectedRow,
   getRadioSelectedRow,
   clearRadioSelectedRow,
-} = useTableRadioSelection(getProps);
+} = useTableRadioSelection(
+  pick(getBindValues.value, "rowKey", "hasRadioSelection")
+);
+
+const {
+  handleSelectionChange,
+  getSelectedRows,
+  getSelectedIds,
+  checkHasSelection,
+  validateHasSelection,
+} = useTableSelection(getProps, { slots });
 
 const tableMethods: TableMethods = {
   setProps,
@@ -265,16 +266,16 @@ const tableMethods: TableMethods = {
   reQuery,
   getRequestParams,
 
+  // useTableRadioSelection
+  setRadioSelectedRow,
+  getRadioSelectedRow,
+  clearRadioSelectedRow,
+
   // useTableSelection
   getSelectedRows,
   getSelectedIds,
   checkHasSelection,
   validateHasSelection,
-
-  // useTableRadioSelection
-  setRadioSelectedRow,
-  clearRadioSelectedRow,
-  getRadioSelectedRow,
 };
 
 onMounted(() => {

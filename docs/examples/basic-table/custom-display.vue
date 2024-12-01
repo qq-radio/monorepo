@@ -32,18 +32,6 @@ const schemas: TableSchema[] = [
     }),
   },
   {
-    label: "部门",
-    prop: "departmentName",
-    width: 120,
-    display: "tag",
-    displayProps: {
-      type: "primary",
-    },
-    displaySlots: ({ value }) => ({
-      default: () => value,
-    }),
-  },
-  {
     label: "岗位",
     prop: "job",
     width: 120,

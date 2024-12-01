@@ -4,7 +4,6 @@ export * from "./table";
 export * from "./use-table-data-column";
 export * from "./use-table-data";
 export * from "./use-table-pagination";
-export * from "./use-table-radio-selection";
 export * from "./use-table-search";
 export * from "./use-table-selection";
 export * from "./use-table-special-column";

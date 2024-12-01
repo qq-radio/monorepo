@@ -1,8 +1,9 @@
+import type { UseTableRadioSelectionReturn } from "../hooks/useTableRadioSelection";
+
 import type {
   BasicTableProps,
   UseTableDataReturn,
   UseTableSelectionReturn,
-  UseTableRadioSelectionReturn,
 } from "./";
 
 export interface TableMethods
@@ -16,7 +17,7 @@ export interface TableMethods
     >,
     Pick<
       UseTableRadioSelectionReturn,
-      "getRadioSelectedRow" | "clearRadioSelectedRow"
+      "setRadioSelectedRow" | "getRadioSelectedRow" | "clearRadioSelectedRow"
     > {
   setProps: (props: Partial<BasicTableProps>) => void;
 }
