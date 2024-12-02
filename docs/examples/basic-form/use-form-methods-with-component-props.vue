@@ -95,10 +95,6 @@ const buttons: Button[] = [
     onClick: () => {},
   },
   {
-    text: "resetFieldsValue",
-    onClick: () => {},
-  },
-  {
     text: "validate",
     onClick: () => {},
   },

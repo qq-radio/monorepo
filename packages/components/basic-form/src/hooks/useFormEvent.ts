@@ -6,7 +6,7 @@ import {
   processSchemas,
 } from "../tools/normalize-schema";
 
-import { ref, unref, watch } from "vue";
+import { computed, onMounted, ref, unref, watch } from "vue";
 import { isObject, isString, cloneDeep, merge } from "lodash";
 
 type UpdateSchemaParams = MakeRequired<FormSchema, "prop">;
@@ -15,8 +15,10 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   const formSchemas = ref<NormalizedFormSchema[]>([]);
   const formModel = ref<Recordable>({});
 
+  const a = computed(() => getProps.value.schemas);
+
   watch(
-    () => getProps.value,
+    () => a.value,
     () => {
       initSchemas();
       initModel();
@@ -28,7 +30,7 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   );
 
   function initSchemas() {
-    formSchemas.value = normalizeSchemas(getProps.value?.schemas);
+    formSchemas.value = normalizeSchemas(cloneDeep(getProps.value.schemas));
   }
 
   function initModel() {
@@ -81,6 +83,7 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     index: number,
     schema: NormalizedFormSchema
   ) {
+    console.log("schema: 要更新的这个是什么？？", schema);
     formSchemas.value.splice(index, 1, schema);
   }
 
@@ -153,13 +156,13 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     emitUpdateModel();
   }
 
-  function resetFieldsValue() {
-    formModel.value = getDefaultValue();
-  }
-
   function emitUpdateModel() {
     emit("update:modelValue", formModel.value);
   }
+
+  onMounted(() => {
+    emitUpdateModel();
+  });
 
   return {
     formSchemas,
@@ -172,7 +175,6 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     getFieldValue,
     getFieldsValue,
     setFieldsValue,
-    resetFieldsValue,
     emitUpdateModel,
   };
 };

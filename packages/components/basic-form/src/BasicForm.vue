@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import type { BasicFormProps, BasicFormEmits, FormMethods } from "./types";
-import type { FormInstance } from "element-plus";
+import type { FormInstance, FormValidateCallback } from "element-plus";
 
 import { useFormEvent } from "./hooks/useFormEvent";
 import { useFormSelf } from "./hooks/useFormSelf";
@@ -139,7 +139,6 @@ const {
   getFieldValue,
   getFieldsValue,
   setFieldsValue,
-  resetFieldsValue,
   emitUpdateModel,
 } = useFormEvent(getProps, {
   emit,
@@ -153,25 +152,21 @@ const submit = async () => {
   console.log("表单填写值", values);
 
   try {
-    const isValid = await validate();
-    if (!isValid) {
-      emit("submit-error", values);
-      return [isValid, values];
-    }
+    await validate();
 
     if (isFunction(getProps.value.modelAdapter)) {
       emit("submit", getProps.value.modelAdapter(values));
     } else {
       emit("submit", values);
     }
-    return [isValid, values];
-  } catch (error: unknown) {
-    console.error("表单提交错误", error);
+
+    return values;
+  } catch (error: FormValidateCallback) {
+    emit("submit-error", error);
   }
 };
 
 const reset = () => {
-  resetFieldsValue();
   resetFields();
   emitUpdateModel();
   emit("reset");
@@ -192,7 +187,6 @@ const formMethods: FormMethods = {
   getFieldValue,
   getFieldsValue,
   setFieldsValue,
-  resetFieldsValue,
 
   /**
    * useFormSelf

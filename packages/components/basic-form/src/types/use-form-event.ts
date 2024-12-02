@@ -15,7 +15,6 @@ export interface UseFormEventReturn {
   getFieldValue: (field: string) => any;
   getFieldsValue: () => Recordable;
   setFieldsValue: (values: Recordable) => void;
-  resetFieldsValue: () => void;
   emitUpdateModel: () => void;
 }
 

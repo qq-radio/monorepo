@@ -30,13 +30,11 @@ import {
 
 import { ref } from "vue";
 
-const activeNames = ref(["example"]);
+const activeNames = ref(["example", "data"]);
 
 const basicFormRef = ref<BasicFormInstance>();
 
-const model = ref({
-  product: "nongfu_tea_pi",
-});
+const model = ref();
 
 const schemas: FormSchema[] = [
   {
@@ -50,6 +48,7 @@ const schemas: FormSchema[] = [
         { label: "康师傅阿萨姆奶茶", value: "kang_shi_fu_tea" },
       ],
     },
+    defaultValue: "nongfu_tea_pi",
     required: true,
   },
   {
@@ -166,12 +165,6 @@ const buttons: Button[] = [
     text: "setFieldsValue",
     onClick: () => {
       basicFormRef.value!.setFieldsValue({ activityType: "fullDiscount" });
-    },
-  },
-  {
-    text: "resetFieldsValue",
-    onClick: () => {
-      basicFormRef.value!.resetFieldsValue();
     },
   },
   {
