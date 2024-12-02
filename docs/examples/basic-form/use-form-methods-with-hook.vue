@@ -34,51 +34,56 @@ const activeNames = ref(["example"]);
 const basicFormRef = ref();
 
 const model = ref({
-  username: "韩梅梅",
+  product: "nongfu_tea_pi",
 });
 
 const schemas: FormSchema[] = [
   {
-    label: "用户",
-    prop: "username",
+    label: "产品",
+    prop: "product",
+    component: "select",
+    componentProps: {
+      options: [
+        { label: "农夫山泉茶π", value: "nongfu_tea_pi" },
+        { label: "百事无糖可乐", value: "pepsi_no_sugar" },
+        { label: "康师傅阿萨姆奶茶", value: "kang_shi_fu_tea" },
+      ],
+    },
     required: true,
   },
   {
-    label: "语言",
-    prop: "language",
+    label: "活动类型",
+    prop: "activityType",
     component: "radio-group",
     componentProps: {
       options: [
-        { label: "前端", value: "frontend" },
-        { label: "后端", value: "backend" },
+        { label: "满减", value: "fullDiscount" },
+        { label: "满赠", value: "fullGift" },
       ],
     },
     required: true,
   },
   {
-    label: "前端语言",
-    prop: "frontendLanguage",
-    component: "checkbox-group",
+    label: "满减券",
+    prop: "discountCoupon",
+    component: "radio-group",
     componentProps: {
       options: [
-        { label: "JavaScript", value: "javaScript" },
-        { label: "TypeScript", value: "typescript" },
+        { label: "满200-30", value: "discount_200_30" },
+        { label: "满300-50", value: "discount_300_50" },
       ],
     },
-    required: true,
   },
   {
-    label: "后端语言",
-    prop: "backendLanguage",
-    component: "checkbox-group",
+    label: "满赠券",
+    prop: "giftCoupon",
+    component: "radio-group",
     componentProps: {
       options: [
-        { label: "Python", value: "python" },
-        { label: "Go", value: "go" },
-        { label: "Java", value: "java" },
+        { label: "买三赠一", value: "buy_3_get_1" },
+        { label: "买五赠二", value: "buy_5_get_2" },
       ],
     },
-    required: true,
   },
 ];
 
@@ -95,8 +100,10 @@ const buttons: Button[] = [
   },
   {
     text: "submit",
-    onClick: () => {
-      basicFormRef.value.submit();
+    onClick: async () => {
+      const [isValid, values] = await basicFormRef.value.submit();
+      console.log("submit isValid:", isValid);
+      console.log("submit values:", values);
     },
   },
   {
@@ -108,22 +115,16 @@ const buttons: Button[] = [
   {
     text: "updateSchema",
     onClick: () => {
-      basicFormRef.value.updateSchema({
-        prop: "backendLanguage",
-        componentProps: {
-          options: [
-            { label: "C", value: "c" },
-            { label: "C++", value: "c++" },
-            { label: "Ruby", value: "ruby" },
-          ],
+      basicFormRef.value.updateSchema([
+        {
+          prop: "discountCoupon",
+          required: true,
         },
-      });
-    },
-  },
-  {
-    text: "removeSchema",
-    onClick: () => {
-      basicFormRef.value.removeSchema("tool");
+        {
+          prop: "giftCoupon",
+          required: true,
+        },
+      ]);
     },
   },
   {
@@ -131,26 +132,26 @@ const buttons: Button[] = [
     onClick: () => {
       basicFormRef.value.appendSchema(
         {
-          label: "工具",
-          prop: "tool",
-          component: "select",
-          componentProps: {
-            options: [
-              { label: "Visual Studio", value: "vscode" },
-              { label: "IntelliJ IDEA", value: "idea" },
-              { label: "Eclipse", value: "eclipse" },
-            ],
-          },
+          label: "是否叠加代金券",
+          prop: "isVoucherStackable",
+          component: "switch",
         },
-        "backendLanguage"
+        "giftCoupon"
       );
     },
   },
   {
+    text: "removeSchema",
+    onClick: () => {
+      basicFormRef.value.removeSchema("isVoucherStackable");
+    },
+  },
+
+  {
     text: "getFieldValue",
     onClick: () => {
-      const language = basicFormRef.value.getFieldValue("tool");
-      console.log("getFieldValue language:", language);
+      const activityType = basicFormRef.value.getFieldValue("activityType");
+      console.log("getFieldValue activityType:", activityType);
     },
   },
   {
@@ -163,7 +164,7 @@ const buttons: Button[] = [
   {
     text: "setFieldsValue",
     onClick: () => {
-      basicFormRef.value.setFieldsValue({ language: "frontend" });
+      basicFormRef.value.setFieldsValue({ activityType: "fullDiscount" });
     },
   },
   {
@@ -181,7 +182,7 @@ const buttons: Button[] = [
   {
     text: "validateField",
     onClick: () => {
-      basicFormRef.value.validateField("language");
+      basicFormRef.value.validateField("activityType");
     },
   },
   {

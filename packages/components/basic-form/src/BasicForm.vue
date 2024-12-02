@@ -149,22 +149,25 @@ const { validate, validateField, resetFields, scrollToField, clearValidate } =
   useFormSelf(formInstance);
 
 const submit = async () => {
-  console.log("表单填写值", formModel.value);
+  const values = formModel.value;
+  console.log("表单填写值", values);
+
   try {
-    const valid = await validate();
-    if (!valid) {
-      return false;
+    const isValid = await validate();
+    if (!isValid) {
+      emit("submit-error", values);
+      return [isValid, values];
     }
 
     if (isFunction(getProps.value.modelAdapter)) {
-      emit("submit", getProps.value.modelAdapter(formModel.value));
+      emit("submit", getProps.value.modelAdapter(values));
     } else {
-      emit("submit", formModel.value);
+      emit("submit", values);
     }
+    return [isValid, values];
   } catch (error: unknown) {
     console.error("表单提交错误", error);
   }
-  return false;
 };
 
 const reset = () => {

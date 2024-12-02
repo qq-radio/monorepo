@@ -6,8 +6,7 @@
     :value="formattedValue"
     :displayProps="getDisplayProps"
     :displaySlots="getDisplaySlots"
-  >
-  </BasicDisplay>
+  />
   <span v-else>
     {{ formattedValue }}
   </span>

@@ -132,6 +132,7 @@ export interface BasicFormEmits {
   (e: "register", methods: FormMethods): void;
   (e: "update:modelValue", values: Recordable): void;
   (e: "change", v: unknown, schemaItem: FormSchema): void;
+  (e: "submit-error", values: Recordable): void;
   (e: "submit", values: Recordable): void;
   (e: "reset", values?: Recordable): void;
 }

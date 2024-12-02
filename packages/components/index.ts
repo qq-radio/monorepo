@@ -2,6 +2,7 @@ export * from "./basic-button-group";
 export * from "./basic-cascader";
 export * from "./basic-checkbox-group";
 export * from "./basic-copy";
+export * from "./basic-description";
 export * from "./basic-dialog";
 export * from "./basic-display";
 export * from "./basic-export";

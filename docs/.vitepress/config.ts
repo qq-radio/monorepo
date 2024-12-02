@@ -39,6 +39,10 @@ export default defineConfig({
               },
             ],
           },
+          {
+            text: "描述",
+            link: "/components/basic-description",
+          },
         ],
       },
       {
