@@ -25,13 +25,14 @@ import {
   FormSchema,
   BasicButtonGroup,
   Button,
+  BasicFormInstance,
 } from "@center/components";
 
 import { ref } from "vue";
 
 const activeNames = ref(["example"]);
 
-const basicFormRef = ref();
+const basicFormRef = ref<BasicFormInstance>();
 
 const model = ref({
   product: "nongfu_tea_pi",
@@ -91,7 +92,7 @@ const buttons: Button[] = [
   {
     text: "setProps",
     onClick: () => {
-      basicFormRef.value.setProps({
+      basicFormRef.value!.setProps({
         colProps: {
           span: 10,
         },
@@ -101,7 +102,7 @@ const buttons: Button[] = [
   {
     text: "submit",
     onClick: async () => {
-      const [isValid, values] = await basicFormRef.value.submit();
+      const [isValid, values] = await basicFormRef.value!.submit();
       console.log("submit isValid:", isValid);
       console.log("submit values:", values);
     },
@@ -109,13 +110,13 @@ const buttons: Button[] = [
   {
     text: "reset",
     onClick: () => {
-      basicFormRef.value.reset();
+      basicFormRef.value!.reset();
     },
   },
   {
     text: "updateSchema",
     onClick: () => {
-      basicFormRef.value.updateSchema([
+      basicFormRef.value!.updateSchema([
         {
           prop: "discountCoupon",
           required: true,
@@ -130,7 +131,7 @@ const buttons: Button[] = [
   {
     text: "appendSchema",
     onClick: () => {
-      basicFormRef.value.appendSchema(
+      basicFormRef.value!.appendSchema(
         {
           label: "是否叠加代金券",
           prop: "isVoucherStackable",
@@ -143,52 +144,52 @@ const buttons: Button[] = [
   {
     text: "removeSchema",
     onClick: () => {
-      basicFormRef.value.removeSchema("isVoucherStackable");
+      basicFormRef.value!.removeSchema("isVoucherStackable");
     },
   },
 
   {
     text: "getFieldValue",
     onClick: () => {
-      const activityType = basicFormRef.value.getFieldValue("activityType");
+      const activityType = basicFormRef.value!.getFieldValue("activityType");
       console.log("getFieldValue activityType:", activityType);
     },
   },
   {
     text: "getFieldsValue",
     onClick: () => {
-      const values = basicFormRef.value.getFieldsValue();
+      const values = basicFormRef.value!.getFieldsValue();
       console.log("getFieldsValue values:", values);
     },
   },
   {
     text: "setFieldsValue",
     onClick: () => {
-      basicFormRef.value.setFieldsValue({ activityType: "fullDiscount" });
+      basicFormRef.value!.setFieldsValue({ activityType: "fullDiscount" });
     },
   },
   {
     text: "resetFieldsValue",
     onClick: () => {
-      basicFormRef.value.resetFieldsValue();
+      basicFormRef.value!.resetFieldsValue();
     },
   },
   {
     text: "validate",
     onClick: () => {
-      basicFormRef.value.validate();
+      basicFormRef.value!.validate();
     },
   },
   {
     text: "validateField",
     onClick: () => {
-      basicFormRef.value.validateField("activityType");
+      basicFormRef.value!.validateField("activityType");
     },
   },
   {
     text: "resetFields",
     onClick: () => {
-      basicFormRef.value.resetFields();
+      basicFormRef.value!.resetFields();
     },
   },
   {
@@ -198,7 +199,7 @@ const buttons: Button[] = [
   {
     text: "clearValidate",
     onClick: () => {
-      basicFormRef.value.clearValidate();
+      basicFormRef.value!.clearValidate();
     },
   },
 ];

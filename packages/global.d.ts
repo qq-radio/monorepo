@@ -10,4 +10,7 @@ declare global {
   declare type Arrayable<T> = T | T[];
 
   declare type Render = (params: any) => VNode;
+
+  declare type MakeRequired<T, K extends keyof T> = Omit<T, K> &
+    Required<Pick<T, K>>;
 }

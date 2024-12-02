@@ -1,9 +1,4 @@
-import type {
-  UseFormEvent,
-  FormSchema,
-  NormalizedFormSchema,
-  UpdateSchemaParams,
-} from "../types";
+import type { UseFormEvent, FormSchema, NormalizedFormSchema } from "../types";
 
 import {
   normalizeSchemas,
@@ -14,12 +9,14 @@ import {
 import { ref, unref, watch } from "vue";
 import { isObject, isString, cloneDeep, merge } from "lodash";
 
+type UpdateSchemaParams = MakeRequired<FormSchema, "prop">;
+
 export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   const formSchemas = ref<NormalizedFormSchema[]>([]);
   const formModel = ref<Recordable>({});
 
   watch(
-    () => getProps.value.schemas,
+    () => getProps.value,
     () => {
       initSchemas();
       initModel();
@@ -31,7 +28,7 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   );
 
   function initSchemas() {
-    formSchemas.value = normalizeSchemas(getProps.value.schemas);
+    formSchemas.value = normalizeSchemas(getProps.value?.schemas);
   }
 
   function initModel() {

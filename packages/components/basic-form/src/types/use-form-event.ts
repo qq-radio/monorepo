@@ -1,10 +1,10 @@
 import type { BasicFormProps, BasicFormEmits, FormSchema } from "./";
 import type { ComputedRef, Ref } from "vue";
 
-export type UpdateSchemaParams = Partial<NormalizedFormSchema> &
-  Required<Pick<NormalizedFormSchema, "prop">>;
+export type UpdateSchemaParams = Partial<FormSchema> &
+  Required<Pick<FormSchema, "prop">>;
 
-export type NormalizedFormSchema = MakeRequired<FormSchema, "component">;
+export type NormalizedFormSchema = Required<FormSchema>;
 
 export interface UseFormEventReturn {
   formSchemas: Ref<NormalizedFormSchema[]>;
