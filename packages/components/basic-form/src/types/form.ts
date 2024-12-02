@@ -8,7 +8,6 @@ import type {
   FormItemRule,
 } from "element-plus";
 import type { Mutable } from "element-plus/es/utils";
-import { Recordable } from "global";
 
 export type ElementPlusComponentType =
   | "input"
