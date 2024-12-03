@@ -83,7 +83,6 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     index: number,
     schema: NormalizedFormSchema
   ) {
-    console.log("schema: 要更新的这个是什么？？", schema);
     formSchemas.value.splice(index, 1, schema);
   }
 

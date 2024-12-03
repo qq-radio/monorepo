@@ -170,9 +170,3 @@ basic-form/group-form-custom-title-render-h
 :::demo
 basic-form/group-form-custom-title-slot
 :::
-
-## 表单联动
-
-:::demo
-basic-form/use-form-methods-with-hook
-:::

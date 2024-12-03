@@ -8,8 +8,20 @@
 - 通过`componentProps`使用
   :::
 
-## 表单联动
+## 通过实例调用
 
 :::demo
-basic-form/use-form-methods-with-hook
+basic-form/use-methods-with-instance
+:::
+
+## 通过`hook`调用
+
+:::demo
+basic-form/use-methods-with-hook
+:::
+
+## 通过`componentProps`调用
+
+:::demo
+basic-form/use-methods-with-component-props
 :::

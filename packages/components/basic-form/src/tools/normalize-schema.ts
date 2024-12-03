@@ -51,7 +51,6 @@ function getPlaceholder(schemaItem) {
 }
 
 function addFormItemPlaceholder(schemaItem: FormSchema) {
-  console.log("schemaItem:", schemaItem);
   return merge(
     {
       componentProps: {
@@ -175,7 +174,7 @@ function processSchemas<T extends Required<Pick<FormSchema, "prop">>>(
     processedSchemas = [...schemas];
   }
 
-  return uniqBy(normalizeSchemas(processedSchemas), "prop");
+  return uniqBy(processedSchemas, "prop");
 }
 
 export { normalizeSchemas, normalizeSchemaItem, processSchemas };
