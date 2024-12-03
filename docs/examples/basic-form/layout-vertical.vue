@@ -2,14 +2,14 @@
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
       <BasicForm
-        v-model="model"
+        v-model="formModel"
         v-bind="formProps"
-        :schemas="schemas"
+        :schemas="formSchemas"
         hasFooter
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -19,9 +19,9 @@ import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 const activeNames = ref(["example"]);
 
-const model = ref({});
+const formModel = ref({});
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",

@@ -8,15 +8,15 @@
       />
       <BasicForm
         ref="basicFormRef"
-        v-model="model"
-        :schemas="schemas"
+        v-model="formModel"
+        :schemas="formSchemas"
         hasFooter
         @submit="handleSubmit"
         @submit-error="handleSubmitError"
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -36,9 +36,9 @@ const activeNames = ref(["example", "data"]);
 
 const basicFormRef = ref<BasicFormInstance>();
 
-const model = ref();
+const formModel = ref();
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "产品",
     prop: "product",
@@ -125,12 +125,10 @@ const buttons: Button[] = [
       basicFormRef.value!.updateSchema([
         {
           prop: "discoduntCoupon",
-          label: "",
           required: true,
         },
         {
           prop: "giftCoupon",
-          label: "",
           required: true,
         },
       ]);
@@ -160,14 +158,14 @@ const buttons: Button[] = [
     text: "getFieldValue",
     onClick: () => {
       const activityType = basicFormRef.value!.getFieldValue("activityType");
-      console.log("getFieldValue activityType:", activityType);
+      console.log("activityType:", activityType);
     },
   },
   {
     text: "getFieldsValue",
     onClick: () => {
       const values = basicFormRef.value!.getFieldsValue();
-      console.log("getFieldsValue values:", values);
+      console.log("values:", values);
     },
   },
   {
@@ -196,7 +194,9 @@ const buttons: Button[] = [
   },
   {
     text: "scrollToField",
-    onClick: () => {},
+    onClick: () => {
+      basicFormRef.value!.scrollToField("activityType");
+    },
   },
   {
     text: "clearValidate",

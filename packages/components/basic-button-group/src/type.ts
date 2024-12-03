@@ -6,7 +6,6 @@ import type {
 import type { ExportConfig } from "@center/components/basic-export";
 
 import type { Ref, ComputedRef } from "vue";
-import type { Recordable } from "../../../global.d.ts";
 
 export interface BasicButtonGroupProps<T = Recordable> {
   confirmType?: ConfirmType;

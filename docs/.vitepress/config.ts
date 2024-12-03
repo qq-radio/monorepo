@@ -26,7 +26,7 @@ export default defineConfig({
             text: "表单",
             items: [
               { text: "基本使用", link: "/components/basic-form" },
-              { text: "组合式函数", link: "/components/basic-form-composable" },
+              { text: "组件方法", link: "/components/basic-form-method" },
             ],
           },
           {
@@ -34,8 +34,8 @@ export default defineConfig({
             items: [
               { text: "基本使用", link: "/components/basic-table" },
               {
-                text: "组合式函数",
-                link: "/components/basic-table-composable",
+                text: "组件方法",
+                link: "/components/basic-table-method",
               },
             ],
           },
@@ -90,7 +90,7 @@ export default defineConfig({
                 items: [
                   { text: "基本使用", link: "/components/basic-dialog" },
                   {
-                    text: "组合式函数",
+                    text: "组件方法",
                     link: "/components/basic-dialog-composable",
                   },
                 ],

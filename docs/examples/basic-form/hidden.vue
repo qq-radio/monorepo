@@ -1,10 +1,10 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="model" :schemas="schemas" hasFooter />
+      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -16,11 +16,11 @@ import { ref } from "vue";
 
 const activeNames = ref(["example"]);
 
-const model = ref({
+const formModel = ref({
   username: "李华",
 });
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",

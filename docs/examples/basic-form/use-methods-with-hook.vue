@@ -7,15 +7,15 @@
         style="margin-bottom: 20px"
       />
       <BasicForm
-        ref="basicFormRef"
-        v-model="model"
-        :schemas="schemas"
+        v-model="formModel"
         hasFooter
         @register="registerForm"
+        @submit="handleSubmit"
+        @submit-error="handleSubmitError"
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -27,18 +27,15 @@ import {
   useForm,
   BasicButtonGroup,
   Button,
-  BasicFormInstance,
 } from "@center/components";
 
 import { ref } from "vue";
 
 const activeNames = ref(["example", "data"]);
 
-const basicFormRef = ref<BasicFormInstance>();
+const formModel = ref();
 
-const model = ref();
-
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "产品",
     prop: "product",
@@ -110,7 +107,9 @@ const [
     scrollToField,
     clearValidate,
   },
-] = useForm();
+] = useForm({
+  schemas: formSchemas,
+});
 
 const buttons: Button[] = [
   {
@@ -144,10 +143,16 @@ const buttons: Button[] = [
   {
     text: "updateSchema",
     onClick: () => {
-      updateSchema({
-        label: "dd",
-        prop: "ddd",
-      });
+      updateSchema([
+        {
+          prop: "discoduntCoupon",
+          required: true,
+        },
+        {
+          prop: "giftCoupon",
+          required: true,
+        },
+      ]);
     },
   },
   {
@@ -174,14 +179,14 @@ const buttons: Button[] = [
     text: "getFieldValue",
     onClick: () => {
       const activityType = getFieldValue("activityType");
-      console.log("getFieldValue activityType:", activityType);
+      console.log("activityType:", activityType);
     },
   },
   {
     text: "getFieldsValue",
     onClick: () => {
       const values = getFieldsValue();
-      console.log("getFieldsValue values:", values);
+      console.log("values:", values);
     },
   },
   {
@@ -221,4 +226,12 @@ const buttons: Button[] = [
     },
   },
 ];
+
+const handleSubmit = (values) => {
+  console.log("handleSubmit:", values);
+};
+
+const handleSubmitError = (error) => {
+  console.log("handleSubmitError:", error);
+};
 </script>

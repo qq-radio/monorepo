@@ -2,14 +2,14 @@
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
       <BasicForm
-        v-model="model"
-        :schemas="schemas"
+        v-model="formModel"
+        :schemas="formSchemas"
         @submit="handleSubmit"
         hasFooter
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -23,11 +23,11 @@ import { User } from "@element-plus/icons-vue";
 
 const activeNames = ref(["example"]);
 
-const model = ref({
+const formModel = ref({
   isEnable: true,
 });
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",

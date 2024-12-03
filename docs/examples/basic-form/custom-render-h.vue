@@ -1,10 +1,10 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="model" :schemas="schemas" hasFooter />
+      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -24,12 +24,12 @@ import { StarFilled } from "@element-plus/icons-vue";
 
 const activeNames = ref(["example"]);
 
-const model = ref<any>({
+const formModel = ref<any>({
   fruit: [],
   breakfast: "",
 });
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
@@ -60,9 +60,9 @@ const schemas: FormSchema[] = [
         { label: "橘子", value: "orange" },
       ];
       return h(BasicCheckboxGroup, {
-        modelValue: model.value.fruit,
+        modelValue: formModel.value.fruit,
         options,
-        "onUpdate:modelValue": (value) => (model.value.fruit = value),
+        "onUpdate:modelValue": (value) => (formModel.value.fruit = value),
       });
     },
   },
@@ -76,9 +76,9 @@ const schemas: FormSchema[] = [
         { label: "培根", value: "bacon" },
       ];
       return h(BasicSelect, {
-        modelValue: model.value.breakfast,
+        modelValue: formModel.value.breakfast,
         options,
-        "onUpdate:modelValue": (value) => (model.value.breakfast = value),
+        "onUpdate:modelValue": (value) => (formModel.value.breakfast = value),
       });
     },
   },

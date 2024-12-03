@@ -1,37 +1,24 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm
-        ref="basicFormRef"
-        v-model="model"
-        :schemas="schemas"
-        hasFooter
-        @register="registerForm"
-      />
+      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
 
 <script lang="tsx" setup>
-import {
-  BasicForm,
-  FormSchema,
-  useForm,
-  BasicFormInstance,
-} from "@center/components";
+import { BasicForm, FormSchema } from "@center/components";
 
 import { ref } from "vue";
 
 const activeNames = ref(["example", "data"]);
 
-const basicFormRef = ref<BasicFormInstance>();
+const formModel = ref();
 
-const model = ref();
-
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "产品",
     prop: "product",
@@ -50,7 +37,7 @@ const schemas: FormSchema[] = [
     label: "活动类型",
     prop: "activityType",
     component: "radio-group",
-    componentProps: ({}) => {
+    componentProps: ({ methods: { updateSchema } }) => {
       return {
         options: [
           { label: "满减", value: "fullDiscount" },
@@ -59,9 +46,8 @@ const schemas: FormSchema[] = [
         onChange: ({ value }) => {
           if (value === "fullDiscount") {
             updateSchema({
-              title: "discountCoupon",
+              prop: "discountCoupon",
               hidden: false,
-              prop: "1",
             });
             updateSchema({
               prop: "giftCoupon",
@@ -116,27 +102,4 @@ const schemas: FormSchema[] = [
     hidden: true,
   },
 ];
-
-const [
-  registerForm,
-  {
-    setProps,
-    submit,
-    reset,
-
-    updateSchema,
-    removeSchema,
-    appendSchema,
-
-    getFieldValue,
-    getFieldsValue,
-    setFieldsValue,
-
-    validate,
-    validateField,
-    resetFields,
-    scrollToField,
-    clearValidate,
-  },
-] = useForm();
 </script>

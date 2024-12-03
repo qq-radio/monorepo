@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="model" :schemas="schemas" hasFooter>
+      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter>
         <template #title-interest>
           <div style="font-size: 20px">
             <el-icon>
@@ -16,7 +16,7 @@
       </BasicForm>
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -31,9 +31,9 @@ import { VideoCamera, Headset } from "@element-plus/icons-vue";
 
 const activeNames = ref(["example"]);
 
-const model = ref({});
+const formModel = ref({});
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     title: "兴趣",
     titleProps: {

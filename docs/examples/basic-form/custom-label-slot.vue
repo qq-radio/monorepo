@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="model" :schemas="schemas" hasFooter>
+      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter>
         <template #username>
           <el-icon
             v-for="_i in 3"
@@ -35,7 +35,7 @@
       </BasicForm>
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ model }}
+      {{ formModel }}
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -54,12 +54,12 @@ import {
 
 const activeNames = ref(["example"]);
 
-const model = ref({
+const formModel = ref({
   coffee: "",
   sport: "",
 });
 
-const schemas: FormSchema[] = [
+const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
