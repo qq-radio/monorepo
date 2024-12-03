@@ -68,7 +68,9 @@ export function useFormEvent(getProps: Props, context: Context) {
     return true;
   }
 
-  function updateSchema(schemas: Arrayable<MakeRequired<FormSchema, "prop">>) {
+  function updateSchema(
+    schemas: Arrayable<PartialRequired<FormSchema, "prop">>
+  ) {
     const waitUpdateSchemas = processSchemas(schemas);
 
     validatePropLength(waitUpdateSchemas);
@@ -190,16 +192,16 @@ function sortSchemas(schemas: FormSchema[]) {
   return schemas.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 }
 
-function processSchemas(schemas: Arrayable<FormSchema>) {
-  let processedSchemas: FormSchema[] = [];
+function processSchemas<T>(schemas: Arrayable<T>) {
+  let processedSchemas: T[] = [];
 
   if (isObject(schemas)) {
-    processedSchemas.push(schemas as FormSchema);
+    processedSchemas.push(schemas as T);
   }
 
   if (isArray(schemas)) {
     processedSchemas = [...schemas];
   }
 
-  return uniqBy(filterSchemas(processedSchemas), "prop");
+  return uniqBy(filterSchemas(processedSchemas as FormSchema[]), "prop");
 }

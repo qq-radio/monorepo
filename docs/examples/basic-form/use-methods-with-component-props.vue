@@ -1,16 +1,12 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicButtonGroup
-        :buttons="buttons"
-        :buttonProps="{ type: 'default' }"
-        style="margin-bottom: 20px"
-      />
       <BasicForm
         ref="basicFormRef"
         v-model="model"
         :schemas="schemas"
         hasFooter
+        @register="registerForm"
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
@@ -23,140 +19,124 @@
 import {
   BasicForm,
   FormSchema,
-  BasicButtonGroup,
-  Button,
+  useForm,
+  BasicFormInstance,
 } from "@center/components";
 
 import { ref } from "vue";
 
-const activeNames = ref(["example"]);
+const activeNames = ref(["example", "data"]);
 
-const basicFormRef = ref();
+const basicFormRef = ref<BasicFormInstance>();
 
-const model = ref({
-  username: "韩梅梅",
-});
-
-const buttons: Button[] = [
-  {
-    text: "setProps",
-    onClick: () => {
-      basicFormRef.value.setProps({
-        colProps: {
-          span: 10,
-        },
-      });
-    },
-  },
-  {
-    text: "submit",
-    onClick: () => {},
-  },
-  {
-    text: "reset",
-    onClick: () => {},
-  },
-  {
-    text: "updateSchema",
-    onClick: () => {},
-  },
-  {
-    text: "removeSchema",
-    onClick: () => {},
-  },
-  {
-    text: "appendSchema",
-    onClick: () => {
-      const item = {
-        label: "充电线",
-        prop: "cable",
-        component: "radio-group",
-        componentProps: {
-          options: [
-            { label: "快充", value: "fast" },
-            { label: "慢充", value: "slow" },
-          ],
-        },
-      };
-
-      basicFormRef.value.appendSchema(item, "gift");
-    },
-  },
-  {
-    text: "getFieldValue",
-    onClick: () => {},
-  },
-  {
-    text: "getFieldsValue",
-    onClick: () => {},
-  },
-  {
-    text: "setFieldsValue",
-    onClick: () => {},
-  },
-  {
-    text: "validate",
-    onClick: () => {},
-  },
-  {
-    text: "validateField",
-    onClick: () => {},
-  },
-  {
-    text: "resetFields",
-    onClick: () => {},
-  },
-  {
-    text: "scrollToField",
-    onClick: () => {},
-  },
-  {
-    text: "clearValidate",
-    onClick: () => {},
-  },
-];
+const model = ref();
 
 const schemas: FormSchema[] = [
   {
-    label: "用户",
-    prop: "username",
+    label: "产品",
+    prop: "product",
+    component: "select",
+    componentProps: {
+      options: [
+        { label: "农夫山泉茶π", value: "nongfu_tea_pi" },
+        { label: "百事无糖可乐", value: "pepsi_no_sugar" },
+        { label: "康师傅阿萨姆奶茶", value: "kang_shi_fu_tea" },
+      ],
+    },
+    defaultValue: "nongfu_tea_pi",
     required: true,
   },
   {
-    label: "礼物",
-    prop: "gift",
+    label: "活动类型",
+    prop: "activityType",
+    component: "radio-group",
+    componentProps: ({}) => {
+      return {
+        options: [
+          { label: "满减", value: "fullDiscount" },
+          { label: "满赠", value: "fullGift" },
+        ],
+        onChange: ({ value }) => {
+          if (value === "fullDiscount") {
+            updateSchema({
+              title: "discountCoupon",
+              hidden: false,
+              prop: "1",
+            });
+            updateSchema({
+              prop: "giftCoupon",
+              hidden: true,
+            });
+          } else if (value === "fullGift") {
+            updateSchema({
+              prop: "discountCoupon",
+              hidden: true,
+            });
+            updateSchema({
+              prop: "giftCoupon",
+              hidden: false,
+            });
+          } else {
+            updateSchema({
+              prop: "discountCoupon",
+              hidden: true,
+            });
+            updateSchema({
+              prop: "giftCoupon",
+              hidden: true,
+            });
+          }
+        },
+      };
+    },
+    required: true,
+  },
+  {
+    label: "满减券",
+    prop: "discountCoupon",
     component: "radio-group",
     componentProps: {
       options: [
-        { label: "手机", value: "phone" },
-        { label: "电脑", value: "computer" },
+        { label: "满200-30", value: "discount_200_30" },
+        { label: "满300-50", value: "discount_300_50" },
       ],
     },
-    required: true,
+    hidden: true,
   },
   {
-    label: "手机品牌",
-    prop: "phoneBrand",
-    component: "select",
+    label: "满赠券",
+    prop: "giftCoupon",
+    component: "radio-group",
     componentProps: {
       options: [
-        { label: "苹果", value: "iphone" },
-        { label: "小米", value: "xiaomi" },
-        { label: "华为", value: "huawei" },
+        { label: "买三赠一", value: "buy_3_get_1" },
+        { label: "买五赠二", value: "buy_5_get_2" },
       ],
     },
-  },
-  {
-    label: "电脑品牌",
-    prop: "computerBrand",
-    component: "select",
-    componentProps: {
-      options: [
-        { label: "联想", value: "lenovo" },
-        { label: "惠普", value: "hp" },
-        { label: "戴尔", value: "dell" },
-      ],
-    },
+    hidden: true,
   },
 ];
+
+const [
+  registerForm,
+  {
+    setProps,
+    submit,
+    reset,
+
+    updateSchema,
+    removeSchema,
+    appendSchema,
+
+    getFieldValue,
+    getFieldsValue,
+    setFieldsValue,
+
+    validate,
+    validateField,
+    resetFields,
+    scrollToField,
+    clearValidate,
+  },
+] = useForm();
 </script>

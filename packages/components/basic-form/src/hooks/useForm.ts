@@ -3,11 +3,13 @@ import type { FormValidateCallback, FormItemProp } from "element-plus";
 
 import { ref, unref, watch, onUnmounted } from "vue";
 
-type Props = { props?: Partial<BasicFormProps> };
+export interface UseForm {
+  (
+    props?: Partial<BasicFormProps>
+  ): [(instance: FormMethods) => void, FormMethods];
+}
 
-export type UseFormReturn = ReturnType<typeof useForm>;
-
-export function useForm({ props }: Props) {
+export const useForm: UseForm = (props) => {
   const instanceRef = ref<Nullable<FormMethods>>(null);
 
   function getInstance() {
@@ -100,4 +102,4 @@ export function useForm({ props }: Props) {
   };
 
   return [register, methods];
-}
+};

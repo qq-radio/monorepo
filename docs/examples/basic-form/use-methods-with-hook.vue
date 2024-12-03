@@ -11,6 +11,7 @@
         v-model="model"
         :schemas="schemas"
         hasFooter
+        @register="registerForm"
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
@@ -23,6 +24,7 @@
 import {
   BasicForm,
   FormSchema,
+  useForm,
   BasicButtonGroup,
   Button,
   BasicFormInstance,
@@ -87,11 +89,34 @@ const schemas: FormSchema[] = [
   },
 ];
 
+const [
+  registerForm,
+  {
+    setProps,
+    submit,
+    reset,
+
+    updateSchema,
+    removeSchema,
+    appendSchema,
+
+    getFieldValue,
+    getFieldsValue,
+    setFieldsValue,
+
+    validate,
+    validateField,
+    resetFields,
+    scrollToField,
+    clearValidate,
+  },
+] = useForm();
+
 const buttons: Button[] = [
   {
     text: "setProps",
     onClick: () => {
-      basicFormRef.value!.setProps({
+      setProps({
         colProps: {
           span: 10,
         },
@@ -100,39 +125,35 @@ const buttons: Button[] = [
   },
   {
     text: "submit",
-    onClick: async () => {
-      const [isValid, values] = await basicFormRef.value!.submit();
-      console.log("submit isValid:", isValid);
-      console.log("submit values:", values);
+    onClick: () => {
+      submit()
+        .then((values) => {
+          console.log("表单填写值:", values);
+        })
+        .catch((error) => {
+          console.error("表单提交错误:", error);
+        });
     },
   },
   {
     text: "reset",
     onClick: () => {
-      basicFormRef.value!.reset();
+      reset();
     },
   },
   {
     text: "updateSchema",
     onClick: () => {
-      basicFormRef.value!.updateSchema([
-        {
-          prop: "discoduntCoupon",
-          label: "",
-          required: true,
-        },
-        {
-          prop: "giftCoupon",
-          label: "",
-          required: true,
-        },
-      ]);
+      updateSchema({
+        label: "dd",
+        prop: "ddd",
+      });
     },
   },
   {
     text: "appendSchema",
     onClick: () => {
-      basicFormRef.value!.appendSchema(
+      appendSchema(
         {
           label: "是否叠加代金券",
           prop: "isVoucherStackable",
@@ -145,56 +166,58 @@ const buttons: Button[] = [
   {
     text: "removeSchema",
     onClick: () => {
-      basicFormRef.value!.removeSchema("isVoucherStackable");
+      removeSchema("isVoucherStackable");
     },
   },
 
   {
     text: "getFieldValue",
     onClick: () => {
-      const activityType = basicFormRef.value!.getFieldValue("activityType");
+      const activityType = getFieldValue("activityType");
       console.log("getFieldValue activityType:", activityType);
     },
   },
   {
     text: "getFieldsValue",
     onClick: () => {
-      const values = basicFormRef.value!.getFieldsValue();
+      const values = getFieldsValue();
       console.log("getFieldsValue values:", values);
     },
   },
   {
     text: "setFieldsValue",
     onClick: () => {
-      basicFormRef.value!.setFieldsValue({ activityType: "fullDiscount" });
+      setFieldsValue({ activityType: "fullDiscount" });
     },
   },
   {
     text: "validate",
     onClick: () => {
-      basicFormRef.value!.validate();
+      validate();
     },
   },
   {
     text: "validateField",
     onClick: () => {
-      basicFormRef.value!.validateField("activityType");
+      validateField("activityType");
     },
   },
   {
     text: "resetFields",
     onClick: () => {
-      basicFormRef.value!.resetFields();
+      resetFields();
     },
   },
   {
     text: "scrollToField",
-    onClick: () => {},
+    onClick: () => {
+      scrollToField("activityType");
+    },
   },
   {
     text: "clearValidate",
     onClick: () => {
-      basicFormRef.value!.clearValidate();
+      clearValidate();
     },
   },
 ];
