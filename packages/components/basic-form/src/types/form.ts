@@ -52,15 +52,16 @@ export interface FormGroup {
 }
 
 export interface FormSchema {
+  // 分组表单
   title?: string;
   customTitleRender?: Render;
   customTitleSlot?: string;
   titleTooltip?: string;
   titleProps?: Recordable;
 
-  // 跟form-item相关
-  label?: string;
-  prop?: string;
+  // 表单项
+  prop: string;
+  label: string;
   defaultValue?: string | number;
   hasLabel?: boolean;
   labelWidth?: string | number;
@@ -71,12 +72,12 @@ export interface FormSchema {
   titleColProps?: Partial<Mutable<ColProps>>;
   formItemProps?: Partial<Mutable<FormItemProps>>;
 
-  // 自定义渲染 - label
+  // 表单项 - label
   customLabelRender?: Render;
   customLabelSlot?: string;
   labelTooltip?: string;
 
-  // 自定义渲染 - field
+  // 表单项 - field
   component?: ComponentType;
   componentProps?: ComponentProps;
   componentSlots?: Recordable;
@@ -85,7 +86,7 @@ export interface FormSchema {
   customRender?: Render;
   customSlot?: string;
 
-  // 这些都是rules了
+  // 表单项 - rules
   required?: boolean;
   min?: number;
   max?: number;
@@ -94,7 +95,7 @@ export interface FormSchema {
   rules?: FormItemRule[];
 }
 
-// export type FormSchema = FormSchemaItem | FormGroup;
+export type NormalizedFormSchema = MakeRequired<FormSchema, "component">;
 
 export interface BasicFormProps {
   modelValue?: Recordable;

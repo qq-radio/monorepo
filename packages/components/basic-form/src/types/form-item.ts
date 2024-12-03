@@ -8,7 +8,7 @@ import type {
 
 export interface FormItemProps {
   modelValue: FieldValue;
-  schemaItem: FormSchema & { component: ComponentType };
+  schemaItem: FormSchema;
 
   formProps: FormProps;
   formModel: Recordable;

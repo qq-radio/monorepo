@@ -3,11 +3,7 @@ import type { FormSchema, NormalizedFormSchema } from "../types";
 import { getPrefix } from "./component-prefix";
 import { normalizeRule } from "./normalize-rule";
 
-import { uniqBy, merge, isArray, isObject } from "lodash";
-
-function addDefaultComponent(schemaItem: FormSchema) {
-  return merge({}, schemaItem);
-}
+import { merge } from "lodash";
 
 function addTextareaProps(schemaItem: FormSchema) {
   if (schemaItem.component === "textarea") {
@@ -21,12 +17,12 @@ function addTextareaProps(schemaItem: FormSchema) {
       schemaItem
     );
   }
-
   return schemaItem;
 }
 
-function addFormItemStyle(schemaItem: FormSchema) {
+function addStyle(schemaItem: FormSchema) {
   if (
+    schemaItem.component &&
     ["input-number", "select", "tree-select", "cascader"].includes(
       schemaItem.component
     )
@@ -42,61 +38,38 @@ function addFormItemStyle(schemaItem: FormSchema) {
       schemaItem
     );
   }
-
   return schemaItem;
 }
 
-function getPlaceholder(schemaItem) {
-  return getPrefix(schemaItem.component) + schemaItem.label;
-}
-
-function addFormItemPlaceholder(schemaItem: FormSchema) {
-  return merge(
-    {
-      componentProps: {
-        placeholder: getPlaceholder(schemaItem),
-      },
-    },
-    schemaItem
-  );
-}
-
-function addTimePickerPlaceholder(schemaItem: FormSchema) {
-  if (schemaItem.component !== "time-picker") {
-    return schemaItem;
-  }
-
-  return merge(
-    {
-      componentProps: {
-        startPlaceholder: "开始时间",
-        endPlaceholder: "结束时间",
-      },
-    },
-    schemaItem
-  );
-}
-
-function addDateRangePlaceholder(schemaItem: FormSchema) {
+function addPlaceholder(schemaItem: FormSchema) {
   if (
-    schemaItem.component !== "date-picker" &&
-    schemaItem.componentProps?.type !== "daterange"
+    schemaItem.component === "time-picker" ||
+    (schemaItem.component === "date-picker" &&
+      schemaItem.componentProps?.type === "daterange")
   ) {
-    return schemaItem;
+    return merge(
+      {
+        componentProps: {
+          startPlaceholder: "开始时间",
+          endPlaceholder: "结束时间",
+        },
+      },
+      schemaItem
+    );
   }
 
   return merge(
     {
       componentProps: {
-        startPlaceholder: "开始时间",
-        endPlaceholder: "结束时间",
+        placeholder:
+          getPrefix(schemaItem.component || "input") + schemaItem.label,
       },
     },
     schemaItem
   );
 }
 
-function addFormItemAllowClear(schemaItem: FormSchema) {
+function addAllowClear(schemaItem: FormSchema) {
   return merge(
     {
       componentProps: {
@@ -107,13 +80,13 @@ function addFormItemAllowClear(schemaItem: FormSchema) {
   );
 }
 
-function addFormItemTimeFormat(schemaItem: FormSchema) {
+function addTimeFormat(schemaItem: FormSchema) {
   if (schemaItem.component === "date-picker") {
     return merge(
       {
         componentProps: {
-          format: schemaItem?.componentProps?.format || "YYYY-MM-DD",
-          valueFormat: schemaItem?.componentProps?.valueFormat || "YYYY-MM-DD",
+          format: "YYYY-MM-DD",
+          valueFormat: "YYYY-MM-DD",
         },
       },
       schemaItem
@@ -124,8 +97,8 @@ function addFormItemTimeFormat(schemaItem: FormSchema) {
     return merge(
       {
         componentProps: {
-          format: schemaItem?.componentProps?.format || "HH:mm:ss",
-          valueFormat: schemaItem?.componentProps?.valueFormat || "HH:mm:ss",
+          format: "HH:mm:ss",
+          valueFormat: "HH:mm:ss",
         },
       },
       schemaItem
@@ -135,46 +108,18 @@ function addFormItemTimeFormat(schemaItem: FormSchema) {
   return schemaItem;
 }
 
-function filterSchemas(schemas: FormSchema[]) {
-  return schemas.filter((schemaItem) => schemaItem.prop || schemaItem.title);
-}
-
-function sortSchemas(schemas: FormSchema[]) {
-  return schemas.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-}
-
-function normalizeSchemaItem(schemaItem: FormSchema): NormalizedFormSchema {
+function normalizeSchema(schemaItem: FormSchema): NormalizedFormSchema {
   return [
-    addDefaultComponent,
     addTextareaProps,
-    addFormItemStyle,
-    addFormItemPlaceholder,
-    addTimePickerPlaceholder,
-    addDateRangePlaceholder,
-    addFormItemAllowClear,
-    addFormItemTimeFormat,
+    addStyle,
+    addPlaceholder,
+    addAllowClear,
+    addTimeFormat,
     normalizeRule,
-  ].reduce((acc, func) => func(acc), schemaItem) as NormalizedFormSchema;
+  ].reduce(
+    (acc, func) => func(acc as unknown as NormalizedFormSchema),
+    schemaItem
+  ) as NormalizedFormSchema;
 }
 
-function normalizeSchemas(schemas: FormSchema[]) {
-  return filterSchemas(sortSchemas(schemas)).map(normalizeSchemaItem);
-}
-
-function processSchemas<T extends Required<Pick<FormSchema, "prop">>>(
-  schemas: Arrayable<T>
-): T[] {
-  let processedSchemas: T[] = [];
-
-  if (isObject(schemas)) {
-    processedSchemas.push(schemas as T);
-  }
-
-  if (isArray(schemas)) {
-    processedSchemas = [...schemas];
-  }
-
-  return uniqBy(processedSchemas, "prop");
-}
-
-export { normalizeSchemas, normalizeSchemaItem, processSchemas };
+export { normalizeSchema };

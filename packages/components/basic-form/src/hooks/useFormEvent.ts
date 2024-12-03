@@ -1,24 +1,19 @@
-import type { UseFormEvent, FormSchema, NormalizedFormSchema } from "../types";
-
-import {
-  normalizeSchemas,
-  normalizeSchemaItem,
-  processSchemas,
-} from "../tools/normalize-schema";
+import type { FormSchema } from "../types";
 
 import { computed, onMounted, ref, unref, watch } from "vue";
-import { isObject, isString, cloneDeep, merge } from "lodash";
+import { isObject, isString, cloneDeep, uniqBy, merge, isArray } from "lodash";
 
 type UpdateSchemaParams = MakeRequired<FormSchema, "prop">;
 
-export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
-  const formSchemas = ref<NormalizedFormSchema[]>([]);
+export const useFormEvent = (getProps, { emit }) => {
+  const schemas = computed(() => getProps.value.schemas);
+  const modelValue = computed(() => getProps.value.modelValue);
+
+  const formSchemas = ref<FormSchema[]>([]);
   const formModel = ref<Recordable>({});
 
-  const a = computed(() => getProps.value.schemas);
-
   watch(
-    () => a.value,
+    () => schemas.value,
     () => {
       initSchemas();
       initModel();
@@ -30,13 +25,13 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
   );
 
   function initSchemas() {
-    formSchemas.value = normalizeSchemas(cloneDeep(getProps.value.schemas));
+    formSchemas.value = filterSchemas(sortSchemas(schemas.value));
   }
 
   function initModel() {
     formModel.value = {
       ...getDefaultValue(),
-      ...getProps.value.modelValue,
+      ...modelValue.value,
     };
   }
 
@@ -54,16 +49,25 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     return formSchemas.value.findIndex((item) => item.prop === prop);
   }
 
-  function updateSchema(schemas: Arrayable<UpdateSchemaParams>) {
-    const waitUpdateSchemas = processSchemas(schemas);
-
-    if (!waitUpdateSchemas.length) {
+  function validatePropLength<T>(array: T[]) {
+    if (!array.length) {
       throw new Error(
         "All schema should have prop or prop should not be empty"
       );
     }
+    return true;
+  }
+
+  function updateSchema(schemas: Arrayable<UpdateSchemaParams>) {
+    const waitUpdateSchemas = processSchemas(schemas);
+
+    validatePropLength(waitUpdateSchemas);
 
     waitUpdateSchemas.forEach((schema) => {
+      if (!schema.prop) {
+        return;
+      }
+
       const updateIndex = getSchemaIndex(schema.prop);
 
       if (updateIndex === -1) {
@@ -79,48 +83,38 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     });
   }
 
-  function _updateSchemaItemByIndex(
-    index: number,
-    schema: NormalizedFormSchema
-  ) {
+  function _updateSchemaItemByIndex(index: number, schema: FormSchema) {
     formSchemas.value.splice(index, 1, schema);
   }
 
   function appendSchema(schemas: Arrayable<FormSchema>, previousProp?: string) {
     const waitAppendSchemas = processSchemas(schemas);
 
-    if (!waitAppendSchemas.length) {
-      throw new Error(
-        "All schema should have prop or prop should not be empty"
-      );
-    }
+    validatePropLength(waitAppendSchemas);
 
     waitAppendSchemas.forEach((schema) => {
+      if (!schema.prop) {
+        return;
+      }
+
       const isExist = getSchema(schema.prop);
       if (isExist) {
         return;
       }
 
       const previousIndex = previousProp ? getSchemaIndex(previousProp) : 0;
-      _appendSchemaItemByIndex(previousIndex + 1, normalizeSchemaItem(schema));
+      _appendSchemaItemByIndex(previousIndex + 1, schema);
     });
   }
 
-  function _appendSchemaItemByIndex(
-    index: number,
-    schema: NormalizedFormSchema
-  ) {
+  function _appendSchemaItemByIndex(index: number, schema: FormSchema) {
     formSchemas.value.splice(index, 0, schema);
   }
 
   function removeSchema(prop: Arrayable<string>) {
-    const propList = (isString(prop) ? [prop] : prop) as string[];
+    const propList = isString(prop) ? [prop] : prop;
 
-    if (!propList.length) {
-      throw new Error(
-        "All schema should have prop or prop should not be empty"
-      );
-    }
+    validatePropLength(propList);
 
     propList.forEach((prop) => {
       const removeIndex = getSchemaIndex(prop);
@@ -177,3 +171,25 @@ export const useFormEvent: UseFormEvent = (getProps, { emit }) => {
     emitUpdateModel,
   };
 };
+
+function filterSchemas(schemas: FormSchema[]) {
+  return schemas.filter((schemaItem) => schemaItem.prop || schemaItem.title);
+}
+
+function sortSchemas(schemas: FormSchema[]) {
+  return schemas.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+}
+
+function processSchemas(schemas: Arrayable<FormSchema>) {
+  let processedSchemas: FormSchema[] = [];
+
+  if (isObject(schemas)) {
+    processedSchemas.push(schemas as FormSchema);
+  }
+
+  if (isArray(schemas)) {
+    processedSchemas = [...schemas];
+  }
+
+  return uniqBy(filterSchemas(processedSchemas), "prop");
+}

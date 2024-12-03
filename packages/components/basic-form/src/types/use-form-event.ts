@@ -4,10 +4,8 @@ import type { ComputedRef, Ref } from "vue";
 export type UpdateSchemaParams = Partial<FormSchema> &
   Required<Pick<FormSchema, "prop">>;
 
-export type NormalizedFormSchema = Required<FormSchema>;
-
 export interface UseFormEventReturn {
-  formSchemas: Ref<NormalizedFormSchema[]>;
+  formSchemas: any;
   formModel: Ref<Recordable>;
   updateSchema: (schemas: Arrayable<UpdateSchemaParams>) => void;
   removeSchema: (prop: Arrayable<string>) => void;
