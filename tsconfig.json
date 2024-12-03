@@ -18,13 +18,13 @@
     "target": 3
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "examples/**/*.vue",
-    "src/**/*.vue",
-    "./components.d.ts",
-    "./auto-imports.d.ts",
-    "./global.d.ts"
+    "packages/**/*.ts",
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "packages/**/*.vue",
+    "docs/**/*.ts",
+    "docs/**/*.ts",
+    "docs/**/*.tsx",
+    "docs/**/*.vue"
   ]
 }
