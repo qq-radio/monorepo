@@ -117,11 +117,13 @@ const buttons: Button[] = [
     onClick: () => {
       basicFormRef.value!.updateSchema([
         {
-          prop: "discountCoupon",
+          prop: "discoduntCoupon",
+          label: "",
           required: true,
         },
         {
           prop: "giftCoupon",
+          label: "",
           required: true,
         },
       ]);

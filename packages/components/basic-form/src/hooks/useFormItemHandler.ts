@@ -1,58 +1,60 @@
-import type {
-  UseFormItemHandler,
-  FormItemEventHandler,
-  FormSchema
-} from '../types'
+import type { FormSchema, FormItemEmits } from "../types";
 
-import { ref } from 'vue'
-import { isArray } from 'lodash'
+import { ref } from "vue";
+import { isArray } from "lodash";
 
-export const useFormItemHandler: UseFormItemHandler = (context) => {
-  const eventHandlers = ref<FormItemEventHandler[]>([
+type Props = { emit: FormItemEmits };
+
+export type UseFormItemHandlerReturn = ReturnType<typeof useFormItemHandler>;
+
+export const useFormItemHandler = (props: Props) => {
+  const { emit } = props;
+
+  const eventHandlers = ref([
     {
-      condition: (schema: FormSchema) => schema.component === 'time-picker',
+      condition: (schema: FormSchema) => schema.component === "time-picker",
       handler: (values: unknown[], schema: FormSchema) => {
-        onTimeRangeChange(values, schema)
-      }
+        onTimeRangeChange(values, schema);
+      },
     },
     {
       condition: (schema: FormSchema) =>
-        schema.component === 'date-picker' &&
-        schema.componentProps?.type === 'daterange',
+        schema.component === "date-picker" &&
+        schema.componentProps?.type === "daterange",
       handler: (values: unknown[], schema: FormSchema) => {
-        onTimeRangeChange(values, schema)
-      }
-    }
-  ])
+        onTimeRangeChange(values, schema);
+      },
+    },
+  ]);
 
   const handleChange = (values: unknown[], schema: FormSchema) => {
     for (const { condition, handler } of eventHandlers.value) {
       if (condition(schema)) {
-        handler(values, schema)
-        break
+        handler(values, schema);
+        break;
       }
     }
-  }
+  };
 
   function onTimeRangeChange(values: any[], schema: FormSchema) {
-    const { componentProps: { timeRangeMapFields } = {} } = schema
+    const { componentProps: { timeRangeMapFields } = {} } = schema;
 
     if (!isArray(timeRangeMapFields)) {
-      return
+      return;
     }
 
-    const [startDate, endDate] = timeRangeMapFields
-    const value = values[0] || []
+    const [startDate, endDate] = timeRangeMapFields;
+    const value = values[0] || [];
 
     if (!value && !startDate && !endDate) {
-      return
+      return;
     }
 
-    context.emit('field-change', {
+    emit("field-change", {
       [startDate]: value[0],
-      [endDate]: value[1]
-    })
+      [endDate]: value[1],
+    });
   }
 
-  return { handleChange }
-}
+  return { handleChange };
+};

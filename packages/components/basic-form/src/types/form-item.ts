@@ -1,10 +1,4 @@
-import type {
-  BasicFormProps,
-  FormSchema,
-  FormMethods,
-  ComponentType,
-  FieldValue,
-} from "./";
+import type { BasicFormProps, FormSchema, FormMethods, FieldValue } from "./";
 
 export interface FormItemProps {
   modelValue: FieldValue;

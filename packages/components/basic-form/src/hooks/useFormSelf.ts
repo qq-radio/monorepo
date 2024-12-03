@@ -1,4 +1,3 @@
-import type { UseFormSelf } from "../types";
 import type {
   FormInstance,
   FormItemProp,
@@ -9,12 +8,14 @@ import type { Ref } from "vue";
 
 import { unref } from "vue";
 
+export type UseFormSelfReturn = ReturnType<typeof useFormSelf>;
+
 export const useFormSelf = (instance?: Ref<FormInstance>) => {
   function getForm() {
     const form = unref(instance);
     if (!form) {
       throw new Error(
-        "The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation"
+        "BasicForm实例还未创建，请确保实例创建成功后再调用组件方法"
       );
     }
     return form;

@@ -1,15 +1,13 @@
-import type {
-  UseForm,
-  BasicFormProps,
-  FormMethods,
-  FormSchema,
-  UpdateSchemaParams,
-} from "../types";
+import type { BasicFormProps, FormMethods, FormSchema } from "../types";
 import type { FormValidateCallback, FormItemProp } from "element-plus";
 
 import { ref, unref, watch, onUnmounted } from "vue";
 
-export const useForm: UseForm = (props) => {
+type Props = { props?: Partial<BasicFormProps> };
+
+export type UseFormReturn = ReturnType<typeof useForm>;
+
+export function useForm({ props }: Props) {
   const instanceRef = ref<Nullable<FormMethods>>(null);
 
   function getInstance() {
@@ -58,7 +56,7 @@ export const useForm: UseForm = (props) => {
     /**
      * useFormEvent
      */
-    updateSchema: (schemas: Arrayable<UpdateSchemaParams>) => {
+    updateSchema: (schemas: Arrayable<MakeRequired<FormSchema, "prop">>) => {
       getInstance().updateSchema(schemas);
     },
     removeSchema: (prop: Arrayable<string>) => {
@@ -102,4 +100,4 @@ export const useForm: UseForm = (props) => {
   };
 
   return [register, methods];
-};
+}

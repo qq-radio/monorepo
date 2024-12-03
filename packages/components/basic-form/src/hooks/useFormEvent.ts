@@ -1,11 +1,19 @@
-import type { FormSchema } from "../types";
+import type { BasicFormProps, BasicFormEmits, FormSchema } from "../types";
 
-import { computed, onMounted, ref, unref, watch } from "vue";
+import { computed, ComputedRef, onMounted, ref, unref, watch } from "vue";
 import { isObject, isString, cloneDeep, uniqBy, merge, isArray } from "lodash";
 
-type UpdateSchemaParams = MakeRequired<FormSchema, "prop">;
+type Props = ComputedRef<Pick<BasicFormProps, "schemas" | "modelValue">>;
 
-export const useFormEvent = (getProps, { emit }) => {
+type Context = {
+  emit: BasicFormEmits;
+};
+
+export type UseFormEventReturn = ReturnType<typeof useFormEvent>;
+
+export function useFormEvent(getProps: Props, context: Context) {
+  const { emit } = context;
+
   const schemas = computed(() => getProps.value.schemas);
   const modelValue = computed(() => getProps.value.modelValue);
 
@@ -25,7 +33,9 @@ export const useFormEvent = (getProps, { emit }) => {
   );
 
   function initSchemas() {
-    formSchemas.value = filterSchemas(sortSchemas(schemas.value));
+    if (isArray(schemas.value)) {
+      formSchemas.value = filterSchemas(sortSchemas(schemas.value));
+    }
   }
 
   function initModel() {
@@ -58,7 +68,7 @@ export const useFormEvent = (getProps, { emit }) => {
     return true;
   }
 
-  function updateSchema(schemas: Arrayable<UpdateSchemaParams>) {
+  function updateSchema(schemas: Arrayable<MakeRequired<FormSchema, "prop">>) {
     const waitUpdateSchemas = processSchemas(schemas);
 
     validatePropLength(waitUpdateSchemas);
@@ -170,7 +180,7 @@ export const useFormEvent = (getProps, { emit }) => {
     setFieldsValue,
     emitUpdateModel,
   };
-};
+}
 
 function filterSchemas(schemas: FormSchema[]) {
   return schemas.filter((schemaItem) => schemaItem.prop || schemaItem.title);

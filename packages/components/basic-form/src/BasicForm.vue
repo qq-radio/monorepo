@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import type { BasicFormProps, BasicFormEmits, FormMethods } from "./types";
-import type { FormInstance, FormValidateCallback } from "element-plus";
+import type { FormValidateCallback } from "element-plus";
 
 import { useFormEvent } from "./hooks/useFormEvent";
 import { useFormSelf } from "./hooks/useFormSelf";
@@ -126,7 +126,7 @@ const formProps = computed(() => {
   };
 });
 
-const formInstance = ref<FormInstance>();
+const formInstance = ref();
 
 const {
   formSchemas,

@@ -1,6 +1,8 @@
-import type { FormMethods, FormItemCallbackParams } from "./";
+import type { FormItemCallbackParams } from "./";
+import type { UseFormSelfReturn } from "../hooks/useFormSelf";
+import type { UseFormEventReturn } from "../hooks/useFormEvent";
 
-import type { VNode, Component, Slots } from "vue";
+import type { VNode, Component } from "vue";
 import type {
   RowProps,
   ColProps,
@@ -135,4 +137,12 @@ export interface BasicFormEmits {
   (e: "submit-error", values: Recordable): void;
   (e: "submit", values: Recordable): void;
   (e: "reset", values?: Recordable): void;
+}
+
+export interface FormMethods
+  extends UseFormSelfReturn,
+    Omit<UseFormEventReturn, "formSchemas" | "formModel" | "emitUpdateModel"> {
+  setProps: (props: Partial<BasicFormProps>) => void;
+  submit: () => Promise<unknown>;
+  reset: () => void;
 }
