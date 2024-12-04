@@ -31,3 +31,10 @@ export interface FormItemCallbackParams {
   model: Recordable;
   schema: FormSchema;
 }
+
+export interface FormItemComponentPropsCallbackParams {
+  value: FieldValue;
+  model: Recordable;
+  schema: FormSchema;
+  methods: FormMethods;
+}

@@ -1,4 +1,7 @@
-import type { FormItemCallbackParams } from "./";
+import type {
+  FormItemCallbackParams,
+  FormItemComponentPropsCallbackParams,
+} from "./";
 import type { UseFormSelfReturn } from "../hooks/useFormSelf";
 import type { UseFormEventReturn } from "../hooks/useFormEvent";
 
@@ -43,6 +46,7 @@ export type ComponentProps = {
   placeholder?: string;
   extraFields?: string[][];
   timeRangeMapFields?: TimeRangeMapFields;
+  type?: string;
 } & Recordable;
 
 export type Render = () => string | VNode;
@@ -81,7 +85,9 @@ export interface FormSchema {
 
   // 表单项 - field
   component?: ComponentType;
-  componentProps?: ComponentProps;
+  componentProps?:
+    | ComponentProps
+    | ((parmas: FormItemComponentPropsCallbackParams) => ComponentProps);
   componentSlots?: Recordable;
   componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
@@ -97,7 +103,13 @@ export interface FormSchema {
   rules?: FormItemRule[];
 }
 
-export type NormalizedFormSchema = MakeRequired<FormSchema, "component">;
+export type NormalizeParams = Omit<
+  FormSchema,
+  "component" | "componentProps"
+> & {
+  component: ComponentType;
+  componentProps: ComponentProps;
+};
 
 export interface BasicFormProps {
   modelValue?: Recordable;

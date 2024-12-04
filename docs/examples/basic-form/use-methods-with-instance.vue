@@ -124,7 +124,7 @@ const buttons: Button[] = [
     onClick: () => {
       basicFormRef.value!.updateSchema([
         {
-          proddp: "discoduntCoupon",
+          prop: "discoduntCoupon",
           required: true,
         },
         {

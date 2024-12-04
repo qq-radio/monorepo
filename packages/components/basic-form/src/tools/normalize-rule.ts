@@ -1,4 +1,4 @@
-import type { NormalizedFormSchema } from "../types";
+import type { NormalizeParams } from "../types";
 import type { FormItemRule } from "element-plus";
 
 import { getPrefix } from "./component-prefix";
@@ -6,24 +6,22 @@ import { isArray } from "lodash";
 
 const TRIGGER = ["change", "blur"];
 
-function getRequiredRule(formItem: NormalizedFormSchema): FormItemRule {
+function getRequiredRule(formItem: NormalizeParams): FormItemRule {
   return {
     required: true,
-    message:
-      formItem.componentProps?.placeholder ||
-      getPrefix(formItem.component) + formItem.label,
+    message: getPrefix(formItem.component || "input") + formItem.label,
   };
 }
 
-function getNoWhitespaceRule(formItem: NormalizedFormSchema): FormItemRule {
+function getNoWhitespaceRule(formItem: NormalizeParams): FormItemRule {
   return {
     trigger: TRIGGER,
     whitespace: true,
-    message: getPrefix(formItem.component) + formItem.label,
+    message: getPrefix(formItem.component || "input") + formItem.label,
   };
 }
 
-function getMinWordRule(formItem: NormalizedFormSchema): FormItemRule {
+function getMinWordRule(formItem: NormalizeParams): FormItemRule {
   return {
     trigger: TRIGGER,
     min: formItem.min,
@@ -31,7 +29,7 @@ function getMinWordRule(formItem: NormalizedFormSchema): FormItemRule {
   };
 }
 
-function getMaxWordRule(formItem: NormalizedFormSchema): FormItemRule {
+function getMaxWordRule(formItem: NormalizeParams): FormItemRule {
   return {
     trigger: TRIGGER,
     max: formItem.max,
@@ -39,7 +37,7 @@ function getMaxWordRule(formItem: NormalizedFormSchema): FormItemRule {
   };
 }
 
-function getMinNumberRule(formItem: NormalizedFormSchema): FormItemRule {
+function getMinNumberRule(formItem: NormalizeParams): FormItemRule {
   return {
     trigger: TRIGGER,
     validator: (_rule, value, callback) => {
@@ -56,7 +54,7 @@ function getMinNumberRule(formItem: NormalizedFormSchema): FormItemRule {
   };
 }
 
-function getMaxNumberRule(formItem: NormalizedFormSchema): FormItemRule {
+function getMaxNumberRule(formItem: NormalizeParams): FormItemRule {
   return {
     trigger: TRIGGER,
     validator: (_rule, value, callback) => {
@@ -73,7 +71,7 @@ function getMaxNumberRule(formItem: NormalizedFormSchema): FormItemRule {
   };
 }
 
-function normalizeRule(formItem: NormalizedFormSchema) {
+function normalizeRule(formItem: NormalizeParams) {
   const { component, required, noWhitespace, min, max } = formItem;
 
   const rules = isArray(formItem.rules) ? formItem.rules : [];
@@ -106,10 +104,7 @@ function normalizeRule(formItem: NormalizedFormSchema) {
     }
   }
 
-  return {
-    ...formItem,
-    rules,
-  };
+  return rules;
 }
 
 export { normalizeRule };

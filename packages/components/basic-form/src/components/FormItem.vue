@@ -21,7 +21,7 @@
         v-bind="formItem.formItemProps"
         :label="getLabel"
         :prop="formItem.prop"
-        :rules="formItem.rules"
+        :rules="getRules"
       >
         <template #label>
           <div :class="ns.e('label')">
@@ -42,7 +42,7 @@
           <component
             v-else="formItem.component"
             :is="renderComponent"
-            v-bind="getComponentProps"
+            v-bind="formItem.componentProps"
             v-model="stateValue"
             :disabled="getDisabled"
             @change="(...v: unknown[]) => onChange(v)"
@@ -68,6 +68,8 @@ import type {
   FormItemCallbackParams,
   FieldValue,
   FormSchema,
+  NormalizeParams,
+  ComponentProps,
 } from "../types";
 
 import { useBasicNamespace, useCustomRender } from "@center/composables";
@@ -79,6 +81,7 @@ import { useSlots, ref, watchEffect, computed } from "vue";
 import { isFunction, isUndefined, merge } from "lodash";
 import { InfoFilled } from "@element-plus/icons-vue";
 import { normalizeSchema } from "../tools/normalize-schema";
+import { normalizeRule } from "../tools/normalize-rule";
 
 const ns = useBasicNamespace("form-item");
 
@@ -97,14 +100,15 @@ const emit = defineEmits<FormItemEmits>();
 
 const stateValue = ref<FieldValue>("");
 
-const formItem = ref<FormSchema>({
+const formItem = ref<NormalizeParams>({
   prop: "",
   label: "",
+  component: "input",
+  componentProps: {},
 });
 
 watchEffect(() => {
   stateValue.value = props.modelValue;
-  formItem.value = normalizeSchema(props.schemaItem);
 });
 
 const callbackParams = computed<FormItemCallbackParams>(() => ({
@@ -112,6 +116,27 @@ const callbackParams = computed<FormItemCallbackParams>(() => ({
   model: props.formModel,
   schema: props.schemaItem,
 }));
+
+const getComponentProps = (schemaItem: FormSchema) => {
+  const { componentProps: originComponentProps } = schemaItem;
+  let componentProps = originComponentProps as ComponentProps;
+  if (isFunction(originComponentProps)) {
+    componentProps = originComponentProps({
+      ...callbackParams.value,
+      methods: props.formMethods,
+    });
+  }
+  return normalizeSchema({
+    ...schemaItem,
+    componentProps,
+    component: schemaItem.component || "input",
+  });
+};
+
+watchEffect(() => {
+  formItem.value = getComponentProps(props.schemaItem);
+  console.log("formItem.value: 不要伤害我", formItem.value);
+});
 
 const getHidden = computed(() => {
   const { hidden } = formItem.value;
@@ -133,18 +158,7 @@ const getLabel = computed(() => {
   return hasLabel ? formItem.value.label : "";
 });
 
-const getComponentProps = computed(() => {
-  const { componentProps } = formItem.value;
-
-  if (isFunction(componentProps)) {
-    return componentProps({
-      ...callbackParams.value,
-      methods: props.formMethods,
-    });
-  }
-
-  return componentProps;
-});
+const getRules = computed(() => normalizeRule(formItem.value));
 
 const getDisabled = computed(() => {
   const {

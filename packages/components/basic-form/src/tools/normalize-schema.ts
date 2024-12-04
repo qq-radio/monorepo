@@ -1,11 +1,10 @@
-import type { FormSchema, NormalizedFormSchema } from "../types";
+import type { NormalizeParams } from "../types";
 
 import { getPrefix } from "./component-prefix";
-import { normalizeRule } from "./normalize-rule";
 
 import { merge } from "lodash";
 
-function addTextareaProps(schemaItem: FormSchema) {
+function addTextareaProps(schemaItem: NormalizeParams) {
   if (schemaItem.component === "textarea") {
     return merge(
       {
@@ -20,7 +19,7 @@ function addTextareaProps(schemaItem: FormSchema) {
   return schemaItem;
 }
 
-function addStyle(schemaItem: FormSchema) {
+function addStyle(schemaItem: NormalizeParams) {
   if (
     schemaItem.component &&
     ["input-number", "select", "tree-select", "cascader"].includes(
@@ -41,7 +40,7 @@ function addStyle(schemaItem: FormSchema) {
   return schemaItem;
 }
 
-function addPlaceholder(schemaItem: FormSchema) {
+function addPlaceholder(schemaItem: NormalizeParams) {
   if (
     schemaItem.component === "time-picker" ||
     (schemaItem.component === "date-picker" &&
@@ -69,7 +68,7 @@ function addPlaceholder(schemaItem: FormSchema) {
   );
 }
 
-function addAllowClear(schemaItem: FormSchema) {
+function addAllowClear(schemaItem: NormalizeParams) {
   return merge(
     {
       componentProps: {
@@ -80,7 +79,7 @@ function addAllowClear(schemaItem: FormSchema) {
   );
 }
 
-function addTimeFormat(schemaItem: FormSchema) {
+function addTimeFormat(schemaItem: NormalizeParams) {
   if (schemaItem.component === "date-picker") {
     return merge(
       {
@@ -108,18 +107,14 @@ function addTimeFormat(schemaItem: FormSchema) {
   return schemaItem;
 }
 
-function normalizeSchema(schemaItem: FormSchema): NormalizedFormSchema {
+function normalizeSchema(schemaItem: NormalizeParams) {
   return [
     addTextareaProps,
     addStyle,
     addPlaceholder,
     addAllowClear,
     addTimeFormat,
-    normalizeRule,
-  ].reduce(
-    (acc, func) => func(acc as unknown as NormalizedFormSchema),
-    schemaItem
-  ) as NormalizedFormSchema;
+  ].reduce((acc, func) => func(acc), schemaItem);
 }
 
 export { normalizeSchema };
