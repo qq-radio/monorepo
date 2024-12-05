@@ -30,10 +30,6 @@ export default defineConfig({
               { text: "弹窗表单", link: "/components/basic-form-with-dialog" },
               { text: "分组表单", link: "/components/basic-form-with-group" },
               { text: "分步表单", link: "/components/basic-form-with-step" },
-              {
-                text: "不要伤害我",
-                link: "/components/basic-form-type-check",
-              },
             ],
           },
           {

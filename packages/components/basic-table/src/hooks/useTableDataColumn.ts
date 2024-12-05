@@ -15,7 +15,6 @@ export const useTableDataColumn: UseTableDataColumn = (getProps, { slots }) => {
           ?.filter((s) => s.customHeaderSlot)
           ?.map((s) => s.customHeaderSlot);
         tableHeaderSlots.value = isEmpty(a) ? {} : pick(slots, a);
-        console.log("tableHeaderSlots:", tableHeaderSlots);
 
         const b = tableSchemas
           ?.filter((s) => s.customSlot)

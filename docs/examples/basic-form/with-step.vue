@@ -11,6 +11,7 @@
         :schemas="productFormSchemas"
         hasFooter
         :hasReset="false"
+        submitText="下一步"
         @submit="active = 1"
       />
       <BasicForm
@@ -20,7 +21,7 @@
         hasFooter
         @submit="handleSubmit"
       >
-        <template #footer="submit">
+        <template #footer="{ submit }">
           <el-button @click="active--">上一步</el-button>
           <el-button type="primary" @click="submit">完成</el-button>
         </template>
