@@ -1,4 +1,4 @@
-import type { FormSchema, FormItemEmits } from "../types";
+import type { EnhancedFormSchema, FormItemEmits } from "../types";
 
 import { ref } from "vue";
 import { isArray } from "lodash";
@@ -12,22 +12,23 @@ export const useFormItemHandler = (props: Props) => {
 
   const eventHandlers = ref([
     {
-      condition: (schema: FormSchema) => schema.component === "time-picker",
-      handler: (values: unknown[], schema: FormSchema) => {
+      condition: (schema: EnhancedFormSchema) =>
+        schema.component === "time-picker",
+      handler: (values: unknown[], schema: EnhancedFormSchema) => {
         onTimeRangeChange(values, schema);
       },
     },
     {
-      condition: (schema: FormSchema) =>
+      condition: (schema: EnhancedFormSchema) =>
         schema.component === "date-picker" &&
         schema.componentProps?.type === "daterange",
-      handler: (values: unknown[], schema: FormSchema) => {
+      handler: (values: unknown[], schema: EnhancedFormSchema) => {
         onTimeRangeChange(values, schema);
       },
     },
   ]);
 
-  const handleChange = (values: unknown[], schema: FormSchema) => {
+  const handleChange = (values: unknown[], schema: EnhancedFormSchema) => {
     for (const { condition, handler } of eventHandlers.value) {
       if (condition(schema)) {
         handler(values, schema);
@@ -36,7 +37,7 @@ export const useFormItemHandler = (props: Props) => {
     }
   };
 
-  function onTimeRangeChange(values: any[], schema: FormSchema) {
+  function onTimeRangeChange(values: any[], schema: EnhancedFormSchema) {
     const { componentProps: { timeRangeMapFields } = {} } = schema;
 
     if (!isArray(timeRangeMapFields)) {

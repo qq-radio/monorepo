@@ -103,7 +103,7 @@ export interface FormSchema {
   rules?: FormItemRule[];
 }
 
-export type NormalizeParams = Omit<
+export type EnhancedFormSchema = Omit<
   FormSchema,
   "component" | "componentProps"
 > & {

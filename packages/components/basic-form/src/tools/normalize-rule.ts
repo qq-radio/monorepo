@@ -1,4 +1,4 @@
-import type { NormalizeParams } from "../types";
+import type { EnhancedFormSchema } from "../types";
 import type { FormItemRule } from "element-plus";
 
 import { getPrefix } from "./component-prefix";
@@ -6,14 +6,14 @@ import { isArray } from "lodash";
 
 const TRIGGER = ["change", "blur"];
 
-function getRequiredRule(formItem: NormalizeParams): FormItemRule {
+function getRequiredRule(formItem: EnhancedFormSchema): FormItemRule {
   return {
     required: true,
     message: getPrefix(formItem.component || "input") + formItem.label,
   };
 }
 
-function getNoWhitespaceRule(formItem: NormalizeParams): FormItemRule {
+function getNoWhitespaceRule(formItem: EnhancedFormSchema): FormItemRule {
   return {
     trigger: TRIGGER,
     whitespace: true,
@@ -21,7 +21,7 @@ function getNoWhitespaceRule(formItem: NormalizeParams): FormItemRule {
   };
 }
 
-function getMinWordRule(formItem: NormalizeParams): FormItemRule {
+function getMinWordRule(formItem: EnhancedFormSchema): FormItemRule {
   return {
     trigger: TRIGGER,
     min: formItem.min,
@@ -29,7 +29,7 @@ function getMinWordRule(formItem: NormalizeParams): FormItemRule {
   };
 }
 
-function getMaxWordRule(formItem: NormalizeParams): FormItemRule {
+function getMaxWordRule(formItem: EnhancedFormSchema): FormItemRule {
   return {
     trigger: TRIGGER,
     max: formItem.max,
@@ -37,7 +37,7 @@ function getMaxWordRule(formItem: NormalizeParams): FormItemRule {
   };
 }
 
-function getMinNumberRule(formItem: NormalizeParams): FormItemRule {
+function getMinNumberRule(formItem: EnhancedFormSchema): FormItemRule {
   return {
     trigger: TRIGGER,
     validator: (_rule, value, callback) => {
@@ -54,7 +54,7 @@ function getMinNumberRule(formItem: NormalizeParams): FormItemRule {
   };
 }
 
-function getMaxNumberRule(formItem: NormalizeParams): FormItemRule {
+function getMaxNumberRule(formItem: EnhancedFormSchema): FormItemRule {
   return {
     trigger: TRIGGER,
     validator: (_rule, value, callback) => {
@@ -71,7 +71,7 @@ function getMaxNumberRule(formItem: NormalizeParams): FormItemRule {
   };
 }
 
-function normalizeRule(formItem: NormalizeParams) {
+function normalizeRule(formItem: EnhancedFormSchema) {
   const { component, required, noWhitespace, min, max } = formItem;
 
   const rules = isArray(formItem.rules) ? formItem.rules : [];

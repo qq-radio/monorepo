@@ -1,10 +1,10 @@
-import type { NormalizeParams } from "../types";
+import type { EnhancedFormSchema } from "../types";
 
 import { getPrefix } from "./component-prefix";
 
 import { merge } from "lodash";
 
-function addTextareaProps(schemaItem: NormalizeParams) {
+function addTextareaProps(schemaItem: EnhancedFormSchema) {
   if (schemaItem.component === "textarea") {
     return merge(
       {
@@ -19,7 +19,7 @@ function addTextareaProps(schemaItem: NormalizeParams) {
   return schemaItem;
 }
 
-function addStyle(schemaItem: NormalizeParams) {
+function addStyle(schemaItem: EnhancedFormSchema) {
   if (
     schemaItem.component &&
     ["input-number", "select", "tree-select", "cascader"].includes(
@@ -40,7 +40,7 @@ function addStyle(schemaItem: NormalizeParams) {
   return schemaItem;
 }
 
-function addPlaceholder(schemaItem: NormalizeParams) {
+function addPlaceholder(schemaItem: EnhancedFormSchema) {
   if (
     schemaItem.component === "time-picker" ||
     (schemaItem.component === "date-picker" &&
@@ -68,7 +68,7 @@ function addPlaceholder(schemaItem: NormalizeParams) {
   );
 }
 
-function addAllowClear(schemaItem: NormalizeParams) {
+function addAllowClear(schemaItem: EnhancedFormSchema) {
   return merge(
     {
       componentProps: {
@@ -79,7 +79,7 @@ function addAllowClear(schemaItem: NormalizeParams) {
   );
 }
 
-function addTimeFormat(schemaItem: NormalizeParams) {
+function addTimeFormat(schemaItem: EnhancedFormSchema) {
   if (schemaItem.component === "date-picker") {
     return merge(
       {
@@ -107,7 +107,7 @@ function addTimeFormat(schemaItem: NormalizeParams) {
   return schemaItem;
 }
 
-function normalizeSchema(schemaItem: NormalizeParams) {
+function normalizeSchema(schemaItem: EnhancedFormSchema) {
   return [
     addTextareaProps,
     addStyle,

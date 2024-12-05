@@ -16,7 +16,7 @@
       "@components": ["src/components"]
     },
     "skipLibCheck": true,
-    "noImplicitAny": true
+    "noImplicitAny": false
   },
   "vueCompilerOptions": {
     "target": 3

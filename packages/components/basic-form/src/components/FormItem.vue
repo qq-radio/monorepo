@@ -68,7 +68,7 @@ import type {
   FormItemCallbackParams,
   FieldValue,
   FormSchema,
-  NormalizeParams,
+  EnhancedFormSchema,
   ComponentProps,
 } from "../types";
 
@@ -100,7 +100,7 @@ const emit = defineEmits<FormItemEmits>();
 
 const stateValue = ref<FieldValue>("");
 
-const formItem = ref<NormalizeParams>({
+const formItem = ref<EnhancedFormSchema>({
   prop: "",
   label: "",
   component: "input",

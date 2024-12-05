@@ -1,5 +1,7 @@
 import { DisplayType } from "@center/components/basic-display";
 
+import type { ComputedRef } from "vue";
+
 export interface BasicDescriptionProps {
   data: Recordable;
   schemas: DescriptionSchema[];

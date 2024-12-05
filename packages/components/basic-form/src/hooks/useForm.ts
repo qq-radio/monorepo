@@ -58,7 +58,7 @@ export const useForm: UseForm = (props) => {
     /**
      * useFormEvent
      */
-    updateSchema: (schemas: Arrayable<MakeRequired<FormSchema, "prop">>) => {
+    updateSchema: (schemas: Arrayable<PartialRequired<FormSchema, "prop">>) => {
       getInstance().updateSchema(schemas);
     },
     removeSchema: (prop: Arrayable<string>) => {

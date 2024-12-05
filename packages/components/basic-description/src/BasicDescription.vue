@@ -3,7 +3,7 @@
     <template v-for="item in descriptionSchemas" :key="item.prop">
       <el-descriptions-item v-bind="getItemProps(item)" :label="item.label">
         <template #label>
-          <component v-if="isCustomLabel(item)" :is="renderCustomLabel(item)" />
+          <component :is="renderCustomLabel(item)" v-if="isCustomLabel(item)" />
           <template v-else>{{ item.label }}</template>
           <el-tooltip placement="top" :content="item.labelTooltip">
             <el-icon>
@@ -11,7 +11,7 @@
             </el-icon>
           </el-tooltip>
         </template>
-        <component v-if="isCustomCell(item)" :is="renderCustomCell(item)" />
+        <component :is="renderCustomCell(item)" v-if="isCustomCell(item)" />
         <BasicDisplay
           v-else-if="item.display && hasComponent(item.display)"
           :type="item.display"

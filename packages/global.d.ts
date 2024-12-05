@@ -16,4 +16,6 @@ declare global {
 
   declare type PartialRequired<T, K extends keyof T> = Partial<T> &
     Required<Pick<T, K>>;
+
+  type RenderType = string | VNode | Component;
 }

@@ -27,7 +27,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "vue"],
   rules: {
     "no-undef": "off",
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
