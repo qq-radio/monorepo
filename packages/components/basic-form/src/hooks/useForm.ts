@@ -1,6 +1,8 @@
 import type { BasicFormProps, FormMethods, FormSchema } from "../types";
 import type { FormValidateCallback, FormItemProp } from "element-plus";
 
+import { ErrorMessages, BasicComponentError } from "@center/components/error";
+
 import { ref, unref, watch, onUnmounted } from "vue";
 
 export interface UseForm {
@@ -15,9 +17,7 @@ export const useForm: UseForm = (props) => {
   function getInstance() {
     const instance = unref(instanceRef);
     if (!instance) {
-      throw new Error(
-        "The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation"
-      );
+      throw new BasicComponentError(ErrorMessages.FORM_INSTANCE_NOT_OBTAINED);
     }
     return instance;
   }

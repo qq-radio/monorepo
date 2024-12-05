@@ -73,15 +73,15 @@ import type {
 } from "../types";
 
 import { useBasicNamespace, useCustomRender } from "@center/composables";
-import { getComponent } from "../tools/component";
-
 import { useFormItemHandler } from "../hooks/useFormItemHandler";
+
+import { getComponent } from "../tools/component";
+import { normalizeSchema } from "../tools/normalize-schema";
+import { normalizeRule } from "../tools/normalize-rule";
 
 import { useSlots, ref, watchEffect, computed } from "vue";
 import { isFunction, isUndefined, merge } from "lodash";
 import { InfoFilled } from "@element-plus/icons-vue";
-import { normalizeSchema } from "../tools/normalize-schema";
-import { normalizeRule } from "../tools/normalize-rule";
 
 const ns = useBasicNamespace("form-item");
 
@@ -107,17 +107,13 @@ const formItem = ref<EnhancedFormSchema>({
   componentProps: {},
 });
 
-watchEffect(() => {
-  stateValue.value = props.modelValue;
-});
-
 const callbackParams = computed<FormItemCallbackParams>(() => ({
   value: props.modelValue,
   model: props.formModel,
   schema: props.schemaItem,
 }));
 
-const getComponentProps = (schemaItem: FormSchema) => {
+const enhanceSchema = (schemaItem: FormSchema) => {
   const { componentProps: originComponentProps } = schemaItem;
   let componentProps = originComponentProps as ComponentProps;
   if (isFunction(originComponentProps)) {
@@ -134,8 +130,8 @@ const getComponentProps = (schemaItem: FormSchema) => {
 };
 
 watchEffect(() => {
-  formItem.value = getComponentProps(props.schemaItem);
-  console.log("formItem.value: 不要伤害我", formItem.value);
+  stateValue.value = props.modelValue;
+  formItem.value = enhanceSchema(props.schemaItem);
 });
 
 const getHidden = computed(() => {

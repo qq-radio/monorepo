@@ -122,6 +122,9 @@ const buttons: Button[] = [
   {
     text: "新增",
     onClick: () => {
+      setProps({
+        disabled: true,
+      });
       setDialogTitle("新增");
       openDialog();
     },

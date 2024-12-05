@@ -6,6 +6,8 @@ import type {
 } from "element-plus";
 import type { Ref } from "vue";
 
+import { ErrorMessages, BasicComponentError } from "@center/components/error";
+
 import { unref } from "vue";
 
 export type UseFormSelfReturn = ReturnType<typeof useFormSelf>;
@@ -14,9 +16,7 @@ export const useFormSelf = (instance?: Ref<FormInstance>) => {
   function getForm() {
     const form = unref(instance);
     if (!form) {
-      throw new Error(
-        "BasicForm实例还未创建，请确保实例创建成功后再调用组件方法"
-      );
+      throw new BasicComponentError(ErrorMessages.FORM_INSTANCE_NOT_OBTAINED);
     }
     return form;
   }

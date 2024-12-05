@@ -1,5 +1,7 @@
 import type { BasicFormProps, BasicFormEmits, FormSchema } from "../types";
 
+import { ErrorMessages, BasicComponentError } from "@center/components/error";
+
 import { computed, ComputedRef, onMounted, ref, unref, watch } from "vue";
 import { isObject, isString, cloneDeep, uniqBy, merge, isArray } from "lodash";
 
@@ -61,9 +63,7 @@ export function useFormEvent(getProps: Props, context: Context) {
 
   function validatePropLength<T>(array: T[]) {
     if (!array.length) {
-      throw new Error(
-        "All schema should have prop or prop should not be empty"
-      );
+      throw new BasicComponentError(ErrorMessages.FORM_SCHEMA_PROP_REQUIRED);
     }
     return true;
   }

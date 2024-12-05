@@ -1,5 +1,7 @@
 import type { UseTable, BasicTableProps, TableMethods } from "../types";
 
+import { ErrorMessages, BasicComponentError } from "@center/components/error";
+
 import { ref, unref, watch, onUnmounted } from "vue";
 
 export const useTable: UseTable = (props) => {
@@ -8,9 +10,7 @@ export const useTable: UseTable = (props) => {
   function getInstance() {
     const instance = unref(instanceRef);
     if (!instance) {
-      const error =
-        "The table instance has not been obtained, please make sure that the table has been rendered when performing the table operation";
-      throw new Error(error);
+      throw new BasicComponentError(ErrorMessages.TABLE_INSTANCE_NOT_OBTAINED);
     }
     return instance;
   }
