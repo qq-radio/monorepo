@@ -20,8 +20,8 @@
           v-else-if="item.display && hasComponent(item.display)"
           :type="item.display"
           :value="formattedValue(item)"
-          :displayProps="getDisplayProps"
-          :displaySlots="getDisplaySlots"
+          :displayProps="getDisplayProps(item)"
+          :displaySlots="getDisplaySlots(item)"
         />
         <span v-else>
           {{ formattedValue(item) }}
@@ -109,7 +109,6 @@ const renderCustomCell = (item: DescriptionSchema) =>
 
 const formattedValue = (item: DescriptionSchema) => {
   const { formatter } = item;
-  console.log("getCallbackParams(item).value:", getCallbackParams(item).value);
 
   return isFunction(formatter)
     ? formatter(getCallbackParams(item))
