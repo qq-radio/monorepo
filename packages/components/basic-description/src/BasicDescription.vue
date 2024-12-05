@@ -5,8 +5,12 @@
         <template #label>
           <component :is="renderCustomLabel(item)" v-if="isCustomLabel(item)" />
           <template v-else>{{ item.label }}</template>
-          <el-tooltip placement="top" :content="item.labelTooltip">
-            <el-icon>
+          <el-tooltip
+            v-if="item.labelTooltip"
+            placement="top"
+            :content="item.labelTooltip"
+          >
+            <el-icon style="vertical-align: middle; margin-left: 4px">
               <InfoFilled />
             </el-icon>
           </el-tooltip>
@@ -15,12 +19,12 @@
         <BasicDisplay
           v-else-if="item.display && hasComponent(item.display)"
           :type="item.display"
-          :value="formattedValue"
+          :value="formattedValue(item)"
           :displayProps="getDisplayProps"
           :displaySlots="getDisplaySlots"
         />
         <span v-else>
-          {{ formattedValue }}
+          {{ formattedValue(item) }}
         </span>
       </el-descriptions-item>
     </template>
@@ -105,10 +109,11 @@ const renderCustomCell = (item: DescriptionSchema) =>
 
 const formattedValue = (item: DescriptionSchema) => {
   const { formatter } = item;
+  console.log("getCallbackParams(item).value:", getCallbackParams(item).value);
 
   return isFunction(formatter)
     ? formatter(getCallbackParams(item))
-    : getCallbackParams(item);
+    : getCallbackParams(item).value;
 };
 
 const getDisplayProps = (item: DescriptionSchema) => {

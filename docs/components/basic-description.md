@@ -12,7 +12,7 @@ basic-description/basic
 
 ## 透传属性
 
-您可以通过`itemProps`设置公共的`<el-descriptions-item/>`属性，也可以自定义各项的属性
+您可以通过`itemProps`设置公共的描述项属性，也可以自定义各项的属性
 
 :::demo
 basic-description/item-props
@@ -70,4 +70,12 @@ basic-description/custom-render-h
 
 :::demo
 basic-description/custom-slot
+:::
+
+## 自定义渲染 - `display`
+
+可以通过`display`自定义渲染描述项
+
+:::demo
+basic-description/display
 :::

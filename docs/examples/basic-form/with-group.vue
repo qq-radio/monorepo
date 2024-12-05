@@ -2,14 +2,11 @@
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
       <el-card header="商品信息" shadow="hover">
-        <BasicForm
-          v-model="formModel.product"
-          @register="registerProductForm"
-        />
+        <BasicForm v-model="productFormModel" @register="registerProductForm" />
       </el-card>
       <el-card header="收货信息" shadow="hover">
         <BasicForm
-          v-model="formModel.delivery"
+          v-model="deliveryFormModel"
           @register="registerDeliveryForm"
         />
       </el-card>
@@ -22,7 +19,8 @@
       </el-button>
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ formModel }}
+      <div>商品信息：{{ productFormModel }}</div>
+      <div>收货信息：{{ deliveryFormModel }}</div>
     </el-collapse-item>
   </el-collapse>
 </template>
@@ -34,10 +32,9 @@ import { ref } from "vue";
 
 const activeNames = ref(["example"]);
 
-const formModel = ref({
-  product: {},
-  delivery: {},
-});
+const productFormModel = ref({});
+
+const deliveryFormModel = ref({});
 
 const productFormSchemas: FormSchema[] = [
   {

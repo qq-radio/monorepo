@@ -1,46 +1,55 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicButtonGroup :buttons="buttons" style="margin: 20px" />
+      <el-steps style="max-width: 600px" :active="active">
+        <el-step title="商品信息" />
+        <el-step title="收货信息" />
+      </el-steps>
+      <BasicForm
+        v-show="active === 0"
+        v-model="productFormModel"
+        :schemas="productFormSchemas"
+        hasFooter
+        :hasReset="false"
+        @submit="active = 1"
+      />
+      <BasicForm
+        v-show="active === 1"
+        v-model="deliveryFormModel"
+        :schemas="deliveryFormSchemas"
+        hasFooter
+        @submit="handleSubmit"
+      >
+        <template #footer="submit">
+          <el-button @click="active--">上一步</el-button>
+          <el-button type="primary" @click="submit">完成</el-button>
+        </template>
+      </BasicForm>
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
-      {{ formModel }}
+      <div>商品信息：{{ productFormModel }}</div>
+      <div>收货信息：{{ deliveryFormModel }}</div>
     </el-collapse-item>
   </el-collapse>
-  <BasicDialog @register="registerDialog" @confirm="submit">
-    <BasicForm
-      :model="formModel"
-      @register="registerForm"
-      @submit="handleSubmit"
-    />
-  </BasicDialog>
 </template>
 
 <script lang="ts" setup>
-import {
-  BasicDialog,
-  useDialog,
-  BasicForm,
-  FormSchema,
-  useForm,
-  BasicButtonGroup,
-  Button,
-} from "@center/components";
+import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 
 const activeNames = ref(["example"]);
 
-const [registerDialog, { openDialog, setDialogTitle }] = useDialog({
-  title: "弹窗表单示例",
-});
+const active = ref(0);
 
-const formModel = ref({});
+const productFormModel = ref({});
 
-const formSchemas: FormSchema[] = [
+const deliveryFormModel = ref({});
+
+const productFormSchemas: FormSchema[] = [
   {
     label: "咖啡",
-    prop: "drink",
+    prop: "coffee",
     component: "radio-group",
     componentProps: {
       options: [
@@ -82,6 +91,9 @@ const formSchemas: FormSchema[] = [
     defaultValue: true,
     required: true,
   },
+];
+
+const deliveryFormSchemas: FormSchema[] = [
   {
     label: "联系人",
     prop: "name",
@@ -100,50 +112,8 @@ const formSchemas: FormSchema[] = [
   },
 ];
 
-const [registerForm, { setProps, submit }] = useForm({
-  schemas: formSchemas,
-});
-
-const handleSubmit = (values) => {
-  console.log("values:", values);
+const handleSubmit = () => {
+  console.log("表单提交-商品信息:", productFormModel.value);
+  console.log("表单提交-收货信息:", deliveryFormModel.value);
 };
-
-const detailData = {
-  drink: "americano",
-  size: "large",
-  temperature: "ice",
-  needStraw: true,
-  name: "李娟娟",
-  phone: "13513699874",
-  address: "广东省南山市塘朗城",
-};
-
-const buttons: Button[] = [
-  {
-    text: "新增",
-    onClick: () => {
-      setDialogTitle("新增");
-      openDialog();
-    },
-  },
-  {
-    text: "编辑",
-    onClick: async () => {
-      setDialogTitle("编辑");
-      openDialog();
-      formModel.value = detailData;
-    },
-  },
-  {
-    text: "查看详情",
-    onClick: () => {
-      setDialogTitle("查看详情");
-      openDialog();
-      setProps({
-        disabled: true,
-      });
-      formModel.value = detailData;
-    },
-  },
-];
 </script>

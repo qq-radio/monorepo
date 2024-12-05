@@ -30,11 +30,6 @@ const schemas: DescriptionSchema[] = [
     prop: "categoryName",
   },
   {
-    label: "价格",
-    prop: "price",
-    formatter: ({ value }) => `￥${value.toFixed(2)}`,
-  },
-  {
     label: "库存数量",
     prop: "stockQuantity",
     formatter: ({ value }) => `${value}件`,
@@ -44,6 +39,11 @@ const schemas: DescriptionSchema[] = [
     prop: "stockWarning",
     formatter: ({ data }) =>
       data.stockQuantity > 20 ? "库存充足" : "库存不足",
+  },
+  {
+    label: "价格",
+    prop: "price",
+    formatter: ({ value }) => `￥${value.toFixed(2)}`,
   },
   {
     label: "供应商",

@@ -1,5 +1,5 @@
 <template>
-  <BasicDescription :data="data" :schemas="schemas" />
+  <BasicDescription :column="2" :data="data" :schemas="schemas" />
 </template>
 
 <script lang="tsx" setup>
@@ -48,14 +48,23 @@ const schemas: DescriptionSchema[] = [
   {
     label: "供应商",
     prop: "supplier",
+    itemProps: {
+      span: 2,
+    },
   },
   {
     label: "生产地址",
     prop: "address",
+    itemProps: {
+      span: 2,
+    },
   },
   {
     label: "上次更新",
     prop: "lastUpdated",
+    itemProps: {
+      span: 2,
+    },
   },
 ];
 </script>

@@ -72,8 +72,6 @@ export interface BasicTableEmits {
   (e: "request-complete", tableDatas: Array<Recordable>): void;
 }
 
-export type RenderType = string | VNode;
-
 export interface TableSchema {
   prop?: string;
   label?: string;

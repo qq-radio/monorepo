@@ -38,8 +38,6 @@ export type ComponentType = ElementPlusComponentType | CustomComponentType;
 
 type TimeRangeMapFields = [string, string];
 
-export type RenderType = string | VNode | Component;
-
 export type CustomSlot = { [slotName: string]: (params?: any) => RenderType };
 
 export type ComponentProps = {

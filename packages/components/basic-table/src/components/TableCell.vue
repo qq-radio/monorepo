@@ -1,5 +1,5 @@
 <template>
-  <component v-if="isCustomCell" :is="renderCustomCell" />
+  <component :is="renderCustomCell" v-if="isCustomCell" />
   <BasicDisplay
     v-else-if="schema.display && hasComponent(schema.display)"
     :type="schema.display"

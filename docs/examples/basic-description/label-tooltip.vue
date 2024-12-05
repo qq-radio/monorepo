@@ -42,6 +42,7 @@ const schemas: DescriptionSchema[] = [
   {
     label: "库存预警",
     prop: "stockWarning",
+    labelTooltip: "产品数量低于20件时提示'库存不足''",
     formatter: ({ data }) =>
       data.stockQuantity > 20 ? "库存充足" : "库存不足",
   },
@@ -56,6 +57,7 @@ const schemas: DescriptionSchema[] = [
   {
     label: "上次更新",
     prop: "lastUpdated",
+    labelTooltip: "库存数量实时更新",
   },
 ];
 </script>
