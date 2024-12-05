@@ -68,7 +68,7 @@ export interface FormSchema {
   // 表单项
   prop: string;
   label: string;
-  defaultValue?: string | number;
+  defaultValue?: string | number | boolean;
   hasLabel?: boolean;
   labelWidth?: string | number;
   sort?: number;
