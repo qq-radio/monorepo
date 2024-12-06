@@ -8,6 +8,6 @@ export interface TableCellProps {
   schema: TableSchema;
 }
 
-export interface TableCellCallbackParams extends TableCellProps {
+export type TableCellCallbackParams = TableCellProps & {
   value: any;
-}
+};

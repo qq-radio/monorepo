@@ -1,52 +1,81 @@
-import type { UseTableData, TableSchema } from "../types";
+import type { BasicTableProps, TableSchema } from "../types";
+import type { Page } from "@center/components/basic-pagination";
+import type { ComputedRef, Ref } from "vue";
 
 import { ref, computed, watch, unref, onMounted } from "vue";
 import { isFunction, cloneDeep, isArray, merge } from "lodash";
 
-export const useTableData: UseTableData = (getProps, context) => {
+type Props = ComputedRef<
+  PickPartial<
+    BasicTableProps,
+    | "data"
+    | "schemas"
+    | "extraParams"
+    | "paramsFormatter"
+    | "dataFormatter"
+    | "request"
+    | "immediate"
+  >
+>;
+
+type Context = {
+  searchParams: Ref<Recordable>;
+  page: Ref<Page>;
+  setPagination: (p: Partial<Page>) => void;
+};
+
+export type UseTableDataReturn = ReturnType<typeof useTableData>;
+
+export function useTableData(getProps: Props, context: Context) {
   const { searchParams, page, setPagination } = context;
 
   const isLoading = ref(false);
+
   const tableDatas = ref<Recordable[]>([]);
 
-  const isCustomTableDatas = computed(() => isArray(getProps.value.data));
-
-  const tableSchemas = computed(() => {
-    return normalizeTableSchemas(getProps.value.schemas);
+  const getTableSchemas: ComputedRef<TableSchema[]> = computed(() => {
+    const { schemas } = getProps.value;
+    return isArray(schemas) ? normalizeTableSchemas(schemas) : [];
   });
 
   watch(
     () => getProps.value.data,
     (data) => {
-      if (isCustomTableDatas.value) {
+      if (isArray(data)) {
         tableDatas.value = data;
-        setPagination({ total: data?.length });
+        setPagination({ total: data.length });
       }
     },
     { immediate: true }
   );
 
-  const getRequestParams = () => {
+  const getRequestParams = (): Recordable => {
+    const { extraParams, paramsFormatter } = getProps.value;
+
     const params = {
-      ...getProps.value.extraParams,
+      ...extraParams,
       ...searchParams.value,
       currentPage: page.value.currentPage,
       pageSize: page.value.pageSize,
     };
 
-    return isFunction(getProps.value.paramsFormatter)
-      ? getProps.value.paramsFormatter(cloneDeep(params))
+    const finalParams = isFunction(paramsFormatter)
+      ? paramsFormatter(params)
       : params;
+
+    return cloneDeep(finalParams);
   };
 
-  const formatRecords = (records: Recordable[]) =>
-    isFunction(getProps.value.dataFormatter)
-      ? getProps.value.dataFormatter(records)
-      : records;
+  const formatRecords = (records: Recordable[]) => {
+    const { dataFormatter } = getProps.value;
+    return isFunction(dataFormatter) ? dataFormatter(records) : records;
+  };
 
   const query = async () => {
+    const { request } = getProps.value;
+
     try {
-      if (!isFunction(getProps.value.request)) {
+      if (!isFunction(request)) {
         return;
       }
 
@@ -54,8 +83,8 @@ export const useTableData: UseTableData = (getProps, context) => {
 
       const requestParams = getRequestParams();
 
-      const response = await getProps.value.request(requestParams);
-      const { total, records } = response || {};
+      const response = await request(requestParams);
+      const { records, total } = response || {};
 
       tableDatas.value = formatRecords(records);
       setPagination({ total });
@@ -80,14 +109,14 @@ export const useTableData: UseTableData = (getProps, context) => {
   });
 
   return {
-    tableDatas,
     isLoading,
-    tableSchemas,
+    tableDatas,
+    getTableSchemas,
     getRequestParams,
     query,
     reQuery,
   };
-};
+}
 
 function filterSchemas(schemas: TableSchema[]) {
   return schemas.filter((item) => unref(item.visible) !== false);

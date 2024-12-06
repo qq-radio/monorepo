@@ -12,7 +12,15 @@
         hasFooter
         @submit="reQuery"
         @reset="reQuery"
-      />
+      >
+        <template
+          v-for="name in Object.keys(searchSlots)"
+          :key="name"
+          #[name]="scope"
+        >
+          <slot :name="name" v-bind="scope" />
+        </template>
+      </BasicForm>
       <div>
         <slot name="operation-before" />
         <BasicButtonGroup :buttons="getProps.operations" @success="reQuery" />
@@ -21,8 +29,8 @@
     </div>
     <div :class="ns.e('body')">
       <el-table
-        v-bind="getBindValues"
         v-loading="isLoading"
+        v-bind="getBindValues"
         :data="tableDatas"
         @selection-change="handleSelectionChange"
         @row-click="handleRadioSelectionChange"
@@ -139,8 +147,8 @@ import { useBasicNamespace } from "@center/composables";
 
 import { useTableSearch } from "./hooks/useTableSearch";
 import { useTableData } from "./hooks/useTableData";
-import { useTableSpecialColumn } from "./hooks/useTableSpecialColumn";
-import { useTableDataColumn } from "./hooks/useTableDataColumn";
+import { useTableColumnProps } from "./hooks/useTableColumnProps";
+import { useTableSlots } from "./hooks/useTableSlots";
 import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
 import { useTableSelection } from "./hooks/useTableSelection";
 import { useTablePagination } from "./hooks/useTablePagination";
@@ -148,9 +156,9 @@ import { useTablePagination } from "./hooks/useTablePagination";
 import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
 import { pick } from "lodash";
 
-import { BasicPagination } from "@center/components/basic-pagination";
 import { BasicForm } from "@center/components/basic-form";
 import { BasicButtonGroup } from "@center/components/basic-button-group";
+import { BasicPagination } from "@center/components/basic-pagination";
 import TableHeader from "./components/TableHeader.vue";
 import TableCell from "./components/TableCell.vue";
 
@@ -235,11 +243,26 @@ const {
   getExpandColumnProps,
   getActionColumnProps,
   getActionProps,
-} = useTableSpecialColumn(getBindValues);
+} = useTableColumnProps(
+  pick(getProps.value, [
+    "radioSelectionColumnProps",
+    "selectionColumnProps",
+    "indexColumnProps",
+    "expandColumnProps",
+    "actionColumnProps",
+    "actionProps",
+  ])
+);
 
-const { tableHeaderSlots, tableCellSlots } = useTableDataColumn(getBindValues, {
-  slots,
-});
+const { searchSlots, tableHeaderSlots, tableCellSlots } = useTableSlots(
+  computed(() => ({
+    searchSchemas: getSearchSchemas.value,
+    tableSchemas: tableSchemas.value,
+  })),
+  {
+    slots,
+  }
+);
 
 const {
   radioSelectedValue,

@@ -4,19 +4,17 @@ import type {
   TableMethods,
 } from "./";
 import type {
-  BasicButtonGroupProps,
-  Button,
-} from "@center/components/basic-button-group";
-
-import type {
   BasicFormProps,
   FormSchema,
 } from "@center/components/basic-form/src/types";
+import type {
+  BasicButtonGroupProps,
+  Button,
+} from "@center/components/basic-button-group";
 import { DisplayType } from "@center/components/basic-display";
 import type { Page } from "@center/components/basic-pagination";
-
+import type { ComputedRef } from "vue";
 import type { PaginationProps, TableColumnCtx } from "element-plus";
-import type { VNode } from "vue";
 
 export interface BasicTableProps {
   schemas: TableSchema[];

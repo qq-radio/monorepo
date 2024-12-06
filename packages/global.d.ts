@@ -18,4 +18,18 @@ declare global {
     Required<Pick<T, K>>;
 
   type RenderType = string | VNode | Component;
+
+  type RequiredAndOptional<
+    T,
+    RequiredKeys extends keyof T,
+    OptionalKeys extends keyof T,
+  > = {
+    [K in RequiredKeys]: T[K];
+  } & {
+    [K in OptionalKeys]?: T[K];
+  };
+
+  type PickPartial<T, PartialKeys extends keyof T> = {
+    [K in PartialKeys]?: T[K];
+  };
 }

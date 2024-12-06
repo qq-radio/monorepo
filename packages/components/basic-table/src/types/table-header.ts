@@ -7,4 +7,4 @@ export interface TableHeaderProps {
   schema: TableSchema;
 }
 
-export interface TableHeaderCallbackParams extends TableHeaderProps {}
+export type TableHeaderCallbackParams = TableHeaderProps;

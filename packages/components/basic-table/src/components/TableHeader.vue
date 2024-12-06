@@ -1,5 +1,5 @@
 <template>
-  <component v-if="isCustomHeader" :is="renderCustomHeader" />
+  <component :is="renderCustomHeader" v-if="isCustomHeader" />
   <span v-else>
     {{ schema.label }}
   </span>

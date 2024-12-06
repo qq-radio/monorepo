@@ -5,7 +5,7 @@ import type {
 import type { UseFormSelfReturn } from "../hooks/useFormSelf";
 import type { UseFormEventReturn } from "../hooks/useFormEvent";
 
-import type { VNode, Component } from "vue";
+import type { VNode } from "vue";
 import type {
   RowProps,
   ColProps,
@@ -111,7 +111,7 @@ export type EnhancedFormSchema = Omit<
 
 export interface BasicFormProps {
   modelValue?: Recordable;
-  schemas?: FormSchema[];
+  schemas?: Array<FormGroup | FormSchema>;
   loading?: boolean;
   disabled?: boolean;
 

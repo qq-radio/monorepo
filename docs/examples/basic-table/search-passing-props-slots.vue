@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { BasicTable, TableSchema } from "@center/components";
+import { BasicTable, TableSchema, BasicSelect } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -49,7 +49,10 @@ const userListApi = (params): Promise<ApiResponse> => {
     response = userListMockData.filter((user) => user.username === username);
   }
   if (status) {
-    response = userListMockData.filter((user) => user.status === status);
+    response =
+      status === 3
+        ? userListMockData
+        : userListMockData.filter((user) => user.status === status);
   }
   return new Promise((resolve) => {
     setTimeout(() => {

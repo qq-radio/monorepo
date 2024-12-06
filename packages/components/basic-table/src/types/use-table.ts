@@ -1,10 +1,7 @@
+import type { UseTableDataReturn } from "../hooks/useTableData";
 import type { UseTableRadioSelectionReturn } from "../hooks/useTableRadioSelection";
 
-import type {
-  BasicTableProps,
-  UseTableDataReturn,
-  UseTableSelectionReturn,
-} from "./";
+import type { BasicTableProps, UseTableSelectionReturn } from "./";
 
 export interface TableMethods
   extends Pick<UseTableDataReturn, "reQuery" | "getRequestParams">,
