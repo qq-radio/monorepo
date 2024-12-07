@@ -10,7 +10,7 @@ export interface BasicCheckboxGroupProps {
   valueField?: string;
   formatter?: (option: any) => any;
 
-  render?: Render;
+  render?: () => RenderType;
 }
 
 export interface BasicCheckboxGroupEmits {
@@ -32,10 +32,10 @@ export interface CheckboxOption {
   value: string | number;
   disabled?: boolean;
   border?: boolean;
-  size?: OptionSize;
+  size?: "large" | "default" | "small";
 
   isButton?: boolean;
-  customRender?: Render;
+  customRender?: () => RenderType;
   customSlot?: string;
 }
 

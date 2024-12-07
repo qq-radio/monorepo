@@ -67,7 +67,7 @@
               </template>
             </el-table-column>
 
-            <template v-for="schema in tableSchemas" :key="schema.prop">
+            <template v-for="schema in getTableSchemas" :key="schema.prop">
               <el-table-column
                 v-if="schema"
                 v-bind="schema.columnProps"
@@ -219,18 +219,17 @@ const getBindValues = computed(() => ({
   ]),
 }));
 
-const { getSearchProps, getSearchSchemas, searchParams } = useTableSearch(
-  getProps,
-  { slots }
-);
+const { getSearchProps, getSearchSchemas, searchParams } =
+  useTableSearch(getProps);
 
-const { getPaginationProps, page, setPagination } =
-  useTablePagination(getProps);
+const { getPaginationProps, page, setPagination } = useTablePagination(
+  pick(getProps.value, "paginationProps")
+);
 
 const {
   isLoading,
   tableDatas,
-  tableSchemas,
+  getTableSchemas,
   query,
   reQuery,
   getRequestParams,
@@ -257,7 +256,7 @@ const {
 const { searchSlots, tableHeaderSlots, tableCellSlots } = useTableSlots(
   computed(() => ({
     searchSchemas: getSearchSchemas.value,
-    tableSchemas: tableSchemas.value,
+    tableSchemas: getTableSchemas.value,
   })),
   {
     slots,
@@ -280,7 +279,7 @@ const {
   getSelectedIds,
   checkHasSelection,
   validateHasSelection,
-} = useTableSelection(getProps, { slots });
+} = useTableSelection();
 
 const tableMethods: TableMethods = {
   setProps,

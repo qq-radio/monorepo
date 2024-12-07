@@ -4,7 +4,7 @@ import { ref, unref } from "vue";
 
 type RadioValue = string | number | boolean;
 
-type Props = Required<Pick<BasicTableProps, "rowKey" | "hasRadioSelection">>;
+type Props = PickRequired<BasicTableProps, "rowKey" | "hasRadioSelection">;
 
 export type UseTableRadioSelectionReturn = ReturnType<
   typeof useTableRadioSelection
@@ -28,12 +28,12 @@ export function useTableRadioSelection(props: Props) {
       return;
     }
     radioSelectedRow.value = row;
-    setRadioSelectedValue(row[props.rowKey]);
+    setRadioSelectedValue(row[props.rowKey || "id"]);
   }
 
   function setRadioSelectedRow(row: Recordable) {
     radioSelectedRow.value = row;
-    setRadioSelectedValue(row[props.rowKey]);
+    setRadioSelectedValue(row[props.rowKey || "id"]);
   }
 
   function getRadioSelectedRow() {

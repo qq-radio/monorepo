@@ -1,9 +1,9 @@
-import type { UseTableSelection } from "../types";
-
 import { ref, computed, unref } from "vue";
 import { ElMessage } from "element-plus";
 
-export const useTableSelection: UseTableSelection = () => {
+export type UseTableSelectionReturn = ReturnType<typeof useTableSelection>;
+
+export const useTableSelection = () => {
   const selectedRows = ref<Array<Recordable>>([]);
 
   const selectedIds = computed<Array<number | string>>(() =>

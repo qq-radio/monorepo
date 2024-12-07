@@ -11,7 +11,7 @@ export interface BasicSelectProps {
   valueField?: string;
   formatter?: (option: any) => any;
 
-  render?: Render;
+  render?: () => RenderType;
 }
 
 export interface BasicSelectEmits {
@@ -39,7 +39,7 @@ export interface SelectOption {
   value: string | number;
   disabled?: boolean;
 
-  customRender?: Render;
+  customRender?: () => RenderType;
   customSlot?: string;
 }
 

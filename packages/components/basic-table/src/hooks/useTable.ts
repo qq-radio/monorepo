@@ -1,10 +1,14 @@
-import type { UseTable, BasicTableProps, TableMethods } from "../types";
+import type { BasicTableProps, TableMethods } from "../types";
 
 import { ErrorMessages, BasicComponentError } from "@center/components/error";
 
 import { ref, unref, watch, onUnmounted } from "vue";
 
-export const useTable: UseTable = (props) => {
+type Props = Partial<BasicTableProps>;
+
+export type UseTableReturn = [(instance: TableMethods) => void, TableMethods];
+
+export const useTable = (props: Props) => {
   const instanceRef = ref<Nullable<TableMethods>>(null);
 
   function getInstance() {

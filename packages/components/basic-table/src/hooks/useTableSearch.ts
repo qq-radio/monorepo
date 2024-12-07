@@ -1,12 +1,20 @@
-import type { UseTableSearch, TableSchema } from "../types";
+import type { BasicTableProps, TableSchema } from "../types";
+import type {
+  BasicFormProps,
+  FormSchema,
+} from "@center/components/basic-form/src/types";
 
-import type { FormSchema } from "@center/components/basic-form/src/types";
-
-import { ref, computed } from "vue";
+import { ref, computed, ComputedRef } from "vue";
 import { merge, isArray, isObject } from "lodash";
 
-export const useTableSearch: UseTableSearch = (getProps) => {
-  const getSearchProps = computed(() => {
+type Props = ComputedRef<
+  Pick<BasicTableProps, "searchProps" | "searchSchemas" | "schemas">
+>;
+
+export type UseTableSearchReturn = ReturnType<typeof useTableSearch>;
+
+export function useTableSearch(getProps: Props) {
+  const getSearchProps = computed<Partial<BasicFormProps>>(() => {
     return merge(
       {
         labelWidth: 80,
@@ -19,11 +27,12 @@ export const useTableSearch: UseTableSearch = (getProps) => {
     );
   });
 
-  const getSearchSchemas = computed(() =>
-    isArray(getProps.value.searchSchemas)
-      ? getProps.value.searchSchemas
-      : normalizeSearchSchemas(getProps.value.schemas)
-  );
+  const getSearchSchemas = computed(() => {
+    const { searchSchemas, schemas } = getProps.value;
+    return isArray(searchSchemas)
+      ? searchSchemas
+      : normalizeSearchSchemas(schemas);
+  });
 
   const searchParams = ref<Recordable>({});
 
@@ -32,32 +41,38 @@ export const useTableSearch: UseTableSearch = (getProps) => {
     getSearchSchemas,
     searchParams,
   };
-};
+}
 
 function normalizeSearchSchemas(schemas: TableSchema[]) {
   const searchSchemas: FormSchema[] = [];
 
   schemas
-    .filter((item) => item.searchable || isObject(item.searchConfig))
+    .filter((item) => item.searchable === true || isObject(item.searchConfig))
     .forEach((item) => {
       if (item.searchable) {
-        searchSchemas.push({
-          label: item.label,
-          prop: item.prop,
-          component: "input",
-        });
-      } else {
-        searchSchemas.push({
-          ...item.searchConfig,
-          label: item.searchConfig?.label || item.label,
-          prop: item.searchConfig?.prop || item.prop,
-        });
+        const label = item.label || "";
+        const prop = item.prop;
+        if (prop) {
+          searchSchemas.push({
+            label,
+            prop,
+            component: "input",
+          });
+        }
+        return;
+      }
+      if (item.searchConfig) {
+        const label = item.searchConfig.label || item.label || "";
+        const prop = item.searchConfig.prop || item.prop;
+        if (prop) {
+          searchSchemas.push({
+            ...item.searchConfig,
+            label,
+            prop,
+          });
+        }
       }
     });
-
-  if (!searchSchemas.length) {
-    return [];
-  }
 
   return searchSchemas;
 }

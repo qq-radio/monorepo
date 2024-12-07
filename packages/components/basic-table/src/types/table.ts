@@ -1,8 +1,4 @@
-import type {
-  TableHeaderCallbackParams,
-  TableCellCallbackParams,
-  TableMethods,
-} from "./";
+import type { TableHeaderCallbackParams, TableCellCallbackParams } from "./";
 import type {
   BasicFormProps,
   FormSchema,
@@ -13,6 +9,11 @@ import type {
 } from "@center/components/basic-button-group";
 import { DisplayType } from "@center/components/basic-display";
 import type { Page } from "@center/components/basic-pagination";
+
+import type { UseTableDataReturn } from "../hooks/useTableData";
+import type { UseTableSelectionReturn } from "../hooks/useTableSelection";
+import type { UseTableRadioSelectionReturn } from "../hooks/useTableRadioSelection";
+
 import type { ComputedRef } from "vue";
 import type { PaginationProps, TableColumnCtx } from "element-plus";
 
@@ -94,4 +95,20 @@ export interface TableSchema {
   display?: DisplayType;
   displayProps?: Recordable;
   displaySlots?: Recordable;
+}
+
+export interface TableMethods
+  extends Pick<UseTableDataReturn, "reQuery" | "getRequestParams">,
+    Pick<
+      UseTableSelectionReturn,
+      | "getSelectedRows"
+      | "getSelectedIds"
+      | "checkHasSelection"
+      | "validateHasSelection"
+    >,
+    Pick<
+      UseTableRadioSelectionReturn,
+      "setRadioSelectedRow" | "getRadioSelectedRow" | "clearRadioSelectedRow"
+    > {
+  setProps: (props: Partial<BasicTableProps>) => void;
 }

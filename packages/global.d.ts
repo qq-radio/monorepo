@@ -1,23 +1,23 @@
-import type { VNode } from "vue";
+import type { VNode, Component } from "vue";
 
 declare global {
-  declare interface Recordable<T = any> {
-    [key: string]: T;
-  }
-
-  declare type Nullable<T> = T | null;
-
-  declare type Arrayable<T> = T | T[];
-
-  declare type Render = (params: any) => VNode;
-
-  declare type MakeRequired<T, K extends keyof T> = Omit<T, K> &
-    Required<Pick<T, K>>;
-
-  declare type PartialRequired<T, K extends keyof T> = Partial<T> &
-    Required<Pick<T, K>>;
-
   type RenderType = string | VNode | Component;
+
+  type Nullable<T> = T | null;
+
+  type Recordable<T = any> = {
+    [key: string]: T;
+  };
+
+  type Arrayable<T> = T | T[];
+
+  type PickPartial<T, PartialKeys extends keyof T> = {
+    [K in PartialKeys]?: T[K];
+  };
+
+  type PickRequired<T, PartialKeys extends keyof T> = {
+    [K in PartialKeys]: T[K];
+  };
 
   type RequiredAndOptional<
     T,
@@ -29,7 +29,7 @@ declare global {
     [K in OptionalKeys]?: T[K];
   };
 
-  type PickPartial<T, PartialKeys extends keyof T> = {
-    [K in PartialKeys]?: T[K];
+  type PartialRequired<T, K extends keyof T> = Omit<T, K> & {
+    [P in K]-?: T[P];
   };
 }

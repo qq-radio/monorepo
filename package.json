@@ -14,6 +14,7 @@
     "@center/components": "workspace:*",
     "@center/composables": "workspace:*",
     "@element-plus/icons-vue": "^2.3.1",
+    "@types/lodash": "^4.17.13",
     "@vueuse/core": "^11.0.3",
     "element-plus": "2.3.5",
     "lodash-es": "^4.17.21",

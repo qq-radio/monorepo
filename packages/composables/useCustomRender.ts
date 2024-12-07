@@ -1,4 +1,4 @@
-import { Slots, VNode, Component } from "vue";
+import { Slots, VNode } from "vue";
 import { isFunction } from "lodash";
 
 type UseCustomRender = (context: {
@@ -8,15 +8,13 @@ type UseCustomRender = (context: {
   renderItem: RenderItem;
 };
 
-type Render = (() => string | VNode) | Component;
-
 type RenderItem = (
   item: {
-    customRender?: Function;
+    customRender?: (...arg: any[]) => RenderType;
     customSlot?: string;
   },
   callbackParams?: { [key: string]: any }
-) => Render;
+) => () => RenderType;
 
 export const useCustomRender: UseCustomRender = (context) => {
   const { render, slots } = context;

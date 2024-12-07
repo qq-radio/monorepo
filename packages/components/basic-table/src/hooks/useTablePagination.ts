@@ -1,14 +1,16 @@
-import type { UseTablePagination } from "../types";
+import type { BasicTableProps } from "../types";
 import type { Page } from "@center/components/basic-pagination";
 
 import { ref, computed, unref } from "vue";
 import { merge } from "lodash";
 
-export const useTablePagination: UseTablePagination = (getProps) => {
-  const { paginationProps } = getProps.value;
+type Props = PickPartial<BasicTableProps, "paginationProps">;
 
+export type UseTablePaginationReturn = ReturnType<typeof useTablePagination>;
+
+export function useTablePagination(props: Props) {
   const getPaginationProps = computed(() => {
-    return merge({}, paginationProps);
+    return merge({}, props.paginationProps);
   });
 
   const page = ref<Page>({
@@ -26,4 +28,4 @@ export const useTablePagination: UseTablePagination = (getProps) => {
     getPaginationProps,
     setPagination,
   };
-};
+}
