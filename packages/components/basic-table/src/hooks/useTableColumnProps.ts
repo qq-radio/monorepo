@@ -6,7 +6,7 @@ import type { TableColumnCtx } from "element-plus";
 
 import { computed } from "vue";
 
-type Props = PickPartial<
+type Props = Pick<
   BasicTableProps,
   | "radioSelectionColumnProps"
   | "selectionColumnProps"

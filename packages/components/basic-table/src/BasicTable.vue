@@ -7,9 +7,6 @@
         v-model="searchParams"
         :schemas="getSearchSchemas"
         :loading="isLoading"
-        submitText="查询"
-        labelPosition="left"
-        hasFooter
         @submit="reQuery"
         @reset="reQuery"
       >
@@ -154,7 +151,7 @@ import { useTableSelection } from "./hooks/useTableSelection";
 import { useTablePagination } from "./hooks/useTablePagination";
 
 import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
-import { pick } from "lodash";
+import { pick, merge } from "lodash";
 
 import { BasicForm } from "@center/components/basic-form";
 import { BasicButtonGroup } from "@center/components/basic-button-group";
@@ -176,21 +173,18 @@ const emit = defineEmits<BasicTableEmits>();
 
 const props = withDefaults(defineProps<BasicTableProps>(), {
   schemas: () => [],
-  extraParams: () => ({}),
   immediate: true,
   loading: false,
-  ellipsis: false,
-  rowKey: "id",
+});
+
+const getProps = computed<BasicTableProps>(() => {
+  return merge(props, unref(propsRef));
 });
 
 const propsRef = ref<Partial<BasicTableProps>>();
 
-const getProps = computed<BasicTableProps>(() => {
-  return { ...props, ...unref(propsRef) };
-});
-
 function setProps(partialProps: Partial<BasicTableProps>) {
-  propsRef.value = { ...unref(propsRef), ...partialProps };
+  propsRef.value = merge(unref(propsRef), partialProps);
 }
 
 const defaultAttrs = {
@@ -203,24 +197,14 @@ const defaultAttrs = {
 const getBindValues = computed(() => ({
   ...defaultAttrs,
   ...attrs,
-  ...pick(getProps.value, [
-    "rowKey",
-    "hasRadioSelection",
-    "radioSelectionColumnProps",
-    "hasSelection",
-    "selectionColumnProps",
-    "hasIndex",
-    "indexColumnProps",
-    "hasExpand",
-    "expandColumnProps",
-    "actionColumnProps",
-    "actionProps",
-    "actions",
-  ]),
+  rowKey: getProps.value.rowKey || "id",
 }));
 
-const { getSearchProps, getSearchSchemas, searchParams } =
-  useTableSearch(getProps);
+const { getSearchProps, getSearchSchemas, searchParams } = useTableSearch(
+  computed(() =>
+    pick(getProps.value, ["searchProps", "searchSchemas", "schemas"])
+  )
+);
 
 const { getPaginationProps, page, setPagination } = useTablePagination(
   pick(getProps.value, "paginationProps")
@@ -233,7 +217,20 @@ const {
   query,
   reQuery,
   getRequestParams,
-} = useTableData(getProps, { searchParams, page, setPagination });
+} = useTableData(
+  computed(() =>
+    pick(getProps.value, [
+      "schemas",
+      "request",
+      "extraParams",
+      "paramsFormatter",
+      "immediate",
+      "data",
+      "dataFormatter",
+    ])
+  ),
+  { searchParams, page, setPagination }
+);
 
 const {
   getRadioSelectionColumnProps,
@@ -269,9 +266,10 @@ const {
   setRadioSelectedRow,
   getRadioSelectedRow,
   clearRadioSelectedRow,
-} = useTableRadioSelection(
-  pick(getBindValues.value, "rowKey", "hasRadioSelection")
-);
+} = useTableRadioSelection({
+  rowKey: getBindValues.value.rowKey,
+  hasRadioSelection: getProps.value.hasRadioSelection,
+});
 
 const {
   handleSelectionChange,

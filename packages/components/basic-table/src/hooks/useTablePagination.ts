@@ -4,7 +4,7 @@ import type { Page } from "@center/components/basic-pagination";
 import { ref, computed, unref } from "vue";
 import { merge } from "lodash";
 
-type Props = PickPartial<BasicTableProps, "paginationProps">;
+type Props = Pick<BasicTableProps, "paginationProps">;
 
 export type UseTablePaginationReturn = ReturnType<typeof useTablePagination>;
 

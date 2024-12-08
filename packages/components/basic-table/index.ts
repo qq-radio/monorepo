@@ -2,4 +2,8 @@ export * from "./src/types";
 
 export { useTable } from "./src/hooks/useTable";
 
-export { default as BasicTable } from "./src/BasicTable.vue";
+import ComponentFile from "./src/BasicTable.vue";
+
+export type BasicTableInstance = InstanceType<typeof ComponentFile>;
+
+export const BasicTable = ComponentFile;

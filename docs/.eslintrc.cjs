@@ -45,5 +45,6 @@ module.exports = {
       },
     ],
     "vue/attributes-order": ["error"],
+    "vue/multi-word-component-names": ["warn"],
   },
 };

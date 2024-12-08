@@ -19,28 +19,35 @@ import type { PaginationProps, TableColumnCtx } from "element-plus";
 
 export interface BasicTableProps {
   schemas: TableSchema[];
-  searchSchemas?: FormSchema[];
-  data?: Array<Recordable>;
+
+  // for table search
   request?: (params: Recordable) => Promise<{
     records: Array<Recordable>;
     total: number;
   }>;
   extraParams?: Recordable;
   paramsFormatter?: (params: Recordable) => Recordable;
-  dataFormatter?: (tableDatas: Array<Recordable>) => Array<Recordable>;
-  rowKey?: string;
+  searchSchemas?: FormSchema[];
+  searchProps?: Partial<BasicFormProps>;
   immediate?: boolean;
   loading?: boolean;
-  ellipsis?: boolean;
 
-  searchProps?: Partial<BasicFormProps>;
+  // for table data
+  data?: Array<Recordable>;
+  dataFormatter?: (tableDatas: Array<Recordable>) => Array<Recordable>;
+
+  // for table pagination
   paginationProps?: Partial<PaginationProps>;
 
+  // for table operation
+  operations?: Button[];
   operationProps?: Pick<
     BasicButtonGroupProps,
     "confirmType" | "showNumber" | "callbackParams" | "buttonProps"
   >;
-  operations?: Button[];
+
+  // for table special column
+  rowKey?: string;
 
   hasRadioSelection?: boolean;
   radioSelectionColumnProps?: Partial<TableColumnCtx<any>>;
@@ -54,19 +61,21 @@ export interface BasicTableProps {
   hasExpand?: boolean;
   expandColumnProps?: Partial<TableColumnCtx<any>>;
 
+  actions?: Button[];
   actionColumnProps?: Partial<TableColumnCtx<any>>;
   actionProps?: Pick<
     BasicButtonGroupProps,
     "confirmType" | "showNumber" | "callbackParams" | "buttonProps"
   >;
-  actions?: Button[];
 }
 
 export interface BasicTableEmits {
   (e: "register", methods: TableMethods): void;
   (e: "search", params: Recordable): void;
+  (e: "search-params-change", params: Recordable): void;
   (e: "reset", params: Recordable): void;
   (e: "pagination-change", page: Page): void;
+  (e: "request-success", tableDatas: Array<Recordable>): void;
   (e: "request-error", error: unknown): void;
   (e: "request-complete", tableDatas: Array<Recordable>): void;
 }
@@ -79,17 +88,18 @@ export interface TableSchema {
   fixed?: "left" | "right" | boolean;
   visible?: boolean | ComputedRef<boolean>;
   formatter?: (params: TableCellCallbackParams) => any;
+  columnProps?: Partial<TableColumnCtx<any>>;
 
+  // for column search
   searchable?: boolean;
   searchConfig?: FormSchema;
 
-  columnProps?: Partial<TableColumnCtx<any>>;
-  columnSlots?: Recordable;
-
+  // for column header
   headerTooltip?: string;
   customHeaderRender?: (params: TableHeaderCallbackParams) => RenderType;
   customHeaderSlot?: string;
 
+  // for column cell
   customRender?: (params: TableCellCallbackParams) => RenderType;
   customSlot?: string;
   display?: DisplayType;

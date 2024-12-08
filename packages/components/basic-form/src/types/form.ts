@@ -5,7 +5,6 @@ import type {
 import type { UseFormSelfReturn } from "../hooks/useFormSelf";
 import type { UseFormEventReturn } from "../hooks/useFormEvent";
 
-import type { VNode } from "vue";
 import type {
   RowProps,
   ColProps,

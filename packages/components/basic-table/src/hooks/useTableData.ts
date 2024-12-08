@@ -6,15 +6,15 @@ import { ref, computed, watch, unref, onMounted } from "vue";
 import { isFunction, cloneDeep, isArray, merge } from "lodash";
 
 type Props = ComputedRef<
-  PickPartial<
+  Pick<
     BasicTableProps,
-    | "data"
     | "schemas"
+    | "request"
     | "extraParams"
     | "paramsFormatter"
-    | "dataFormatter"
-    | "request"
     | "immediate"
+    | "data"
+    | "dataFormatter"
   >
 >;
 
@@ -50,7 +50,7 @@ export function useTableData(getProps: Props, context: Context) {
   );
 
   const getRequestParams = (): Recordable => {
-    const { extraParams, paramsFormatter } = getProps.value;
+    const { extraParams = {}, paramsFormatter } = getProps.value;
 
     const params = {
       ...extraParams,

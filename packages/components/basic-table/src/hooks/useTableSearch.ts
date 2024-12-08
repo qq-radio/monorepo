@@ -3,8 +3,9 @@ import type {
   BasicFormProps,
   FormSchema,
 } from "@center/components/basic-form/src/types";
+import type { ComputedRef } from "vue";
 
-import { ref, computed, ComputedRef } from "vue";
+import { ref, computed, watch } from "vue";
 import { merge, isArray, isObject } from "lodash";
 
 type Props = ComputedRef<
@@ -22,6 +23,8 @@ export function useTableSearch(getProps: Props) {
         colProps: {
           span: 8,
         },
+        submitText: "查询",
+        hasFooter: true,
       },
       getProps.value.searchProps
     );
@@ -35,6 +38,14 @@ export function useTableSearch(getProps: Props) {
   });
 
   const searchParams = ref<Recordable>({});
+
+  watch(
+    () => searchParams.value,
+    () => {
+      // emit("search-params-change", params);
+    },
+    { immediate: true, deep: true }
+  );
 
   return {
     getSearchProps,

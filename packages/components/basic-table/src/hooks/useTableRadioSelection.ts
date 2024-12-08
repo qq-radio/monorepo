@@ -4,7 +4,7 @@ import { ref, unref } from "vue";
 
 type RadioValue = string | number | boolean;
 
-type Props = PickRequired<BasicTableProps, "rowKey" | "hasRadioSelection">;
+type Props = Pick<BasicTableProps, "rowKey" | "hasRadioSelection">;
 
 export type UseTableRadioSelectionReturn = ReturnType<
   typeof useTableRadioSelection

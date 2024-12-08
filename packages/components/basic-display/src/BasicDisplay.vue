@@ -20,7 +20,7 @@ defineOptions({
 });
 
 withDefaults(defineProps<BasicDisplayProps>(), {
-  displayProps: {},
-  displaySlots: {},
+  displayProps: () => ({}),
+  displaySlots: () => ({}),
 });
 </script>

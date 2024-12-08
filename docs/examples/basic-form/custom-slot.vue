@@ -19,12 +19,12 @@
         </template>
         <template #movie>
           <BasicCheckboxGroup
-            :options="movieOptions"
             v-model="formModel.movie"
+            :options="movieOptions"
           />
         </template>
         <template #music>
-          <BasicSelect :options="musicOptions" v-model="formModel.music" />
+          <BasicSelect v-model="formModel.music" :options="musicOptions" />
         </template>
       </BasicForm>
     </el-collapse-item>

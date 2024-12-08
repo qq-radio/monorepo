@@ -1,14 +1,14 @@
 <template>
   <el-select
-    :class="ns.b()"
     v-bind="getBindValues"
     v-model="stateValue"
+    :class="ns.b()"
     @change="handleChange"
   >
     <el-checkbox
-      :class="ns.e('check-all')"
       v-if="hasCheckAll"
       v-model="isCheckAll"
+      :class="ns.e('check-all')"
       :indeterminate="isIndeterminate"
       style=""
       @change="handleCheckAllChange"
@@ -22,8 +22,8 @@
         :disabled="item.disabled"
       >
         <component
-          v-if="isFunction(item.customRender)"
           :is="item.customRender(getCallbackParams(item))"
+          v-if="isFunction(item.customRender)"
         />
         <slot
           v-else-if="isString(item.customSlot)"
@@ -31,8 +31,8 @@
           v-bind="getCallbackParams(item)"
         />
         <component
-          v-else-if="isFunction(render)"
           :is="render(getCallbackParams(item))"
+          v-else-if="isFunction(render)"
         />
         <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
         <span v-else>{{ item.label }}</span>

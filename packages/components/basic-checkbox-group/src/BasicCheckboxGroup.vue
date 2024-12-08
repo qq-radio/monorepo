@@ -24,8 +24,8 @@
         :size="item.size"
       >
         <component
-          v-if="isFunction(item.customRender)"
           :is="item.customRender(getCallbackParams(item))"
+          v-if="isFunction(item.customRender)"
         />
         <slot
           v-else-if="isString(item.customSlot)"
@@ -33,8 +33,8 @@
           v-bind="getCallbackParams(item)"
         />
         <component
-          v-else-if="isFunction(render)"
           :is="render(getCallbackParams(item))"
+          v-else-if="isFunction(render)"
         />
         <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
         <span v-else>{{ item.label }}</span>
