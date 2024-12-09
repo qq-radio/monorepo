@@ -8,7 +8,7 @@
         :disabled="item.disabled"
         :border="item.border"
         :size="item.size"
-        @click.native.prevent="handleClick(item)"
+        @click.prevent="handleClick(item)"
       >
         <component
           :is="item.customRender(getCallbackParams(item))"

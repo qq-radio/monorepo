@@ -9,7 +9,7 @@ export interface BasicRadioGroupProps {
   valueField?: string;
   formatter?: (option: any) => any;
 
-  render?: () => RenderType;
+  render?: (params: RadioCallbackParams) => RenderType;
 }
 
 export interface BasicRadioGroupEmits {
@@ -34,7 +34,7 @@ export interface RadioOption {
   size?: "large" | "default" | "small";
 
   isButton?: boolean;
-  customRender?: () => RenderType;
+  customRender?: (params: RadioCallbackParams) => RenderType;
   customSlot?: string;
 }
 

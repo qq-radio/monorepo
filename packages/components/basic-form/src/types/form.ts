@@ -56,7 +56,7 @@ export interface BasicFormEmits {
 export interface FormSchema {
   // 分组表单
   title?: string;
-  customTitleRender?: () => RenderType;
+  customTitleRender?: (params: FormItemCallbackParams) => RenderType;
   customTitleSlot?: string;
   titleTooltip?: string;
   titleProps?: Recordable;
@@ -75,7 +75,7 @@ export interface FormSchema {
   formItemProps?: Partial<Mutable<FormItemProps>>;
 
   // 表单项 - label
-  customLabelRender?: () => RenderType;
+  customLabelRender?: (params: FormItemCallbackParams) => RenderType;
   customLabelSlot?: string;
   labelTooltip?: string;
 
@@ -87,7 +87,7 @@ export interface FormSchema {
   componentSlots?: Recordable;
   componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
-  customRender?: () => RenderType;
+  customRender?: (params: FormItemCallbackParams) => RenderType;
   customSlot?: string;
 
   // 表单项 - rules
@@ -131,8 +131,6 @@ export type ComponentType = ElementPlusComponentType | CustomComponentType;
 
 type TimeRangeMapFields = [string, string];
 
-export type CustomSlot = { [slotName: string]: (params?: any) => RenderType };
-
 export type ComponentProps = {
   placeholder?: string;
   extraFields?: string[][];
@@ -142,7 +140,7 @@ export type ComponentProps = {
 
 export interface FormGroup {
   title: string;
-  customTitleRender?: () => RenderType;
+  customTitleRender?: (params: FormItemCallbackParams) => RenderType;
   customTitleSlot?: string;
 }
 
