@@ -37,12 +37,12 @@ basic-form/passing-props
 basic-form/passing-slots
 :::
 
-## 隐藏
+## 显示与隐藏
 
-您可以通过`hidden`设置表单项是否隐藏
+您可以通过`visible`设置表单项显示与隐藏
 
 :::demo
-basic-form/hidden
+basic-form/visible
 :::
 
 ## 禁用

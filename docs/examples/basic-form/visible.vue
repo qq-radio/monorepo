@@ -16,7 +16,7 @@ import { ref } from "vue";
 
 const activeNames = ref(["example"]);
 
-const formModel = ref({
+const formModel = ref<Recordable>({
   username: "李华",
 });
 
@@ -47,7 +47,7 @@ const formSchemas: FormSchema[] = [
         { label: "华为", value: "huawei" },
       ],
     },
-    hidden: ({ model }) => !model.gift || model.gift === "computer",
+    visible: ({ model }) => model.gift || model.gift === "phone",
   },
   {
     label: "电脑品牌",
@@ -60,7 +60,9 @@ const formSchemas: FormSchema[] = [
         { label: "戴尔", value: "dell" },
       ],
     },
-    hidden: ({ model }) => !model.gift || model.gift === "phone",
+    visible: computed(
+      () => formModel.value.gift || formModel.value.gift === "computer"
+    ),
   },
 ];
 </script>

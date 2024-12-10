@@ -18,14 +18,14 @@ export interface BasicCheckboxGroupEmits {
   (
     e: "change",
     params: {
-      labels: string[];
-      values: CheckboxValue;
-      options: CheckboxOption[];
+      labels?: string[];
+      values?: CheckboxValue;
+      options?: CheckboxOption[];
     }
   ): void;
 }
 
-export type CheckboxValue = (string | number)[];
+export type CheckboxValue = (string | number | boolean)[];
 
 export interface CheckboxOption {
   label: string;
@@ -40,7 +40,7 @@ export interface CheckboxOption {
 }
 
 export interface CheckboxCallbackParams {
-  labels: string[];
-  values: CheckboxValue;
+  labels?: string[];
+  values?: CheckboxValue;
   option: CheckboxOption;
 }

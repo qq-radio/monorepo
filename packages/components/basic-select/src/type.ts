@@ -19,20 +19,14 @@ export interface BasicSelectEmits {
   (
     e: "change",
     params: {
-      labels: string[];
-      values: SelectValue;
-      options: SelectOption[];
+      labels?: string[];
+      values?: SelectValue;
+      options?: SelectOption | SelectOption[];
     }
   ): void;
 }
 
-export type SelectValue =
-  | undefined
-  | string
-  | number
-  | boolean
-  | string[]
-  | number[];
+export type SelectValue = any;
 
 export interface SelectOption {
   label: string;
@@ -44,7 +38,7 @@ export interface SelectOption {
 }
 
 export interface SelectCallbackParams {
-  labels: string[];
-  values: SelectValue;
+  labels?: string[];
+  values?: SelectValue;
   option: SelectOption;
 }

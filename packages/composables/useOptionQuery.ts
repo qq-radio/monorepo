@@ -1,35 +1,22 @@
-import type { Ref, UnwrapRef } from "vue";
-
 import { ref } from "vue";
-import {
-  isArray,
-  isFunction,
-  getValue,
-  mapObjectArrayFields,
-} from "@center/utils";
+import { isArray, isFunction, get } from "lodash";
+import { mapObjectArrayFields } from "@center/utils";
 
-export type Value = undefined | string | number;
-
-export interface Option {
+type Option = {
   label: string;
-  value: Value;
-}
+  value: string | number | boolean;
+};
 
-export function useOptionQuery<T extends Option>(props: {
-  options?: Recordable[];
+type Props<T> = {
+  options?: T[];
   api?: () => Promise<any>;
   resultField?: string;
   labelField?: string;
   valueField?: string;
   formatter?: (option: any) => any;
-}): {
-  options: Ref<UnwrapRef<T[]> | T[]>;
-  init: () => void;
-  findLabel: (value: Value) => string | undefined;
-  findOptions: (values: Value[]) => Option[];
-  findLabels: (values?: Value[]) => string[];
-  findValues: (values?: string[]) => Value[];
-} {
+};
+
+export function useOptionQuery<T extends Option>(props: Props<T>) {
   const options = ref<T[]>([]);
 
   const init = async () => {
@@ -51,7 +38,7 @@ export function useOptionQuery<T extends Option>(props: {
   const normalizeOptions = (result) => {
     const { resultField, labelField, valueField, formatter } = props;
 
-    let list = resultField ? getValue(result, resultField) : result;
+    let list = resultField ? get(result, resultField) : result;
 
     if (!isArray(list)) {
       return [];
@@ -75,19 +62,19 @@ export function useOptionQuery<T extends Option>(props: {
 
   const getAllValues = () => options.value.map((i) => i.value) || [];
 
-  const findOption = (value: Value) => {
+  const findOption = (value) => {
     return options.value.find((option) => option.value === value);
   };
 
-  const findLabel = (value: Value) => findOption(value)?.label;
+  const findLabel = (value) => findOption(value)?.label;
 
-  const findOptions = (values: Value[]) =>
+  const findOptions = (values) =>
     options.value.filter((option) => values.includes(option.value));
 
-  const findLabels = (values: Value[]) =>
+  const findLabels = (values) =>
     values?.length ? findOptions(values).map((i) => i.label) : [];
 
-  const findValues = (labels: string[]) =>
+  const findValues = (labels) =>
     labels?.length
       ? options.value
           .filter((option) => labels.includes(option.label))

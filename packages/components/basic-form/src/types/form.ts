@@ -12,18 +12,19 @@ import type {
   FormItemRule,
 } from "element-plus";
 import type { Mutable } from "element-plus/es/utils";
+import type { MaybeRefOrGetter } from "vue";
 
 export interface BasicFormProps {
   modelValue?: Recordable;
   schemas?: Array<FormGroup | FormSchema>;
   loading?: boolean;
-  disabled?: boolean;
+  disabled?: MaybeRefOrGetter<boolean>;
 
   rowProps?: Partial<Mutable<RowProps>>;
   colProps?: Partial<Mutable<ColProps>>;
   titleColProps?: Partial<Mutable<ColProps>>;
   buttonColProps?: Partial<Mutable<ColProps>>;
-  formItemProps?: Partial<Mutable<FormItemProps>>;
+  itemProps?: Partial<Mutable<FormItemProps>>;
 
   hasLabel?: boolean;
   labelSuffix?: string;
@@ -68,11 +69,15 @@ export interface FormSchema {
   hasLabel?: boolean;
   labelWidth?: string | number;
   sort?: number;
-  hidden?: boolean | ((parmas: FormItemCallbackParams) => boolean);
-  disabled?: boolean | ((parmas: FormItemCallbackParams) => boolean);
+  visible?:
+    | MaybeRefOrGetter<boolean>
+    | ((parmas: FormItemCallbackParams) => boolean);
+  disabled?:
+    | MaybeRefOrGetter<boolean>
+    | ((parmas: FormItemCallbackParams) => boolean);
   colProps?: Partial<Mutable<ColProps>>;
   titleColProps?: Partial<Mutable<ColProps>>;
-  formItemProps?: Partial<Mutable<FormItemProps>>;
+  itemProps?: Partial<Mutable<FormItemProps>>;
 
   // 表单项 - label
   customLabelRender?: (params: FormItemCallbackParams) => RenderType;

@@ -19,7 +19,7 @@ type FormProps = Pick<
   BasicFormProps,
   | "colProps"
   | "titleColProps"
-  | "formItemProps"
+  | "itemProps"
   | "disabled"
   | "hasLabel"
   | "labelSuffix"

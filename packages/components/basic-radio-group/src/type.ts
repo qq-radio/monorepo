@@ -17,9 +17,9 @@ export interface BasicRadioGroupEmits {
   (
     e: "change",
     params: {
-      label: string;
-      value: RadioValue;
-      option: RadioOption;
+      label?: string;
+      value?: RadioValue;
+      option?: RadioOption;
     }
   ): void;
 }
@@ -39,7 +39,7 @@ export interface RadioOption {
 }
 
 export interface RadioCallbackParams {
-  label: string;
-  value: RadioValue;
+  label?: string;
+  value?: RadioValue;
   option: RadioOption;
 }

@@ -4,7 +4,6 @@ import type {
   ImportConfig,
 } from "@center/components/basic-import";
 import type { ExportConfig } from "@center/components/basic-export";
-import type { Recordable } from "../../../global.d.ts";
 
 import type { Ref, ComputedRef } from "vue";
 

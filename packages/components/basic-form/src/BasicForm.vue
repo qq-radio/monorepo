@@ -70,7 +70,7 @@ const props = withDefaults(defineProps<BasicFormProps>(), {
     justify: "start",
   }),
   colProps: () => ({ span: 24 }),
-  formItemProps: () => ({}),
+  itemProps: () => ({}),
 
   hasLabel: true,
   labelSuffix: ":",
@@ -111,20 +111,17 @@ const getBindValues = computed(() => {
   };
 });
 
-const formProps = computed(() => {
-  const partialProps = pick(
+const formProps = computed(() =>
+  pick(
     getProps.value,
     "disabled",
-    "formItemProps",
+    "itemProps",
     "colProps",
     "hasLabel",
     "labelSuffix",
     "labelWidth"
-  );
-  return {
-    ...partialProps,
-  };
-});
+  )
+);
 
 const formInstance = ref();
 

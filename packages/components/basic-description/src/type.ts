@@ -1,6 +1,6 @@
 import { DisplayType } from "@center/components/basic-display";
 
-import type { ComputedRef } from "vue";
+import type { MaybeRefOrGetter } from "vue";
 
 export interface BasicDescriptionProps {
   data: Recordable;
@@ -11,7 +11,7 @@ export interface BasicDescriptionProps {
 export interface DescriptionSchema {
   prop: string;
   label: string;
-  visible?: boolean | ComputedRef<boolean>;
+  visible?: MaybeRefOrGetter<boolean>;
   itemProps?: Recordable;
 
   labelTooltip?: string;

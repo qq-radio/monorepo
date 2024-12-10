@@ -95,7 +95,7 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   () => {
-    stateValue.value = props.modelValue;
+    stateValue.value = props.modelValue || [];
     stateLabel.value = findLabels(props.modelValue);
   },
   { immediate: true }
@@ -105,8 +105,8 @@ const getComponent = (isButton?: boolean) =>
   isButton || props.isButton ? "el-checkbox-button" : "el-checkbox";
 
 const getCallbackParams = (item: CheckboxOption): CheckboxCallbackParams => ({
-  labels: stateLabel.value,
   values: stateValue.value,
+  labels: stateLabel.value,
   option: item,
 });
 

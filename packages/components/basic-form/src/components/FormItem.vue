@@ -16,9 +16,9 @@
     </el-col>
   </template>
   <template v-else>
-    <el-col v-if="!getHidden" v-bind="getColProps">
+    <el-col v-if="getVisible" v-bind="getColProps">
       <el-form-item
-        v-bind="formItem.formItemProps"
+        v-bind="formItem.itemProps"
         :label="getLabel"
         :prop="formItem.prop"
         :rules="getRules"
@@ -79,7 +79,7 @@ import { getComponent } from "../tools/component";
 import { normalizeSchema } from "../tools/normalize-schema";
 import { normalizeRule } from "../tools/normalize-rule";
 
-import { useSlots, ref, watchEffect, computed } from "vue";
+import { useSlots, ref, watchEffect, computed, unref } from "vue";
 import { isFunction, isUndefined, merge } from "lodash";
 import { InfoFilled } from "@element-plus/icons-vue";
 
@@ -134,9 +134,12 @@ watchEffect(() => {
   formItem.value = enhanceSchema(props.schemaItem);
 });
 
-const getHidden = computed(() => {
-  const { hidden } = formItem.value;
-  return isFunction(hidden) ? hidden(callbackParams.value) : hidden;
+const getVisible = computed(() => {
+  const { visible } = formItem.value;
+  const isVisible = isFunction(visible)
+    ? visible(callbackParams.value)
+    : unref(visible);
+  return isVisible !== false;
 });
 
 const getTitleColProps = computed(() =>
@@ -163,14 +166,14 @@ const getDisabled = computed(() => {
   const { disabled } = formItem.value;
 
   if (isUndefined(disabled)) {
-    return formDisabled;
+    return unref(formDisabled);
   }
 
   if (isFunction(disabled)) {
     return disabled(callbackParams.value);
   }
 
-  return disabled;
+  return unref(disabled);
 });
 
 const { handleChange } = useFormItemHandler({

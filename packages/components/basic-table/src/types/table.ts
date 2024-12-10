@@ -14,7 +14,7 @@ import type { UseTableDataReturn } from "../hooks/useTableData";
 import type { UseTableSelectionReturn } from "../hooks/useTableSelection";
 import type { UseTableRadioSelectionReturn } from "../hooks/useTableRadioSelection";
 
-import type { ComputedRef } from "vue";
+import type { MaybeRefOrGetter } from "vue";
 import type { PaginationProps, TableColumnCtx } from "element-plus";
 
 export interface BasicTableProps {
@@ -86,7 +86,7 @@ export interface TableSchema {
   width?: string | number;
   minWidth?: string | number;
   fixed?: "left" | "right" | boolean;
-  visible?: boolean | ComputedRef<boolean>;
+  visible?: MaybeRefOrGetter<boolean>;
   formatter?: (params: TableCellCallbackParams) => any;
   columnProps?: Partial<TableColumnCtx<any>>;
 
