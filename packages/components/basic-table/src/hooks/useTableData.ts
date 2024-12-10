@@ -19,7 +19,7 @@ type Props = ComputedRef<
 >;
 
 type Context = {
-  searchParams: Ref<Recordable>;
+  formParams: Ref<Recordable>;
   page: Ref<Page>;
   setPagination: (p: Partial<Page>) => void;
   emit: BasicTableEmits;
@@ -28,7 +28,7 @@ type Context = {
 export type UseTableDataReturn = ReturnType<typeof useTableData>;
 
 export function useTableData(getProps: Props, context: Context) {
-  const { searchParams, page, setPagination, emit } = context;
+  const { formParams, page, setPagination, emit } = context;
 
   const isLoading = ref(false);
 
@@ -55,7 +55,7 @@ export function useTableData(getProps: Props, context: Context) {
 
     const params = {
       ...extraParams,
-      ...searchParams.value,
+      ...formParams.value,
       currentPage: page.value.currentPage,
       pageSize: page.value.pageSize,
     };

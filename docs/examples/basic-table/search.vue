@@ -45,6 +45,7 @@ const schemas: TableSchema[] = [
       label: "用户名",
       prop: "username",
       component: "input",
+      required: true,
     },
   },
   {

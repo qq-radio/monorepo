@@ -4,7 +4,7 @@
       <BasicForm
         v-if="getSearchSchemas?.length"
         v-bind="getSearchProps"
-        v-model="searchParams"
+        v-model="formParams"
         :schemas="getSearchSchemas"
         :loading="isLoading"
         @submit="search"
@@ -200,9 +200,14 @@ const getBindValues = computed(() => ({
   rowKey: getProps.value.rowKey || "id",
 }));
 
-const { getSearchProps, getSearchSchemas, searchParams } = useTableSearch(
+const { getSearchProps, getSearchSchemas, formParams } = useTableSearch(
   computed(() =>
-    pick(getProps.value, ["searchProps", "searchSchemas", "schemas"])
+    pick(getProps.value, [
+      "searchProps",
+      "searchParams",
+      "searchSchemas",
+      "schemas",
+    ])
   ),
   { emit }
 );
@@ -231,7 +236,7 @@ const {
       "dataFormatter",
     ])
   ),
-  { searchParams, page, setPagination, emit }
+  { formParams, page, setPagination, emit }
 );
 
 const {
@@ -282,11 +287,13 @@ const {
 } = useTableSelection();
 
 const search = () => {
+  emit("update:searchParams", formParams.value);
   reQuery();
   emit("search", getRequestParams());
 };
 
 const reset = () => {
+  emit("update:searchParams", formParams.value);
   reQuery();
   emit("reset", getRequestParams());
 };

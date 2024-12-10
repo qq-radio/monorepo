@@ -25,6 +25,7 @@ export interface BasicTableProps {
     records: Array<Recordable>;
     total: number;
   }>;
+  searchParams?: Recordable;
   extraParams?: Recordable;
   paramsFormatter?: (params: Recordable) => Recordable;
   searchSchemas?: FormSchema[];
@@ -73,6 +74,7 @@ export interface BasicTableEmits {
   (e: "register", methods: TableMethods): void;
   (e: "search", params: Recordable): void;
   (e: "search-params-change", params: Recordable): void;
+  (e: "update:searchParams", params: Recordable): void;
   (e: "reset", params: Recordable): void;
   (e: "pagination-change", page: Page): void;
   (e: "request-success", tableDatas: Array<Recordable>): void;

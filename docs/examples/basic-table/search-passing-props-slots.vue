@@ -1,5 +1,6 @@
 <template>
   <BasicTable
+    v-model:searchParams="searchParams"
     :request="userListApi"
     :schemas="schemas"
     :searchProps="{
@@ -13,12 +14,12 @@
       },
     }"
   >
-    <template #search-username="model">
-      <el-input v-model="model.username" placeholder="请输入用户名" />
+    <template #search-username>
+      <el-input v-model="searchParams.username" placeholder="请输入用户名" />
     </template>
-    <template #search-status="model">
+    <template #search-status>
       <BasicSelect
-        v-model="model.status"
+        v-model="searchParams.status"
         :options="statusOptions"
         placeholder="请选择状态"
       />
@@ -44,15 +45,10 @@ const userListApi = (params): Promise<ApiResponse> => {
     response = userListMockData.filter(
       (user) => user.username === username && user.status === status
     );
-  }
-  if (username) {
+  } else if (username) {
     response = userListMockData.filter((user) => user.username === username);
-  }
-  if (status) {
-    response =
-      status === 3
-        ? userListMockData
-        : userListMockData.filter((user) => user.status === status);
+  } else if (status) {
+    response = userListMockData.filter((user) => user.status === status);
   }
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -67,8 +63,9 @@ const userListApi = (params): Promise<ApiResponse> => {
 const statusOptions = [
   { label: "在职中", value: 1 },
   { label: "已离职", value: 2 },
-  { label: "全部", value: 3 },
 ];
+
+const searchParams = ref<any>({});
 
 const schemas: TableSchema[] = [
   {
@@ -100,7 +97,6 @@ const schemas: TableSchema[] = [
       label: "状态",
       prop: "status",
       customSlot: "search-status",
-      defaultValue: 3,
       required: true,
     },
   },

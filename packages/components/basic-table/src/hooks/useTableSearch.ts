@@ -9,7 +9,10 @@ import { ref, computed, watch } from "vue";
 import { merge, isArray, isObject } from "lodash";
 
 type Props = ComputedRef<
-  Pick<BasicTableProps, "searchProps" | "searchSchemas" | "schemas">
+  Pick<
+    BasicTableProps,
+    "searchProps" | "searchParams" | "searchSchemas" | "schemas"
+  >
 >;
 
 type Context = {
@@ -43,12 +46,23 @@ export function useTableSearch(getProps: Props, context: Context) {
       : normalizeSearchSchemas(schemas);
   });
 
-  const searchParams = ref<Recordable>({});
+  const formParams = ref<Recordable>({});
 
   watch(
-    () => searchParams.value,
+    () => getProps.value.searchParams,
+    (searchParams) => {
+      formParams.value = {
+        ...formParams.value,
+        ...searchParams,
+      };
+    },
+    { immediate: true, deep: true }
+  );
+
+  watch(
+    () => formParams.value,
     () => {
-      emit("search-params-change", searchParams.value);
+      emit("search-params-change", formParams.value || {});
     },
     { immediate: true, deep: true }
   );
@@ -56,7 +70,7 @@ export function useTableSearch(getProps: Props, context: Context) {
   return {
     getSearchProps,
     getSearchSchemas,
-    searchParams,
+    formParams,
   };
 }
 
