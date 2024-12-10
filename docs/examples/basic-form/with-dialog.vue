@@ -9,7 +9,8 @@
   </el-collapse>
   <BasicDialog @register="registerDialog" @confirm="submit">
     <BasicForm
-      :model="formModel"
+      v-model="formModel"
+      :disabled="!!formModel.id"
       @register="registerForm"
       @submit="handleSubmit"
     />
@@ -27,7 +28,7 @@ import {
   Button,
 } from "@center/components";
 
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 
 const activeNames = ref(["example"]);
 
@@ -35,7 +36,7 @@ const [registerDialog, { openDialog, setDialogTitle }] = useDialog({
   title: "弹窗表单示例",
 });
 
-const formModel = ref({});
+const formModel = ref<any>({});
 
 const formSchemas: FormSchema[] = [
   {
@@ -100,7 +101,7 @@ const formSchemas: FormSchema[] = [
   },
 ];
 
-const [registerForm, { setProps, submit }] = useForm({
+const [registerForm, { submit, reset }] = useForm({
   schemas: formSchemas,
 });
 
@@ -121,9 +122,12 @@ const detailData = {
 const buttons: Button[] = [
   {
     text: "新增",
-    onClick: () => {
+    onClick: async () => {
       setDialogTitle("新增");
       openDialog();
+      await nextTick();
+      reset();
+      formModel.value = {};
     },
   },
   {
@@ -131,18 +135,18 @@ const buttons: Button[] = [
     onClick: async () => {
       setDialogTitle("编辑");
       openDialog();
+      await nextTick();
+      reset();
       formModel.value = detailData;
     },
   },
   {
     text: "查看详情",
-    onClick: () => {
+    onClick: async () => {
       setDialogTitle("查看详情");
       openDialog();
-      setProps({
-        disabled: true,
-      });
-      formModel.value = detailData;
+      await nextTick();
+      reset();
     },
   },
 ];

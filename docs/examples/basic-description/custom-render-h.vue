@@ -21,23 +21,25 @@ const schemas: DescriptionSchema[] = [
   {
     label: "产品名称",
     prop: "productName",
-    customRender: ({ value }) => h("span", [h(ElIcon, [h(Monitor)]), value]),
+    customRender: ({ value }) =>
+      h("span", [h(ElIcon, () => h(Monitor)), value]),
   },
   {
     label: "价格",
     prop: "price",
     customRender: ({ value }) =>
-      h("span", [h(ElIcon, [h(Money)]), `￥${value.toFixed(2)}`]),
+      h("span", [h(ElIcon, () => h(Money)), `￥${value.toFixed(2)}`]),
   },
   {
     label: "库存数量",
     prop: "stockQuantity",
-    customRender: ({ value }) => h("span", [h(ElIcon, [h(Box)]), `${value}件`]),
+    customRender: ({ value }) =>
+      h("span", [h(ElIcon, () => h(Box)), `${value}件`]),
   },
   {
     label: "上次更新",
     prop: "lastUpdated",
-    customRender: ({ value }) => h("span", [h(ElIcon, [h(Clock)]), value]),
+    customRender: ({ value }) => h("span", [h(ElIcon, () => h(Clock)), value]),
   },
 ];
 </script>
