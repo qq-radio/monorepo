@@ -16,6 +16,7 @@
 
 <script lang="tsx" setup>
 import { BasicForm, FormSchema } from "@center/components/basic-form";
+import type { RowProps } from "element-plus";
 
 const activeNames = ref(["example"]);
 
@@ -76,7 +77,7 @@ const formProps = {
   labelWidth: "140px",
   rowProps: {
     justify: "start",
-  },
+  } as Partial<RowProps>,
   colProps: {
     span: 22,
   },

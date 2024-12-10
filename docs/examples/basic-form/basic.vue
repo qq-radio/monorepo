@@ -4,8 +4,8 @@
       <BasicForm
         v-model="formModel"
         :schemas="formSchemas"
-        @submit="handleSubmit"
         hasFooter
+        @submit="handleSubmit"
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">

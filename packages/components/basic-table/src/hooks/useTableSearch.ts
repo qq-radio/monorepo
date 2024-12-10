@@ -1,4 +1,4 @@
-import type { BasicTableProps, TableSchema } from "../types";
+import type { BasicTableProps, BasicTableEmits, TableSchema } from "../types";
 import type {
   BasicFormProps,
   FormSchema,
@@ -12,9 +12,15 @@ type Props = ComputedRef<
   Pick<BasicTableProps, "searchProps" | "searchSchemas" | "schemas">
 >;
 
+type Context = {
+  emit: BasicTableEmits;
+};
+
 export type UseTableSearchReturn = ReturnType<typeof useTableSearch>;
 
-export function useTableSearch(getProps: Props) {
+export function useTableSearch(getProps: Props, context: Context) {
+  const { emit } = context;
+
   const getSearchProps = computed<Partial<BasicFormProps>>(() => {
     return merge(
       {
@@ -42,7 +48,7 @@ export function useTableSearch(getProps: Props) {
   watch(
     () => searchParams.value,
     () => {
-      // emit("search-params-change", params);
+      emit("search-params-change", searchParams.value);
     },
     { immediate: true, deep: true }
   );

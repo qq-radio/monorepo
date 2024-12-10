@@ -3,13 +3,13 @@
     <el-col v-bind="getTitleColProps">
       <div :class="ns.e('title')" v-bind="formItem.titleProps">
         <div>
-          <component v-if="isCustomTitle" :is="renderCustomTitle" />
+          <component :is="renderCustomTitle" v-if="isCustomTitle" />
           <span v-else :class="ns.e('title-text')">{{ formItem.title }}</span>
         </div>
         <div>
           <component
-            v-if="formItem.titleTooltip"
             :is="renderTooltip(formItem.titleTooltip)"
+            v-if="formItem.titleTooltip"
           />
         </div>
       </div>
@@ -26,22 +26,22 @@
         <template #label>
           <div :class="ns.e('label')">
             <div>
-              <component v-if="isCustomLabel" :is="renderCustomLabel" />
+              <component :is="renderCustomLabel" v-if="isCustomLabel" />
               <span v-else>{{ formItem.label }}</span>
             </div>
             <div>
               <component
-                v-if="formItem.labelTooltip"
                 :is="renderTooltip(formItem.labelTooltip)"
+                v-if="formItem.labelTooltip"
               />
             </div>
           </div>
         </template>
         <template #default>
-          <component v-if="isCustomField" :is="renderCustomField" />
+          <component :is="renderCustomField" v-if="isCustomField" />
           <component
-            v-else="formItem.component"
             :is="renderComponent"
+            v-else
             v-bind="formItem.componentProps"
             v-model="stateValue"
             :disabled="getDisabled"
@@ -113,7 +113,7 @@ const callbackParams = computed<FormItemCallbackParams>(() => ({
   schema: props.schemaItem,
 }));
 
-const enhanceSchema = (schemaItem: FormSchema) => {
+const enhanceSchema = (schemaItem: FormSchema): EnhancedFormSchema => {
   const { componentProps: originComponentProps } = schemaItem;
   let componentProps = originComponentProps as ComponentProps;
   if (isFunction(originComponentProps)) {
@@ -131,7 +131,8 @@ const enhanceSchema = (schemaItem: FormSchema) => {
 
 watchEffect(() => {
   stateValue.value = props.modelValue;
-  formItem.value = enhanceSchema(props.schemaItem);
+  // escape ts error can't understand
+  formItem.value = enhanceSchema(props.schemaItem) as any;
 });
 
 const getVisible = computed(() => {

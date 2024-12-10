@@ -7,8 +7,8 @@
         v-model="searchParams"
         :schemas="getSearchSchemas"
         :loading="isLoading"
-        @submit="reQuery"
-        @reset="reQuery"
+        @submit="search"
+        @reset="reset"
       >
         <template
           v-for="name in Object.keys(searchSlots)"
@@ -177,11 +177,11 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
   loading: false,
 });
 
+const propsRef = ref<Partial<BasicTableProps>>();
+
 const getProps = computed<BasicTableProps>(() => {
   return merge(props, unref(propsRef));
 });
-
-const propsRef = ref<Partial<BasicTableProps>>();
 
 function setProps(partialProps: Partial<BasicTableProps>) {
   propsRef.value = merge(unref(propsRef), partialProps);
@@ -203,11 +203,13 @@ const getBindValues = computed(() => ({
 const { getSearchProps, getSearchSchemas, searchParams } = useTableSearch(
   computed(() =>
     pick(getProps.value, ["searchProps", "searchSchemas", "schemas"])
-  )
+  ),
+  { emit }
 );
 
 const { getPaginationProps, page, setPagination } = useTablePagination(
-  pick(getProps.value, "paginationProps")
+  pick(getProps.value, "paginationProps"),
+  { emit }
 );
 
 const {
@@ -229,7 +231,7 @@ const {
       "dataFormatter",
     ])
   ),
-  { searchParams, page, setPagination }
+  { searchParams, page, setPagination, emit }
 );
 
 const {
@@ -278,6 +280,16 @@ const {
   checkHasSelection,
   validateHasSelection,
 } = useTableSelection();
+
+const search = () => {
+  reQuery();
+  emit("search", getRequestParams());
+};
+
+const reset = () => {
+  reQuery();
+  emit("reset", getRequestParams());
+};
 
 const tableMethods: TableMethods = {
   setProps,

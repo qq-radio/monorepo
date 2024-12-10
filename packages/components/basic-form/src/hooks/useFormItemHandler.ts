@@ -3,12 +3,12 @@ import type { EnhancedFormSchema, FormItemEmits } from "../types";
 import { ref } from "vue";
 import { isArray } from "lodash";
 
-type Props = { emit: FormItemEmits };
+type Context = { emit: FormItemEmits };
 
 export type UseFormItemHandlerReturn = ReturnType<typeof useFormItemHandler>;
 
-export const useFormItemHandler = (props: Props) => {
-  const { emit } = props;
+export const useFormItemHandler = (context: Context) => {
+  const { emit } = context;
 
   const eventHandlers = ref([
     {

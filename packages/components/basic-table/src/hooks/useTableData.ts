@@ -1,4 +1,4 @@
-import type { BasicTableProps, TableSchema } from "../types";
+import type { BasicTableProps, BasicTableEmits, TableSchema } from "../types";
 import type { Page } from "@center/components/basic-pagination";
 import type { ComputedRef, Ref } from "vue";
 
@@ -22,12 +22,13 @@ type Context = {
   searchParams: Ref<Recordable>;
   page: Ref<Page>;
   setPagination: (p: Partial<Page>) => void;
+  emit: BasicTableEmits;
 };
 
 export type UseTableDataReturn = ReturnType<typeof useTableData>;
 
 export function useTableData(getProps: Props, context: Context) {
-  const { searchParams, page, setPagination } = context;
+  const { searchParams, page, setPagination, emit } = context;
 
   const isLoading = ref(false);
 
@@ -88,10 +89,13 @@ export function useTableData(getProps: Props, context: Context) {
 
       tableDatas.value = formatRecords(records);
       setPagination({ total });
+      emit("request-success", tableDatas.value);
     } catch (error: unknown) {
       console.log("BasicTable Error:", error);
+      emit("request-error", error);
     } finally {
       isLoading.value = false;
+      emit("request-complete", tableDatas.value);
     }
   };
 

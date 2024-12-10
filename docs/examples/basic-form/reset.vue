@@ -4,11 +4,11 @@
       <BasicForm
         v-model="formModel"
         :schemas="formSchemas"
+        hasFooter
+        hasClear
         @clear="handleClear"
         @reset="handleReset"
         @submit="handleSubmit"
-        hasFooter
-        hasClear
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">

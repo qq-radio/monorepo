@@ -59,9 +59,7 @@ const formSchemas: FormSchema[] = [
         { label: "戴尔", value: "dell" },
       ],
     },
-    disabled: computed(
-      () => formModel.value.gift || formModel.value.gift !== "phone"
-    ),
+    disabled: ({ model }) => !model.gift || model.gift === "phone",
   },
 ];
 </script>

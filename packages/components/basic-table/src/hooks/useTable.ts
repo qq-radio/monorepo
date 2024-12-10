@@ -8,7 +8,7 @@ type Props = Partial<BasicTableProps>;
 
 export type UseTableReturn = [(instance: TableMethods) => void, TableMethods];
 
-export const useTable = (props: Props) => {
+export const useTable = (props?: Props): UseTableReturn => {
   const instanceRef = ref<Nullable<TableMethods>>(null);
 
   function getInstance() {

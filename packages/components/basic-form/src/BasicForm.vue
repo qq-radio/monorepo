@@ -3,6 +3,7 @@
     <el-row v-bind="getProps.rowProps">
       <template v-for="schemaItem in formSchemas" :key="schemaItem.prop">
         <FormItem
+          v-if="schemaItem.prop"
           v-model="formModel[schemaItem.prop]"
           v-bind="{
             schemaItem,
@@ -114,6 +115,7 @@ const getBindValues = computed(() => {
 const formProps = computed(() =>
   pick(
     getProps.value,
+    "titleColProps",
     "disabled",
     "itemProps",
     "colProps",
@@ -137,9 +139,15 @@ const {
   getFieldsValue,
   setFieldsValue,
   emitUpdateModel,
-} = useFormEvent(getProps, {
-  emit,
-});
+} = useFormEvent(
+  computed(() => ({
+    schemas: getProps.value.schemas,
+    modelValue: getProps.value.modelValue,
+  })),
+  {
+    emit,
+  }
+);
 
 const { validate, validateField, resetFields, scrollToField, clearValidate } =
   useFormSelf(formInstance);

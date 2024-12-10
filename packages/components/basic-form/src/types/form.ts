@@ -16,7 +16,7 @@ import type { MaybeRefOrGetter } from "vue";
 
 export interface BasicFormProps {
   modelValue?: Recordable;
-  schemas?: Array<FormGroup | FormSchema>;
+  schemas?: FormSchema[];
   loading?: boolean;
   disabled?: MaybeRefOrGetter<boolean>;
 
@@ -48,14 +48,12 @@ export interface BasicFormProps {
 export interface BasicFormEmits {
   (e: "register", methods: FormMethods): void;
   (e: "update:modelValue", values: Recordable): void;
-  (e: "change", v: unknown, schemaItem: FormSchema): void;
   (e: "submit-error", values: Recordable): void;
   (e: "submit", values: Recordable): void;
   (e: "reset", values?: Recordable): void;
 }
 
 export interface FormSchema {
-  // 分组表单
   title?: string;
   customTitleRender?: (params: FormItemCallbackParams) => RenderType;
   customTitleSlot?: string;
@@ -63,18 +61,14 @@ export interface FormSchema {
   titleProps?: Recordable;
 
   // 表单项
-  prop: string;
-  label: string;
+  prop?: string;
+  label?: string;
   defaultValue?: string | number | boolean;
   hasLabel?: boolean;
   labelWidth?: string | number;
   sort?: number;
-  visible?:
-    | MaybeRefOrGetter<boolean>
-    | ((parmas: FormItemCallbackParams) => boolean);
-  disabled?:
-    | MaybeRefOrGetter<boolean>
-    | ((parmas: FormItemCallbackParams) => boolean);
+  visible?: boolean | ((parmas: FormItemCallbackParams) => boolean);
+  disabled?: boolean | ((parmas: FormItemCallbackParams) => boolean);
   colProps?: Partial<Mutable<ColProps>>;
   titleColProps?: Partial<Mutable<ColProps>>;
   itemProps?: Partial<Mutable<FormItemProps>>;
@@ -142,12 +136,6 @@ export type ComponentProps = {
   timeRangeMapFields?: TimeRangeMapFields;
   type?: string;
 } & Recordable;
-
-export interface FormGroup {
-  title: string;
-  customTitleRender?: (params: FormItemCallbackParams) => RenderType;
-  customTitleSlot?: string;
-}
 
 export type EnhancedFormSchema = Omit<
   FormSchema,

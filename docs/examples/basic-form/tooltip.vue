@@ -8,8 +8,9 @@
     </el-collapse-item>
   </el-collapse>
 </template>
+
 <script lang="tsx" setup>
-import { BasicForm, useForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 

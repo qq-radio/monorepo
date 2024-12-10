@@ -4,14 +4,16 @@
       <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter>
         <template #username>
           <el-icon
-            v-for="_i in 3"
+            v-for="i in 3"
+            :key="i"
             style="color: #00cef0; vertical-align: middle"
           >
             <StarFilled />
           </el-icon>
           <span style="margin: 0 10px">迈克尔</span>
           <el-icon
-            v-for="_i in 3"
+            v-for="i in 3"
+            :key="i"
             style="color: #00cef0; vertical-align: middle"
           >
             <StarFilled />

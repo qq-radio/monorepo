@@ -60,9 +60,7 @@ const formSchemas: FormSchema[] = [
         { label: "戴尔", value: "dell" },
       ],
     },
-    visible: computed(
-      () => formModel.value.gift || formModel.value.gift === "computer"
-    ),
+    visible: ({ model }) => model.gift || model.gift === "computer",
   },
 ];
 </script>

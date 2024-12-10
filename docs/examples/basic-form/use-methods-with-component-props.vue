@@ -47,29 +47,29 @@ const formSchemas: FormSchema[] = [
           if (value === "fullDiscount") {
             updateSchema({
               prop: "discountCoupon",
-              hidden: false,
+              visible: true,
             });
             updateSchema({
               prop: "giftCoupon",
-              hidden: true,
+              visible: false,
             });
           } else if (value === "fullGift") {
             updateSchema({
               prop: "discountCoupon",
-              hidden: true,
+              visible: false,
             });
             updateSchema({
               prop: "giftCoupon",
-              hidden: false,
+              visible: true,
             });
           } else {
             updateSchema({
               prop: "discountCoupon",
-              hidden: true,
+              visible: false,
             });
             updateSchema({
               prop: "giftCoupon",
-              hidden: true,
+              visible: false,
             });
           }
         },
@@ -87,7 +87,7 @@ const formSchemas: FormSchema[] = [
         { label: "满300-50", value: "discount_300_50" },
       ],
     },
-    hidden: true,
+    visible: false,
   },
   {
     label: "满赠券",
@@ -99,7 +99,7 @@ const formSchemas: FormSchema[] = [
         { label: "买五赠二", value: "buy_5_get_2" },
       ],
     },
-    hidden: true,
+    visible: false,
   },
 ];
 </script>

@@ -1,4 +1,4 @@
-import type { BasicFormProps, FormSchema, FormMethods, FieldValue } from "./";
+import type { BasicFormProps, FormSchema, FormMethods } from "./";
 
 export interface FormItemProps {
   modelValue: FieldValue;
@@ -38,3 +38,21 @@ export interface FormItemComponentPropsCallbackParams {
   schema: FormSchema;
   methods: FormMethods;
 }
+
+export type FieldValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Date
+  | string[]
+  | number[]
+  | boolean[]
+  | Date[]
+  | [Date, Date]
+  | [number, number]
+  | [string, string]
+  | string[][]
+  | number[][]
+  | Recordable;

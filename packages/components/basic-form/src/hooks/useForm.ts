@@ -5,13 +5,11 @@ import { ErrorMessages, BasicComponentError } from "@center/components/error";
 
 import { ref, unref, watch, onUnmounted } from "vue";
 
-export interface UseForm {
-  (
-    props?: Partial<BasicFormProps>
-  ): [(instance: FormMethods) => void, FormMethods];
-}
+type Props = Partial<BasicFormProps>;
 
-export const useForm: UseForm = (props) => {
+export type UseFormReturn = [(instance: FormMethods) => void, FormMethods];
+
+export const useForm = (props: Props): UseFormReturn => {
   const instanceRef = ref<Nullable<FormMethods>>(null);
 
   function getInstance() {
