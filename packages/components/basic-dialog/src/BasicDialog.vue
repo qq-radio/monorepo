@@ -33,7 +33,7 @@ import { BasicDialogProps, BasicDialogEmits, DialogMethods } from "./type";
 
 import { useBasicNamespace } from "@center/composables";
 
-import { ref, watchEffect, computed, useAttrs, onMounted, unref } from "vue";
+import { ref, watchEffect, computed, useAttrs, onMounted } from "vue";
 import { debounce } from "lodash";
 
 const ns = useBasicNamespace("dialog");
@@ -59,11 +59,17 @@ const props = withDefaults(defineProps<BasicDialogProps>(), {
 const propsRef = ref<Partial<BasicDialogProps>>({});
 
 const getProps = computed<BasicDialogProps>(() => {
-  return { ...props, ...unref(propsRef) };
+  return {
+    ...props,
+    ...propsRef.value,
+  };
 });
 
 function setProps(partialProps: Partial<BasicDialogProps>) {
-  propsRef.value = { ...unref(propsRef), ...partialProps };
+  propsRef.value = {
+    ...propsRef.value,
+    ...partialProps,
+  };
 }
 
 const getBindValues = computed(() => ({

@@ -95,7 +95,11 @@ const schemas: TableSchema[] = [
   },
 ];
 
-const userListApi = () => {
+interface ApiResponse {
+  total: number;
+  records: any[];
+}
+const userListApi = (): Promise<ApiResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({

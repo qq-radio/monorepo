@@ -20,7 +20,7 @@ export const useCustomRender: UseCustomRender = (context) => {
   const { render, slots } = context;
 
   const renderItem: RenderItem = (item, callbackParams = {}) => {
-    console.log("呼叫 useCustomRender renderItem :", item);
+    // console.log("呼叫 useCustomRender renderItem :", item);
 
     const customRender = item.customRender;
     const customSlot = slots && item.customSlot && slots[item.customSlot];

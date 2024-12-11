@@ -150,8 +150,8 @@ import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
 import { useTableSelection } from "./hooks/useTableSelection";
 import { useTablePagination } from "./hooks/useTablePagination";
 
-import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
-import { pick, merge } from "lodash";
+import { useAttrs, useSlots, ref, computed,   onMounted } from "vue";
+import { pick,   } from "lodash";
 
 import { BasicForm } from "@center/components/basic-form";
 import { BasicButtonGroup } from "@center/components/basic-button-group";
@@ -180,11 +180,17 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
 const propsRef = ref<Partial<BasicTableProps>>();
 
 const getProps = computed<BasicTableProps>(() => {
-  return merge(props, unref(propsRef));
+  return {
+    ...props,
+    ...propsRef.value,
+  };
 });
 
 function setProps(partialProps: Partial<BasicTableProps>) {
-  propsRef.value = merge(unref(propsRef), partialProps);
+  propsRef.value = {
+    ...propsRef.value,
+    ...partialProps,
+  };
 }
 
 const defaultAttrs = {

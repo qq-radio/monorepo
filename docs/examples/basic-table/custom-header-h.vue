@@ -61,7 +61,7 @@ const schemas: TableSchema[] = [
             },
             onClick: toggleHide,
           },
-          isShowFullPhone.value ? h(Hide) : h(View)
+          () => (isShowFullPhone.value ? h(Hide) : h(View))
         ),
       ]),
     customRender: ({ value }) =>

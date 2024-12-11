@@ -26,6 +26,7 @@ const ns = useBasicNamespace("status");
 
 defineOptions({
   name: "BasicStatus",
+  inheritAttrs: false,
 });
 
 const props = withDefaults(defineProps<BasicStatusProps>(), {

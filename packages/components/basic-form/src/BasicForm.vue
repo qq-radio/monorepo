@@ -46,7 +46,7 @@ import type { FormValidateCallback } from "element-plus";
 import { useFormEvent } from "./hooks/useFormEvent";
 import { useFormSelf } from "./hooks/useFormSelf";
 
-import { useAttrs, useSlots, ref, computed, unref, onMounted } from "vue";
+import { useAttrs, useSlots, ref, computed, onMounted } from "vue";
 import { isFunction, pick } from "lodash";
 
 import FormItem from "./components/FormItem.vue";
@@ -89,11 +89,17 @@ const props = withDefaults(defineProps<BasicFormProps>(), {
 const propsRef = ref<Partial<BasicFormProps>>();
 
 const getProps = computed<BasicFormProps>(() => {
-  return { ...props, ...unref(propsRef) };
+  return {
+    ...props,
+    ...propsRef.value,
+  };
 });
 
 function setProps(partialProps: Partial<BasicFormProps>) {
-  propsRef.value = { ...unref(propsRef), ...partialProps };
+  propsRef.value = {
+    ...propsRef.value,
+    ...partialProps,
+  };
 }
 
 const getBindValues = computed(() => {

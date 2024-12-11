@@ -35,7 +35,7 @@ const schemas: TableSchema[] = [
               verticalAlign: "middle",
             },
           },
-          h(Phone)
+          () => h(Phone)
         ),
         value,
       ]);
@@ -67,9 +67,10 @@ const schemas: TableSchema[] = [
               verticalAlign: "middle",
             },
           },
-          value === 1
-            ? h(CircleCheckFilled, { style: { color: "#8dd35f" } })
-            : h(CircleCloseFilled, { style: { color: "#ca5555" } })
+          () =>
+            value === 1
+              ? h(CircleCheckFilled, { style: { color: "#8dd35f" } })
+              : h(CircleCloseFilled, { style: { color: "#ca5555" } })
         ),
         value === 1 ? "在职中" : "已离职",
       ]);
