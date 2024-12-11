@@ -34,6 +34,17 @@ export function useFormEvent(getProps: Props, context: Context) {
     }
   );
 
+  watch(
+    () => modelValue.value,
+    () => {
+      setModel();
+    },
+    {
+      deep: true,
+      immediate: true,
+    }
+  );
+
   function initSchemas() {
     if (isArray(schemas.value)) {
       formSchemas.value = filterSchemas(sortSchemas(schemas.value));
@@ -45,6 +56,10 @@ export function useFormEvent(getProps: Props, context: Context) {
       ...getDefaultValue(),
       ...modelValue.value,
     };
+  }
+
+  function setModel() {
+    formModel.value = modelValue.value || {};
   }
 
   function getDefaultValue() {

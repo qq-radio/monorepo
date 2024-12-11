@@ -173,7 +173,7 @@ const submit = () => {
       .catch((error: FormValidateCallback) => {
         console.error("表单提交错误:", error);
         emit("submit-error", error);
-        reject(error);
+        // reject(error);
       });
   });
 };
