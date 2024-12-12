@@ -1,19 +1,9 @@
 <template>
   <BasicButtonGroup :buttons="buttons" />
-  <BasicTable
-    :data="userListMockData"
-    :schemas="schemas"
-    rowKey="code"
-    hasRadioSelection
-    :radioSelectionColumnProps="{
-      fixed: true,
-      align: 'center',
-    }"
-    @register="register"
-  />
+  <BasicTable @register="register" />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import {
   BasicTable,
   useTable,
@@ -52,30 +42,40 @@ const schemas: TableSchema[] = [
   },
 ];
 
+// 待实现下面的多选hook
 const [
   register,
   { setRadioSelectedRow, getRadioSelectedRow, clearRadioSelectedRow },
-] = useTable();
+] = useTable({
+  schemas,
+  data: userListMockData,
+  rowKey: "code",
+  hasRadioSelection: true,
+  radioSelectionColumnProps: {
+    fixed: true,
+    align: "center",
+  },
+});
 
 const buttons: Button[] = [
   {
-    text: "设置勾选项",
+    text: "(单选)设置勾选项",
     onClick: () => {
       setRadioSelectedRow(userListMockData[2]);
-      console.log("设置勾选项成功");
+      console.log("(单选)设置勾选项成功");
     },
   },
   {
-    text: "获取勾选项",
+    text: "(单选)获取勾选项",
     onClick: () => {
-      console.log("获取勾选项", getRadioSelectedRow());
+      console.log("(单选)获取勾选项", getRadioSelectedRow());
     },
   },
   {
-    text: "清空勾选项",
+    text: "(单选)清空勾选项",
     onClick: () => {
       clearRadioSelectedRow();
-      console.log("清空勾选项成功");
+      console.log("(单选)清空勾选项成功");
     },
   },
 ];

@@ -17,32 +17,38 @@ import type { MaybeRefOrGetter } from "vue";
 export interface BasicFormProps {
   modelValue?: Recordable;
   schemas?: FormSchema[];
+
   loading?: boolean;
   disabled?: MaybeRefOrGetter<boolean>;
+  itemProps?: Partial<Mutable<FormItemProps>>;
 
+  // for form layout
   rowProps?: Partial<Mutable<RowProps>>;
   colProps?: Partial<Mutable<ColProps>>;
   titleColProps?: Partial<Mutable<ColProps>>;
-  buttonColProps?: Partial<Mutable<ColProps>>;
-  itemProps?: Partial<Mutable<FormItemProps>>;
 
+  // for form label
   hasLabel?: boolean;
   labelSuffix?: string;
   labelWidth?: string | number;
   labelPosition?: "left" | "right" | "top";
 
+  // for form footer
   hasFooter?: boolean;
+  footerAlign?: "left" | "right" | "center";
+  footerColProps?: Partial<Mutable<ColProps>>;
+
+  // for form footer button
   hasReset?: boolean;
   resetText?: string;
   submitText?: string;
-  footerAlign?: "left" | "right" | "center";
 
+  // for form adapt
+  modelAdaptee?: (model: Recordable) => Recordable; // interface data -> form model
+  modelAdapter?: (model: Recordable) => Recordable; // form model -> interface data
+
+  // for form submit
   hasErrorMessageTip?: boolean;
-
-  // interface data -> form model
-  modelAdaptee?: (model: Recordable) => Recordable;
-  // form model -> interface data
-  modelAdapter?: (model: Recordable) => Recordable;
 }
 
 export interface BasicFormEmits {
@@ -54,13 +60,6 @@ export interface BasicFormEmits {
 }
 
 export interface FormSchema {
-  title?: string;
-  customTitleRender?: (params: FormItemCallbackParams) => RenderType;
-  customTitleSlot?: string;
-  titleTooltip?: string;
-  titleProps?: Recordable;
-
-  // 表单项
   prop?: string;
   label?: string;
   defaultValue?: string | number | boolean;
@@ -73,12 +72,14 @@ export interface FormSchema {
   titleColProps?: Partial<Mutable<ColProps>>;
   itemProps?: Partial<Mutable<FormItemProps>>;
 
-  // 表单项 - label
+  // for form item label
+  labelTooltip?: string;
   customLabelRender?: (params: FormItemCallbackParams) => RenderType;
   customLabelSlot?: string;
-  labelTooltip?: string;
 
-  // 表单项 - field
+  // for form item field
+  customRender?: (params: FormItemCallbackParams) => RenderType;
+  customSlot?: string;
   component?: ComponentType;
   componentProps?:
     | ComponentProps
@@ -86,17 +87,28 @@ export interface FormSchema {
   componentSlots?: Recordable;
   componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
-  customRender?: (params: FormItemCallbackParams) => RenderType;
-  customSlot?: string;
-
-  // 表单项 - rules
+  // for form item rule
   required?: boolean;
   min?: number;
   max?: number;
-
   noWhitespace?: boolean;
   rules?: FormItemRule[];
+
+  // for group form item
+  title?: string;
+  titleProps?: Recordable;
+  titleTooltip?: string;
+  customTitleRender?: (params: FormItemCallbackParams) => RenderType;
+  customTitleSlot?: string;
 }
+
+export type EnhancedFormSchema = Omit<
+  FormSchema,
+  "component" | "componentProps"
+> & {
+  component: ComponentType;
+  componentProps: ComponentProps;
+};
 
 export interface FormMethods
   extends UseFormSelfReturn,
@@ -128,19 +140,9 @@ export type CustomComponentType =
 
 export type ComponentType = ElementPlusComponentType | CustomComponentType;
 
-type TimeRangeMapFields = [string, string];
-
 export type ComponentProps = {
   placeholder?: string;
   extraFields?: string[][];
-  timeRangeMapFields?: TimeRangeMapFields;
+  timeRangeMapFields?: [string, string];
   type?: string;
 } & Recordable;
-
-export type EnhancedFormSchema = Omit<
-  FormSchema,
-  "component" | "componentProps"
-> & {
-  component: ComponentType;
-  componentProps: ComponentProps;
-};

@@ -1,17 +1,16 @@
 <template>
-  <BasicTable
-    hasSelection
-    :selectionColumnProps="{
-      'class-name': 'custom-style',
-      fixed: true,
-    }"
-    @register="registerTable"
-    @selection-change="handleRowClick"
-  />
+  <BasicButtonGroup :buttons="buttons" />
+  <BasicTable @register="register" />
 </template>
 
-<script lang="tsx" setup>
-import { BasicTable, useTable, TableSchema } from "@center/components";
+<script lang="ts" setup>
+import {
+  BasicTable,
+  useTable,
+  TableSchema,
+  BasicButtonGroup,
+  Button,
+} from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -19,19 +18,10 @@ const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      label: "用户名",
-      prop: "username",
-      component: "input",
-    },
   },
   {
     label: "手机号",
     prop: "phone",
-  },
-  {
-    label: "部门",
-    prop: "departmentName",
   },
   {
     label: "岗位",
@@ -41,16 +31,10 @@ const schemas: TableSchema[] = [
     label: "状态",
     prop: "status",
     display: "status",
-    formatter: ({ value }) =>
-      value === 1
-        ? {
-            type: "success",
-            text: "在职中",
-          }
-        : {
-            type: "danger",
-            text: "已离职",
-          },
+    displayProps: ({ value }) => ({
+      text: value === 1 ? "在职中" : "已离职",
+      type: value === 1 ? "success" : "danger",
+    }),
   },
   {
     label: "创建时间",
@@ -58,29 +42,40 @@ const schemas: TableSchema[] = [
   },
 ];
 
-const userListApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        total: userListMockData.length,
-        records: userListMockData,
-      });
-    }, 300);
-  });
-};
-
-const [registerTable] = useTable({
-  request: userListApi,
+const [
+  register,
+  { setRadioSelectedRow, getRadioSelectedRow, clearRadioSelectedRow },
+] = useTable({
   schemas,
+  data: userListMockData,
+  rowKey: "code",
+  hasSelection: true,
+  selectionColumnProps: {
+    fixed: true,
+    align: "center",
+  },
 });
 
-const handleRowClick = (newSelection) => {
-  console.log("表格多选 newSelection:", newSelection);
-};
+const buttons: Button[] = [
+  {
+    text: "(多选)设置勾选项",
+    onClick: () => {
+      setRadioSelectedRow(userListMockData[2]);
+      console.log("(多选)设置勾选项成功");
+    },
+  },
+  {
+    text: "(多选)获取勾选项",
+    onClick: () => {
+      console.log("(多选)获取勾选项", getRadioSelectedRow());
+    },
+  },
+  {
+    text: "(多选)清空勾选项",
+    onClick: () => {
+      clearRadioSelectedRow();
+      console.log("(多选)清空勾选项成功");
+    },
+  },
+];
 </script>
-
-<style lang="scss">
-.custom-style {
-  background: pink !important;
-}
-</style>

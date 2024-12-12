@@ -65,7 +65,7 @@ const statusOptions = [
   { label: "已离职", value: 2 },
 ];
 
-const searchParams = ref<any>({});
+const searchParams = ref<Recordable>({});
 
 const schemas: TableSchema[] = [
   {

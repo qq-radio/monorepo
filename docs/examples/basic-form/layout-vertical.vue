@@ -81,7 +81,7 @@ const formProps = {
   colProps: {
     span: 22,
   },
-  buttonColProps: {
+  footerColProps: {
     push: 19,
   },
 };

@@ -25,7 +25,7 @@
       </template>
     </el-row>
     <el-row>
-      <el-col v-if="getProps.hasFooter" v-bind="getProps.buttonColProps">
+      <el-col v-if="getProps.hasFooter" v-bind="getProps.footerColProps">
         <slot name="footer" v-bind="{ reset, submit }">
           <el-button v-if="getProps.hasReset" @click="reset">
             {{ getProps.resetText }}
