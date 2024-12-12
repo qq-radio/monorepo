@@ -116,6 +116,28 @@ type Example = {
 
 const examples: Example[] = [
   {
+    description: "设置表格属性",
+    buttons: [
+      {
+        text: "setProps",
+        onClick: () => {
+          basicTableRef.value!.setProps({
+            hasIndex: true,
+            actions: [
+              {
+                text: "设置",
+                onClick: () => {
+                  console.log("点击了设置");
+                },
+              },
+            ],
+          });
+          console.log("设置表格属性成功");
+        },
+      },
+    ],
+  },
+  {
     description: "与表格搜索、表格数据相关功能的函数",
     buttons: [
       {

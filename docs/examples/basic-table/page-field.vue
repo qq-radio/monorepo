@@ -3,32 +3,14 @@
     v-model:searchParams="searchParams"
     :request="userListApi"
     :schemas="schemas"
-    :searchProps="{
-      labelWidth: 60,
-      labelPosition: 'left',
-      rowProps: {
-        gutter: 40,
-      },
-      colProps: {
-        span: 6,
-      },
-    }"
-  >
-    <template #search-username>
-      <el-input v-model="searchParams.username" placeholder="请输入用户名" />
-    </template>
-    <template #search-status>
-      <BasicSelect
-        v-model="searchParams.status"
-        :options="statusOptions"
-        placeholder="请选择状态"
-      />
-    </template>
-  </BasicTable>
+    currentPageField="current"
+    pageSizeField="size"
+  />
+  {{ searchParams }}
 </template>
 
 <script lang="ts" setup>
-import { BasicTable, TableSchema, BasicSelect } from "@center/components";
+import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
 
@@ -45,9 +27,11 @@ const userListApi = (params): Promise<ApiResponse> => {
     response = userListMockData.filter(
       (user) => user.username === username && user.status === status
     );
-  } else if (username) {
+  }
+  if (username) {
     response = userListMockData.filter((user) => user.username === username);
-  } else if (status) {
+  }
+  if (status) {
     response = userListMockData.filter((user) => user.status === status);
   }
   return new Promise((resolve) => {
@@ -60,24 +44,18 @@ const userListApi = (params): Promise<ApiResponse> => {
   });
 };
 
-const statusOptions = [
-  { label: "在职中", value: 1 },
-  { label: "已离职", value: 2 },
-];
-
 const searchParams = ref<Recordable>({});
 
 const schemas: TableSchema[] = [
   {
     label: "用户名",
     prop: "username",
-    searchConfig: {
-      customSlot: "search-username",
-    },
+    searchable: true,
   },
   {
     label: "手机号",
     prop: "phone",
+    searchable: true,
   },
   {
     label: "岗位",
@@ -92,8 +70,13 @@ const schemas: TableSchema[] = [
       type: value === 1 ? "success" : "danger",
     }),
     searchConfig: {
-      customSlot: "search-status",
-      required: true,
+      component: "select",
+      componentProps: {
+        options: [
+          { label: "在职中", value: 1 },
+          { label: "已离职", value: 2 },
+        ],
+      },
     },
   },
   {

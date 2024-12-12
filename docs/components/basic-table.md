@@ -178,6 +178,14 @@ basic-table/custom-header-h
 basic-table/custom-header-slot
 :::
 
+## 分页器
+
+分页器参数键名默认使用`el-pagination`的`currentPage`、`pageSize`，您也可以使用`currentPageField`、`pageSizeField`指定新的键名
+
+:::demo
+basic-table/page-field
+:::
+
 ## 单选
 
 若需要使用表格单选，需传入`hasRadioSelection`，且可通过`radioSelectionColumnProps`自定义单选列属性

@@ -197,7 +197,6 @@ function setProps(partialProps: Partial<BasicTableProps>) {
     ...propsRef.value,
     ...partialProps,
   };
-  console.log(" propsRef.value:", propsRef.value);
 }
 
 const defaultAttrs = {
@@ -249,6 +248,8 @@ const {
       "immediate",
       "data",
       "dataFormatter",
+      "currentPageField",
+      "pageSizeField",
     ])
   ),
   { searchFormParams, page, setPagination, emit }

@@ -15,6 +15,8 @@ type Props = ComputedRef<
     | "immediate"
     | "data"
     | "dataFormatter"
+    | "currentPageField"
+    | "pageSizeField"
   >
 >;
 
@@ -54,13 +56,18 @@ export function useTableData(getProps: Props, context: Context) {
   const getTableDatas = () => tableDatas.value;
 
   const getSearchParams = () => {
-    const { extraParams = {}, paramsFormatter } = getProps.value;
+    const {
+      extraParams = {},
+      paramsFormatter,
+      currentPageField = "currentPage",
+      pageSizeField = "pageSize",
+    } = getProps.value;
 
     const params = {
       ...extraParams,
       ...searchFormParams.value,
-      currentPage: page.value.currentPage,
-      pageSize: page.value.pageSize,
+      [currentPageField]: page.value.currentPage,
+      [pageSizeField]: page.value.pageSize,
     };
 
     const finalParams = isFunction(paramsFormatter)

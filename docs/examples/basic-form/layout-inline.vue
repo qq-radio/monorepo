@@ -24,7 +24,6 @@ const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-
     required: true,
   },
   {

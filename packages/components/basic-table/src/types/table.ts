@@ -39,6 +39,8 @@ export interface BasicTableProps {
 
   // for table pagination
   paginationProps?: Partial<PaginationProps>;
+  currentPageField?: string;
+  pageSizeField?: string;
 
   // for table operation
   operations?: Button[];
