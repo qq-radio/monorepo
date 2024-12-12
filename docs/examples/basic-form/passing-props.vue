@@ -19,7 +19,7 @@ import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";
 
-import { User } from "@element-plus/icons-vue";
+// import { User } from "@element-plus/icons-vue";
 
 const activeNames = ref(["example"]);
 
@@ -31,9 +31,10 @@ const formSchemas: FormSchema[] = [
   {
     label: "用户",
     prop: "username",
-    componentProps: {
-      prefixIcon: User,
-    },
+    // help: use markraw ?
+    // componentProps: {
+    //   prefixIcon: User,
+    // },
     required: true,
   },
   {

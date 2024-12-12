@@ -1,15 +1,24 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicButtonGroup
-        :buttons="buttons"
-        :buttonProps="{ type: 'default' }"
-        style="margin-bottom: 20px"
-      />
+      <div v-for="example in examples" :key="example" class="example">
+        <el-tooltip placement="top" :content="example.description">
+          <el-icon class="example__description">
+            <InfoFilled />
+          </el-icon>
+        </el-tooltip>
+        <BasicButtonGroup
+          :buttons="example.buttons"
+          :buttonProps="{
+            type: 'default',
+          }"
+        />
+      </div>
       <BasicForm
         ref="basicFormRef"
         v-model="formModel"
         :schemas="formSchemas"
+        labelWidth="110"
         hasFooter
         @submit="handleSubmit"
         @submit-error="handleSubmitError"
@@ -32,7 +41,9 @@ import {
 
 import { ref } from "vue";
 
-const activeNames = ref(["example", "data"]);
+import { InfoFilled } from "@element-plus/icons-vue";
+
+const activeNames = ref(["example"]);
 
 const basicFormRef = ref<BasicFormInstance>();
 
@@ -89,120 +100,150 @@ const formSchemas: FormSchema[] = [
   },
 ];
 
-const buttons: Button[] = [
-  {
-    text: "setProps",
-    onClick: () => {
-      basicFormRef.value!.setProps({
-        colProps: {
-          span: 10,
-        },
-      });
-    },
-  },
-  {
-    text: "submit",
-    onClick: () => {
-      basicFormRef
-        .value!.submit()
-        .then((values) => {
-          console.log("表单填写值:", values);
-        })
-        .catch((error) => {
-          console.error("表单提交错误:", error);
-        });
-    },
-  },
-  {
-    text: "reset",
-    onClick: () => {
-      basicFormRef.value!.reset();
-    },
-  },
-  {
-    text: "updateSchema",
-    onClick: () => {
-      basicFormRef.value!.updateSchema([
-        {
-          prop: "discoduntCoupon",
-          required: true,
-        },
-        {
-          prop: "giftCoupon",
-          required: true,
-        },
-      ]);
-    },
-  },
-  {
-    text: "appendSchema",
-    onClick: () => {
-      basicFormRef.value!.appendSchema(
-        {
-          label: "是否叠加代金券",
-          prop: "isVoucherStackable",
-          component: "switch",
-        },
-        "giftCoupon"
-      );
-    },
-  },
-  {
-    text: "removeSchema",
-    onClick: () => {
-      basicFormRef.value!.removeSchema("isVoucherStackable");
-    },
-  },
+type Example = {
+  description: string;
+  buttons: Button[];
+};
 
+const examples: Example[] = [
   {
-    text: "getFieldValue",
-    onClick: () => {
-      const activityType = basicFormRef.value!.getFieldValue("activityType");
-      console.log("activityType:", activityType);
-    },
+    description: "设置属性",
+    buttons: [
+      {
+        text: "setProps",
+        onClick: () => {
+          basicFormRef.value!.setProps({
+            colProps: {
+              span: 10,
+            },
+          });
+        },
+      },
+    ],
   },
   {
-    text: "getFieldsValue",
-    onClick: () => {
-      const values = basicFormRef.value!.getFieldsValue();
-      console.log("values:", values);
-    },
+    description: "提交、重置",
+    buttons: [
+      {
+        text: "submit",
+        onClick: () => {
+          basicFormRef
+            .value!.submit()
+            .then((values) => {
+              console.log("表单填写值:", values);
+            })
+            .catch((error) => {
+              console.error("表单提交错误:", error);
+            });
+        },
+      },
+      {
+        text: "reset",
+        onClick: () => {
+          basicFormRef.value!.reset();
+        },
+      },
+    ],
   },
   {
-    text: "setFieldsValue",
-    onClick: () => {
-      basicFormRef.value!.setFieldsValue({ activityType: "fullDiscount" });
-    },
+    description: "增删改表单项，实现动态表单控制",
+    buttons: [
+      {
+        text: "updateSchema",
+        onClick: () => {
+          basicFormRef.value!.updateSchema([
+            {
+              prop: "discountCoupon",
+              required: true,
+            },
+            {
+              prop: "giftCoupon",
+              required: true,
+            },
+          ]);
+        },
+      },
+      {
+        text: "appendSchema",
+        onClick: () => {
+          basicFormRef.value!.appendSchema(
+            {
+              label: "是否叠加代金券",
+              prop: "isVoucherStackable",
+              component: "switch",
+            },
+            "giftCoupon"
+          );
+        },
+      },
+      {
+        text: "removeSchema",
+        onClick: () => {
+          basicFormRef.value!.removeSchema("isVoucherStackable");
+        },
+      },
+    ],
   },
   {
-    text: "validate",
-    onClick: () => {
-      basicFormRef.value!.validate();
-    },
+    description: "与表单值相关的功能函数",
+    buttons: [
+      {
+        text: "getFieldValue",
+        onClick: () => {
+          const activityType =
+            basicFormRef.value!.getFieldValue("activityType");
+          console.log("activityType:", activityType);
+        },
+      },
+      {
+        text: "getFieldsValue",
+        onClick: () => {
+          const values = basicFormRef.value!.getFieldsValue();
+          console.log("values:", values);
+        },
+      },
+      {
+        text: "setFieldsValue",
+        onClick: () => {
+          basicFormRef.value!.setFieldsValue({ activityType: "fullDiscount" });
+        },
+      },
+    ],
   },
   {
-    text: "validateField",
-    onClick: () => {
-      basicFormRef.value!.validateField("activityType");
-    },
-  },
-  {
-    text: "resetFields",
-    onClick: () => {
-      basicFormRef.value!.resetFields();
-    },
-  },
-  {
-    text: "scrollToField",
-    onClick: () => {
-      basicFormRef.value!.scrollToField("activityType");
-    },
-  },
-  {
-    text: "clearValidate",
-    onClick: () => {
-      basicFormRef.value!.clearValidate();
-    },
+    description: "原el-form组件expose的方法",
+    buttons: [
+      {
+        text: "validate",
+        onClick: () => {
+          basicFormRef.value!.validate();
+        },
+      },
+      {
+        text: "validateField",
+        onClick: () => {
+          basicFormRef.value!.validateField("activityType");
+        },
+      },
+      {
+        text: "resetFields",
+        onClick: () => {
+          basicFormRef.value!.resetFields();
+        },
+      },
+      {
+        text: "scrollToField",
+        onClick: () => {
+          basicFormRef.value!.scrollToField("activityType");
+        },
+      },
+      {
+        text: "clearValidate",
+        onClick: () => {
+          basicFormRef.value!.clearValidate();
+        },
+      },
+    ],
   },
 ];
 
@@ -214,3 +255,15 @@ const handleSubmitError = (error) => {
   console.log("handleSubmitError:", error);
 };
 </script>
+
+<style lang="scss" scoped>
+.example {
+  display: flex;
+
+  .example__description {
+    margin-top: 8px;
+    margin-right: 10px;
+    color: #409eff;
+  }
+}
+</style>

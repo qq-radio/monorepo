@@ -116,7 +116,7 @@ type Example = {
 
 const examples: Example[] = [
   {
-    description: "设置表格属性",
+    description: "设置属性",
     buttons: [
       {
         text: "setProps",

@@ -154,6 +154,7 @@ const formSchemas: FormSchema[] = [
       options: filterTreeByDepth(options, 1),
       labelField: "name",
       valueField: "id",
+      hasCheckAll: true,
     },
     required: true,
   },

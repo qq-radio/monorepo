@@ -57,7 +57,7 @@ import {
 const activeNames = ref(["example"]);
 
 const formModel = ref({
-  coffee: "",
+  coffee: [],
   sport: "",
 });
 

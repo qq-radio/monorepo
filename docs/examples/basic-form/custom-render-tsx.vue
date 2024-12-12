@@ -24,7 +24,7 @@ import { StarFilled } from "@element-plus/icons-vue";
 const activeNames = ref(["example"]);
 
 const formModel = ref({
-  coffee: "",
+  coffee: [],
   sport: "",
 });
 

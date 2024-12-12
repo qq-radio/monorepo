@@ -16,7 +16,7 @@ export default defineConfig({
         items: [
           { text: "设计总则", link: "/guide/design-principle" },
           { text: "组件总览", link: "/guide/component-overview" },
-          { text: "快速demo", link: "/guide/quick-demo" },
+          // { text: "快速demo", link: "/guide/quick-demo" },
         ],
       },
       {
