@@ -13,7 +13,7 @@
     </el-collapse-item>
   </el-collapse>
 </template>
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 const activeNames = ref(["example"]);

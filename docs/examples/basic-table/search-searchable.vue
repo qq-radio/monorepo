@@ -2,7 +2,7 @@
   <BasicTable :request="userListApi" :schemas="schemas" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";

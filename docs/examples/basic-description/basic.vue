@@ -2,7 +2,7 @@
   <BasicDescription :data="data" :schemas="schemas" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicDescription, DescriptionSchema } from "@center/components";
 
 const data = {

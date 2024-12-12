@@ -2,7 +2,7 @@
   <BasicButtonGroup :buttons="buttons" :callbackParams="callbackParams" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicButtonGroup, Button } from "@center/components";
 
 interface CustomCallbackParams {

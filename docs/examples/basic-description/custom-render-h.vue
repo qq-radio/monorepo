@@ -2,7 +2,7 @@
   <BasicDescription :column="2" :data="data" :schemas="schemas" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { h } from "vue";
 
 import { BasicDescription, DescriptionSchema } from "@center/components";

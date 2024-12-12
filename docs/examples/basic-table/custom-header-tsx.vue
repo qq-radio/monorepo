@@ -2,7 +2,7 @@
   <BasicTable @register="registerTable" />
 </template>
 
-<script lang="tsx" setup>
+<script setup lang="tsx">
 import {
   BasicTable,
   useTable,

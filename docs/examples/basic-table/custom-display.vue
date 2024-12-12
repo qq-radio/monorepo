@@ -2,7 +2,7 @@
   <BasicTable @register="registerTable" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { BasicTable, useTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";

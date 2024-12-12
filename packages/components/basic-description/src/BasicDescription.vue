@@ -39,7 +39,7 @@
   </el-descriptions>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type {
   BasicDescriptionProps,
   DescriptionSchema,

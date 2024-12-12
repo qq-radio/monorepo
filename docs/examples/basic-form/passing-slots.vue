@@ -13,7 +13,7 @@
     </el-collapse-item>
   </el-collapse>
 </template>
-<script lang="tsx" setup>
+<script setup lang="tsx">
 import { BasicForm, FormSchema } from "@center/components/basic-form";
 
 import { ref } from "vue";

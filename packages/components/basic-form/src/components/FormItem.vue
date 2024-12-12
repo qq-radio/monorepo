@@ -61,7 +61,7 @@
   </template>
 </template>
 
-<script lang="tsx" setup>
+<script setup lang="tsx">
 import type {
   FormItemProps,
   FormItemEmits,

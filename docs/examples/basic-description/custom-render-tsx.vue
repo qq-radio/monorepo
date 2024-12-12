@@ -2,7 +2,7 @@
   <BasicDescription :column="2" :data="data" :schemas="schemas" />
 </template>
 
-<script lang="tsx" setup>
+<script setup lang="tsx">
 import { BasicDescription, DescriptionSchema } from "@center/components";
 
 import { Monitor, Money, Box, Clock } from "@element-plus/icons-vue";

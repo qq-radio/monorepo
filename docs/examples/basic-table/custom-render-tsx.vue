@@ -2,7 +2,7 @@
   <BasicTable :data="userListMockData" :schemas="schemas" />
 </template>
 
-<script lang="tsx" setup>
+<script setup lang="tsx">
 import { BasicTable, TableSchema } from "@center/components";
 
 import userListMockData from "@mocks/user-list.json";
