@@ -42,9 +42,10 @@ const schemas: TableSchema[] = [
   },
 ];
 
+// 待实现下面的多选hook
 const [
   register,
-  { setRadioSelectedRow, getRadioSelectedRow, clearRadioSelectedRow },
+  { setRadioSelectedRow, getRadioSelectedRow, clearRadioSelected },
 ] = useTable({
   schemas,
   data: userListMockData,
@@ -73,7 +74,7 @@ const buttons: Button[] = [
   {
     text: "(多选)清空勾选项",
     onClick: () => {
-      clearRadioSelectedRow();
+      clearRadioSelected();
       console.log("(多选)清空勾选项成功");
     },
   },

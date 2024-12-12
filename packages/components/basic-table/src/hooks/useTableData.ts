@@ -19,7 +19,7 @@ type Props = ComputedRef<
 >;
 
 type Context = {
-  formParams: Ref<Recordable>;
+  searchFormParams: Ref<Recordable>;
   page: Ref<Page>;
   setPagination: (p: Partial<Page>) => void;
   emit: BasicTableEmits;
@@ -28,9 +28,10 @@ type Context = {
 export type UseTableDataReturn = ReturnType<typeof useTableData>;
 
 export function useTableData(getProps: Props, context: Context) {
-  const { formParams, page, setPagination, emit } = context;
+  const { searchFormParams, page, setPagination, emit } = context;
 
   const isLoading = ref(false);
+  let requestParams = {};
 
   const tableDatas = ref<Recordable[]>([]);
 
@@ -50,12 +51,14 @@ export function useTableData(getProps: Props, context: Context) {
     { immediate: true }
   );
 
-  const getRequestParams = (): Recordable => {
+  const getTableDatas = () => tableDatas.value;
+
+  const getSearchParams = () => {
     const { extraParams = {}, paramsFormatter } = getProps.value;
 
     const params = {
       ...extraParams,
-      ...formParams.value,
+      ...searchFormParams.value,
       currentPage: page.value.currentPage,
       pageSize: page.value.pageSize,
     };
@@ -66,6 +69,8 @@ export function useTableData(getProps: Props, context: Context) {
 
     return cloneDeep(finalParams);
   };
+
+  const getRequestParams = (): Recordable => requestParams;
 
   const formatRecords = (records: Recordable[]) => {
     const { dataFormatter } = getProps.value;
@@ -82,7 +87,7 @@ export function useTableData(getProps: Props, context: Context) {
 
       isLoading.value = true;
 
-      const requestParams = getRequestParams();
+      requestParams = getSearchParams();
 
       const response = await request(requestParams);
       const { records, total } = response || {};
@@ -115,7 +120,9 @@ export function useTableData(getProps: Props, context: Context) {
   return {
     isLoading,
     tableDatas,
+    getTableDatas,
     getTableSchemas,
+    getSearchParams,
     getRequestParams,
     query,
     reQuery,

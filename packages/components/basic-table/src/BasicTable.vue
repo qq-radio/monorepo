@@ -4,7 +4,7 @@
       <BasicForm
         v-if="getSearchSchemas?.length"
         v-bind="getSearchProps"
-        v-model="formParams"
+        v-model="searchFormParams"
         :schemas="getSearchSchemas"
         :loading="isLoading"
         @submit="search"
@@ -30,12 +30,12 @@
         v-bind="getBindValues"
         :data="tableDatas"
         @selection-change="handleSelectionChange"
-        @row-click="handleRadioSelectionChange"
+        @row-click="setRadioSelectedRow"
       >
         <template #default>
           <slot name="default">
             <el-table-column
-              v-if="hasRadioSelection"
+              v-if="getProps.hasRadioSelection"
               v-bind="getRadioSelectionColumnProps"
             >
               <template #default="scope">
@@ -49,13 +49,19 @@
             </el-table-column>
 
             <el-table-column
-              v-if="hasSelection"
+              v-if="getProps.hasSelection"
               v-bind="getSelectionColumnProps"
             />
 
-            <el-table-column v-if="hasIndex" v-bind="getIndexColumnProps" />
+            <el-table-column
+              v-if="getProps.hasIndex"
+              v-bind="getIndexColumnProps"
+            />
 
-            <el-table-column v-if="hasExpand" v-bind="getExpandColumnProps">
+            <el-table-column
+              v-if="getProps.hasExpand"
+              v-bind="getExpandColumnProps"
+            >
               <template #default="{ row, $index, expanded }">
                 <slot
                   name="expand"
@@ -99,7 +105,7 @@
             </template>
 
             <el-table-column
-              v-if="actions?.length"
+              v-if="getProps.actions?.length"
               v-bind="getActionColumnProps"
             >
               <template #default="{ row, $index, column }">
@@ -110,7 +116,7 @@
                     rowIndex: $index,
                     column,
                   }"
-                  :buttons="actions || []"
+                  :buttons="getProps.actions || []"
                 />
               </template>
             </el-table-column>
@@ -150,8 +156,8 @@ import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
 import { useTableSelection } from "./hooks/useTableSelection";
 import { useTablePagination } from "./hooks/useTablePagination";
 
-import { useAttrs, useSlots, ref, computed,   onMounted } from "vue";
-import { pick,   } from "lodash";
+import { useAttrs, useSlots, ref, computed, onMounted } from "vue";
+import { pick } from "lodash";
 
 import { BasicForm } from "@center/components/basic-form";
 import { BasicButtonGroup } from "@center/components/basic-button-group";
@@ -191,6 +197,7 @@ function setProps(partialProps: Partial<BasicTableProps>) {
     ...propsRef.value,
     ...partialProps,
   };
+  console.log(" propsRef.value:", propsRef.value);
 }
 
 const defaultAttrs = {
@@ -206,7 +213,7 @@ const getBindValues = computed(() => ({
   rowKey: getProps.value.rowKey || "id",
 }));
 
-const { getSearchProps, getSearchSchemas, formParams } = useTableSearch(
+const { getSearchProps, getSearchSchemas, searchFormParams } = useTableSearch(
   computed(() =>
     pick(getProps.value, [
       "searchProps",
@@ -226,10 +233,12 @@ const { getPaginationProps, page, setPagination } = useTablePagination(
 const {
   isLoading,
   tableDatas,
+  getTableDatas,
   getTableSchemas,
+  getSearchParams,
+  getRequestParams,
   query,
   reQuery,
-  getRequestParams,
 } = useTableData(
   computed(() =>
     pick(getProps.value, [
@@ -242,7 +251,7 @@ const {
       "dataFormatter",
     ])
   ),
-  { formParams, page, setPagination, emit }
+  { searchFormParams, page, setPagination, emit }
 );
 
 const {
@@ -275,14 +284,17 @@ const { searchSlots, tableHeaderSlots, tableCellSlots } = useTableSlots(
 
 const {
   radioSelectedValue,
-  handleRadioSelectionChange,
-  setRadioSelectedRow,
+  getRadioSelectedValue,
+  setRadioSelectedValue,
   getRadioSelectedRow,
-  clearRadioSelectedRow,
-} = useTableRadioSelection({
-  rowKey: getBindValues.value.rowKey,
-  hasRadioSelection: getProps.value.hasRadioSelection,
-});
+  setRadioSelectedRow,
+  clearRadioSelected,
+} = useTableRadioSelection(
+  computed(() => ({
+    rowKey: getBindValues.value.rowKey,
+    tableDatas: tableDatas.value,
+  }))
+);
 
 const {
   handleSelectionChange,
@@ -293,28 +305,32 @@ const {
 } = useTableSelection();
 
 const search = () => {
-  emit("update:searchParams", formParams.value);
+  emit("update:searchParams", searchFormParams.value);
   reQuery();
-  emit("search", getRequestParams());
+  emit("search", getSearchParams());
 };
 
 const reset = () => {
-  emit("update:searchParams", formParams.value);
+  emit("update:searchParams", searchFormParams.value);
   reQuery();
-  emit("reset", getRequestParams());
+  emit("reset", getSearchParams());
 };
 
 const tableMethods: TableMethods = {
   setProps,
 
   // useTableData
-  reQuery,
+  getTableDatas,
+  getSearchParams,
   getRequestParams,
+  reQuery,
 
   // useTableRadioSelection
-  setRadioSelectedRow,
+  getRadioSelectedValue,
+  setRadioSelectedValue,
   getRadioSelectedRow,
-  clearRadioSelectedRow,
+  setRadioSelectedRow,
+  clearRadioSelected,
 
   // useTableSelection
   getSelectedRows,

@@ -47,11 +47,17 @@ export const useTable = (props?: Props): UseTableReturn => {
     },
 
     // useTableData
-    reQuery: () => {
-      getInstance().reQuery();
+    getTableDatas: () => {
+      return getInstance().getTableDatas();
+    },
+    getSearchParams: () => {
+      return getInstance().getSearchParams();
     },
     getRequestParams: () => {
       return getInstance().getRequestParams();
+    },
+    reQuery: () => {
+      getInstance().reQuery();
     },
 
     // useTableSelection
@@ -69,14 +75,20 @@ export const useTable = (props?: Props): UseTableReturn => {
     },
 
     // useTableRadioSelection
-    setRadioSelectedRow: (value) => {
-      return getInstance().setRadioSelectedRow(value);
+    getRadioSelectedValue: () => {
+      return getInstance().getRadioSelectedValue();
+    },
+    setRadioSelectedValue: (value) => {
+      return getInstance().setRadioSelectedValue(value);
     },
     getRadioSelectedRow: () => {
       return getInstance().getRadioSelectedRow();
     },
-    clearRadioSelectedRow: () => {
-      return getInstance().clearRadioSelectedRow();
+    setRadioSelectedRow: (value) => {
+      return getInstance().setRadioSelectedRow(value);
+    },
+    clearRadioSelected: () => {
+      return getInstance().clearRadioSelected();
     },
   };
 

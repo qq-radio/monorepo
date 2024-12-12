@@ -18,7 +18,7 @@ import type { MaybeRefOrGetter } from "vue";
 import type { PaginationProps, TableColumnCtx } from "element-plus";
 
 export interface BasicTableProps {
-  schemas: TableSchema[];
+  schemas?: TableSchema[];
 
   // for table search
   request?: (params: Recordable) => Promise<{
@@ -110,7 +110,10 @@ export interface TableSchema {
 }
 
 export interface TableMethods
-  extends Pick<UseTableDataReturn, "reQuery" | "getRequestParams">,
+  extends Pick<
+      UseTableDataReturn,
+      "getTableDatas" | "getSearchParams" | "getRequestParams" | "reQuery"
+    >,
     Pick<
       UseTableSelectionReturn,
       | "getSelectedRows"
@@ -120,7 +123,11 @@ export interface TableMethods
     >,
     Pick<
       UseTableRadioSelectionReturn,
-      "setRadioSelectedRow" | "getRadioSelectedRow" | "clearRadioSelectedRow"
+      | "getRadioSelectedValue"
+      | "setRadioSelectedValue"
+      | "getRadioSelectedRow"
+      | "setRadioSelectedRow"
+      | "clearRadioSelected"
     > {
   setProps: (props: Partial<BasicTableProps>) => void;
 }

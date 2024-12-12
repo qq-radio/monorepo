@@ -1,10 +1,12 @@
-import type { BasicTableProps } from "../types";
-
+import type { ComputedRef } from "vue";
 import { ref, unref } from "vue";
 
 type RadioValue = string | number | boolean;
 
-type Props = Pick<BasicTableProps, "rowKey" | "hasRadioSelection">;
+type Props = ComputedRef<{
+  rowKey: string;
+  tableDatas: Array<Recordable>;
+}>;
 
 export type UseTableRadioSelectionReturn = ReturnType<
   typeof useTableRadioSelection
@@ -12,45 +14,39 @@ export type UseTableRadioSelectionReturn = ReturnType<
 
 export function useTableRadioSelection(props: Props) {
   const radioSelectedValue = ref<RadioValue>();
+  const radioSelectedRow = ref<Recordable>({});
+
+  function getRadioSelectedValue() {
+    return unref(radioSelectedValue);
+  }
 
   function setRadioSelectedValue(value: RadioValue) {
     radioSelectedValue.value = value;
-  }
-
-  function clearRadioSelectedValue() {
-    radioSelectedValue.value = undefined;
-  }
-
-  const radioSelectedRow = ref<Recordable>({});
-
-  function handleRadioSelectionChange(row: Recordable) {
-    if (!props.hasRadioSelection) {
-      return;
-    }
-    radioSelectedRow.value = row;
-    setRadioSelectedValue(row[props.rowKey || "id"]);
-  }
-
-  function setRadioSelectedRow(row: Recordable) {
-    radioSelectedRow.value = row;
-    setRadioSelectedValue(row[props.rowKey || "id"]);
+    radioSelectedRow.value =
+      props.value.tableDatas.find((d) => d[props.value.rowKey] === value) || {};
   }
 
   function getRadioSelectedRow() {
     return unref(radioSelectedRow);
   }
 
-  function clearRadioSelectedRow() {
+  function setRadioSelectedRow(row: Recordable) {
+    radioSelectedValue.value = row[props.value.rowKey];
+    radioSelectedRow.value = row;
+  }
+
+  function clearRadioSelected() {
+    radioSelectedValue.value = undefined;
     radioSelectedRow.value = {};
-    clearRadioSelectedValue();
   }
 
   return {
     radioSelectedValue,
     radioSelectedRow,
-    handleRadioSelectionChange,
-    setRadioSelectedRow,
+    getRadioSelectedValue,
+    setRadioSelectedValue,
     getRadioSelectedRow,
-    clearRadioSelectedRow,
+    setRadioSelectedRow,
+    clearRadioSelected,
   };
 }

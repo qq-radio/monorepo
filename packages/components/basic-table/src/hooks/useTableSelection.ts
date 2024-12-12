@@ -37,10 +37,10 @@ export const useTableSelection = () => {
   }
 
   return {
+    handleSelectionChange,
     getSelectedRows,
     getSelectedIds,
     checkHasSelection,
-    handleSelectionChange,
     validateHasSelection,
   };
 };

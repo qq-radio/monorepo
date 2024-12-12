@@ -1,25 +1,21 @@
 # BasicTable 表格
 
-## 使用hook - useTableData
+:::note
+`BasicTable`组件提供了若干方法，您可以通过以下任一种调用：
 
-:::demo
-basic-table/use-table-data
+- 通过实例调用
+- 通过`useTable`调用
+
 :::
 
-## 使用hook - useTableSelection
+## 通过实例调用
 
 :::demo
-basic-table/use-table-selection
+basic-table/use-methods-with-instance
 :::
 
-## 使用hook - useTableRadioSelection
+## 通过`useTable`调用
 
 :::demo
-basic-table/use-table-radio-selection
-:::
-
-## 使用hook - page
-
-:::demo
-basic-table/map-page-field
+basic-table/use-methods-with-hook
 :::

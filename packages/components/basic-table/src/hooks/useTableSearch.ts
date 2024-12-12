@@ -43,16 +43,16 @@ export function useTableSearch(getProps: Props, context: Context) {
     const { searchSchemas, schemas } = getProps.value;
     return isArray(searchSchemas)
       ? searchSchemas
-      : normalizeSearchSchemas(schemas);
+      : normalizeSearchSchemas(schemas || []);
   });
 
-  const formParams = ref<Recordable>({});
+  const searchFormParams = ref<Recordable>({});
 
   watch(
     () => getProps.value.searchParams,
     (searchParams) => {
-      formParams.value = {
-        ...formParams.value,
+      searchFormParams.value = {
+        ...searchFormParams.value,
         ...searchParams,
       };
     },
@@ -60,9 +60,9 @@ export function useTableSearch(getProps: Props, context: Context) {
   );
 
   watch(
-    () => formParams.value,
+    () => searchFormParams.value,
     () => {
-      emit("search-params-change", formParams.value || {});
+      emit("search-params-change", searchFormParams.value || {});
     },
     { immediate: true, deep: true }
   );
@@ -70,7 +70,7 @@ export function useTableSearch(getProps: Props, context: Context) {
   return {
     getSearchProps,
     getSearchSchemas,
-    formParams,
+    searchFormParams,
   };
 }
 
