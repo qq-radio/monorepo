@@ -4,7 +4,7 @@
   <div>选中值详细数据：{{ detail }}</div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { BasicRadioGroup } from "@center/components";
 
 const value = ref();

@@ -4,7 +4,7 @@
   <BasicButtonGroup :buttons="buttons" />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { BasicButtonGroup, Button } from "@center/components";
 
 const isDisabled = ref(false);

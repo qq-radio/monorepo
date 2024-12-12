@@ -35,7 +35,7 @@
   </BasicDescription>
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { BasicDescription, DescriptionSchema } from "@center/components";
 
 import { Monitor, Money, Box, Clock } from "@element-plus/icons-vue";

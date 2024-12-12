@@ -11,7 +11,7 @@
   <div>当前选中值：{{ value }}</div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { BasicRadioGroup } from "@center/components";
 
 const value = ref();

@@ -1,7 +1,10 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <el-steps style="max-width: 600px" :active="active">
+      <el-steps
+        style="max-width: 400px; margin-left: 50px; margin-bottom: 20px"
+        :active="active"
+      >
         <el-step title="商品信息" />
         <el-step title="收货信息" />
       </el-steps>

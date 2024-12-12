@@ -2,7 +2,7 @@
   <BasicButtonGroup :buttons="buttons" confirm-type="pop-confirm" />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { BasicButtonGroup, Button } from "@center/components";
 
 const buttons: Button[] = [

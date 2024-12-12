@@ -10,7 +10,7 @@
   <div>当前选中值：{{ value }}</div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { BasicSelect } from "@center/components";
 import { Calendar } from "@element-plus/icons-vue";
 

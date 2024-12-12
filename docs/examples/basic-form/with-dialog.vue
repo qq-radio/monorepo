@@ -136,7 +136,6 @@ const buttons: Button[] = [
       setDialogTitle("编辑");
       openDialog();
       await nextTick();
-      reset();
       formModel.value = detailData;
     },
   },
@@ -146,7 +145,7 @@ const buttons: Button[] = [
       setDialogTitle("查看详情");
       openDialog();
       await nextTick();
-      reset();
+      formModel.value = detailData;
     },
   },
 ];

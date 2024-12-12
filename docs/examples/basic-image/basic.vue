@@ -2,7 +2,7 @@
   <BasicImage :src="src" />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { BasicImage } from "@center/components";
 
 const src =

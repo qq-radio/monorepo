@@ -9,7 +9,7 @@
   />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import { BasicButtonGroup, Button } from "@center/components";
 
 const buttons: Button[] = [

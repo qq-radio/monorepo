@@ -7,7 +7,7 @@
   />
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { BasicSelectInput } from "@center/components";
 
 const value = ref([]);

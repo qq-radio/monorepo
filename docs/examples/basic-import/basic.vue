@@ -9,7 +9,7 @@
   />
 </template>
 
-<script lang="tsx" setup>
+<script lang="ts" setup>
 import {
   BasicImport,
   TemplateConfig,
