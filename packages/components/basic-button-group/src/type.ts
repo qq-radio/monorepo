@@ -29,11 +29,7 @@ interface ButtonBase<T = Recordable> {
   text: string | ((params: ButtonCallbackParams<T>) => string);
   permission?: string;
   show?: boolean | ((params: ButtonCallbackParams<T>) => boolean);
-  disabled?:
-    | boolean
-    | Ref<boolean>
-    | ComputedRef<boolean>
-    | ((params: ButtonCallbackParams<T>) => boolean);
+  disabled?: boolean | Ref<boolean> | ComputedRef<boolean>;
   message?: string;
   props?: Recordable;
   onClick?: (params: ButtonCallbackParams<T>) => void;
