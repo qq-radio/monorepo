@@ -42,7 +42,6 @@ const schemas: TableSchema[] = [
   },
 ];
 
-// 待实现下面的多选hook
 const [
   register,
   { setRadioSelectedRow, getRadioSelectedRow, clearRadioSelected },

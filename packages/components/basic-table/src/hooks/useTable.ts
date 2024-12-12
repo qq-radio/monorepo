@@ -60,20 +60,6 @@ export const useTable = (props?: Props): UseTableReturn => {
       getInstance().reQuery();
     },
 
-    // useTableSelection
-    getSelectedRows: () => {
-      return getInstance().getSelectedRows();
-    },
-    getSelectedIds: () => {
-      return getInstance().getSelectedIds();
-    },
-    checkHasSelection: () => {
-      return getInstance().checkHasSelection();
-    },
-    validateHasSelection: () => {
-      return getInstance().validateHasSelection();
-    },
-
     // useTableRadioSelection
     getRadioSelectedValue: () => {
       return getInstance().getRadioSelectedValue();
@@ -89,6 +75,26 @@ export const useTable = (props?: Props): UseTableReturn => {
     },
     clearRadioSelected: () => {
       return getInstance().clearRadioSelected();
+    },
+    checkHasRadioSelection: () => {
+      return getInstance().checkHasRadioSelection();
+    },
+    validateHasRadioSelection: () => {
+      return getInstance().validateHasRadioSelection();
+    },
+
+    // useTableSelection
+    getSelectedValues: () => {
+      return getInstance().getSelectedValues();
+    },
+    getSelectedRows: () => {
+      return getInstance().getSelectedRows();
+    },
+    checkHasSelection: () => {
+      return getInstance().checkHasSelection();
+    },
+    validateHasSelection: () => {
+      return getInstance().validateHasSelection();
     },
   };
 

@@ -1,46 +1,53 @@
+import type { ComputedRef } from "vue";
+
 import { ref, computed, unref } from "vue";
+
 import { ElMessage } from "element-plus";
+
+type Props = ComputedRef<{
+  rowKey: string;
+}>;
 
 export type UseTableSelectionReturn = ReturnType<typeof useTableSelection>;
 
-export const useTableSelection = () => {
+// 这里要实现 set clear 我不会 o(╥﹏╥)o
+export function useTableSelection(props: Props) {
   const selectedRows = ref<Array<Recordable>>([]);
 
-  const selectedIds = computed<Array<number | string>>(() =>
-    selectedRows.value.map((i) => i.id)
+  const selectedValues = computed<Array<number | string>>(() =>
+    selectedRows.value.map((i) => i[props.value.rowKey])
   );
+
+  function getSelectedValues() {
+    return unref(selectedValues);
+  }
 
   function getSelectedRows() {
     return unref(selectedRows);
   }
 
-  function getSelectedIds() {
-    return unref(selectedIds);
-  }
-
-  function handleSelectionChange(rows: Recordable[]) {
+  function setSelectedRows(rows: Recordable[]) {
     selectedRows.value = rows;
   }
 
   function checkHasSelection() {
-    return !!unref(selectedIds)?.length;
+    return !!unref(selectedValues)?.length;
   }
 
   function validateHasSelection() {
-    if (selectedRows.value.length) {
+    if (checkHasSelection()) {
       return;
     }
 
     const message = "请至少选择一条数据后再操作";
     ElMessage.warning(message);
-    throw new Error(message);
   }
 
   return {
-    handleSelectionChange,
+    getSelectedValues,
     getSelectedRows,
-    getSelectedIds,
+    setSelectedRows,
     checkHasSelection,
     validateHasSelection,
   };
-};
+}

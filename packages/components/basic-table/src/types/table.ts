@@ -116,8 +116,8 @@ export interface TableMethods
     >,
     Pick<
       UseTableSelectionReturn,
+      | "getSelectedValues"
       | "getSelectedRows"
-      | "getSelectedIds"
       | "checkHasSelection"
       | "validateHasSelection"
     >,
@@ -128,6 +128,8 @@ export interface TableMethods
       | "getRadioSelectedRow"
       | "setRadioSelectedRow"
       | "clearRadioSelected"
+      | "checkHasRadioSelection"
+      | "validateHasRadioSelection"
     > {
   setProps: (props: Partial<BasicTableProps>) => void;
 }

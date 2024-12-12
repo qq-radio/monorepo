@@ -1,5 +1,8 @@
 import type { ComputedRef } from "vue";
+
 import { ref, unref } from "vue";
+
+import { ElMessage } from "element-plus";
 
 type RadioValue = string | number | boolean;
 
@@ -40,6 +43,19 @@ export function useTableRadioSelection(props: Props) {
     radioSelectedRow.value = {};
   }
 
+  function checkHasRadioSelection() {
+    return !!unref(radioSelectedValue);
+  }
+
+  function validateHasRadioSelection() {
+    if (checkHasRadioSelection()) {
+      return;
+    }
+
+    const message = "请选择一条数据";
+    ElMessage.warning(message);
+  }
+
   return {
     radioSelectedValue,
     radioSelectedRow,
@@ -48,5 +64,7 @@ export function useTableRadioSelection(props: Props) {
     getRadioSelectedRow,
     setRadioSelectedRow,
     clearRadioSelected,
+    checkHasRadioSelection,
+    validateHasRadioSelection,
   };
 }

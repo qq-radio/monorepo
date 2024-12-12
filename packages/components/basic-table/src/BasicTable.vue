@@ -29,7 +29,7 @@
         v-loading="isLoading"
         v-bind="getBindValues"
         :data="tableDatas"
-        @selection-change="handleSelectionChange"
+        @selection-change="setSelectedRows"
         @row-click="setRadioSelectedRow"
       >
         <template #default>
@@ -289,6 +289,8 @@ const {
   getRadioSelectedRow,
   setRadioSelectedRow,
   clearRadioSelected,
+  checkHasRadioSelection,
+  validateHasRadioSelection,
 } = useTableRadioSelection(
   computed(() => ({
     rowKey: getBindValues.value.rowKey,
@@ -297,12 +299,16 @@ const {
 );
 
 const {
-  handleSelectionChange,
+  getSelectedValues,
   getSelectedRows,
-  getSelectedIds,
+  setSelectedRows,
   checkHasSelection,
   validateHasSelection,
-} = useTableSelection();
+} = useTableSelection(
+  computed(() => ({
+    rowKey: getBindValues.value.rowKey,
+  }))
+);
 
 const search = () => {
   emit("update:searchParams", searchFormParams.value);
@@ -331,10 +337,12 @@ const tableMethods: TableMethods = {
   getRadioSelectedRow,
   setRadioSelectedRow,
   clearRadioSelected,
+  checkHasRadioSelection,
+  validateHasRadioSelection,
 
   // useTableSelection
+  getSelectedValues,
   getSelectedRows,
-  getSelectedIds,
   checkHasSelection,
   validateHasSelection,
 };

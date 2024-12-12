@@ -5,7 +5,12 @@
         <InfoFilled />
       </el-icon>
     </el-tooltip>
-    <BasicButtonGroup :buttons="example.buttons" />
+    <BasicButtonGroup
+      :buttons="example.buttons"
+      :buttonProps="{
+        type: 'default',
+      }"
+    />
   </div>
   <BasicTable @register="register" />
 </template>
@@ -104,6 +109,13 @@ const [
     getRadioSelectedRow,
     setRadioSelectedRow,
     clearRadioSelected,
+    checkHasRadioSelection,
+    validateHasRadioSelection,
+
+    getSelectedValues,
+    getSelectedRows,
+    checkHasSelection,
+    validateHasSelection,
   },
 ] = useTable({
   schemas,
@@ -114,6 +126,7 @@ const [
     fixed: true,
     align: "center",
   },
+  hasSelection: true,
 });
 
 type Example = {
@@ -123,7 +136,7 @@ type Example = {
 
 const examples: Example[] = [
   {
-    description: "与表格搜索、表格数据相关的功能函数",
+    description: "与表格搜索、表格数据相关功能的函数",
     buttons: [
       {
         text: "getTableDatas",
@@ -156,7 +169,7 @@ const examples: Example[] = [
     ],
   },
   {
-    description: "提供一组用于表格单选的功能函数",
+    description: "提供一组用于表格单选功能的函数",
     buttons: [
       {
         text: "getRadioSelectedValue",
@@ -193,6 +206,53 @@ const examples: Example[] = [
           console.log("(单选)清空勾选成功");
         },
       },
+      {
+        text: "checkHasRadioSelection",
+        onClick: () => {
+          const flag = checkHasRadioSelection();
+          console.log("(单选)是否有勾选值", flag);
+        },
+      },
+      {
+        text: "validateHasRadioSelection",
+        onClick: () => {
+          validateHasRadioSelection();
+          console.log("(单选)校验是否有勾选值");
+        },
+      },
+    ],
+  },
+  {
+    description: "提供一组用于表格多选功能的函数",
+    buttons: [
+      {
+        text: "getSelectedValues",
+        onClick: () => {
+          const values = getSelectedValues();
+          console.log("(多选)获取勾选值", values);
+        },
+      },
+      {
+        text: "getSelectedRows",
+        onClick: () => {
+          const rows = getSelectedRows();
+          console.log("(多选)获取勾选项", rows);
+        },
+      },
+      {
+        text: "checkHasSelection",
+        onClick: () => {
+          const flag = checkHasSelection();
+          console.log("(多选)是否有勾选值", flag);
+        },
+      },
+      {
+        text: "validateHasSelection",
+        onClick: () => {
+          validateHasSelection();
+          console.log("(多选)校验是否有勾选值");
+        },
+      },
     ],
   },
 ];
@@ -205,6 +265,7 @@ const examples: Example[] = [
   .example__description {
     margin-top: 8px;
     margin-right: 10px;
+    color: #409eff;
   }
 }
 </style>
