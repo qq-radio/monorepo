@@ -9,6 +9,7 @@ export * from "./basic-export";
 export * from "./basic-form";
 export * from "./basic-image";
 export * from "./basic-import";
+export * from "./basic-input-number-range";
 export * from "./basic-list";
 export * from "./basic-pagination";
 export * from "./basic-radio-group";

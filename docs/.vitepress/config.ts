@@ -63,7 +63,7 @@ export default defineConfig({
                   },
                   {
                     text: "数字范围输入框",
-                    link: "/components/basic-number-range",
+                    link: "/components/basic-input-number-range",
                   },
                 ],
               },
