@@ -110,8 +110,24 @@ const [registerDeliveryForm, { submit: submitDeliveryForm }] = useForm({
   schemas: deliveryFormSchemas,
 });
 
-const submit = () => {
-  submitProductForm();
-  submitDeliveryForm();
+const submit = async () => {
+  const [productFormResult, deliveryFormResult] = await Promise.all([
+    submitProductForm(),
+    submitDeliveryForm(),
+  ]);
+
+  if (productFormResult.valid && deliveryFormResult.valid) {
+    console.log(
+      "分组表单校验正确:",
+      productFormResult.values,
+      deliveryFormResult.values
+    );
+  } else {
+    console.error(
+      "分组表单校验错误:",
+      productFormResult.errors,
+      deliveryFormResult.errors
+    );
+  }
 };
 </script>

@@ -1,6 +1,7 @@
 @use "../../../theme/index.scss" as *;
 
 @include b(input-number-range) {
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: space-around;

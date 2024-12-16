@@ -101,7 +101,7 @@ const formSchemas: FormSchema[] = [
   },
 ];
 
-const [registerForm, { submit, reset }] = useForm({
+const [registerForm, { setProps, submit, reset }] = useForm({
   schemas: formSchemas,
 });
 
@@ -127,6 +127,7 @@ const buttons: Button[] = [
       openDialog();
       await nextTick();
       reset();
+      setProps({ disabled: false });
       formModel.value = {};
     },
   },
@@ -136,7 +137,10 @@ const buttons: Button[] = [
       setDialogTitle("编辑");
       openDialog();
       await nextTick();
-      formModel.value = detailData;
+      setProps({ disabled: false });
+      formModel.value = {
+        ...detailData,
+      };
     },
   },
   {
@@ -145,7 +149,10 @@ const buttons: Button[] = [
       setDialogTitle("查看详情");
       openDialog();
       await nextTick();
-      formModel.value = detailData;
+      setProps({ disabled: true });
+      formModel.value = {
+        ...detailData,
+      };
     },
   },
 ];

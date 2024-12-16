@@ -5,7 +5,8 @@ export type ModelValue = (number | undefined)[];
 export interface BasicInputNumberRangeProps {
   modelValue?: ModelValue;
   disabled?: boolean;
-  placeholder?: string[];
+  startPlaceholder?: string;
+  endPlaceholder?: string;
   inputNumberProps?: Partial<InputNumberProps>;
 
   prefix?: string;

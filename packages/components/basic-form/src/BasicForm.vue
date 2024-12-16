@@ -40,14 +40,19 @@
 </template>
 
 <script setup lang="ts">
-import type { BasicFormProps, BasicFormEmits, FormMethods } from "./types";
-import type { FormValidateCallback } from "element-plus";
+import type {
+  BasicFormProps,
+  BasicFormEmits,
+  FormSubmitResult,
+  FormMethods,
+} from "./types";
 
 import { useFormEvent } from "./hooks/useFormEvent";
 import { useFormSelf } from "./hooks/useFormSelf";
 
 import { useAttrs, useSlots, ref, computed, onMounted } from "vue";
 import { isFunction, pick } from "lodash";
+import { ElMessage } from "element-plus";
 
 import FormItem from "./components/FormItem.vue";
 
@@ -158,22 +163,25 @@ const {
 const { validate, validateField, resetFields, scrollToField, clearValidate } =
   useFormSelf(formInstance);
 
-const submit = () => {
-  return new Promise((resolve, reject) => {
+const submit = (): Promise<FormSubmitResult> => {
+  const { modelAdapter, hasErrorMessageTip } = getProps.value;
+  return new Promise((resolve) => {
     validate()
       .then(() => {
-        const { modelAdapter } = getProps.value;
         const values = isFunction(modelAdapter)
           ? modelAdapter(formModel.value)
           : formModel.value;
-        console.log("表单填写值:", values);
         emit("submit", values);
-        resolve(values);
+        resolve({ valid: true, values });
+        console.log("表单填写值:", values);
       })
-      .catch((error: FormValidateCallback) => {
-        console.error("表单提交错误:", error);
-        emit("submit-error", error);
-        // reject(error);
+      .catch((errors) => {
+        if (hasErrorMessageTip) {
+          ElMessage.warning("表单填写有误，请重新填写后提交");
+        }
+        emit("submit-error", errors);
+        resolve({ valid: false, errors });
+        console.error("表单提交错误:", errors);
       });
   });
 };

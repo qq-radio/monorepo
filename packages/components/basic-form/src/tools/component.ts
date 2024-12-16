@@ -10,6 +10,7 @@ import {
   ElSlider,
   ElColorPicker,
 } from "element-plus";
+import { BasicInputNumberRange } from "@center/components/basic-input-number-range";
 import { BasicRadioGroup } from "@center/components/basic-radio-group";
 import { BasicCheckboxGroup } from "@center/components/basic-checkbox-group";
 import { BasicSelect } from "@center/components/basic-select";
@@ -30,6 +31,7 @@ componentMap.set("rate", ElRate);
 componentMap.set("slider", ElSlider);
 componentMap.set("color-picker", ElColorPicker);
 
+componentMap.set("input-number-range", BasicInputNumberRange);
 componentMap.set("radio-group", BasicRadioGroup);
 componentMap.set("checkbox-group", BasicCheckboxGroup);
 componentMap.set("select", BasicSelect);

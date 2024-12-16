@@ -95,7 +95,7 @@ const getCallbackParams = (item: RadioOption): RadioCallbackParams => ({
 const handleClick = (option: RadioOption) => {
   const { label, value, disabled } = option;
 
-  if (disabled === true) {
+  if (props.disabled === true || disabled === true) {
     return;
   }
 

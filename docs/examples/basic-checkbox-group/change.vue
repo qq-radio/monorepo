@@ -1,7 +1,7 @@
 <template>
   <BasicCheckboxGroup v-model="value" :options="options" @change="onChange" />
   <div style="margin-top: 10px">双向绑定值：{{ value }}</div>
-  <div>选中值详细数据：{{ detail }}</div>
+  <div>详细数据：{{ detail }}</div>
 </template>
 
 <script setup lang="ts">

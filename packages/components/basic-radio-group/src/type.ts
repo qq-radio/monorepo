@@ -1,6 +1,7 @@
 export interface BasicRadioGroupProps {
   modelValue?: RadioValue;
   isButton?: boolean;
+  disabled?: boolean;
 
   options?: RadioOption[];
   api?: () => Promise<unknown>;

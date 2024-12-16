@@ -105,6 +105,12 @@ const formSchemas: FormSchema[] = [
     required: true,
   },
   {
+    label: "分数",
+    prop: "score",
+    component: "input-number-range",
+    required: true,
+  },
+  {
     label: "备注",
     prop: "remark",
     component: "textarea",

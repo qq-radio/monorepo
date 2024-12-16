@@ -22,9 +22,13 @@ function addTextareaProps(schemaItem: EnhancedFormSchema) {
 function addStyle(schemaItem: EnhancedFormSchema) {
   if (
     schemaItem.component &&
-    ["input-number", "select", "tree-select", "cascader"].includes(
-      schemaItem.component
-    )
+    [
+      "input-number",
+      "input-number-range",
+      "select",
+      "tree-select",
+      "cascader",
+    ].includes(schemaItem.component)
   ) {
     return merge(
       {
@@ -51,6 +55,18 @@ function addPlaceholder(schemaItem: EnhancedFormSchema) {
         componentProps: {
           startPlaceholder: "开始时间",
           endPlaceholder: "结束时间",
+        },
+      },
+      schemaItem
+    );
+  }
+
+  if (schemaItem.component === "input-number-range") {
+    return merge(
+      {
+        componentProps: {
+          startPlaceholder: "请输入数字",
+          endPlaceholder: "请输入数字",
         },
       },
       schemaItem

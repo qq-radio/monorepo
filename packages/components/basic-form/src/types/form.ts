@@ -19,7 +19,7 @@ export interface BasicFormProps {
   schemas?: FormSchema[];
 
   loading?: boolean;
-  disabled?: MaybeRefOrGetter<boolean>;
+  disabled?: boolean | MaybeRefOrGetter<boolean>;
   itemProps?: Partial<Mutable<FormItemProps>>;
 
   // for form layout
@@ -85,7 +85,6 @@ export interface FormSchema {
     | ComponentProps
     | ((parmas: FormItemComponentPropsCallbackParams) => ComponentProps);
   componentSlots?: Recordable;
-  componentListeners?: (actions: Partial<FormMethods>) => Recordable;
 
   // for form item rule
   required?: boolean;
@@ -110,11 +109,17 @@ export type EnhancedFormSchema = Omit<
   componentProps: ComponentProps;
 };
 
+export type FormSubmitResult = {
+  valid: boolean;
+  values?: Recordable;
+  errors?: any;
+};
+
 export interface FormMethods
   extends UseFormSelfReturn,
     Omit<UseFormEventReturn, "formSchemas" | "formModel" | "emitUpdateModel"> {
   setProps: (props: Partial<BasicFormProps>) => void;
-  submit: () => Promise<unknown>;
+  submit: () => Promise<FormSubmitResult>;
   reset: () => void;
 }
 
@@ -131,6 +136,7 @@ export type ElementPlusComponentType =
   | "color-picker";
 
 export type CustomComponentType =
+  | "input-number-range"
   | "radio-group"
   | "checkbox-group"
   | "select"

@@ -5,6 +5,7 @@ function getPrefix(component: ComponentType) {
   switch (component) {
     case "input":
     case "input-number":
+    case "input-number-range":
     case "textarea":
       prefix = "请输入";
       break;

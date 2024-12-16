@@ -4,7 +4,7 @@
     <el-input-number
       v-bind="getItemProps"
       v-model="minValue"
-      :placeholder="placeholder[0]"
+      :placeholder="startPlaceholder"
       :disabled="disabled"
       @change="emitChange"
       @blur="emitChange"
@@ -13,7 +13,7 @@
     <el-input-number
       v-bind="getItemProps"
       v-model="maxValue"
-      :placeholder="placeholder[1]"
+      :placeholder="endPlaceholder"
       :disabled="disabled"
       @change="emitChange"
       @blur="emitChange"
@@ -41,7 +41,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<BasicInputNumberRangeProps>(), {
   modelValue: () => [undefined, undefined],
-  placeholder: () => ["请输入数字", "请输入数字"],
+  startPlaceholder: "请输入数字",
+  endPlaceholder: "请输入数字",
   rangeSeparator: "-",
   inputNumberProps: () => ({}),
 });
