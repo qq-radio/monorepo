@@ -144,6 +144,6 @@ const emitChange = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @use "./style.scss";
 </style>

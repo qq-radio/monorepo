@@ -87,7 +87,7 @@ const tem = content.value.split("\r\n");
 total.value = tem.length;
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .docs-example-showcase {
   border: 1px solid #dcdfe6;
   border-radius: 4px 4px 0 0;

@@ -10,7 +10,7 @@
 import { BasicStatus } from "@center/components";
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 :deep(.basic-status) {
   margin-right: 30px;
 }

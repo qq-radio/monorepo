@@ -41,6 +41,6 @@ const getContents = computed(() =>
 );
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "./style.scss";
 </style>

@@ -256,7 +256,7 @@ const handleSubmitError = (error) => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .example {
   display: flex;
 

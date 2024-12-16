@@ -66,7 +66,7 @@ const schemas: DescriptionSchema[] = [
 ];
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 :deep(.el-icon) {
   vertical-align: middle;
   margin-right: 4px;
