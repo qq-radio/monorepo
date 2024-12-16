@@ -10,7 +10,6 @@
   <BasicDialog @register="registerDialog" @confirm="submit">
     <BasicForm
       v-model="formModel"
-      :disabled="!!formModel.id"
       @register="registerForm"
       @submit="handleSubmit"
     />

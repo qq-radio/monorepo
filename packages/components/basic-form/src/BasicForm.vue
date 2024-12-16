@@ -112,9 +112,7 @@ const getBindValues = computed(() => {
     getProps.value,
     "disabled",
     "labelWidth",
-    "labelPosition",
-    "labelSuffix",
-    "labelWidth"
+    "labelPosition"
   );
   return {
     ...attrs,

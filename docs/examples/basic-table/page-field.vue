@@ -1,12 +1,10 @@
 <template>
   <BasicTable
-    v-model:searchParams="searchParams"
     :request="userListApi"
     :schemas="schemas"
     currentPageField="current"
     pageSizeField="size"
   />
-  {{ searchParams }}
 </template>
 
 <script setup lang="ts">
@@ -43,8 +41,6 @@ const userListApi = (params): Promise<ApiResponse> => {
     }, 300);
   });
 };
-
-const searchParams = ref<Recordable>({});
 
 const schemas: TableSchema[] = [
   {

@@ -1,6 +1,6 @@
 <template>
   <BasicTable
-    v-model:searchParams="searchParams"
+    v-model:search-params="searchParams"
     :request="userListApi"
     :schemas="schemas"
     :searchProps="{
@@ -25,6 +25,11 @@
       />
     </template>
   </BasicTable>
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="搜索值" name="params">
+      {{ searchParams }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script setup lang="ts">
@@ -65,8 +70,6 @@ const statusOptions = [
   { label: "已离职", value: 2 },
 ];
 
-const searchParams = ref<Recordable>({});
-
 const schemas: TableSchema[] = [
   {
     label: "用户名",
@@ -101,4 +104,8 @@ const schemas: TableSchema[] = [
     prop: "createTime",
   },
 ];
+
+const activeNames = ref(["params"]);
+
+const searchParams = ref<any>({});
 </script>

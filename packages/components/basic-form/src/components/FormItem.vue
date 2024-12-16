@@ -18,16 +18,15 @@
   <template v-else>
     <el-col v-if="getVisible" v-bind="getColProps">
       <el-form-item
-        v-bind="formItem.itemProps"
-        :label="getLabel"
         :prop="formItem.prop"
         :rules="getRules"
+        :label-width="getLabelWidth"
       >
         <template #label>
           <div :class="ns.e('label')">
             <div>
               <component :is="renderCustomLabel" v-if="isCustomLabel" />
-              <span v-else>{{ formItem.label }}</span>
+              <span v-else>{{ getLabel }}</span>
             </div>
             <div>
               <component
@@ -135,14 +134,6 @@ watchEffect(() => {
   formItem.value = enhanceSchema(props.schemaItem) as any;
 });
 
-const getVisible = computed(() => {
-  const { visible } = formItem.value;
-  const isVisible = isFunction(visible)
-    ? visible(callbackParams.value)
-    : unref(visible);
-  return isVisible !== false;
-});
-
 const getTitleColProps = computed(() =>
   merge(props.formProps.titleColProps, formItem.value.titleColProps)
 );
@@ -151,19 +142,29 @@ const getColProps = computed(() =>
   merge(props.formProps.colProps, formItem.value.colProps)
 );
 
+const getVisible = computed(() => {
+  const { visible } = formItem.value;
+  const isVisible = isFunction(visible)
+    ? visible(callbackParams.value)
+    : unref(visible);
+  return isVisible !== false;
+});
+
+const getLabelWidth = computed(
+  () => formItem.value.labelWidth || props.formProps.labelWidth
+);
+
 const getLabel = computed(() => {
-  const hasLabel = isUndefined(formItem.value.hasLabel)
-    ? props.formProps.hasLabel
-    : formItem.value.hasLabel;
-  return hasLabel ? formItem.value.label : "";
+  const { hasLabel: formHasLabel, labelSuffix = "" } = props.formProps;
+  const { hasLabel, label } = formItem.value;
+  const flag = isUndefined(hasLabel) ? formHasLabel : hasLabel;
+  return flag ? label + labelSuffix : "";
 });
 
 const getRules = computed(() => normalizeRule(formItem.value));
 
 const getDisabled = computed(() => {
-  const {
-    formProps: { disabled: formDisabled },
-  } = props;
+  const { disabled: formDisabled } = props.formProps;
   const { disabled } = formItem.value;
 
   if (isUndefined(disabled)) {

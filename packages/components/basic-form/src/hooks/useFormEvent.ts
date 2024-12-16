@@ -37,7 +37,9 @@ export function useFormEvent(getProps: Props, context: Context) {
   watch(
     () => modelValue.value,
     () => {
-      setModel();
+      setTimeout(() => {
+        setModel();
+      }, 0);
     },
     {
       deep: true,

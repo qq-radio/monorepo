@@ -4,6 +4,7 @@
     <el-input-number
       v-bind="getItemProps"
       v-model="minValue"
+      :class="ns.e('start')"
       :placeholder="startPlaceholder"
       :disabled="disabled"
       @change="emitChange"
@@ -13,6 +14,7 @@
     <el-input-number
       v-bind="getItemProps"
       v-model="maxValue"
+      :class="ns.e('end')"
       :placeholder="endPlaceholder"
       :disabled="disabled"
       @change="emitChange"

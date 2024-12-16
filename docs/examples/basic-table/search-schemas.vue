@@ -1,9 +1,15 @@
 <template>
   <BasicTable
+    v-model:search-params="searchParams"
     :request="userListApi"
     :searchSchemas="searchSchemas"
     :schemas="schemas"
   />
+  <el-collapse v-model="activeNames">
+    <el-collapse-item title="搜索值" name="params">
+      {{ searchParams }}
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script setup lang="ts">
@@ -87,4 +93,8 @@ const schemas: TableSchema[] = [
     prop: "createTime",
   },
 ];
+
+const activeNames = ref(["params"]);
+
+const searchParams = ref<any>({});
 </script>
