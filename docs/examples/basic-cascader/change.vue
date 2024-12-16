@@ -14,7 +14,7 @@
     checkStrictly
     @change="onChange"
   />
-  <div>当前选中值：{{ value }}</div>
+  <div style="margin-top: 10px">双向绑定值：{{ value }}</div>
   <div>选中值详细信息：{{ valueDetails }}</div>
 </template>
 

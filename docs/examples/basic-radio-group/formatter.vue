@@ -1,6 +1,6 @@
 <template>
   <BasicRadioGroup v-model="value" :formatter="formatter" :options="options" />
-  <div>当前选中值：{{ value }}</div>
+  <div style="margin-top: 10px">双向绑定值：{{ value }}</div>
 </template>
 
 <script setup lang="ts">

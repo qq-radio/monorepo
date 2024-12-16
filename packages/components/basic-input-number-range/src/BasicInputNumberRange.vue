@@ -6,6 +6,7 @@
       v-model="minValue"
       :placeholder="placeholder[0]"
       :disabled="disabled"
+      @change="emitChange"
       @blur="emitChange"
     />
     <span :class="ns.e('range-separator')">{{ rangeSeparator }}</span>
@@ -14,6 +15,7 @@
       v-model="maxValue"
       :placeholder="placeholder[1]"
       :disabled="disabled"
+      @change="emitChange"
       @blur="emitChange"
     />
     <span v-if="suffix" :class="ns.e('suffix')">{{ suffix }}</span>
@@ -52,8 +54,6 @@ const maxValue = ref<number>();
 const getItemProps = computed(() => ({
   controls: false,
   ...props.inputNumberProps,
-  min: props.min || props.inputNumberProps.min,
-  max: props.max || props.inputNumberProps.max,
 }));
 
 watchEffect(() => {

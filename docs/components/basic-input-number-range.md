@@ -18,14 +18,6 @@ basic-input-number-range/basic
 basic-input-number-range/passing-props
 :::
 
-## 最小值、最大值
-
-您可以通过`min`、`max`设置数字范围区间
-
-:::demo
-basic-input-number-range/min-max
-:::
-
 ## 自定义标识符
 
 您可以通过`prefix`自定义前缀标识符、`suffix`自定义后缀标识符、`range-separator`自定义分隔标识符

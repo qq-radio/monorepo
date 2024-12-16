@@ -3,9 +3,11 @@
     v-model="value"
     :inputNumberProps="{
       controls: true,
+      size: 'large',
       step: 0.2,
       precision: 2,
-      size: 'large',
+      min: 2,
+      max: 5,
     }"
   />
   <div style="margin-top: 10px">双向绑定值：{{ value }}</div>

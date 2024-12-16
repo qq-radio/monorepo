@@ -53,19 +53,19 @@ watchEffect(() => {
   page.value = { ...props.modelValue };
 });
 
-const handleChange = () => {
+const emitChange = () => {
   emit("update:modelValue", page.value);
   emit("change", page.value);
 };
 
 const handleCurrentChange = (p: number) => {
   page.value.currentPage = p;
-  handleChange();
+  emitChange();
 };
 
 const handleSizeChange = (s: number) => {
   page.value.pageSize = s;
   page.value.currentPage = 1;
-  handleChange();
+  emitChange();
 };
 </script>

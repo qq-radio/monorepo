@@ -5,8 +5,7 @@
     @size-change="handleSizeChange"
     @change="handleChange"
   />
-  <br />
-  page改变值：{{ page }}
+  <div style="margin-top: 10px">双向绑定值：{{ page }}</div>
 </template>
 
 <script setup lang="ts">
