@@ -63,9 +63,3 @@ basic-button-group/permission
 :::demo
 basic-button-group/type
 :::
-
-## 回调参数类型
-
-:::demo
-basic-button-group/callback-params
-:::

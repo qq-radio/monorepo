@@ -42,5 +42,6 @@
   "turboConsoleLog.delimiterInsideMessage": "",
   "turboConsoleLog.insertEnclosingClass": false,
   "turboConsoleLog.insertEnclosingFunction": false,
-  "turboConsoleLog.logMessagePrefix": ""
+  "turboConsoleLog.logMessagePrefix": "",
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

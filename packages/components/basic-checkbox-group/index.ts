@@ -1,3 +1,3 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { default as BasicCheckboxGroup } from "./src/BasicCheckboxGroup.vue";
+export { default as BasicCheckboxGroup } from './src/BasicCheckboxGroup.vue'
