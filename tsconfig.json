@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
     "target": "esnext",
@@ -17,14 +18,5 @@
   "vueCompilerOptions": {
     "target": 3
   },
-  "include": [
-    "packages/**/*.ts",
-    "packages/**/*.ts",
-    "packages/**/*.tsx",
-    "packages/**/*.vue",
-    "docs/**/*.ts",
-    "docs/**/*.ts",
-    "docs/**/*.tsx",
-    "docs/**/*.vue"
-  ]
+  "include": ["packages", "./types"]
 }

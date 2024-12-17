@@ -2,6 +2,7 @@
 
 export const usePermission = () => {
   function checkButtonPermission(permission?) {
+    console.log("permission:", permission);
     //   if (isUndefined(permission)) {
     //     return true;
     //   }

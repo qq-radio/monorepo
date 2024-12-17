@@ -6,6 +6,7 @@
   "editor.formatOnSave": true,
 
   /** 使用prettier格式化以下文件 */
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -29,14 +30,9 @@
   },
 
   /** 开启eslint报错提示和eslint自动修复 */
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll": "explicit"
   },
 
   /** 禁用文件重命名后，扫描整个项目，从而避免卡顿（关闭后无法自动重构路径，需要手动检查） */
