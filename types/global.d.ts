@@ -4,4 +4,4 @@ declare interface Recordable<T = any> {
 
 declare type Nullable<T> = T | null;
 
-declare type Arrayable<T> = T | T[];
+type Arrayable<T> = T | T[];
