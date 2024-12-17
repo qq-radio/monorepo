@@ -3,7 +3,7 @@ export interface BasicCheckboxGroupProps {
   isButton?: boolean;
   hasCheckAll?: boolean;
 
-  options?: CheckboxOption[];
+  options?: (CheckboxOption & Recordable)[];
   api?: () => Promise<unknown>;
   resultField?: string;
   labelField?: string;
@@ -28,8 +28,8 @@ export interface BasicCheckboxGroupEmits {
 export type CheckboxValue = (string | number | boolean)[];
 
 export interface CheckboxOption {
-  label: string;
-  value: string | number;
+  label?: string;
+  value?: string | number;
   disabled?: boolean;
   border?: boolean;
   size?: "large" | "default" | "small";

@@ -3,7 +3,7 @@ export interface BasicRadioGroupProps {
   isButton?: boolean;
   disabled?: boolean;
 
-  options?: RadioOption[];
+  options?: (RadioOption & Recordable)[];
   api?: () => Promise<unknown>;
   resultField?: string;
   labelField?: string;
@@ -28,8 +28,8 @@ export interface BasicRadioGroupEmits {
 export type RadioValue = undefined | string | number;
 
 export interface RadioOption {
-  label: string;
-  value: string | number;
+  label?: string;
+  value?: string | number;
   disabled?: boolean;
   border?: boolean;
   size?: "large" | "default" | "small";

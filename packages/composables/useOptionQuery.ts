@@ -16,8 +16,8 @@ type Props<T> = {
   formatter?: (option: any) => any;
 };
 
-export function useOptionQuery<T extends Option>(props: Props<T>) {
-  const options = ref<T[]>([]);
+export function useOptionQuery<T>(props: Props<T>) {
+  const options = ref<(T & Option)[]>([]);
 
   const init = async () => {
     try {

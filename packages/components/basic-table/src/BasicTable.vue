@@ -132,7 +132,7 @@
         </template>
       </el-table>
     </div>
-    <div :class="ns.e('page')">
+    <div v-if="getProps.showPagination" :class="ns.e('page')">
       <BasicPagination
         v-bind="getPaginationProps"
         v-model="page"
@@ -181,6 +181,7 @@ const props = withDefaults(defineProps<BasicTableProps>(), {
   schemas: () => [],
   immediate: true,
   loading: false,
+  showPagination: true,
 });
 
 const propsRef = ref<Partial<BasicTableProps>>();

@@ -4,7 +4,7 @@ export interface BasicSelectProps {
   multiple?: boolean;
   clearable?: boolean;
 
-  options?: SelectOption[];
+  options?: (SelectOption & Recordable)[];
   api?: () => Promise<unknown>;
   resultField?: string;
   labelField?: string;
@@ -29,8 +29,8 @@ export interface BasicSelectEmits {
 export type SelectValue = any;
 
 export interface SelectOption {
-  label: string;
-  value: string | number;
+  label?: string;
+  value?: string | number;
   disabled?: boolean;
 
   customRender?: (params: SelectCallbackParams) => RenderType;

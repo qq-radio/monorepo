@@ -3,7 +3,7 @@ import type { Page } from "@center/components/basic-pagination";
 import type { ComputedRef, Ref } from "vue";
 
 import { ref, computed, watch, unref, onMounted } from "vue";
-import { isFunction, cloneDeep, isArray, merge } from "lodash";
+import { isFunction, cloneDeep, isArray, merge, isEmpty } from "lodash";
 
 type Props = ComputedRef<
   Pick<
@@ -15,6 +15,7 @@ type Props = ComputedRef<
     | "immediate"
     | "data"
     | "dataFormatter"
+    | "showPagination"
     | "currentPageField"
     | "pageSizeField"
   >
@@ -63,12 +64,24 @@ export function useTableData(getProps: Props, context: Context) {
       pageSizeField = "pageSize",
     } = getProps.value;
 
-    const params = {
-      ...extraParams,
+    let params = {
       ...searchFormParams.value,
-      [currentPageField]: page.value.currentPage,
-      [pageSizeField]: page.value.pageSize,
     };
+
+    if (!isEmpty(extraParams)) {
+      params = {
+        ...params,
+        ...extraParams,
+      };
+    }
+
+    if (getProps.value.showPagination) {
+      params = {
+        ...params,
+        [currentPageField]: page.value.currentPage,
+        [pageSizeField]: page.value.pageSize,
+      };
+    }
 
     const finalParams = isFunction(paramsFormatter)
       ? paramsFormatter(params)

@@ -38,6 +38,7 @@ export interface BasicTableProps {
   dataFormatter?: (tableDatas: Array<Recordable>) => Array<Recordable>;
 
   // for table pagination
+  showPagination?: boolean;
   paginationProps?: Partial<PaginationProps>;
   currentPageField?: string;
   pageSizeField?: string;
