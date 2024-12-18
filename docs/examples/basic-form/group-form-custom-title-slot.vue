@@ -22,54 +22,54 @@
 </template>
 
 <script setup lang="ts">
-import { BasicForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import { ElIcon } from "element-plus";
-import { VideoCamera, Headset } from "@element-plus/icons-vue";
+import { ElIcon } from 'element-plus'
+import { VideoCamera, Headset } from '@element-plus/icons-vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
-const formModel = ref({});
+const formModel = ref({})
 
 const formSchemas: FormSchema[] = [
   {
-    title: "兴趣",
+    title: '兴趣',
     titleProps: {
       style: {
-        color: "#409eff",
-        fontWeight: "bold",
-        borderBottom: "1px solid #409eff",
+        color: '#409eff',
+        fontWeight: 'bold',
+        borderBottom: '1px solid #409eff',
       },
     },
-    customTitleSlot: "title-interest",
+    customTitleSlot: 'title-interest',
   },
   {
-    label: "电影",
-    prop: "movie",
-    component: "checkbox-group",
+    label: '电影',
+    prop: 'movie',
+    component: 'checkbox-group',
     componentProps: {
       options: [
-        { label: "动作", value: "action" },
-        { label: "喜剧", value: "comedy" },
-        { label: "恐怖", value: "horror" },
+        { label: '动作', value: 'action' },
+        { label: '喜剧', value: 'comedy' },
+        { label: '恐怖', value: 'horror' },
       ],
     },
     required: true,
   },
   {
-    label: "音乐",
-    prop: "music",
-    component: "select",
+    label: '音乐',
+    prop: 'music',
+    component: 'select',
     componentProps: {
       options: [
-        { label: "古典乐", value: "classical" },
-        { label: "蓝调", value: "blues" },
-        { label: "摇滚", value: "rock" },
+        { label: '古典乐', value: 'classical' },
+        { label: '蓝调', value: 'blues' },
+        { label: '摇滚', value: 'rock' },
       ],
     },
     required: true,
   },
-];
+]
 </script>

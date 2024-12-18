@@ -3,19 +3,11 @@
     <el-collapse-item title="示例" name="example">
       <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter>
         <template #username>
-          <el-icon
-            v-for="i in 3"
-            :key="i"
-            style="color: #00cef0; vertical-align: middle"
-          >
+          <el-icon v-for="i in 3" :key="i" style="color: #00cef0; vertical-align: middle">
             <StarFilled />
           </el-icon>
           <span style="margin: 0 10px">迈克尔</span>
-          <el-icon
-            v-for="i in 3"
-            :key="i"
-            style="color: #00cef0; vertical-align: middle"
-          >
+          <el-icon v-for="i in 3" :key="i" style="color: #00cef0; vertical-align: middle">
             <StarFilled />
           </el-icon>
         </template>
@@ -43,56 +35,51 @@
 </template>
 
 <script setup lang="ts">
-import { BasicForm, FormSchema } from "@center/components";
+import { BasicForm, FormSchema } from '@center/components'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import {
-  UserFilled,
-  StarFilled,
-  VideoCamera,
-  Headset,
-} from "@element-plus/icons-vue";
+import { UserFilled, StarFilled, VideoCamera, Headset } from '@element-plus/icons-vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
 const formModel = ref({
   coffee: [],
-  sport: "",
-});
+  sport: '',
+})
 
 const formSchemas: FormSchema[] = [
   {
-    label: "用户",
-    prop: "username",
-    customLabelSlot: "label-username",
-    customSlot: "username",
+    label: '用户',
+    prop: 'username',
+    customLabelSlot: 'label-username',
+    customSlot: 'username',
   },
   {
-    label: "电影",
-    prop: "movie",
-    component: "checkbox-group",
+    label: '电影',
+    prop: 'movie',
+    component: 'checkbox-group',
     componentProps: {
       options: [
-        { label: "动作", value: "action" },
-        { label: "喜剧", value: "comedy" },
-        { label: "恐怖", value: "horror" },
+        { label: '动作', value: 'action' },
+        { label: '喜剧', value: 'comedy' },
+        { label: '恐怖', value: 'horror' },
       ],
     },
-    customLabelSlot: "label-movie",
+    customLabelSlot: 'label-movie',
   },
   {
-    label: "音乐",
-    prop: "music",
-    component: "select",
+    label: '音乐',
+    prop: 'music',
+    component: 'select',
     componentProps: {
       options: [
-        { label: "古典乐", value: "classical" },
-        { label: "蓝调", value: "blues" },
-        { label: "摇滚", value: "rock" },
+        { label: '古典乐', value: 'classical' },
+        { label: '蓝调', value: 'blues' },
+        { label: '摇滚', value: 'rock' },
       ],
     },
-    customLabelSlot: "label-music",
+    customLabelSlot: 'label-music',
   },
-];
+]
 </script>

@@ -9,23 +9,23 @@
 </template>
 
 <script setup lang="ts">
-import { BasicPagination } from "@center/components";
+import { BasicPagination } from '@center/components'
 
 const page = ref({
   currentPage: 1,
   pageSize: 20,
   total: 86,
-});
+})
 
 const handleCurrentChange = (p) => {
-  console.log("current-change", p);
-};
+  console.log('current-change', p)
+}
 
 const handleSizeChange = (s) => {
-  console.log("size-change", s);
-};
+  console.log('size-change', s)
+}
 
 const handleChange = (page) => {
-  console.log("change", page);
-};
+  console.log('change', page)
+}
 </script>

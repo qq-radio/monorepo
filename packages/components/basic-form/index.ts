@@ -1,9 +1,9 @@
-export * from "./src/types";
+export * from './src/types'
 
-export { useForm } from "./src/hooks/useForm";
+export { useForm } from './src/hooks/useForm'
 
-import ComponentFile from "./src/BasicForm.vue";
+import ComponentFile from './src/BasicForm.vue'
 
-export type BasicFormInstance = InstanceType<typeof ComponentFile>;
+export type BasicFormInstance = InstanceType<typeof ComponentFile>
 
-export const BasicForm = ComponentFile;
+export const BasicForm = ComponentFile

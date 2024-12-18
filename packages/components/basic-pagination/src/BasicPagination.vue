@@ -11,17 +11,17 @@
 </template>
 
 <script setup lang="ts">
-import type { BasicPaginationProps, BasicPaginationEmits, Page } from "./type";
+import type { BasicPaginationProps, BasicPaginationEmits, Page } from './type'
 
-import { ref, computed, watchEffect, useAttrs } from "vue";
+import { ref, computed, watchEffect, useAttrs } from 'vue'
 
 defineOptions({
-  name: "BasicPagination",
-});
+  name: 'BasicPagination',
+})
 
-const attrs = useAttrs();
+const attrs = useAttrs()
 
-const emit = defineEmits<BasicPaginationEmits>();
+const emit = defineEmits<BasicPaginationEmits>()
 
 const props = withDefaults(defineProps<BasicPaginationProps>(), {
   modelValue: () => ({
@@ -29,43 +29,43 @@ const props = withDefaults(defineProps<BasicPaginationProps>(), {
     pageSize: 10,
     total: 0,
   }),
-});
+})
 
 const defaultProps = {
-  layout: "total, sizes, prev, pager, next, jumper",
+  layout: 'total, sizes, prev, pager, next, jumper',
   pageSizes: [10, 20, 30, 40, 50, 100],
   currentPage: 1,
   pageSize: 10,
-};
+}
 
 const getBindValues = computed(() => ({
   ...defaultProps,
   ...attrs,
-}));
+}))
 
 const page = ref<Page>({
   currentPage: 1,
   pageSize: 10,
   total: 0,
-});
+})
 
 watchEffect(() => {
-  page.value = { ...props.modelValue };
-});
+  page.value = { ...props.modelValue }
+})
 
 const emitChange = () => {
-  emit("update:modelValue", page.value);
-  emit("change", page.value);
-};
+  emit('update:modelValue', page.value)
+  emit('change', page.value)
+}
 
 const handleCurrentChange = (p: number) => {
-  page.value.currentPage = p;
-  emitChange();
-};
+  page.value.currentPage = p
+  emitChange()
+}
 
 const handleSizeChange = (s: number) => {
-  page.value.pageSize = s;
-  page.value.currentPage = 1;
-  emitChange();
-};
+  page.value.pageSize = s
+  page.value.currentPage = 1
+  emitChange()
+}
 </script>

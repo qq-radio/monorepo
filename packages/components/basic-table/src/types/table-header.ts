@@ -1,10 +1,10 @@
-import type { TableSchema } from "./";
-import type { TableColumnCtx } from "element-plus";
+import type { TableSchema } from './'
+import type { TableColumnCtx } from 'element-plus'
 
 export interface TableHeaderProps {
-  rowIndex: number;
-  column: TableColumnCtx<any>;
-  schema: TableSchema;
+  rowIndex: number
+  column: TableColumnCtx<any>
+  schema: TableSchema
 }
 
-export type TableHeaderCallbackParams = TableHeaderProps;
+export type TableHeaderCallbackParams = TableHeaderProps

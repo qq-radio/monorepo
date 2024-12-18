@@ -1,4 +1,4 @@
-@use "../../../theme/index.scss" as *;
+@use '../../../theme/index.scss' as *;
 
 @include b(form) {
 }
@@ -30,7 +30,7 @@
   vertical-align: middle;
 }
 
-:deep(.el-row ) {
+:deep(.el-row) {
   &:last-child {
     float: right;
     margin-bottom: 20px;

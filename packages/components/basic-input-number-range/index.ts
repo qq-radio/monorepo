@@ -1,3 +1,3 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { default as BasicInputNumberRange } from "./src/BasicInputNumberRange.vue";
+export { default as BasicInputNumberRange } from './src/BasicInputNumberRange.vue'

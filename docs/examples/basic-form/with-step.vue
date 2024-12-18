@@ -1,10 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <el-steps
-        style="max-width: 400px; margin-left: 50px; margin-bottom: 20px"
-        :active="active"
-      >
+      <el-steps style="max-width: 400px; margin-left: 50px; margin-bottom: 20px" :active="active">
         <el-step title="商品信息" />
         <el-step title="收货信息" />
       </el-steps>
@@ -38,86 +35,86 @@
 </template>
 
 <script setup lang="ts">
-import { BasicForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
-const active = ref(0);
+const active = ref(0)
 
-const productFormModel = ref({});
+const productFormModel = ref({})
 
-const deliveryFormModel = ref({});
+const deliveryFormModel = ref({})
 
 const productFormSchemas: FormSchema[] = [
   {
-    label: "咖啡",
-    prop: "coffee",
-    component: "radio-group",
+    label: '咖啡',
+    prop: 'coffee',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "拿铁", value: "latte" },
-        { label: "卡布奇诺", value: "cappuccino" },
-        { label: "美式", value: "americano" },
+        { label: '拿铁', value: 'latte' },
+        { label: '卡布奇诺', value: 'cappuccino' },
+        { label: '美式', value: 'americano' },
       ],
     },
     required: true,
   },
   {
-    label: "规格",
-    prop: "size",
-    component: "radio-group",
+    label: '规格',
+    prop: 'size',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "大杯(500ml)", value: "large" },
-        { label: "小杯(350ml)", value: "small" },
+        { label: '大杯(500ml)', value: 'large' },
+        { label: '小杯(350ml)', value: 'small' },
       ],
     },
     required: true,
   },
   {
-    label: "温度",
-    prop: "temperature",
-    component: "radio-group",
+    label: '温度',
+    prop: 'temperature',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "热", value: "hot" },
-        { label: "冰", value: "ice" },
+        { label: '热', value: 'hot' },
+        { label: '冰', value: 'ice' },
       ],
     },
     required: true,
   },
   {
-    label: "需要吸管",
-    prop: "needStraw",
-    component: "switch",
+    label: '需要吸管',
+    prop: 'needStraw',
+    component: 'switch',
     defaultValue: true,
     required: true,
   },
-];
+]
 
 const deliveryFormSchemas: FormSchema[] = [
   {
-    label: "联系人",
-    prop: "name",
+    label: '联系人',
+    prop: 'name',
     required: true,
   },
   {
-    label: "联系电话",
-    prop: "phone",
+    label: '联系电话',
+    prop: 'phone',
     required: true,
   },
   {
-    label: "收货地址",
-    prop: "address",
-    component: "textarea",
+    label: '收货地址',
+    prop: 'address',
+    component: 'textarea',
     required: true,
   },
-];
+]
 
 const handleSubmit = () => {
-  console.log("表单提交-商品信息:", productFormModel.value);
-  console.log("表单提交-收货信息:", deliveryFormModel.value);
-};
+  console.log('表单提交-商品信息:', productFormModel.value)
+  console.log('表单提交-收货信息:', deliveryFormModel.value)
+}
 </script>

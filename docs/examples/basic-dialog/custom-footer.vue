@@ -9,16 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { BasicDialog } from "@center/components";
+import { BasicDialog } from '@center/components'
 
-const dialogVisible = ref(false);
+const dialogVisible = ref(false)
 
 const handleCancel = () => {
-  console.log("点击了取消");
-};
+  console.log('点击了取消')
+}
 
 const handleAudit = () => {
-  console.log("点击了审核通过");
-  dialogVisible.value = false;
-};
+  console.log('点击了审核通过')
+  dialogVisible.value = false
+}
 </script>

@@ -2,7 +2,7 @@
 
 export const usePermission = () => {
   function checkButtonPermission(permission?) {
-    console.log("permission:", permission);
+    console.log('permission:', permission)
     //   if (isUndefined(permission)) {
     //     return true;
     //   }
@@ -10,10 +10,10 @@ export const usePermission = () => {
     //   const buttonPermissions = store.getters.permissions;
 
     //   return buttonPermissions[permission];
-    return true;
+    return true
   }
 
   return {
     checkButtonPermission,
-  };
-};
+  }
+}

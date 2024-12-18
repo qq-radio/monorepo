@@ -1,3 +1,3 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { default as BasicRadioGroup } from "./src/BasicRadioGroup.vue";
+export { default as BasicRadioGroup } from './src/BasicRadioGroup.vue'

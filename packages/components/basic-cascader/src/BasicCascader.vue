@@ -13,71 +13,65 @@
 </template>
 
 <script setup lang="ts">
-import {
-  BasicCascaderProps,
-  BasicCascaderEmits,
-  CascaderModelValue,
-} from "./type";
+import { BasicCascaderProps, BasicCascaderEmits, CascaderModelValue } from './type'
 
-import { isFunction, isArray, get } from "lodash";
-import { useAttrs, useSlots, computed, ref, watch } from "vue";
+import { isFunction, isArray, get } from 'lodash'
+import { useAttrs, useSlots, computed, ref, watch } from 'vue'
 
 defineOptions({
-  name: "BasicCascader",
+  name: 'BasicCascader',
   inheritAttrs: false,
-});
+})
 
-const attrs = useAttrs();
-const slots = useSlots();
+const attrs = useAttrs()
+const slots = useSlots()
 
 const props = withDefaults(defineProps<BasicCascaderProps>(), {
   clearable: true,
-});
+})
 
-const emit = defineEmits<BasicCascaderEmits>();
+const emit = defineEmits<BasicCascaderEmits>()
 
 const getBindValues = computed(() => ({
   ...attrs,
   clearable: props.clearable,
-}));
+}))
 
-const instanceRef = ref();
-const stateValue = ref<CascaderModelValue>();
-const cascaderDatas = ref<Recordable[]>([]);
+const instanceRef = ref()
+const stateValue = ref<CascaderModelValue>()
+const cascaderDatas = ref<Recordable[]>([])
 
 watch(
   () => props.modelValue,
   () => {
-    stateValue.value = props.modelValue;
+    stateValue.value = props.modelValue
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
 const init = async () => {
   try {
     if (isArray(props.options)) {
-      cascaderDatas.value = props.options;
-      return;
+      cascaderDatas.value = props.options
+      return
     }
 
     if (isFunction(props.api)) {
-      const result = await props.api();
-      cascaderDatas.value = props.resultField
-        ? get(result, props.resultField)
-        : result;
+      const result = await props.api()
+      cascaderDatas.value = props.resultField ? get(result, props.resultField) : result
     }
   } catch (error) {
-    console.error("BasicCascader init error:", error);
+    console.error('BasicCascader init error:', error)
   }
-};
+}
 
-init();
+init()
 
 const emitChange = () => {
-  emit("update:modelValue", stateValue.value);
-  emit("change", {
+  emit('update:modelValue', stateValue.value)
+  emit('change', {
     value: stateValue.value,
     node: instanceRef.value.getCheckedNodes(),
-  });
-};
+  })
+}
 </script>

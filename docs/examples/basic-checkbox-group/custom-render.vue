@@ -4,15 +4,15 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicCheckboxGroup } from "@center/components";
-import { Grape, Cherry, Orange } from "@element-plus/icons-vue";
+import { BasicCheckboxGroup } from '@center/components'
+import { Grape, Cherry, Orange } from '@element-plus/icons-vue'
 
-const value = ref();
+const value = ref()
 
 const options = [
   {
-    label: "葡萄",
-    value: "grape",
+    label: '葡萄',
+    value: 'grape',
     customRender: ({ option }) => (
       <span style="color: purple; display: flex; align-items: center">
         <el-icon style="margin-right: 4px">
@@ -23,8 +23,8 @@ const options = [
     ),
   },
   {
-    label: "樱桃",
-    value: "cherry",
+    label: '樱桃',
+    value: 'cherry',
     customRender: ({ option }) => (
       <span style="color: red; display: flex; align-items: center">
         <el-icon style="margin-right: 4px">
@@ -35,8 +35,8 @@ const options = [
     ),
   },
   {
-    label: "橘子",
-    value: "orange",
+    label: '橘子',
+    value: 'orange',
     customRender: ({ option }) => (
       <span style="color: orange; display: flex; align-items: center">
         <el-icon style="margin-right: 4px">
@@ -46,5 +46,5 @@ const options = [
       </span>
     ),
   },
-];
+]
 </script>

@@ -8,15 +8,15 @@
 </template>
 
 <script setup lang="ts">
-import { BasicExport, ExportConfig } from "@center/components";
+import { BasicExport, ExportConfig } from '@center/components'
 
 const config: ExportConfig = {
-  url: "mock-url",
+  url: 'mock-url',
   params: () => {},
-  fileName: "导出文件名称",
-};
+  fileName: '导出文件名称',
+}
 
 const handleSuccess = () => {
-  console.log("导入成功");
-};
+  console.log('导入成功')
+}
 </script>

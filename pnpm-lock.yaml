@@ -39,6 +39,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      prettier:
+        specifier: ^3.3.3
+        version: 3.4.2
       sass:
         specifier: ^1.83.0
         version: 1.83.0

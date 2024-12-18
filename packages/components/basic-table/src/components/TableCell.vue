@@ -13,79 +13,73 @@
 </template>
 
 <script setup lang="ts">
-import type { TableCellProps, TableCellCallbackParams } from "../types";
+import type { TableCellProps, TableCellCallbackParams } from '../types'
 
-import { useCustomRender } from "@center/composables";
+import { useCustomRender } from '@center/composables'
 
-import { useSlots, computed } from "vue";
-import { isFunction } from "lodash";
+import { useSlots, computed } from 'vue'
+import { isFunction } from 'lodash'
 
-import { BasicDisplay, hasComponent } from "@center/components/basic-display";
+import { BasicDisplay, hasComponent } from '@center/components/basic-display'
 
 defineOptions({
-  name: "TableCell",
-});
+  name: 'TableCell',
+})
 
-const slots = useSlots();
+const slots = useSlots()
 
 const props = withDefaults(defineProps<TableCellProps>(), {
   schema: () => ({
-    prop: "",
-    label: "",
+    prop: '',
+    label: '',
   }),
-});
+})
 
 const params = computed<TableCellCallbackParams>(() => {
-  const { row = {}, rowIndex, column, schema } = props;
-  const value = schema.prop && row[schema.prop];
+  const { row = {}, rowIndex, column, schema } = props
+  const value = schema.prop && row[schema.prop]
   return {
     row,
     rowIndex,
     column,
     schema,
     value,
-  };
-});
+  }
+})
 
 const formattedValue = computed(() => {
   const {
     schema: { formatter },
-  } = props;
+  } = props
 
-  return isFunction(formatter)
-    ? formatter({ ...params.value })
-    : params.value.value;
-});
+  return isFunction(formatter) ? formatter({ ...params.value }) : params.value.value
+})
 
 const getDisplayProps = computed(() => {
   const {
     schema: { displayProps },
-  } = props;
+  } = props
 
-  return isFunction(displayProps)
-    ? displayProps({ ...params.value })
-    : displayProps;
-});
+  return isFunction(displayProps) ? displayProps({ ...params.value }) : displayProps
+})
 
 const getDisplaySlots = computed(() => {
   const {
     schema: { displaySlots },
-  } = props;
+  } = props
 
-  return isFunction(displaySlots)
-    ? displaySlots({ ...params.value })
-    : displaySlots;
-});
+  return isFunction(displaySlots) ? displaySlots({ ...params.value }) : displaySlots
+})
 
-const { renderItem } = useCustomRender({ slots });
+const { renderItem } = useCustomRender({ slots })
 
-const isCustomCell = props.schema.customRender || props.schema.customSlot;
+const isCustomCell = props.schema.customRender || props.schema.customSlot
 
 const renderCustomCell = renderItem(
   {
     customRender: props.schema.customRender,
     customSlot: props.schema.customSlot,
   },
-  params.value
-);
+  params.value,
+)
 </script>

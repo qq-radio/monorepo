@@ -10,24 +10,24 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import { CoffeeCup, Baseball } from "@element-plus/icons-vue";
+import { CoffeeCup, Baseball } from '@element-plus/icons-vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
-const formModel = ref({});
+const formModel = ref({})
 
 const formSchemas: FormSchema[] = [
   {
-    title: "喜好",
+    title: '喜好',
     titleProps: {
       style: {
-        color: "#409eff",
-        fontWeight: "bold",
-        borderBottom: "1px solid #409eff",
+        color: '#409eff',
+        fontWeight: 'bold',
+        borderBottom: '1px solid #409eff',
       },
     },
     customTitleRender: () => (
@@ -43,30 +43,30 @@ const formSchemas: FormSchema[] = [
     ),
   },
   {
-    label: "咖啡",
-    prop: "coffee",
-    component: "radio-group",
+    label: '咖啡',
+    prop: 'coffee',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "拿铁", value: "latte" },
-        { label: "卡布奇诺", value: "cappuccino" },
-        { label: "美式", value: "americano" },
+        { label: '拿铁', value: 'latte' },
+        { label: '卡布奇诺', value: 'cappuccino' },
+        { label: '美式', value: 'americano' },
       ],
     },
     required: true,
   },
   {
-    label: "运动",
-    prop: "sport",
-    component: "checkbox-group",
+    label: '运动',
+    prop: 'sport',
+    component: 'checkbox-group',
     componentProps: {
       options: [
-        { label: "足球", value: "football" },
-        { label: "篮球", value: "basketball" },
-        { label: "羽毛球", value: "badminton" },
+        { label: '足球', value: 'football' },
+        { label: '篮球', value: 'basketball' },
+        { label: '羽毛球', value: 'badminton' },
       ],
     },
     required: true,
   },
-];
+]
 </script>

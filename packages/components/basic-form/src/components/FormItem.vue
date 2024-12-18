@@ -7,21 +7,14 @@
           <span v-else :class="ns.e('title-text')">{{ formItem.title }}</span>
         </div>
         <div>
-          <component
-            :is="renderTooltip(formItem.titleTooltip)"
-            v-if="formItem.titleTooltip"
-          />
+          <component :is="renderTooltip(formItem.titleTooltip)" v-if="formItem.titleTooltip" />
         </div>
       </div>
     </el-col>
   </template>
   <template v-else>
     <el-col v-if="getVisible" v-bind="getColProps">
-      <el-form-item
-        :prop="formItem.prop"
-        :rules="getRules"
-        :label-width="getLabelWidth"
-      >
+      <el-form-item :prop="formItem.prop" :rules="getRules" :label-width="getLabelWidth">
         <template #label>
           <div :class="ns.e('label')">
             <div>
@@ -29,10 +22,7 @@
               <span v-else>{{ getLabel }}</span>
             </div>
             <div>
-              <component
-                :is="renderTooltip(formItem.labelTooltip)"
-                v-if="formItem.labelTooltip"
-              />
+              <component :is="renderTooltip(formItem.labelTooltip)" v-if="formItem.labelTooltip" />
             </div>
           </div>
         </template>
@@ -46,11 +36,7 @@
             :disabled="getDisabled"
             @change="(...v: unknown[]) => onChange(v)"
           >
-            <template
-              v-for="(fieldSlot, key) in formItem.componentSlots"
-              :key="key"
-              #[key]="data"
-            >
+            <template v-for="(fieldSlot, key) in formItem.componentSlots" :key="key" #[key]="data">
               <component :is="fieldSlot" v-bind="data" />
             </template>
           </component>
@@ -69,160 +55,152 @@ import type {
   FormSchema,
   EnhancedFormSchema,
   ComponentProps,
-} from "../types";
+} from '../types'
 
-import { useBasicNamespace, useCustomRender } from "@center/composables";
-import { useFormItemHandler } from "../hooks/useFormItemHandler";
+import { useBasicNamespace, useCustomRender } from '@center/composables'
+import { useFormItemHandler } from '../hooks/useFormItemHandler'
 
-import { getComponent } from "../tools/component";
-import { normalizeSchema } from "../tools/normalize-schema";
-import { normalizeRule } from "../tools/normalize-rule";
+import { getComponent } from '../tools/component'
+import { normalizeSchema } from '../tools/normalize-schema'
+import { normalizeRule } from '../tools/normalize-rule'
 
-import { useSlots, ref, watchEffect, computed, unref } from "vue";
-import { isFunction, isUndefined, merge } from "lodash";
-import { InfoFilled } from "@element-plus/icons-vue";
+import { useSlots, ref, watchEffect, computed, unref } from 'vue'
+import { isFunction, isUndefined, merge } from 'lodash'
+import { InfoFilled } from '@element-plus/icons-vue'
 
-const ns = useBasicNamespace("form-item");
+const ns = useBasicNamespace('form-item')
 
 defineOptions({
-  name: "FormItem",
-});
+  name: 'FormItem',
+})
 
-const slots = useSlots();
+const slots = useSlots()
 
 const props = withDefaults(defineProps<FormItemProps>(), {
   formProps: () => ({}),
   formModel: () => ({}),
-});
+})
 
-const emit = defineEmits<FormItemEmits>();
+const emit = defineEmits<FormItemEmits>()
 
-const stateValue = ref<FieldValue>("");
+const stateValue = ref<FieldValue>('')
 
 const formItem = ref<EnhancedFormSchema>({
-  prop: "",
-  label: "",
-  component: "input",
+  prop: '',
+  label: '',
+  component: 'input',
   componentProps: {},
-});
+})
 
 const callbackParams = computed<FormItemCallbackParams>(() => ({
   value: props.modelValue,
   model: props.formModel,
   schema: props.schemaItem,
-}));
+}))
 
 const enhanceSchema = (schemaItem: FormSchema): EnhancedFormSchema => {
-  const { componentProps: originComponentProps } = schemaItem;
-  let componentProps = originComponentProps as ComponentProps;
+  const { componentProps: originComponentProps } = schemaItem
+  let componentProps = originComponentProps as ComponentProps
   if (isFunction(originComponentProps)) {
     componentProps = originComponentProps({
       ...callbackParams.value,
       methods: props.formMethods,
-    });
+    })
   }
   return normalizeSchema({
     ...schemaItem,
     componentProps,
-    component: schemaItem.component || "input",
-  });
-};
+    component: schemaItem.component || 'input',
+  })
+}
 
 watchEffect(() => {
-  stateValue.value = props.modelValue;
+  stateValue.value = props.modelValue
   // escape ts error can't understand
-  formItem.value = enhanceSchema(props.schemaItem) as any;
-});
+  formItem.value = enhanceSchema(props.schemaItem) as any
+})
 
 const getTitleColProps = computed(() =>
-  merge(props.formProps.titleColProps, formItem.value.titleColProps)
-);
+  merge(props.formProps.titleColProps, formItem.value.titleColProps),
+)
 
-const getColProps = computed(() =>
-  merge(props.formProps.colProps, formItem.value.colProps)
-);
+const getColProps = computed(() => merge(props.formProps.colProps, formItem.value.colProps))
 
 const getVisible = computed(() => {
-  const { visible } = formItem.value;
-  const isVisible = isFunction(visible)
-    ? visible(callbackParams.value)
-    : unref(visible);
-  return isVisible !== false;
-});
+  const { visible } = formItem.value
+  const isVisible = isFunction(visible) ? visible(callbackParams.value) : unref(visible)
+  return isVisible !== false
+})
 
-const getLabelWidth = computed(
-  () => formItem.value.labelWidth || props.formProps.labelWidth
-);
+const getLabelWidth = computed(() => formItem.value.labelWidth || props.formProps.labelWidth)
 
 const getLabel = computed(() => {
-  const { hasLabel: formHasLabel, labelSuffix = "" } = props.formProps;
-  const { hasLabel, label } = formItem.value;
-  const flag = isUndefined(hasLabel) ? formHasLabel : hasLabel;
-  return flag ? label + labelSuffix : "";
-});
+  const { hasLabel: formHasLabel, labelSuffix = '' } = props.formProps
+  const { hasLabel, label } = formItem.value
+  const flag = isUndefined(hasLabel) ? formHasLabel : hasLabel
+  return flag ? label + labelSuffix : ''
+})
 
-const getRules = computed(() => normalizeRule(formItem.value));
+const getRules = computed(() => normalizeRule(formItem.value))
 
 const getDisabled = computed(() => {
-  const { disabled: formDisabled } = props.formProps;
-  const { disabled } = formItem.value;
+  const { disabled: formDisabled } = props.formProps
+  const { disabled } = formItem.value
 
   if (isUndefined(disabled)) {
-    return unref(formDisabled);
+    return unref(formDisabled)
   }
 
   if (isFunction(disabled)) {
-    return disabled(callbackParams.value);
+    return disabled(callbackParams.value)
   }
 
-  return unref(disabled);
-});
+  return unref(disabled)
+})
 
 const { handleChange } = useFormItemHandler({
   emit,
-});
+})
 
 const onChange = (values: unknown[]) => {
-  handleChange(values, formItem.value);
-  emit("update:modelValue", stateValue.value);
-  emit("change", stateValue.value, formItem.value);
-};
+  handleChange(values, formItem.value)
+  emit('update:modelValue', stateValue.value)
+  emit('change', stateValue.value, formItem.value)
+}
 
-const { renderItem } = useCustomRender({ slots });
+const { renderItem } = useCustomRender({ slots })
 
-const isCustomTitle =
-  formItem.value.customTitleRender || formItem.value.customTitleSlot;
+const isCustomTitle = formItem.value.customTitleRender || formItem.value.customTitleSlot
 
 const renderCustomTitle = renderItem(
   {
     customRender: formItem.value.customTitleRender,
     customSlot: formItem.value.customTitleSlot,
   },
-  callbackParams.value
-);
+  callbackParams.value,
+)
 
-const isCustomLabel =
-  formItem.value.customLabelRender || formItem.value.customLabelSlot;
+const isCustomLabel = formItem.value.customLabelRender || formItem.value.customLabelSlot
 
 const renderCustomLabel = renderItem(
   {
     customRender: formItem.value.customLabelRender,
     customSlot: formItem.value.customLabelSlot,
   },
-  callbackParams.value
-);
+  callbackParams.value,
+)
 
-const isCustomField = formItem.value.customRender || formItem.value.customSlot;
+const isCustomField = formItem.value.customRender || formItem.value.customSlot
 
 const renderCustomField = renderItem(
   {
     customRender: formItem.value.customRender,
     customSlot: formItem.value.customSlot,
   },
-  callbackParams.value
-);
+  callbackParams.value,
+)
 
-const renderComponent = getComponent(formItem.value.component);
+const renderComponent = getComponent(formItem.value.component)
 
 const renderTooltip = (content) =>
   content && (
@@ -231,9 +209,9 @@ const renderTooltip = (content) =>
         <InfoFilled />
       </el-icon>
     </el-tooltip>
-  );
+  )
 </script>
 
 <style scoped lang="scss">
-@use "../style.scss";
+@use '../style.scss';
 </style>

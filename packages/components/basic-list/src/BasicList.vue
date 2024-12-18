@@ -17,20 +17,19 @@
 </template>
 
 <script setup lang="ts">
-import { BasicListProps } from "./type";
+import { BasicListProps } from './type'
 
-import { isFunction } from "lodash";
+import { isFunction } from 'lodash'
 
 defineOptions({
-  name: "BasicList",
-});
+  name: 'BasicList',
+})
 
 const props = withDefaults(defineProps<BasicListProps>(), {
-  type: "ul",
-  childKey: "children",
+  type: 'ul',
+  childKey: 'children',
   lists: () => [],
-});
+})
 
-const formatLabel = (item) =>
-  isFunction(props.formatter) ? props.formatter(item) : item.label;
+const formatLabel = (item) => (isFunction(props.formatter) ? props.formatter(item) : item.label)
 </script>

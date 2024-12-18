@@ -1,13 +1,13 @@
 export interface ListItem {
-  label: string;
-  [key: string]: any;
+  label: string
+  [key: string]: any
 }
 
-export type ListType = "ul" | "ol";
+export type ListType = 'ul' | 'ol'
 
 export interface BasicListProps {
-  lists: ListItem[];
-  type?: ListType;
-  childKey?: string;
-  formatter?: (item: any) => string;
+  lists: ListItem[]
+  type?: ListType
+  childKey?: string
+  formatter?: (item: any) => string
 }

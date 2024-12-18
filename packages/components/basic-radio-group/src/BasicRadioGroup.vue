@@ -19,10 +19,7 @@
           :name="item.customSlot"
           v-bind="getCallbackParams(item)"
         />
-        <component
-          :is="render(getCallbackParams(item))"
-          v-else-if="isFunction(render)"
-        />
+        <component :is="render(getCallbackParams(item))" v-else-if="isFunction(render)" />
         <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
         <span v-else>{{ item.label }}</span>
       </component>
@@ -37,82 +34,77 @@ import {
   RadioOption,
   RadioValue,
   RadioCallbackParams,
-} from "./type";
+} from './type'
 
-import { useOptionQuery } from "@center/composables";
+import { useOptionQuery } from '@center/composables'
 
-import { isFunction, isString } from "lodash";
-import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
+import { isFunction, isString } from 'lodash'
+import { useAttrs, useSlots, computed, onMounted, ref, watch } from 'vue'
 
 defineOptions({
-  name: "BasicRadioGroup",
+  name: 'BasicRadioGroup',
   inheritAttrs: false,
-});
+})
 
-const attrs = useAttrs();
-const slots = useSlots();
+const attrs = useAttrs()
+const slots = useSlots()
 
-const props = withDefaults(defineProps<BasicRadioGroupProps>(), {});
+const props = withDefaults(defineProps<BasicRadioGroupProps>(), {})
 
-const emit = defineEmits<BasicRadioGroupEmits>();
+const emit = defineEmits<BasicRadioGroupEmits>()
 
 const getBindValues = computed(() => ({
   ...attrs,
-}));
+}))
 
-const stateLabel = ref<string>();
-const stateValue = ref<RadioValue>();
+const stateLabel = ref<string>()
+const stateValue = ref<RadioValue>()
 
-const {
-  options: stateOptions,
-  init,
-  findLabel,
-  findOption,
-} = useOptionQuery<RadioOption>(props);
+const { options: stateOptions, init, findLabel, findOption } = useOptionQuery<RadioOption>(props)
 
 onMounted(() => {
-  init();
-});
+  init()
+})
 
 watch(
   () => props.modelValue,
   () => {
-    stateValue.value = props.modelValue;
-    stateLabel.value = findLabel(props.modelValue);
+    stateValue.value = props.modelValue
+    stateLabel.value = findLabel(props.modelValue)
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
 const getComponent = (isButton?: boolean) =>
-  isButton || props.isButton ? "el-radio-button" : "el-radio";
+  isButton || props.isButton ? 'el-radio-button' : 'el-radio'
 
 const getCallbackParams = (item: RadioOption): RadioCallbackParams => ({
   value: stateValue.value,
   label: stateLabel.value,
   option: item,
-});
+})
 
 const handleClick = (option: RadioOption) => {
-  const { label, value, disabled } = option;
+  const { label, value, disabled } = option
 
   if (props.disabled === true || disabled === true) {
-    return;
+    return
   }
 
-  const flag = stateLabel.value === label;
+  const flag = stateLabel.value === label
 
-  stateLabel.value = flag ? undefined : label;
-  stateValue.value = flag ? "" : value;
+  stateLabel.value = flag ? undefined : label
+  stateValue.value = flag ? '' : value
 
-  emitChange();
-};
+  emitChange()
+}
 
 const emitChange = () => {
-  emit("update:modelValue", stateValue.value);
-  emit("change", {
+  emit('update:modelValue', stateValue.value)
+  emit('change', {
     value: stateValue.value,
     label: stateLabel.value,
     option: findOption(stateValue.value),
-  });
-};
+  })
+}
 </script>

@@ -9,25 +9,25 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTime } from "@center/components";
+import { BasicTime } from '@center/components'
 
 const array = [
   {
-    label: "基本使用",
+    label: '基本使用',
     time: new Date(),
   },
   {
-    label: "指定时间格式",
+    label: '指定时间格式',
     time: new Date(),
-    format: "YYYY-MM-DD HH:mm:ss",
+    format: 'YYYY-MM-DD HH:mm:ss',
   },
   {
-    label: "传入时间戳",
+    label: '传入时间戳',
     time: Date.now(),
   },
   {
-    label: "时间无效时，显示为空",
-    time: "abcdef",
+    label: '时间无效时，显示为空',
+    time: 'abcdef',
   },
-];
+]
 </script>

@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { BasicSelectInput } from "@center/components";
+import { BasicSelectInput } from '@center/components'
 </script>

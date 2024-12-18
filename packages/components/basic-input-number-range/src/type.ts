@@ -1,20 +1,20 @@
-import type { InputNumberProps } from "element-plus";
+import type { InputNumberProps } from 'element-plus'
 
-export type ModelValue = (number | undefined)[];
+export type ModelValue = (number | undefined)[]
 
 export interface BasicInputNumberRangeProps {
-  modelValue?: ModelValue;
-  disabled?: boolean;
-  startPlaceholder?: string;
-  endPlaceholder?: string;
-  inputNumberProps?: Partial<InputNumberProps>;
+  modelValue?: ModelValue
+  disabled?: boolean
+  startPlaceholder?: string
+  endPlaceholder?: string
+  inputNumberProps?: Partial<InputNumberProps>
 
-  prefix?: string;
-  suffix?: string;
-  rangeSeparator?: string;
+  prefix?: string
+  suffix?: string
+  rangeSeparator?: string
 }
 
 export interface BasicInputNumberRangeEmits {
-  (e: "update:modelValue", value: ModelValue): void;
-  (e: "change", value: ModelValue): void;
+  (e: 'update:modelValue', value: ModelValue): void
+  (e: 'change', value: ModelValue): void
 }

@@ -3,11 +3,7 @@
   <span v-else>
     {{ schema.label }}
   </span>
-  <el-tooltip
-    v-if="schema.headerTooltip"
-    :content="schema.headerTooltip"
-    placement="top"
-  >
+  <el-tooltip v-if="schema.headerTooltip" :content="schema.headerTooltip" placement="top">
     <el-icon :size="16" style="vertical-align: middle; margin-left: 4px">
       <WarningFilled />
     </el-icon>
@@ -15,46 +11,45 @@
 </template>
 
 <script setup lang="ts">
-import type { TableHeaderProps, TableHeaderCallbackParams } from "../types";
+import type { TableHeaderProps, TableHeaderCallbackParams } from '../types'
 
-import { useCustomRender } from "@center/composables";
+import { useCustomRender } from '@center/composables'
 
-import { useSlots, computed } from "vue";
+import { useSlots, computed } from 'vue'
 
-import { WarningFilled } from "@element-plus/icons-vue";
+import { WarningFilled } from '@element-plus/icons-vue'
 
 defineOptions({
-  name: "TableHeader",
-});
+  name: 'TableHeader',
+})
 
-const slots = useSlots();
+const slots = useSlots()
 
 const props = withDefaults(defineProps<TableHeaderProps>(), {
   schema: () => ({
-    prop: "",
-    label: "",
+    prop: '',
+    label: '',
   }),
-});
+})
 
 const params = computed<TableHeaderCallbackParams>(() => {
-  const { rowIndex, column, schema } = props;
+  const { rowIndex, column, schema } = props
   return {
     rowIndex,
     column,
     schema,
-  };
-});
+  }
+})
 
-const { renderItem } = useCustomRender({ slots });
+const { renderItem } = useCustomRender({ slots })
 
-const isCustomHeader =
-  props.schema.customHeaderRender || props.schema.customHeaderSlot;
+const isCustomHeader = props.schema.customHeaderRender || props.schema.customHeaderSlot
 
 const renderCustomHeader = renderItem(
   {
     customRender: props.schema.customHeaderRender,
     customSlot: props.schema.customHeaderSlot,
   },
-  params.value
-);
+  params.value,
+)
 </script>

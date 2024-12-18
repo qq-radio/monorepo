@@ -36,55 +36,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import {
-  DocumentCopy,
-  ArrowDown,
-  ArrowUp,
-  EditPen,
-} from "@element-plus/icons-vue";
-import { ElIcon, ElTooltip } from "element-plus";
+import { ref, computed } from 'vue'
+import { DocumentCopy, ArrowDown, ArrowUp, EditPen } from '@element-plus/icons-vue'
+import { ElIcon, ElTooltip } from 'element-plus'
 const getComponent = (moduleFiles: Record<string, any>, path: string) => {
-  const key = Object.keys(moduleFiles).find((i) =>
-    i.endsWith(`/examples/${path}.vue`)
-  ) as string;
-  return moduleFiles[key]?.default;
-};
+  const key = Object.keys(moduleFiles).find((i) => i.endsWith(`/examples/${path}.vue`)) as string
+  return moduleFiles[key]?.default
+}
 
 const getPlaygroundEncoded = (source: string) => {
-  const code = decodeURIComponent(source);
+  const code = decodeURIComponent(source)
   const originCode = {
     [MAIN_FILE_NAME]: code,
-  };
-  const encoded = utoa(JSON.stringify(originCode));
-  return encoded;
-};
+  }
+  const encoded = utoa(JSON.stringify(originCode))
+  return encoded
+}
 
-const moduleFiles = import.meta.glob("../../../examples/**/*.vue", {
+const moduleFiles = import.meta.glob('../../../examples/**/*.vue', {
   eager: true,
-});
+})
 
 const props = defineProps<{
-  source: string;
-  path: string;
-  rawSource: string;
-}>();
+  source: string
+  path: string
+  rawSource: string
+}>()
 
-const show = ref(false);
-const total = ref(0);
-const size = 18;
+const show = ref(false)
+const total = ref(0)
+const size = 18
 
-const AppAsyncComponent = getComponent(moduleFiles, props.path);
+const AppAsyncComponent = getComponent(moduleFiles, props.path)
 
 const handleToggle = () => {
-  show.value = !show.value;
-};
+  show.value = !show.value
+}
 
-const decoded = computed(() => decodeURIComponent(props.source));
-const content = computed(() => decodeURIComponent(props.rawSource));
+const decoded = computed(() => decodeURIComponent(props.source))
+const content = computed(() => decodeURIComponent(props.rawSource))
 
-const tem = content.value.split("\r\n");
-total.value = tem.length;
+const tem = content.value.split('\r\n')
+total.value = tem.length
 </script>
 
 <style scoped lang="scss">

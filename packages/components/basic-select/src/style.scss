@@ -1,4 +1,4 @@
-@use "../../../theme/index.scss" as *;
+@use '../../../theme/index.scss' as *;
 
 @include b(select) {
   @include e(check-all) {

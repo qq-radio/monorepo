@@ -3,45 +3,45 @@ import type {
   FormItemProp,
   FormValidateCallback,
   FormValidationResult,
-} from "element-plus";
-import type { Ref } from "vue";
+} from 'element-plus'
+import type { Ref } from 'vue'
 
-import { ErrorMessages, BasicComponentError } from "@center/components/error";
+import { ErrorMessages, BasicComponentError } from '@center/components/error'
 
-import { unref } from "vue";
+import { unref } from 'vue'
 
-export type UseFormSelfReturn = ReturnType<typeof useFormSelf>;
+export type UseFormSelfReturn = ReturnType<typeof useFormSelf>
 
 export const useFormSelf = (instance?: Ref<FormInstance>) => {
   function getForm() {
-    const form = unref(instance);
+    const form = unref(instance)
     if (!form) {
-      throw new BasicComponentError(ErrorMessages.FORM_INSTANCE_NOT_OBTAINED);
+      throw new BasicComponentError(ErrorMessages.FORM_INSTANCE_NOT_OBTAINED)
     }
-    return form;
+    return form
   }
 
   function validate(callback?: FormValidateCallback) {
-    return getForm().validate(callback);
+    return getForm().validate(callback)
   }
 
   function validateField(
     props?: Arrayable<FormItemProp>,
-    callback?: FormValidateCallback
+    callback?: FormValidateCallback,
   ): FormValidationResult {
-    return getForm().validateField(props, callback);
+    return getForm().validateField(props, callback)
   }
 
   function resetFields(props?: Arrayable<FormItemProp>) {
-    getForm().resetFields(props);
+    getForm().resetFields(props)
   }
 
   function scrollToField(prop: FormItemProp) {
-    getForm().scrollToField(prop);
+    getForm().scrollToField(prop)
   }
 
   function clearValidate(props?: Arrayable<FormItemProp>) {
-    getForm().clearValidate(props);
+    getForm().clearValidate(props)
   }
 
   return {
@@ -50,5 +50,5 @@ export const useFormSelf = (instance?: Ref<FormInstance>) => {
     resetFields,
     scrollToField,
     clearValidate,
-  };
-};
+  }
+}

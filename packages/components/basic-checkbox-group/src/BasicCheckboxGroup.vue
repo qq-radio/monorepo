@@ -9,11 +9,7 @@
       全选
     </el-checkbox>
   </div>
-  <el-checkbox-group
-    v-bind="getBindValues"
-    v-model="stateLabel"
-    @change="handleCheckChange"
-  >
+  <el-checkbox-group v-bind="getBindValues" v-model="stateLabel" @change="handleCheckChange">
     <template v-for="(item, index) in stateOptions" :key="index">
       <component
         :is="getComponent(item.isButton)"
@@ -32,10 +28,7 @@
           :name="item.customSlot"
           v-bind="getCallbackParams(item)"
         />
-        <component
-          :is="render(getCallbackParams(item))"
-          v-else-if="isFunction(render)"
-        />
+        <component :is="render(getCallbackParams(item))" v-else-if="isFunction(render)" />
         <slot v-else-if="slots.default" v-bind="getCallbackParams(item)" />
         <span v-else>{{ item.label }}</span>
       </component>
@@ -50,34 +43,34 @@ import {
   CheckboxOption,
   CheckboxValue,
   CheckboxCallbackParams,
-} from "./type";
+} from './type'
 
-import { useOptionQuery } from "@center/composables";
+import { useOptionQuery } from '@center/composables'
 
-import { isFunction, isString, isEmpty } from "lodash";
-import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
+import { isFunction, isString, isEmpty } from 'lodash'
+import { useAttrs, useSlots, computed, onMounted, ref, watch } from 'vue'
 
 defineOptions({
-  name: "BasicCheckboxGroup",
+  name: 'BasicCheckboxGroup',
   inheritAttrs: false,
-});
+})
 
-const attrs = useAttrs();
-const slots = useSlots();
+const attrs = useAttrs()
+const slots = useSlots()
 
-const props = withDefaults(defineProps<BasicCheckboxGroupProps>(), {});
+const props = withDefaults(defineProps<BasicCheckboxGroupProps>(), {})
 
-const emit = defineEmits<BasicCheckboxGroupEmits>();
+const emit = defineEmits<BasicCheckboxGroupEmits>()
 
 const getBindValues = computed(() => ({
   ...attrs,
-}));
+}))
 
-const isCheckAll = ref(false);
-const isIndeterminate = ref(false);
+const isCheckAll = ref(false)
+const isIndeterminate = ref(false)
 
-const stateLabel = ref<string[]>();
-const stateValue = ref<CheckboxValue>([]);
+const stateLabel = ref<string[]>()
+const stateValue = ref<CheckboxValue>([])
 
 const {
   options: stateOptions,
@@ -86,55 +79,54 @@ const {
   findOptions,
   findLabels,
   findValues,
-} = useOptionQuery<CheckboxOption>(props);
+} = useOptionQuery<CheckboxOption>(props)
 
 onMounted(() => {
-  init();
-});
+  init()
+})
 
 watch(
   () => props.modelValue,
   () => {
-    stateValue.value = props.modelValue || [];
-    stateLabel.value = findLabels(props.modelValue);
+    stateValue.value = props.modelValue || []
+    stateLabel.value = findLabels(props.modelValue)
     if (isEmpty(stateValue.value)) {
-      isCheckAll.value = false;
-      isIndeterminate.value = false;
+      isCheckAll.value = false
+      isIndeterminate.value = false
     }
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
 const getComponent = (isButton?: boolean) =>
-  isButton || props.isButton ? "el-checkbox-button" : "el-checkbox";
+  isButton || props.isButton ? 'el-checkbox-button' : 'el-checkbox'
 
 const getCallbackParams = (item: CheckboxOption): CheckboxCallbackParams => ({
   values: stateValue.value,
   labels: stateLabel.value,
   option: item,
-});
+})
 
 const handleCheckAllChange = (checkAll: boolean) => {
-  stateLabel.value = checkAll ? getAllLabels() : [];
-  isIndeterminate.value = false;
-  emitChange();
-};
+  stateLabel.value = checkAll ? getAllLabels() : []
+  isIndeterminate.value = false
+  emitChange()
+}
 
 const handleCheckChange = (values: string[]) => {
-  const checkedCount = values.length;
-  isCheckAll.value = checkedCount === stateOptions.value.length;
-  isIndeterminate.value =
-    checkedCount > 0 && checkedCount < stateOptions.value.length;
-  emitChange();
-};
+  const checkedCount = values.length
+  isCheckAll.value = checkedCount === stateOptions.value.length
+  isIndeterminate.value = checkedCount > 0 && checkedCount < stateOptions.value.length
+  emitChange()
+}
 
 const emitChange = () => {
-  stateValue.value = findValues(stateLabel.value);
-  emit("update:modelValue", stateValue.value);
-  emit("change", {
+  stateValue.value = findValues(stateLabel.value)
+  emit('update:modelValue', stateValue.value)
+  emit('change', {
     values: stateValue.value,
     labels: stateLabel.value,
     options: findOptions(stateValue.value),
-  });
-};
+  })
+}
 </script>

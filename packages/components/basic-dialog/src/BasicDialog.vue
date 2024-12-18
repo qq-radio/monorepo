@@ -5,10 +5,7 @@
     :class="ns.b()"
     :before-close="handleCancel"
   >
-    <div
-      :class="ns.e('content')"
-      :style="{ maxHeight: getProps.height + 'px' }"
-    >
+    <div :class="ns.e('content')" :style="{ maxHeight: getProps.height + 'px' }">
       <slot />
     </div>
     <template v-if="getProps.hasFooter" #footer>
@@ -17,9 +14,7 @@
         <el-button
           type="primary"
           :loading="confirmLoading"
-          @click="
-            getProps.hasDebounce ? handleDebounceConfirm() : handleConfirm()
-          "
+          @click="getProps.hasDebounce ? handleDebounceConfirm() : handleConfirm()"
         >
           {{ getProps.confirmText }}
         </el-button>
@@ -29,95 +24,95 @@
 </template>
 
 <script setup lang="ts">
-import { BasicDialogProps, BasicDialogEmits, DialogMethods } from "./type";
+import { BasicDialogProps, BasicDialogEmits, DialogMethods } from './type'
 
-import { useBasicNamespace } from "@center/composables";
+import { useBasicNamespace } from '@center/composables'
 
-import { ref, watchEffect, computed, useAttrs, onMounted } from "vue";
-import { debounce } from "lodash";
+import { ref, watchEffect, computed, useAttrs, onMounted } from 'vue'
+import { debounce } from 'lodash'
 
-const ns = useBasicNamespace("dialog");
+const ns = useBasicNamespace('dialog')
 
 defineOptions({
-  name: "BasicDialog",
-});
+  name: 'BasicDialog',
+})
 
-const attrs = useAttrs();
+const attrs = useAttrs()
 
-const emit = defineEmits<BasicDialogEmits>();
+const emit = defineEmits<BasicDialogEmits>()
 
 const props = withDefaults(defineProps<BasicDialogProps>(), {
-  title: "标题",
-  width: "780px",
+  title: '标题',
+  width: '780px',
   height: 760,
   appendToBody: false,
   hasFooter: true,
-  cancelText: "取消",
-  confirmText: "确定",
-});
+  cancelText: '取消',
+  confirmText: '确定',
+})
 
-const propsRef = ref<Partial<BasicDialogProps>>({});
+const propsRef = ref<Partial<BasicDialogProps>>({})
 
 const getProps = computed<BasicDialogProps>(() => {
   return {
     ...props,
     ...propsRef.value,
-  };
-});
+  }
+})
 
 function setProps(partialProps: Partial<BasicDialogProps>) {
   propsRef.value = {
     ...propsRef.value,
     ...partialProps,
-  };
+  }
 }
 
 const getBindValues = computed(() => ({
   ...attrs,
   ...getProps.value,
   title: dialogTitle.value,
-}));
+}))
 
-const dialogTitle = ref("");
-const dialogVisible = ref(false);
-const confirmLoading = ref(false);
+const dialogTitle = ref('')
+const dialogVisible = ref(false)
+const confirmLoading = ref(false)
 
 watchEffect(() => {
-  dialogTitle.value = props.title;
-  dialogVisible.value = props.modelValue;
-  confirmLoading.value = props.loading;
-});
+  dialogTitle.value = props.title
+  dialogVisible.value = props.modelValue
+  confirmLoading.value = props.loading
+})
 
 const openDialog = () => {
-  dialogVisible.value = true;
-};
+  dialogVisible.value = true
+}
 
 const closeDialog = () => {
-  dialogVisible.value = false;
-};
+  dialogVisible.value = false
+}
 
 const setDialogTitle = (value) => {
-  dialogTitle.value = value;
-};
+  dialogTitle.value = value
+}
 
 const setConfirmLoading = (value) => {
-  confirmLoading.value = value;
-};
+  confirmLoading.value = value
+}
 
 const handleConfirm = () => {
   if (confirmLoading.value) {
-    return;
+    return
   }
-  emit("confirm");
-};
+  emit('confirm')
+}
 
-const handleDebounceConfirm = debounce(handleConfirm, 2000);
+const handleDebounceConfirm = debounce(handleConfirm, 2000)
 
 const handleCancel = () => {
-  closeDialog();
-  emit("update:modelValue", false);
-  emit("cancel");
-};
+  closeDialog()
+  emit('update:modelValue', false)
+  emit('cancel')
+}
 
 const dialogMethods: DialogMethods = {
   setProps,
@@ -125,17 +120,17 @@ const dialogMethods: DialogMethods = {
   closeDialog,
   setDialogTitle,
   setConfirmLoading,
-};
+}
 
 onMounted(() => {
-  emit("register", dialogMethods);
-});
+  emit('register', dialogMethods)
+})
 
 defineExpose({
   ...dialogMethods,
-});
+})
 </script>
 
 <style scoped lang="scss">
-@use "./style.scss";
+@use './style.scss';
 </style>

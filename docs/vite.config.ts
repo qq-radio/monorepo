@@ -18,15 +18,13 @@ export default defineConfig(() => {
     resolve: {
       alias: alias,
     },
-    plugins: [
-      vueJsx(),
-    ],
-    css :{
-      preprocessorOptions : {
+    plugins: [vueJsx()],
+    css: {
+      preprocessorOptions: {
         scss: {
-          api: "modern",
-        }        
-      } 
-    }
+          api: 'modern',
+        },
+      },
+    },
   }
 })

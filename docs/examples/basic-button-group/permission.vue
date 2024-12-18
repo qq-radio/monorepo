@@ -3,22 +3,22 @@
 </template>
 
 <script setup lang="ts">
-import { BasicButtonGroup, Button } from "@center/components";
+import { BasicButtonGroup, Button } from '@center/components'
 
 const buttons: Button[] = [
   {
-    text: "新增",
+    text: '新增',
     props: {
-      type: "primary",
+      type: 'primary',
       // 请结合您项目的权限控制逻辑自行实现permission控制
       // permission: ""
     },
   },
   {
-    text: "查看",
+    text: '查看',
     props: {
-      type: "success",
+      type: 'success',
     },
   },
-];
+]
 </script>

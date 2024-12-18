@@ -1,46 +1,46 @@
-import type { ComputedRef } from "vue";
+import type { ComputedRef } from 'vue'
 
-import { ref, computed, unref } from "vue";
+import { ref, computed, unref } from 'vue'
 
-import { ElMessage } from "element-plus";
+import { ElMessage } from 'element-plus'
 
 type Props = ComputedRef<{
-  rowKey: string;
-}>;
+  rowKey: string
+}>
 
-export type UseTableSelectionReturn = ReturnType<typeof useTableSelection>;
+export type UseTableSelectionReturn = ReturnType<typeof useTableSelection>
 
 // 这里要实现 set clear 我不会 o(╥﹏╥)o
 export function useTableSelection(props: Props) {
-  const selectedRows = ref<Array<Recordable>>([]);
+  const selectedRows = ref<Array<Recordable>>([])
 
   const selectedValues = computed<Array<number | string>>(() =>
-    selectedRows.value.map((i) => i[props.value.rowKey])
-  );
+    selectedRows.value.map((i) => i[props.value.rowKey]),
+  )
 
   function getSelectedValues() {
-    return unref(selectedValues);
+    return unref(selectedValues)
   }
 
   function getSelectedRows() {
-    return unref(selectedRows);
+    return unref(selectedRows)
   }
 
   function setSelectedRows(rows: Recordable[]) {
-    selectedRows.value = rows;
+    selectedRows.value = rows
   }
 
   function checkHasSelection() {
-    return !!unref(selectedValues)?.length;
+    return !!unref(selectedValues)?.length
   }
 
   function validateHasSelection() {
     if (checkHasSelection()) {
-      return;
+      return
     }
 
-    const message = "请至少选择一条数据后再操作";
-    ElMessage.warning(message);
+    const message = '请至少选择一条数据后再操作'
+    ElMessage.warning(message)
   }
 
   return {
@@ -49,5 +49,5 @@ export function useTableSelection(props: Props) {
     setSelectedRows,
     checkHasSelection,
     validateHasSelection,
-  };
+  }
 }

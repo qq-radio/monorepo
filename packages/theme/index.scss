@@ -8,7 +8,7 @@ $color-danger: #f56c6c;
 // bem
 
 @mixin b($name) {
-  $namespace: "basic-";
+  $namespace: 'basic-';
 
   .#{$namespace}#{$name} {
     @content;
@@ -16,7 +16,7 @@ $color-danger: #f56c6c;
 }
 
 @mixin e($name) {
-  $element-separator: "__";
+  $element-separator: '__';
 
   @at-root {
     &#{$element-separator}#{$name} {
@@ -26,7 +26,7 @@ $color-danger: #f56c6c;
 }
 
 @mixin m($name) {
-  $modifier-separator: "--";
+  $modifier-separator: '--';
 
   @at-root {
     &#{$modifier-separator}#{$name} {

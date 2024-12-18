@@ -1,87 +1,81 @@
-import type { EnhancedFormSchema } from "../types";
+import type { EnhancedFormSchema } from '../types'
 
-import { getPrefix } from "./component-prefix";
+import { getPrefix } from './component-prefix'
 
-import { merge } from "lodash";
+import { merge } from 'lodash'
 
 function addTextareaProps(schemaItem: EnhancedFormSchema) {
-  if (schemaItem.component === "textarea") {
+  if (schemaItem.component === 'textarea') {
     return merge(
       {
         componentProps: {
-          type: "textarea",
+          type: 'textarea',
           showWordLimit: true,
         },
       },
-      schemaItem
-    );
+      schemaItem,
+    )
   }
-  return schemaItem;
+  return schemaItem
 }
 
 function addStyle(schemaItem: EnhancedFormSchema) {
   if (
     schemaItem.component &&
-    [
-      "input-number",
-      "input-number-range",
-      "select",
-      "tree-select",
-      "cascader",
-    ].includes(schemaItem.component)
+    ['input-number', 'input-number-range', 'select', 'tree-select', 'cascader'].includes(
+      schemaItem.component,
+    )
   ) {
     return merge(
       {
         componentProps: {
           style: {
-            width: "100%",
+            width: '100%',
           },
         },
       },
-      schemaItem
-    );
+      schemaItem,
+    )
   }
-  return schemaItem;
+  return schemaItem
 }
 
 function addPlaceholder(schemaItem: EnhancedFormSchema) {
   if (
-    schemaItem.component === "time-picker" ||
-    (schemaItem.component === "date-picker" &&
-      schemaItem.componentProps?.type === "daterange")
+    schemaItem.component === 'time-picker' ||
+    (schemaItem.component === 'date-picker' && schemaItem.componentProps?.type === 'daterange')
   ) {
     return merge(
       {
         componentProps: {
-          startPlaceholder: "开始时间",
-          endPlaceholder: "结束时间",
+          startPlaceholder: '开始时间',
+          endPlaceholder: '结束时间',
         },
       },
-      schemaItem
-    );
+      schemaItem,
+    )
   }
 
-  if (schemaItem.component === "input-number-range") {
+  if (schemaItem.component === 'input-number-range') {
     return merge(
       {
         componentProps: {
-          startPlaceholder: "请输入数字",
-          endPlaceholder: "请输入数字",
+          startPlaceholder: '请输入数字',
+          endPlaceholder: '请输入数字',
         },
       },
-      schemaItem
-    );
+      schemaItem,
+    )
   }
 
   return merge(
     {
       componentProps: {
-        placeholder:
-          getPrefix(schemaItem.component || "input") + schemaItem.label,
+        placeholder: getPrefix(schemaItem.component || 'input') + schemaItem.label,
       },
     },
-    schemaItem
-  );
+    schemaItem,
+  )
 }
 
 function addAllowClear(schemaItem: EnhancedFormSchema) {
@@ -91,46 +85,43 @@ function addAllowClear(schemaItem: EnhancedFormSchema) {
         clearable: true,
       },
     },
-    schemaItem
-  );
+    schemaItem,
+  )
 }
 
 function addTimeFormat(schemaItem: EnhancedFormSchema) {
-  if (schemaItem.component === "date-picker") {
+  if (schemaItem.component === 'date-picker') {
     return merge(
       {
         componentProps: {
-          format: "YYYY-MM-DD",
-          valueFormat: "YYYY-MM-DD",
+          format: 'YYYY-MM-DD',
+          valueFormat: 'YYYY-MM-DD',
         },
       },
-      schemaItem
-    );
+      schemaItem,
+    )
   }
 
-  if (schemaItem.component === "time-picker") {
+  if (schemaItem.component === 'time-picker') {
     return merge(
       {
         componentProps: {
-          format: "HH:mm:ss",
-          valueFormat: "HH:mm:ss",
+          format: 'HH:mm:ss',
+          valueFormat: 'HH:mm:ss',
         },
       },
-      schemaItem
-    );
+      schemaItem,
+    )
   }
 
-  return schemaItem;
+  return schemaItem
 }
 
 function normalizeSchema(schemaItem: EnhancedFormSchema) {
-  return [
-    addTextareaProps,
-    addStyle,
-    addPlaceholder,
-    addAllowClear,
-    addTimeFormat,
-  ].reduce((acc, func) => func(acc), schemaItem);
+  return [addTextareaProps, addStyle, addPlaceholder, addAllowClear, addTimeFormat].reduce(
+    (acc, func) => func(acc),
+    schemaItem,
+  )
 }
 
-export { normalizeSchema };
+export { normalizeSchema }

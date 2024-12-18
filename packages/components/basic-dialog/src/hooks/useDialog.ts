@@ -1,63 +1,63 @@
-import type { BasicDialogProps, DialogMethods, UseDialog } from "../type";
+import type { BasicDialogProps, DialogMethods, UseDialog } from '../type'
 
-import { ErrorMessages, BasicComponentError } from "@center/components/error";
+import { ErrorMessages, BasicComponentError } from '@center/components/error'
 
-import { ref, unref, watch, onUnmounted } from "vue";
+import { ref, unref, watch, onUnmounted } from 'vue'
 
 export const useDialog: UseDialog = (props) => {
-  const instanceRef = ref<Nullable<DialogMethods>>(null);
+  const instanceRef = ref<Nullable<DialogMethods>>(null)
 
   function getInstance() {
-    const instance = unref(instanceRef);
+    const instance = unref(instanceRef)
     if (!instance) {
-      throw new BasicComponentError(ErrorMessages.DIALOG_INSTANCE_NOT_OBTAINED);
+      throw new BasicComponentError(ErrorMessages.DIALOG_INSTANCE_NOT_OBTAINED)
     }
-    return instance;
+    return instance
   }
 
   function register(instance: DialogMethods) {
     onUnmounted(() => {
-      instanceRef.value = null;
-    });
+      instanceRef.value = null
+    })
 
-    instanceRef.value = instance;
+    instanceRef.value = instance
 
     watch(
       () => props,
       () => {
-        const propsValue = unref(props);
+        const propsValue = unref(props)
         if (propsValue) {
-          getInstance().setProps(propsValue);
+          getInstance().setProps(propsValue)
         }
       },
       {
         immediate: true,
         deep: true,
-      }
-    );
+      },
+    )
   }
 
   const methods: DialogMethods = {
     setProps: (props: Partial<BasicDialogProps>) => {
-      getInstance().setProps(props);
+      getInstance().setProps(props)
     },
 
     openDialog: () => {
-      getInstance().openDialog();
+      getInstance().openDialog()
     },
 
     closeDialog: () => {
-      getInstance().closeDialog();
+      getInstance().closeDialog()
     },
 
     setDialogTitle: (value) => {
-      getInstance().setDialogTitle(value);
+      getInstance().setDialogTitle(value)
     },
 
     setConfirmLoading: (loading) => {
-      getInstance().setConfirmLoading(loading);
+      getInstance().setConfirmLoading(loading)
     },
-  };
+  }
 
-  return [register, methods];
-};
+  return [register, methods]
+}

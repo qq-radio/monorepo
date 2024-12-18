@@ -1,3 +1,3 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { default as BasicSelectInput } from "./src/BasicSelectInput.vue";
+export { default as BasicSelectInput } from './src/BasicSelectInput.vue'

@@ -29,26 +29,26 @@
 </template>
 
 <script setup lang="ts">
-import { BasicSelect } from "@center/components";
-import { Grape, Cherry, Orange } from "@element-plus/icons-vue";
+import { BasicSelect } from '@center/components'
+import { Grape, Cherry, Orange } from '@element-plus/icons-vue'
 
-const value = ref();
+const value = ref()
 
 const options = [
   {
-    label: "葡萄",
-    value: "grape",
-    customSlot: "grape",
+    label: '葡萄',
+    value: 'grape',
+    customSlot: 'grape',
   },
   {
-    label: "樱桃",
-    value: "cherry",
-    customSlot: "cherry",
+    label: '樱桃',
+    value: 'cherry',
+    customSlot: 'cherry',
   },
   {
-    label: "橘子",
-    value: "orange",
-    customSlot: "orange",
+    label: '橘子',
+    value: 'orange',
+    customSlot: 'orange',
   },
-];
+]
 </script>

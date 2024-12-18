@@ -5,17 +5,17 @@
 </template>
 
 <script setup lang="ts">
-import { BasicButtonGroup, Button } from "@center/components";
+import { BasicButtonGroup, Button } from '@center/components'
 
-const isDisabled = ref(false);
+const isDisabled = ref(false)
 
 const buttons: Button[] = [
   {
-    text: "编辑",
+    text: '编辑',
     disabled: isDisabled,
     onClick: () => {
-      console.log("点击了编辑");
+      console.log('点击了编辑')
     },
   },
-];
+]
 </script>

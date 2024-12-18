@@ -6,12 +6,12 @@
 </template>
 
 <script setup lang="ts">
-import { BasicDialog } from "@center/components";
+import { BasicDialog } from '@center/components'
 
-const dialogVisible = ref(false);
+const dialogVisible = ref(false)
 
 const handleConfirm = () => {
-  console.log("点击了确定");
-  dialogVisible.value = false;
-};
+  console.log('点击了确定')
+  dialogVisible.value = false
+}
 </script>

@@ -9,33 +9,33 @@
 </template>
 
 <script setup lang="ts">
-import type { BasicCopyProps } from "./type";
+import type { BasicCopyProps } from './type'
 
-import { useBasicNamespace } from "@center/composables";
+import { useBasicNamespace } from '@center/composables'
 
-import { ref } from "vue";
-import { DocumentCopy } from "@element-plus/icons-vue";
+import { ref } from 'vue'
+import { DocumentCopy } from '@element-plus/icons-vue'
 
-const ns = useBasicNamespace("copy");
+const ns = useBasicNamespace('copy')
 
 defineOptions({
-  name: "BasicCopy",
+  name: 'BasicCopy',
   inheritAttrs: false,
-});
+})
 
-const props = withDefaults(defineProps<BasicCopyProps>(), {});
+const props = withDefaults(defineProps<BasicCopyProps>(), {})
 
-const showAnimation = ref(false);
+const showAnimation = ref(false)
 
 const copyToClipboard = async () => {
-  await navigator.clipboard.writeText(props.text);
-  showAnimation.value = true;
+  await navigator.clipboard.writeText(props.text)
+  showAnimation.value = true
   setTimeout(() => {
-    showAnimation.value = false;
-  }, 2000);
-};
+    showAnimation.value = false
+  }, 2000)
+}
 </script>
 
 <style scoped lang="scss">
-@use "./style.scss";
+@use './style.scss';
 </style>

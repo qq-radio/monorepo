@@ -1,3 +1,3 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { default as BasicStatus } from "./src/BasicStatus.vue";
+export { default as BasicStatus } from './src/BasicStatus.vue'

@@ -3,21 +3,21 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicDescription, DescriptionSchema } from "@center/components";
+import { BasicDescription, DescriptionSchema } from '@center/components'
 
-import { Monitor, Money, Box, Clock } from "@element-plus/icons-vue";
+import { Monitor, Money, Box, Clock } from '@element-plus/icons-vue'
 
 const data = {
-  productName: "笔记本电脑",
+  productName: '笔记本电脑',
   price: 3999.9901,
   stockQuantity: 150,
   lastUpdated: new Date().toLocaleString(),
-};
+}
 
 const schemas: DescriptionSchema[] = [
   {
-    label: "产品名称",
-    prop: "productName",
+    label: '产品名称',
+    prop: 'productName',
     customLabelRender: () => (
       <span>
         <el-icon>
@@ -28,8 +28,8 @@ const schemas: DescriptionSchema[] = [
     ),
   },
   {
-    label: "价格",
-    prop: "price",
+    label: '价格',
+    prop: 'price',
     customLabelRender: () => (
       <span>
         <el-icon>
@@ -41,8 +41,8 @@ const schemas: DescriptionSchema[] = [
     formatter: ({ value }) => `￥${value.toFixed(2)}`,
   },
   {
-    label: "库存数量",
-    prop: "stockQuantity",
+    label: '库存数量',
+    prop: 'stockQuantity',
     customLabelRender: () => (
       <span>
         <el-icon>
@@ -54,8 +54,8 @@ const schemas: DescriptionSchema[] = [
     formatter: ({ value }) => `${value}件`,
   },
   {
-    label: "上次更新",
-    prop: "lastUpdated",
+    label: '上次更新',
+    prop: 'lastUpdated',
     customLabelRender: () => (
       <span>
         <el-icon>
@@ -65,7 +65,7 @@ const schemas: DescriptionSchema[] = [
       </span>
     ),
   },
-];
+]
 </script>
 
 <style scoped lang="scss">

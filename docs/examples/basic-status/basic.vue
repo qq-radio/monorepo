@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { BasicStatus } from "@center/components";
+import { BasicStatus } from '@center/components'
 </script>
 
 <style scoped lang="scss">

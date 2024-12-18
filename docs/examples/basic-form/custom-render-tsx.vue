@@ -10,34 +10,29 @@
 </template>
 
 <script setup lang="tsx">
-import {
-  BasicForm,
-  FormSchema,
-  BasicCheckboxGroup,
-  BasicSelect,
-} from "@center/components";
+import { BasicForm, FormSchema, BasicCheckboxGroup, BasicSelect } from '@center/components'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import { StarFilled } from "@element-plus/icons-vue";
+import { StarFilled } from '@element-plus/icons-vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
 const formModel = ref({
   coffee: [],
-  sport: "",
-});
+  sport: '',
+})
 
 const formSchemas: FormSchema[] = [
   {
-    label: "用户",
-    prop: "username",
+    label: '用户',
+    prop: 'username',
     customRender: () => {
       const icon = (
         <el-icon style="color: #f16268; vertical-align: middle">
           <StarFilled />
         </el-icon>
-      );
+      )
       return (
         <div>
           {icon}
@@ -48,18 +43,18 @@ const formSchemas: FormSchema[] = [
           {icon}
           {icon}
         </div>
-      );
+      )
     },
   },
   {
-    label: "咖啡",
-    prop: "coffee",
+    label: '咖啡',
+    prop: 'coffee',
     customRender: () => {
       const options = [
-        { label: "拿铁", value: "latte" },
-        { label: "卡布奇诺", value: "cappuccino" },
-        { label: "美式", value: "americano" },
-      ];
+        { label: '拿铁', value: 'latte' },
+        { label: '卡布奇诺', value: 'cappuccino' },
+        { label: '美式', value: 'americano' },
+      ]
 
       return (
         <BasicCheckboxGroup
@@ -67,18 +62,18 @@ const formSchemas: FormSchema[] = [
           options={options}
           onUpdate:modelValue={(value) => (formModel.value.coffee = value)}
         />
-      );
+      )
     },
   },
   {
-    label: "运动",
-    prop: "sport",
+    label: '运动',
+    prop: 'sport',
     customRender: () => {
       const options = [
-        { label: "足球", value: "football" },
-        { label: "篮球", value: "basketball" },
-        { label: "羽毛球", value: "badminton" },
-      ];
+        { label: '足球', value: 'football' },
+        { label: '篮球', value: 'basketball' },
+        { label: '羽毛球', value: 'badminton' },
+      ]
 
       return (
         <BasicSelect
@@ -86,8 +81,8 @@ const formSchemas: FormSchema[] = [
           options={options}
           onUpdate:modelValue={(value) => (formModel.value.sport = value)}
         />
-      );
+      )
     },
   },
-];
+]
 </script>

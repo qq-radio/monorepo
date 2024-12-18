@@ -3,101 +3,101 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTable, useTable, TableSchema } from "@center/components";
+import { BasicTable, useTable, TableSchema } from '@center/components'
 
-import userListMockData from "@mocks/user-list.json";
+import userListMockData from '@mocks/user-list.json'
 
 const schemas: TableSchema[] = [
   {
-    label: "用户名",
-    prop: "username",
-    headerTooltip: "为了展示link的用法，实际是个假的用户跳转",
+    label: '用户名',
+    prop: 'username',
+    headerTooltip: '为了展示link的用法，实际是个假的用户跳转',
     width: 120,
-    display: "link",
+    display: 'link',
     displayProps: {
-      href: "/",
-      type: "success",
+      href: '/',
+      type: 'success',
     },
     displaySlots: ({ value }) => ({
       default: () => value,
     }),
   },
   {
-    label: "手机号",
-    prop: "phone",
+    label: '手机号',
+    prop: 'phone',
     width: 160,
-    display: "copy",
+    display: 'copy',
     displayProps: ({ value }) => ({
       text: value,
     }),
   },
   {
-    label: "岗位",
-    prop: "job",
+    label: '岗位',
+    prop: 'job',
     width: 120,
-    display: "tag",
+    display: 'tag',
     displayProps: {
-      type: "success",
+      type: 'success',
     },
     displaySlots: ({ value }) => ({
       default: () => value,
     }),
   },
   {
-    label: "开发进度",
-    prop: "progress",
+    label: '开发进度',
+    prop: 'progress',
     width: 140,
-    display: "progress",
+    display: 'progress',
     displayProps: ({ value }) => ({
       percentage: value,
       textInside: true,
       strokeWidth: 16,
-      status: value > 60 ? (value > 90 ? "success" : "warning") : "exception",
+      status: value > 60 ? (value > 90 ? 'success' : 'warning') : 'exception',
     }),
   },
   {
-    label: "头像",
-    prop: "image",
+    label: '头像',
+    prop: 'image',
     width: 120,
-    display: "avatar",
+    display: 'avatar',
     displayProps: ({ value }) => ({
       src: value,
       size: 80,
     }),
   },
   {
-    label: "图片",
-    prop: "image",
+    label: '图片',
+    prop: 'image',
     width: 120,
-    display: "image",
+    display: 'image',
     displayProps: ({ value }) => ({
       src: value,
     }),
   },
   {
-    label: "状态",
-    prop: "status",
+    label: '状态',
+    prop: 'status',
     width: 120,
-    display: "status",
+    display: 'status',
     displayProps: ({ value }) => ({
-      text: value === 1 ? "在职中" : "已离职",
-      type: value === 1 ? "success" : "danger",
+      text: value === 1 ? '在职中' : '已离职',
+      type: value === 1 ? 'success' : 'danger',
     }),
   },
   {
-    label: "创建时间",
-    prop: "createTime",
+    label: '创建时间',
+    prop: 'createTime',
     width: 120,
-    display: "time",
+    display: 'time',
     displayProps: ({ value }) => ({
       time: value,
     }),
   },
-];
+]
 
 interface ApiResponse {
-  total: number;
-  records: any[];
+  total: number
+  records: any[]
 }
 const userListApi = (): Promise<ApiResponse> => {
   return new Promise((resolve) => {
@@ -105,13 +105,13 @@ const userListApi = (): Promise<ApiResponse> => {
       resolve({
         total: userListMockData.length,
         records: userListMockData,
-      });
-    }, 300);
-  });
-};
+      })
+    }, 300)
+  })
+}
 
 const [registerTable] = useTable({
   request: userListApi,
   schemas,
-});
+})
 </script>

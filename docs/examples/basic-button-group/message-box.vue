@@ -3,32 +3,32 @@
 </template>
 
 <script setup lang="ts">
-import { BasicButtonGroup, Button } from "@center/components";
+import { BasicButtonGroup, Button } from '@center/components'
 
 const buttons: Button[] = [
   {
-    text: "禁用",
+    text: '禁用',
     props: {
-      type: "danger",
+      type: 'danger',
     },
     onConfirm: () => {
-      console.log("二次确认禁用-确定");
+      console.log('二次确认禁用-确定')
     },
     onCancel: () => {
-      console.log("二次确认禁用-取消");
+      console.log('二次确认禁用-取消')
     },
   },
   {
-    text: "删除",
+    text: '删除',
     props: {
-      type: "danger",
+      type: 'danger',
     },
     onConfirm: () => {
-      console.log("二次确认删除-确定");
+      console.log('二次确认删除-确定')
     },
     onCancel: () => {
-      console.log("二次确认删除-取消");
+      console.log('二次确认删除-取消')
     },
   },
-];
+]
 </script>

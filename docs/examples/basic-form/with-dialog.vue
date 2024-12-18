@@ -8,11 +8,7 @@
     </el-collapse-item>
   </el-collapse>
   <BasicDialog @register="registerDialog" @confirm="submit">
-    <BasicForm
-      v-model="formModel"
-      @register="registerForm"
-      @submit="handleSubmit"
-    />
+    <BasicForm v-model="formModel" @register="registerForm" @submit="handleSubmit" />
   </BasicDialog>
 </template>
 
@@ -25,134 +21,134 @@ import {
   useForm,
   BasicButtonGroup,
   Button,
-} from "@center/components";
+} from '@center/components'
 
-import { ref, nextTick } from "vue";
+import { ref, nextTick } from 'vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
 const [registerDialog, { openDialog, setDialogTitle }] = useDialog({
-  title: "弹窗表单示例",
-});
+  title: '弹窗表单示例',
+})
 
-const formModel = ref<any>({});
+const formModel = ref<any>({})
 
 const formSchemas: FormSchema[] = [
   {
-    label: "咖啡",
-    prop: "drink",
-    component: "radio-group",
+    label: '咖啡',
+    prop: 'drink',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "拿铁", value: "latte" },
-        { label: "卡布奇诺", value: "cappuccino" },
-        { label: "美式", value: "americano" },
+        { label: '拿铁', value: 'latte' },
+        { label: '卡布奇诺', value: 'cappuccino' },
+        { label: '美式', value: 'americano' },
       ],
     },
     required: true,
   },
   {
-    label: "规格",
-    prop: "size",
-    component: "radio-group",
+    label: '规格',
+    prop: 'size',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "大杯(500ml)", value: "large" },
-        { label: "小杯(350ml)", value: "small" },
+        { label: '大杯(500ml)', value: 'large' },
+        { label: '小杯(350ml)', value: 'small' },
       ],
     },
     required: true,
   },
   {
-    label: "温度",
-    prop: "temperature",
-    component: "radio-group",
+    label: '温度',
+    prop: 'temperature',
+    component: 'radio-group',
     componentProps: {
       options: [
-        { label: "热", value: "hot" },
-        { label: "冰", value: "ice" },
+        { label: '热', value: 'hot' },
+        { label: '冰', value: 'ice' },
       ],
     },
     required: true,
   },
   {
-    label: "需要吸管",
-    prop: "needStraw",
-    component: "switch",
+    label: '需要吸管',
+    prop: 'needStraw',
+    component: 'switch',
     defaultValue: true,
     required: true,
   },
   {
-    label: "联系人",
-    prop: "name",
+    label: '联系人',
+    prop: 'name',
     required: true,
   },
   {
-    label: "联系电话",
-    prop: "phone",
+    label: '联系电话',
+    prop: 'phone',
     required: true,
   },
   {
-    label: "收货地址",
-    prop: "address",
-    component: "textarea",
+    label: '收货地址',
+    prop: 'address',
+    component: 'textarea',
     required: true,
   },
-];
+]
 
 const [registerForm, { setProps, submit, reset }] = useForm({
   schemas: formSchemas,
-});
+})
 
 const handleSubmit = (values) => {
-  console.log("values:", values);
-};
+  console.log('values:', values)
+}
 
 const detailData = {
-  drink: "americano",
-  size: "large",
-  temperature: "ice",
+  drink: 'americano',
+  size: 'large',
+  temperature: 'ice',
   needStraw: true,
-  name: "李娟娟",
-  phone: "13513699874",
-  address: "广东省南山市塘朗城",
-};
+  name: '李娟娟',
+  phone: '13513699874',
+  address: '广东省南山市塘朗城',
+}
 
 const buttons: Button[] = [
   {
-    text: "新增",
+    text: '新增',
     onClick: async () => {
-      setDialogTitle("新增");
-      openDialog();
-      await nextTick();
-      reset();
-      setProps({ disabled: false });
-      formModel.value = {};
+      setDialogTitle('新增')
+      openDialog()
+      await nextTick()
+      reset()
+      setProps({ disabled: false })
+      formModel.value = {}
     },
   },
   {
-    text: "编辑",
+    text: '编辑',
     onClick: async () => {
-      setDialogTitle("编辑");
-      openDialog();
-      await nextTick();
-      setProps({ disabled: false });
+      setDialogTitle('编辑')
+      openDialog()
+      await nextTick()
+      setProps({ disabled: false })
       formModel.value = {
         ...detailData,
-      };
+      }
     },
   },
   {
-    text: "查看详情",
+    text: '查看详情',
     onClick: async () => {
-      setDialogTitle("查看详情");
-      openDialog();
-      await nextTick();
-      setProps({ disabled: true });
+      setDialogTitle('查看详情')
+      openDialog()
+      await nextTick()
+      setProps({ disabled: true })
       formModel.value = {
         ...detailData,
-      };
+      }
     },
   },
-];
+]
 </script>

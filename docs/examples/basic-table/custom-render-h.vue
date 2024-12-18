@@ -3,82 +3,76 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTable, TableSchema } from "@center/components";
+import { BasicTable, TableSchema } from '@center/components'
 
-import userListMockData from "@mocks/user-list.json";
+import userListMockData from '@mocks/user-list.json'
 
-import { h } from "vue";
+import { h } from 'vue'
 
-import { ElIcon } from "element-plus";
-import {
-  Phone,
-  CircleCheckFilled,
-  CircleCloseFilled,
-} from "@element-plus/icons-vue";
+import { ElIcon } from 'element-plus'
+import { Phone, CircleCheckFilled, CircleCloseFilled } from '@element-plus/icons-vue'
 
 const schemas: TableSchema[] = [
   {
-    label: "用户名",
-    prop: "username",
+    label: '用户名',
+    prop: 'username',
   },
   {
-    label: "手机号",
-    prop: "phone",
+    label: '手机号',
+    prop: 'phone',
     customRender: ({ value }) => {
-      return h("span", [
+      return h('span', [
         h(
           ElIcon,
           {
             style: {
-              color: "#25a6e7",
-              marginRight: "4px",
-              verticalAlign: "middle",
+              color: '#25a6e7',
+              marginRight: '4px',
+              verticalAlign: 'middle',
             },
           },
-          () => h(Phone)
+          () => h(Phone),
         ),
         value,
-      ]);
+      ])
     },
   },
   {
-    label: "岗位",
-    prop: "job",
+    label: '岗位',
+    prop: 'job',
   },
   {
-    label: "地址",
-    prop: "address",
+    label: '地址',
+    prop: 'address',
     customRender: ({ row }) => {
-      return h("span", [
-        `${row.provinceName}/${row.cityName}/${row.regionName}`,
-      ]);
+      return h('span', [`${row.provinceName}/${row.cityName}/${row.regionName}`])
     },
   },
   {
-    label: "状态",
-    prop: "status",
+    label: '状态',
+    prop: 'status',
     customRender: ({ value }) => {
-      return h("span", [
+      return h('span', [
         h(
           ElIcon,
           {
             style: {
-              marginRight: "4px",
-              verticalAlign: "middle",
+              marginRight: '4px',
+              verticalAlign: 'middle',
             },
           },
           () =>
             value === 1
-              ? h(CircleCheckFilled, { style: { color: "#8dd35f" } })
-              : h(CircleCloseFilled, { style: { color: "#ca5555" } })
+              ? h(CircleCheckFilled, { style: { color: '#8dd35f' } })
+              : h(CircleCloseFilled, { style: { color: '#ca5555' } }),
         ),
-        value === 1 ? "在职中" : "已离职",
-      ]);
+        value === 1 ? '在职中' : '已离职',
+      ])
     },
   },
   {
-    label: "创建时间",
-    prop: "createTime",
+    label: '创建时间',
+    prop: 'createTime',
   },
-];
+]
 </script>

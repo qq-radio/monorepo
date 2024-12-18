@@ -10,28 +10,23 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicForm, FormSchema } from "@center/components";
+import { BasicForm, FormSchema } from '@center/components'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import {
-  UserFilled,
-  StarFilled,
-  CoffeeCup,
-  Baseball,
-} from "@element-plus/icons-vue";
+import { UserFilled, StarFilled, CoffeeCup, Baseball } from '@element-plus/icons-vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
 const formModel = ref({
   coffee: [],
-  sport: "",
-});
+  sport: '',
+})
 
 const formSchemas: FormSchema[] = [
   {
-    label: "用户",
-    prop: "username",
+    label: '用户',
+    prop: 'username',
     customLabelRender: () => (
       <el-icon>
         <UserFilled />
@@ -42,7 +37,7 @@ const formSchemas: FormSchema[] = [
         <el-icon style="color: #f16268; vertical-align: middle">
           <StarFilled />
         </el-icon>
-      );
+      )
       return (
         <div>
           {icon}
@@ -53,18 +48,18 @@ const formSchemas: FormSchema[] = [
           {icon}
           {icon}
         </div>
-      );
+      )
     },
   },
   {
-    label: "咖啡",
-    prop: "coffee",
-    component: "checkbox-group",
+    label: '咖啡',
+    prop: 'coffee',
+    component: 'checkbox-group',
     componentProps: {
       options: [
-        { label: "拿铁", value: "latte" },
-        { label: "卡布奇诺", value: "cappuccino" },
-        { label: "美式", value: "americano" },
+        { label: '拿铁', value: 'latte' },
+        { label: '卡布奇诺', value: 'cappuccino' },
+        { label: '美式', value: 'americano' },
       ],
     },
     customLabelRender: () => (
@@ -74,14 +69,14 @@ const formSchemas: FormSchema[] = [
     ),
   },
   {
-    label: "运动",
-    prop: "sport",
-    component: "select",
+    label: '运动',
+    prop: 'sport',
+    component: 'select',
     componentProps: {
       options: [
-        { label: "足球", value: "football" },
-        { label: "篮球", value: "basketball" },
-        { label: "羽毛球", value: "badminton" },
+        { label: '足球', value: 'football' },
+        { label: '篮球', value: 'basketball' },
+        { label: '羽毛球', value: 'badminton' },
       ],
     },
     customLabelRender: () => (
@@ -90,5 +85,5 @@ const formSchemas: FormSchema[] = [
       </el-icon>
     ),
   },
-];
+]
 </script>

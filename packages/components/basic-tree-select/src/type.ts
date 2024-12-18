@@ -1,21 +1,21 @@
 export interface BasicTreeSelectProps {
-  modelValue?: TreeSelectModelValue;
-  clearable?: boolean;
+  modelValue?: TreeSelectModelValue
+  clearable?: boolean
 
-  data?: Recordable[];
-  api?: () => Promise<any>;
-  resultField?: string;
+  data?: Recordable[]
+  api?: () => Promise<any>
+  resultField?: string
 }
 
 export interface BasicTreeSelectEmits {
-  (e: "update:modelValue", value: TreeSelectModelValue): void;
+  (e: 'update:modelValue', value: TreeSelectModelValue): void
   (
-    e: "change",
+    e: 'change',
     params: {
-      value: TreeSelectModelValue;
+      value: TreeSelectModelValue
       // node: Recordable[];
-    }
-  ): void;
+    },
+  ): void
 }
 
-export type TreeSelectModelValue = string | number | boolean | object;
+export type TreeSelectModelValue = string | number | boolean | object

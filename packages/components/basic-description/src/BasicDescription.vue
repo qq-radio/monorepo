@@ -5,11 +5,7 @@
         <template #label>
           <component :is="renderCustomLabel(item)" v-if="isCustomLabel(item)" />
           <template v-else>{{ item.label }}</template>
-          <el-tooltip
-            v-if="item.labelTooltip"
-            placement="top"
-            :content="item.labelTooltip"
-          >
+          <el-tooltip v-if="item.labelTooltip" placement="top" :content="item.labelTooltip">
             <el-icon style="vertical-align: middle; margin-left: 4px">
               <InfoFilled />
             </el-icon>
@@ -44,59 +40,56 @@ import type {
   BasicDescriptionProps,
   DescriptionSchema,
   DescriptionItemCallbackParams,
-} from "./type";
+} from './type'
 
-import { computed, unref, useAttrs, useSlots } from "vue";
-import { isFunction } from "lodash";
+import { computed, unref, useAttrs, useSlots } from 'vue'
+import { isFunction } from 'lodash'
 
-import { merge, get } from "lodash";
+import { merge, get } from 'lodash'
 
-import { BasicDisplay, hasComponent } from "@center/components/basic-display";
+import { BasicDisplay, hasComponent } from '@center/components/basic-display'
 
-import { useCustomRender } from "@center/composables";
+import { useCustomRender } from '@center/composables'
 
-import { InfoFilled } from "@element-plus/icons-vue";
+import { InfoFilled } from '@element-plus/icons-vue'
 
 defineOptions({
-  name: "BasicDescription",
-});
+  name: 'BasicDescription',
+})
 
-const attrs = useAttrs();
-const slots = useSlots();
+const attrs = useAttrs()
+const slots = useSlots()
 
 const props = withDefaults(defineProps<BasicDescriptionProps>(), {
   data: () => ({}),
   schemas: () => [],
-});
+})
 
 const descriptionSchemas = computed(() =>
-  props.schemas.filter((item) => unref(item.visible) !== false)
-);
+  props.schemas.filter((item) => unref(item.visible) !== false),
+)
 
-const getItemProps = (item) => merge(props.itemProps, item.itemProps);
+const getItemProps = (item) => merge(props.itemProps, item.itemProps)
 
-const { renderItem } = useCustomRender({ slots });
+const { renderItem } = useCustomRender({ slots })
 
-const isCustomLabel = (item: DescriptionSchema) =>
-  item.customLabelRender || item.customLabelSlot;
+const isCustomLabel = (item: DescriptionSchema) => item.customLabelRender || item.customLabelSlot
 
 const renderCustomLabel = (item: DescriptionSchema) =>
   renderItem({
     customRender: item.customLabelRender,
     customSlot: item.customLabelSlot,
-  });
+  })
 
-const getCallbackParams = (
-  item: DescriptionSchema
-): DescriptionItemCallbackParams => {
+const getCallbackParams = (item: DescriptionSchema): DescriptionItemCallbackParams => {
   return {
     data: props.data,
     value: get(props.data, item.prop),
     schema: item,
-  };
-};
+  }
+}
 
-const isCustomCell = (item) => item.customRender || item.customSlot;
+const isCustomCell = (item) => item.customRender || item.customSlot
 
 const renderCustomCell = (item: DescriptionSchema) =>
   renderItem(
@@ -104,30 +97,24 @@ const renderCustomCell = (item: DescriptionSchema) =>
       customRender: item.customRender,
       customSlot: item.customSlot,
     },
-    getCallbackParams(item)
-  );
+    getCallbackParams(item),
+  )
 
 const formattedValue = (item: DescriptionSchema) => {
-  const { formatter } = item;
+  const { formatter } = item
 
-  return isFunction(formatter)
-    ? formatter(getCallbackParams(item))
-    : getCallbackParams(item).value;
-};
+  return isFunction(formatter) ? formatter(getCallbackParams(item)) : getCallbackParams(item).value
+}
 
 const getDisplayProps = (item: DescriptionSchema) => {
-  const { displayProps } = item;
+  const { displayProps } = item
 
-  return isFunction(displayProps)
-    ? displayProps(getCallbackParams(item))
-    : displayProps;
-};
+  return isFunction(displayProps) ? displayProps(getCallbackParams(item)) : displayProps
+}
 
 const getDisplaySlots = (item: DescriptionSchema) => {
-  const { displaySlots } = item;
+  const { displaySlots } = item
 
-  return isFunction(displaySlots)
-    ? displaySlots(getCallbackParams(item))
-    : displaySlots;
-};
+  return isFunction(displaySlots) ? displaySlots(getCallbackParams(item)) : displaySlots
+}
 </script>

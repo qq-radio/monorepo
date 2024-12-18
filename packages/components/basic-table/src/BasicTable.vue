@@ -10,11 +10,7 @@
         @submit="search"
         @reset="reset"
       >
-        <template
-          v-for="name in Object.keys(searchSlots)"
-          :key="name"
-          #[name]="scope"
-        >
+        <template v-for="name in Object.keys(searchSlots)" :key="name" #[name]="scope">
           <slot :name="name" v-bind="scope" />
         </template>
       </BasicForm>
@@ -39,34 +35,19 @@
               v-bind="getRadioSelectionColumnProps"
             >
               <template #default="scope">
-                <el-radio
-                  v-model="radioSelectedValue"
-                  :label="scope.row[getBindValues.rowKey]"
-                >
+                <el-radio v-model="radioSelectedValue" :label="scope.row[getBindValues.rowKey]">
                   &nbsp;
                 </el-radio>
               </template>
             </el-table-column>
 
-            <el-table-column
-              v-if="getProps.hasSelection"
-              v-bind="getSelectionColumnProps"
-            />
+            <el-table-column v-if="getProps.hasSelection" v-bind="getSelectionColumnProps" />
 
-            <el-table-column
-              v-if="getProps.hasIndex"
-              v-bind="getIndexColumnProps"
-            />
+            <el-table-column v-if="getProps.hasIndex" v-bind="getIndexColumnProps" />
 
-            <el-table-column
-              v-if="getProps.hasExpand"
-              v-bind="getExpandColumnProps"
-            >
+            <el-table-column v-if="getProps.hasExpand" v-bind="getExpandColumnProps">
               <template #default="{ row, $index, expanded }">
-                <slot
-                  name="expand"
-                  v-bind="{ row, rowIndex: $index, expanded }"
-                />
+                <slot name="expand" v-bind="{ row, rowIndex: $index, expanded }" />
               </template>
             </el-table-column>
 
@@ -104,10 +85,7 @@
               </el-table-column>
             </template>
 
-            <el-table-column
-              v-if="getProps.actions?.length"
-              v-bind="getActionColumnProps"
-            >
+            <el-table-column v-if="getProps.actions?.length" v-bind="getActionColumnProps">
               <template #default="{ row, $index, column }">
                 <BasicButtonGroup
                   v-bind="getActionProps"
@@ -144,91 +122,84 @@
 </template>
 
 <script setup lang="ts">
-import type { BasicTableProps, BasicTableEmits, TableMethods } from "./types";
+import type { BasicTableProps, BasicTableEmits, TableMethods } from './types'
 
-import { useBasicNamespace } from "@center/composables";
+import { useBasicNamespace } from '@center/composables'
 
-import { useTableSearch } from "./hooks/useTableSearch";
-import { useTableData } from "./hooks/useTableData";
-import { useTableColumnProps } from "./hooks/useTableColumnProps";
-import { useTableSlots } from "./hooks/useTableSlots";
-import { useTableRadioSelection } from "./hooks/useTableRadioSelection";
-import { useTableSelection } from "./hooks/useTableSelection";
-import { useTablePagination } from "./hooks/useTablePagination";
+import { useTableSearch } from './hooks/useTableSearch'
+import { useTableData } from './hooks/useTableData'
+import { useTableColumnProps } from './hooks/useTableColumnProps'
+import { useTableSlots } from './hooks/useTableSlots'
+import { useTableRadioSelection } from './hooks/useTableRadioSelection'
+import { useTableSelection } from './hooks/useTableSelection'
+import { useTablePagination } from './hooks/useTablePagination'
 
-import { useAttrs, useSlots, ref, computed, onMounted } from "vue";
-import { pick } from "lodash";
+import { useAttrs, useSlots, ref, computed, onMounted } from 'vue'
+import { pick } from 'lodash'
 
-import { BasicForm } from "@center/components/basic-form";
-import { BasicButtonGroup } from "@center/components/basic-button-group";
-import { BasicPagination } from "@center/components/basic-pagination";
-import TableHeader from "./components/TableHeader.vue";
-import TableCell from "./components/TableCell.vue";
+import { BasicForm } from '@center/components/basic-form'
+import { BasicButtonGroup } from '@center/components/basic-button-group'
+import { BasicPagination } from '@center/components/basic-pagination'
+import TableHeader from './components/TableHeader.vue'
+import TableCell from './components/TableCell.vue'
 
-const ns = useBasicNamespace("table");
+const ns = useBasicNamespace('table')
 
 defineOptions({
-  name: "BasicTable",
+  name: 'BasicTable',
   inheritAttrs: false,
-});
+})
 
-const attrs = useAttrs();
-const slots = useSlots();
+const attrs = useAttrs()
+const slots = useSlots()
 
-const emit = defineEmits<BasicTableEmits>();
+const emit = defineEmits<BasicTableEmits>()
 
 const props = withDefaults(defineProps<BasicTableProps>(), {
   schemas: () => [],
   immediate: true,
   loading: false,
   showPagination: true,
-});
+})
 
-const propsRef = ref<Partial<BasicTableProps>>();
+const propsRef = ref<Partial<BasicTableProps>>()
 
 const getProps = computed<BasicTableProps>(() => {
   return {
     ...props,
     ...propsRef.value,
-  };
-});
+  }
+})
 
 function setProps(partialProps: Partial<BasicTableProps>) {
   propsRef.value = {
     ...propsRef.value,
     ...partialProps,
-  };
+  }
 }
 
 const defaultAttrs = {
   border: true,
   highlightCurrentRow: true,
   scrollbarAlwaysOn: true,
-  headerCellClassName: "custom-header",
-};
+  headerCellClassName: 'custom-header',
+}
 
 const getBindValues = computed(() => ({
   ...defaultAttrs,
   ...attrs,
-  rowKey: getProps.value.rowKey || "id",
-}));
+  rowKey: getProps.value.rowKey || 'id',
+}))
 
 const { getSearchProps, getSearchSchemas, searchFormParams } = useTableSearch(
-  computed(() =>
-    pick(getProps.value, [
-      "searchProps",
-      "searchParams",
-      "searchSchemas",
-      "schemas",
-    ])
-  ),
-  { emit }
-);
+  computed(() => pick(getProps.value, ['searchProps', 'searchParams', 'searchSchemas', 'schemas'])),
+  { emit },
+)
 
 const { getPaginationProps, page, setPagination } = useTablePagination(
-  pick(getProps.value, "paginationProps"),
-  { emit }
-);
+  pick(getProps.value, 'paginationProps'),
+  { emit },
+)
 
 const {
   isLoading,
@@ -242,19 +213,19 @@ const {
 } = useTableData(
   computed(() =>
     pick(getProps.value, [
-      "schemas",
-      "request",
-      "extraParams",
-      "paramsFormatter",
-      "immediate",
-      "data",
-      "dataFormatter",
-      "currentPageField",
-      "pageSizeField",
-    ])
+      'schemas',
+      'request',
+      'extraParams',
+      'paramsFormatter',
+      'immediate',
+      'data',
+      'dataFormatter',
+      'currentPageField',
+      'pageSizeField',
+    ]),
   ),
-  { searchFormParams, page, setPagination, emit }
-);
+  { searchFormParams, page, setPagination, emit },
+)
 
 const {
   getRadioSelectionColumnProps,
@@ -265,14 +236,14 @@ const {
   getActionProps,
 } = useTableColumnProps(
   pick(getProps.value, [
-    "radioSelectionColumnProps",
-    "selectionColumnProps",
-    "indexColumnProps",
-    "expandColumnProps",
-    "actionColumnProps",
-    "actionProps",
-  ])
-);
+    'radioSelectionColumnProps',
+    'selectionColumnProps',
+    'indexColumnProps',
+    'expandColumnProps',
+    'actionColumnProps',
+    'actionProps',
+  ]),
+)
 
 const { searchSlots, tableHeaderSlots, tableCellSlots } = useTableSlots(
   computed(() => ({
@@ -281,8 +252,8 @@ const { searchSlots, tableHeaderSlots, tableCellSlots } = useTableSlots(
   })),
   {
     slots,
-  }
-);
+  },
+)
 
 const {
   radioSelectedValue,
@@ -297,8 +268,8 @@ const {
   computed(() => ({
     rowKey: getBindValues.value.rowKey,
     tableDatas: tableDatas.value,
-  }))
-);
+  })),
+)
 
 const {
   getSelectedValues,
@@ -309,20 +280,20 @@ const {
 } = useTableSelection(
   computed(() => ({
     rowKey: getBindValues.value.rowKey,
-  }))
-);
+  })),
+)
 
 const search = () => {
-  emit("update:searchParams", searchFormParams.value);
-  reQuery();
-  emit("search", getSearchParams());
-};
+  emit('update:searchParams', searchFormParams.value)
+  reQuery()
+  emit('search', getSearchParams())
+}
 
 const reset = () => {
-  emit("update:searchParams", searchFormParams.value);
-  reQuery();
-  emit("reset", getSearchParams());
-};
+  emit('update:searchParams', searchFormParams.value)
+  reQuery()
+  emit('reset', getSearchParams())
+}
 
 const tableMethods: TableMethods = {
   setProps,
@@ -347,17 +318,17 @@ const tableMethods: TableMethods = {
   getSelectedRows,
   checkHasSelection,
   validateHasSelection,
-};
+}
 
 onMounted(() => {
-  emit("register", tableMethods);
-});
+  emit('register', tableMethods)
+})
 
 defineExpose({
   ...tableMethods,
-});
+})
 </script>
 
 <style lang="scss">
-@use "./style.scss";
+@use './style.scss';
 </style>

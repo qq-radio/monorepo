@@ -4,16 +4,16 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicSelect } from "@center/components";
-import { IceDrink } from "@element-plus/icons-vue";
+import { BasicSelect } from '@center/components'
+import { IceDrink } from '@element-plus/icons-vue'
 
-const value = ref();
+const value = ref()
 
 const options = [
-  { label: "牛奶", value: "milk", price: 6 },
-  { label: "咖啡", value: "coffee", price: 8 },
-  { label: "果汁", value: "juice", price: 10 },
-];
+  { label: '牛奶', value: 'milk', price: 6 },
+  { label: '咖啡', value: 'coffee', price: 8 },
+  { label: '果汁', value: 'juice', price: 10 },
+]
 
 const customDrinkRender = ({ option }) => (
   <span style="display: flex; align-items: center">
@@ -24,5 +24,5 @@ const customDrinkRender = ({ option }) => (
       {option.label}({option.price}元)
     </span>
   </span>
-);
+)
 </script>

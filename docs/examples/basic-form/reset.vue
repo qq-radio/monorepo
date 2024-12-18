@@ -18,50 +18,50 @@
 </template>
 
 <script setup lang="ts">
-import { BasicForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
-const formModel = ref({});
+const formModel = ref({})
 
 const formSchemas: FormSchema[] = [
   {
-    label: "用户",
-    prop: "username",
+    label: '用户',
+    prop: 'username',
 
-    defaultValue: "李华",
+    defaultValue: '李华',
   },
   {
-    label: "运动",
-    prop: "sport",
-    component: "select",
+    label: '运动',
+    prop: 'sport',
+    component: 'select',
     componentProps: {
       options: [
-        { label: "足球", value: "football" },
-        { label: "篮球", value: "basketball" },
-        { label: "羽毛球", value: "badminton" },
+        { label: '足球', value: 'football' },
+        { label: '篮球', value: 'basketball' },
+        { label: '羽毛球', value: 'badminton' },
       ],
     },
-    defaultValue: "basketball",
+    defaultValue: 'basketball',
   },
   {
-    label: "入职日期",
-    prop: "joinDay",
-    component: "date-picker",
+    label: '入职日期',
+    prop: 'joinDay',
+    component: 'date-picker',
   },
-];
+]
 
 const handleClear = () => {
-  console.log("清空成功");
-};
+  console.log('清空成功')
+}
 
 const handleReset = () => {
-  console.log("重置成功");
-};
+  console.log('重置成功')
+}
 
 const handleSubmit = () => {
-  console.log("提交成功");
-};
+  console.log('提交成功')
+}
 </script>

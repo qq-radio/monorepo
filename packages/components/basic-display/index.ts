@@ -1,5 +1,5 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { hasComponent } from "./src/component";
+export { hasComponent } from './src/component'
 
-export { default as BasicDisplay } from "./src/BasicDisplay.vue";
+export { default as BasicDisplay } from './src/BasicDisplay.vue'

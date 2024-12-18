@@ -3,21 +3,21 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicDescription, DescriptionSchema } from "@center/components";
+import { BasicDescription, DescriptionSchema } from '@center/components'
 
-import { Monitor, Money, Box, Clock } from "@element-plus/icons-vue";
+import { Monitor, Money, Box, Clock } from '@element-plus/icons-vue'
 
 const data = {
-  productName: "笔记本电脑",
+  productName: '笔记本电脑',
   price: 3999.9901,
   stockQuantity: 150,
   lastUpdated: new Date().toLocaleString(),
-};
+}
 
 const schemas: DescriptionSchema[] = [
   {
-    label: "产品名称",
-    prop: "productName",
+    label: '产品名称',
+    prop: 'productName',
     customRender: ({ value }) => (
       <span>
         <el-icon>
@@ -28,8 +28,8 @@ const schemas: DescriptionSchema[] = [
     ),
   },
   {
-    label: "价格",
-    prop: "price",
+    label: '价格',
+    prop: 'price',
     customRender: ({ value }) => (
       <span>
         <el-icon>
@@ -40,8 +40,8 @@ const schemas: DescriptionSchema[] = [
     ),
   },
   {
-    label: "库存数量",
-    prop: "stockQuantity",
+    label: '库存数量',
+    prop: 'stockQuantity',
     customRender: ({ value }) => (
       <span>
         <el-icon>
@@ -52,8 +52,8 @@ const schemas: DescriptionSchema[] = [
     ),
   },
   {
-    label: "上次更新",
-    prop: "lastUpdated",
+    label: '上次更新',
+    prop: 'lastUpdated',
     customRender: ({ value }) => (
       <span>
         <el-icon>
@@ -63,7 +63,7 @@ const schemas: DescriptionSchema[] = [
       </span>
     ),
   },
-];
+]
 </script>
 
 <style scoped lang="scss">

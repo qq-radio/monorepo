@@ -1,3 +1,3 @@
-export * from "./src/type";
+export * from './src/type'
 
-export { default as BasicCopy } from "./src/BasicCopy.vue";
+export { default as BasicCopy } from './src/BasicCopy.vue'

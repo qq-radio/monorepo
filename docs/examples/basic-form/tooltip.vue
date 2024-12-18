@@ -10,43 +10,43 @@
 </template>
 
 <script setup lang="ts">
-import { BasicForm, FormSchema } from "@center/components/basic-form";
+import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const activeNames = ref(["example"]);
+const activeNames = ref(['example'])
 
-const formModel = ref({});
+const formModel = ref({})
 
 const formSchemas: FormSchema[] = [
   {
-    title: "基本信息",
-    titleTooltip: "数据收集将会保密，不会透露您的隐私，请放心填写",
+    title: '基本信息',
+    titleTooltip: '数据收集将会保密，不会透露您的隐私，请放心填写',
   },
   {
-    label: "用户",
-    prop: "username",
+    label: '用户',
+    prop: 'username',
 
-    labelTooltip: "名称至少2个文字",
+    labelTooltip: '名称至少2个文字',
     required: true,
   },
   {
-    title: "技能",
-    titleTooltip: "请根据实际情况选择您熟悉的技能",
+    title: '技能',
+    titleTooltip: '请根据实际情况选择您熟悉的技能',
   },
   {
-    label: "工作",
-    prop: "work",
-    component: "checkbox-group",
+    label: '工作',
+    prop: 'work',
+    component: 'checkbox-group',
     componentProps: {
       options: [
-        { label: "前端开发", value: "front_end_dev" },
-        { label: "后端开发", value: "back_end_dev" },
-        { label: "全栈", value: "full_dev" },
+        { label: '前端开发', value: 'front_end_dev' },
+        { label: '后端开发', value: 'back_end_dev' },
+        { label: '全栈', value: 'full_dev' },
       ],
     },
-    labelTooltip: "可以选择多项，但请至少选择一项",
+    labelTooltip: '可以选择多项，但请至少选择一项',
     required: true,
   },
-];
+]
 </script>

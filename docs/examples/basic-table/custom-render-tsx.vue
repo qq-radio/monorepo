@@ -3,24 +3,20 @@
 </template>
 
 <script setup lang="tsx">
-import { BasicTable, TableSchema } from "@center/components";
+import { BasicTable, TableSchema } from '@center/components'
 
-import userListMockData from "@mocks/user-list.json";
+import userListMockData from '@mocks/user-list.json'
 
-import {
-  Phone,
-  CircleCheckFilled,
-  CircleCloseFilled,
-} from "@element-plus/icons-vue";
+import { Phone, CircleCheckFilled, CircleCloseFilled } from '@element-plus/icons-vue'
 
 const schemas: TableSchema[] = [
   {
-    label: "用户名",
-    prop: "username",
+    label: '用户名',
+    prop: 'username',
   },
   {
-    label: "手机号",
-    prop: "phone",
+    label: '手机号',
+    prop: 'phone',
     customRender: ({ value }) => (
       <>
         <el-icon style="color: #25a6e7; margin-right: 4px; vertical-align: middle">
@@ -31,18 +27,17 @@ const schemas: TableSchema[] = [
     ),
   },
   {
-    label: "岗位",
-    prop: "job",
+    label: '岗位',
+    prop: 'job',
   },
   {
-    label: "地址",
-    prop: "address",
-    customRender: ({ row }) =>
-      `${row.provinceName}/${row.cityName}/${row.regionName}`,
+    label: '地址',
+    prop: 'address',
+    customRender: ({ row }) => `${row.provinceName}/${row.cityName}/${row.regionName}`,
   },
   {
-    label: "状态",
-    prop: "status",
+    label: '状态',
+    prop: 'status',
     customRender: ({ value }) => (
       <>
         <el-icon style="margin-right: 4px; vertical-align: middle">
@@ -52,13 +47,13 @@ const schemas: TableSchema[] = [
             <CircleCloseFilled style="color: #ca5555" />
           )}
         </el-icon>
-        {value === 1 ? "在职中" : "已离职"}
+        {value === 1 ? '在职中' : '已离职'}
       </>
     ),
   },
   {
-    label: "创建时间",
-    prop: "createTime",
+    label: '创建时间',
+    prop: 'createTime',
   },
-];
+]
 </script>

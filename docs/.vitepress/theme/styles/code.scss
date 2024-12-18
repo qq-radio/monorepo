@@ -1,6 +1,6 @@
 /* 本文件只放code样式 */
 // @use 'highlight.js/styles/vs2015.css';
-@use "highlight.js/styles/color-brewer.css";
+@use 'highlight.js/styles/color-brewer.css';
 
 .main {
   h1 {
@@ -31,7 +31,7 @@
 
   /* vitePres默认 */
   .github-light {
-    [class*="language-"] pre {
+    [class*='language-'] pre {
       padding: 0 10px;
 
       box-sizing: border-box;

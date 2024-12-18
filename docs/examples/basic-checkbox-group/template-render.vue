@@ -1,23 +1,19 @@
 <template>
-  <BasicCheckboxGroup
-    v-model="value"
-    :options="options"
-    :render="customDrinkRender"
-  />
+  <BasicCheckboxGroup v-model="value" :options="options" :render="customDrinkRender" />
   <div style="margin-top: 10px">双向绑定值：{{ value }}</div>
 </template>
 
 <script setup lang="tsx">
-import { BasicCheckboxGroup } from "@center/components";
-import { IceDrink } from "@element-plus/icons-vue";
+import { BasicCheckboxGroup } from '@center/components'
+import { IceDrink } from '@element-plus/icons-vue'
 
-const value = ref();
+const value = ref()
 
 const options = [
-  { label: "牛奶", value: "milk", price: 6 },
-  { label: "咖啡", value: "coffee", price: 8 },
-  { label: "果汁", value: "juice", price: 10 },
-];
+  { label: '牛奶', value: 'milk', price: 6 },
+  { label: '咖啡', value: 'coffee', price: 8 },
+  { label: '果汁', value: 'juice', price: 10 },
+]
 
 const customDrinkRender = ({ option }) => (
   <span style="display: flex; align-items: center">
@@ -28,5 +24,5 @@ const customDrinkRender = ({ option }) => (
       {option.label}({option.price}元)
     </span>
   </span>
-);
+)
 </script>

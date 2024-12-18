@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { BasicInputNumberRange } from "@center/components";
+import { BasicInputNumberRange } from '@center/components'
 
-const value = ref();
+const value = ref()
 </script>

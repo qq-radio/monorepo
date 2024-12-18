@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { BasicCopy } from "@center/components";
+import { BasicCopy } from '@center/components'
 </script>

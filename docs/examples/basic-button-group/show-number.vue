@@ -3,38 +3,38 @@
 </template>
 
 <script setup lang="ts">
-import { BasicButtonGroup, Button } from "@center/components";
+import { BasicButtonGroup, Button } from '@center/components'
 
 const buttons: Button[] = [
   {
-    text: "新增",
+    text: '新增',
     props: {
-      type: "primary",
+      type: 'primary',
     },
   },
   {
-    text: "查看",
+    text: '查看',
     props: {
-      type: "success",
+      type: 'success',
     },
   },
   {
-    text: "启用",
+    text: '启用',
     props: {
-      type: "success",
+      type: 'success',
     },
   },
   {
-    text: "禁用",
+    text: '禁用',
     props: {
-      type: "danger",
+      type: 'danger',
     },
   },
   {
-    text: "删除",
+    text: '删除',
     props: {
-      type: "danger",
+      type: 'danger',
     },
   },
-];
+]
 </script>
