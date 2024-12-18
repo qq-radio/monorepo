@@ -54,9 +54,8 @@ import {
 
 import { useOptionQuery } from "@center/composables";
 
-import { isFunction, isString } from "@center/utils";
+import { isFunction, isString, isEmpty } from "lodash";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
-import { isEmpty } from "lodash";
 
 defineOptions({
   name: "BasicCheckboxGroup",

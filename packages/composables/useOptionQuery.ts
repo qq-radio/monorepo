@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { isArray, isFunction, get } from "lodash";
-import { mapObjectArrayFields } from "@center/utils";
+import { mapObjectArrayFields } from "../utils";
 
 type Option = {
   label: string;

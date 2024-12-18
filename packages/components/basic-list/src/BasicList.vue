@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { BasicListProps } from "./type";
 
-import { defineProps } from "vue";
 import { isFunction } from "lodash";
 
 defineOptions({

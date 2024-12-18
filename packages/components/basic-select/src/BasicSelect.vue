@@ -55,9 +55,8 @@ import {
 
 import { useOptionQuery, useBasicNamespace } from "@center/composables";
 
-import { isFunction, isString } from "@center/utils";
+import { isFunction, isString, isEmpty } from "lodash";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
-import { isEmpty } from "lodash";
 
 const ns = useBasicNamespace("select");
 

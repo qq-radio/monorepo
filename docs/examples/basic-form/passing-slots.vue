@@ -16,7 +16,7 @@
 <script setup lang="tsx">
 import { BasicForm, FormSchema } from "@center/components/basic-form";
 
-import { ref } from "vue";
+import { ref , h } from "vue";
 
 import { ElIcon } from "element-plus";
 import { Search, Location, Present } from "@element-plus/icons-vue";

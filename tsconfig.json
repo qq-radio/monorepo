@@ -18,5 +18,6 @@
   "vueCompilerOptions": {
     "target": 3
   },
-  "include": ["packages", "./types"]
+  "include": ["packages", "types"],
+  "exclude": ["node_modules", "**/dist", "**/__tests__/**", "**/*.md", "web"]
 }

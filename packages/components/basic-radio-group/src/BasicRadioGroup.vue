@@ -41,7 +41,7 @@ import {
 
 import { useOptionQuery } from "@center/composables";
 
-import { isFunction, isString } from "@center/utils";
+import { isFunction, isString } from "lodash";
 import { useAttrs, useSlots, computed, onMounted, ref, watch } from "vue";
 
 defineOptions({
