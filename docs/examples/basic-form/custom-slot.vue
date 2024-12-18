@@ -28,8 +28,6 @@
 <script setup lang="ts">
 import { BasicForm, FormSchema, BasicCheckboxGroup, BasicSelect } from '@center/components'
 
-import { ref } from 'vue'
-
 import { StarFilled } from '@element-plus/icons-vue'
 
 const activeNames = ref(['example'])

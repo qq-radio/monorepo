@@ -3,8 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
-
 import { BasicDescription, DescriptionSchema } from '@center/components'
 
 import { ElIcon } from 'element-plus'

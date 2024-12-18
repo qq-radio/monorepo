@@ -24,8 +24,6 @@
 <script setup lang="ts">
 import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from 'vue'
-
 import { ElIcon } from 'element-plus'
 import { VideoCamera, Headset } from '@element-plus/icons-vue'
 

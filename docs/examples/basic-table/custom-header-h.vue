@@ -7,8 +7,6 @@ import { BasicTable, useTable, TableSchema, BasicSelect } from '@center/componen
 
 import userListMockData from '@mocks/user-list.json'
 
-import { h } from 'vue'
-
 import { ElIcon } from 'element-plus'
 import { Hide, View } from '@element-plus/icons-vue'
 

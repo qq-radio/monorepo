@@ -39,8 +39,6 @@ import {
   BasicFormInstance,
 } from '@center/components'
 
-import { ref } from 'vue'
-
 import { InfoFilled } from '@element-plus/icons-vue'
 
 const activeNames = ref(['example'])

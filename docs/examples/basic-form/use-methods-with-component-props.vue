@@ -12,8 +12,6 @@
 <script setup lang="ts">
 import { BasicForm, FormSchema } from '@center/components'
 
-import { ref } from 'vue'
-
 const activeNames = ref(['example', 'data'])
 
 const formModel = ref()

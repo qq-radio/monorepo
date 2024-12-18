@@ -12,8 +12,6 @@
 <script setup lang="ts">
 import { BasicForm, FormSchema } from '@center/components'
 
-import { ref, h } from 'vue'
-
 import { ElIcon } from 'element-plus'
 import { UserFilled, StarFilled, Cherry, KnifeFork } from '@element-plus/icons-vue'
 

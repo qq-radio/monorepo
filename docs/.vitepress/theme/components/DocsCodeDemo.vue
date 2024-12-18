@@ -36,7 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import { DocumentCopy, ArrowDown, ArrowUp, EditPen } from '@element-plus/icons-vue'
 import { ElIcon, ElTooltip } from 'element-plus'
 const getComponent = (moduleFiles: Record<string, any>, path: string) => {

@@ -12,8 +12,6 @@
 <script setup lang="tsx">
 import { BasicForm, FormSchema } from '@center/components/basic-form'
 
-import { ref } from 'vue'
-
 import { CoffeeCup, Baseball } from '@element-plus/icons-vue'
 
 const activeNames = ref(['example'])

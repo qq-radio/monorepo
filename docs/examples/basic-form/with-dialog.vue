@@ -23,8 +23,6 @@ import {
   Button,
 } from '@center/components'
 
-import { ref, nextTick } from 'vue'
-
 const activeNames = ref(['example'])
 
 const [registerDialog, { openDialog, setDialogTitle }] = useDialog({

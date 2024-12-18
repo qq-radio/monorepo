@@ -31,8 +31,6 @@
 <script setup lang="ts">
 import { BasicForm, FormSchema, useForm, BasicButtonGroup, Button } from '@center/components'
 
-import { ref } from 'vue'
-
 import { InfoFilled } from '@element-plus/icons-vue'
 
 const activeNames = ref(['example'])
