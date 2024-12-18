@@ -19,6 +19,7 @@
     "vue": "3.4.21"
   },
   "devDependencies": {
+    "@center/eslint-config": "workspace:*",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@types/lodash-es": "^4.17.7",
     "@types/markdown-it": "^14.1.2",
