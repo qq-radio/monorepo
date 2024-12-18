@@ -100,6 +100,9 @@ importers:
       '@vitejs/plugin-vue-jsx':
         specifier: ^4.0.1
         version: 4.1.1(vite@5.4.11(@types/node@22.10.2)(sass@1.83.0))(vue@3.4.21(typescript@5.6.3))
+      eslint:
+        specifier: ^8.18.0
+        version: 8.57.1
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
@@ -127,6 +130,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.30.0
         version: 5.62.0(eslint@8.57.1)(typescript@4.9.5)
+      '@vue/eslint-config-typescript':
+        specifier: ^11.0.3
+        version: 11.0.3(eslint-plugin-vue@9.32.0(eslint@8.57.1))(eslint@8.57.1)(typescript@4.9.5)
       eslint-config-prettier:
         specifier: ^8.5.0
         version: 8.10.0(eslint@8.57.1)
@@ -1346,6 +1352,17 @@ packages:
     peerDependencies:
       eslint: '>= 8.21.0'
       prettier: '>= 3.0.0'
+
+  '@vue/eslint-config-typescript@11.0.3':
+    resolution: {integrity: sha512-dkt6W0PX6H/4Xuxg/BlFj5xHvksjpSlVjtkQCpaYJBIEuKj2hOVU7r+TIe+ysCwRYFz/lGqvklntRkCAibsbPw==}
+    engines: {node: ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
+      eslint-plugin-vue: ^9.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@vue/eslint-config-typescript@14.1.4':
     resolution: {integrity: sha512-NcG1adLFde+t+TCaXlL38PHuZlBEuwDahgrPVyB052m9QeHOswVIAplMD2cXgH8vXieAVNF1+mXvyilpIO3+kg==}
@@ -4443,6 +4460,18 @@ snapshots:
       prettier: 3.4.2
     transitivePeerDependencies:
       - '@types/eslint'
+
+  '@vue/eslint-config-typescript@11.0.3(eslint-plugin-vue@9.32.0(eslint@8.57.1))(eslint@8.57.1)(typescript@4.9.5)':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@4.9.5))(eslint@8.57.1)(typescript@4.9.5)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@4.9.5)
+      eslint: 8.57.1
+      eslint-plugin-vue: 9.32.0(eslint@8.57.1)
+      vue-eslint-parser: 9.4.3(eslint@8.57.1)
+    optionalDependencies:
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
 
   '@vue/eslint-config-typescript@14.1.4(@typescript-eslint/parser@8.18.1(eslint@9.17.0)(typescript@5.6.3))(eslint-plugin-vue@9.32.0(eslint@9.17.0))(eslint@9.17.0)(typescript@5.6.3)':
     dependencies:

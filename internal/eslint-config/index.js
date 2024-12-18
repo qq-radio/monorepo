@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   parser: 'vue-eslint-parser',
   env: {
     browser: true,
@@ -11,7 +11,6 @@ export default {
     'plugin:import/recommended',
     'plugin:vue/vue3-recommended',
     '@vue/eslint-config-typescript/recommended',
-    '@vue/eslint-config-prettier',
     'prettier',
   ],
   parserOptions: {
