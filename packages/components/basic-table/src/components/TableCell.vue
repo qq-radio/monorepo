@@ -4,8 +4,8 @@
     v-else-if="schema.display && hasComponent(schema.display)"
     :type="schema.display"
     :value="formattedValue"
-    :displayProps="getDisplayProps"
-    :displaySlots="getDisplaySlots"
+    :display-props="getDisplayProps"
+    :display-slots="getDisplaySlots"
   />
   <span v-else>
     {{ formattedValue }}

@@ -2,8 +2,8 @@
   <BasicTable
     :request="userListApi"
     :schemas="schemas"
-    currentPageField="current"
-    pageSizeField="size"
+    current-page-field="current"
+    page-size-field="size"
   />
 </template>
 

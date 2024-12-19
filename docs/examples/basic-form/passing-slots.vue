@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter @submit="handleSubmit" />
+      <BasicForm v-model="formModel" :schemas="formSchemas" has-footer @submit="handleSubmit" />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
       {{ formModel }}
@@ -129,5 +129,7 @@ const formSchemas: FormSchema[] = [
   },
 ]
 
-const handleSubmit = () => {}
+const handleSubmit = () => {
+  console.log('handleSubmit: 午休后再这里加上所有的成功提示')
+}
 </script>

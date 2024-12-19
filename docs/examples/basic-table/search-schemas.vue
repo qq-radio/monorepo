@@ -2,7 +2,7 @@
   <BasicTable
     v-model:search-params="searchParams"
     :request="userListApi"
-    :searchSchemas="searchSchemas"
+    :search-schemas="searchSchemas"
     :schemas="schemas"
   />
   <el-collapse v-model="activeNames">

@@ -9,14 +9,14 @@
         </el-tooltip>
         <BasicButtonGroup
           :buttons="example.buttons"
-          :buttonProps="{
+          :button-props="{
             type: 'default',
           }"
         />
       </div>
       <BasicForm
         v-model="formModel"
-        hasFooter
+        has-footer
         @register="registerForm"
         @submit="handleSubmit"
         @submit-error="handleSubmitError"

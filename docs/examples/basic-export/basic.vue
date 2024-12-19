@@ -12,7 +12,6 @@ import { BasicExport, ExportConfig } from '@center/components'
 
 const config: ExportConfig = {
   url: 'mock-url',
-  params: () => {},
   fileName: '导出文件名称',
 }
 

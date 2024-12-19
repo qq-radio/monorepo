@@ -2,8 +2,8 @@
   <BasicTable
     :data="userListMockData"
     :schemas="schemas"
-    hasIndex
-    :indexColumnProps="{
+    has-index
+    :index-column-props="{
       fixed: true,
       align: 'center',
     }"

@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter>
+      <BasicForm v-model="formModel" :schemas="formSchemas" has-footer>
         <template #title-interest>
           <div style="font-size: 20px">
             <el-icon>

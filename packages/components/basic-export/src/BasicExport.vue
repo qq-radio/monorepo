@@ -22,7 +22,8 @@ const emit = defineEmits<BasicExportEmits>()
 
 const handleExport = async () => {
   try {
-    const { url, params, beforeExport, fileName } = props.config
+    // const { url, params, beforeExport, fileName } = props.config
+    const { url, params, beforeExport } = props.config
 
     if (!url) {
       ElMessage.error('导出链接不能为空')

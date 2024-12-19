@@ -31,7 +31,6 @@ const buttons: Button[] = [
     props: {
       config: {
         url: 'mock-url',
-        params: () => {},
         fileName: '导出文件名称',
       },
     },

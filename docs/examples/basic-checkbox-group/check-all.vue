@@ -1,5 +1,5 @@
 <template>
-  <BasicCheckboxGroup v-model="value" :options="options" hasCheckAll />
+  <BasicCheckboxGroup v-model="value" :options="options" has-check-all />
   <div style="margin-top: 10px">双向绑定值：{{ value }}</div>
 </template>
 

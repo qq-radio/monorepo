@@ -5,8 +5,6 @@
 <script setup lang="ts">
 import { BasicButtonGroup, Button } from '@center/components'
 
-const a = ref()
-
 const buttons: Button[] = [
   {
     text: '新增',

@@ -4,8 +4,8 @@
       <span style="margin-right: 10px">{{ item.label }}：</span>
       <BasicDisplay
         :type="item.type"
-        :displayProps="getDisplayProps(item)"
-        :displaySlots="getDisplaySlots(item)"
+        :display-props="getDisplayProps(item)"
+        :display-slots="getDisplaySlots(item)"
       />
     </div>
     <el-divider style="margin: 10px 0" />

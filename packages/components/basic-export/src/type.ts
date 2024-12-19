@@ -2,7 +2,7 @@ export type Params = Recordable | (() => Recordable)
 
 export interface ExportConfig {
   url: string
-  params: Params
+  params?: Params
   beforeExport?: (params: Recordable) => boolean
   fileName?: string
 }

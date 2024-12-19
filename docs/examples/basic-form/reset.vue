@@ -4,8 +4,8 @@
       <BasicForm
         v-model="formModel"
         :schemas="formSchemas"
-        hasFooter
-        hasClear
+        has-footer
+        has-clear
         @clear="handleClear"
         @reset="handleReset"
         @submit="handleSubmit"

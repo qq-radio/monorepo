@@ -3,7 +3,7 @@
     :data="userListMockData"
     :schemas="schemas"
     :actions="actions"
-    :actionColumnProps="{ width: 300 }"
+    :action-column-props="{ width: 300 }"
   />
 </template>
 

@@ -2,10 +2,10 @@
   <BasicTable
     :data="userListMockData"
     :schemas="schemas"
-    :expandColumnProps="{
+    :expand-column-props="{
       label: '展开',
     }"
-    hasExpand
+    has-expand
   >
     <template #expand="{ row }">
       <div style="margin: 10px 9px 10px 80px">

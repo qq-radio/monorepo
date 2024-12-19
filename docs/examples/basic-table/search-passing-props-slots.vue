@@ -3,7 +3,7 @@
     v-model:search-params="searchParams"
     :request="userListApi"
     :schemas="schemas"
-    :searchProps="{
+    :search-props="{
       labelWidth: 60,
       labelPosition: 'left',
       rowProps: {

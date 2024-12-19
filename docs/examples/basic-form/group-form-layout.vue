@@ -4,13 +4,13 @@
       <BasicForm
         v-model="formModel"
         :schemas="formSchemas"
-        :titleColProps="{
+        :title-col-props="{
           span: 22,
         }"
-        :colProps="{
+        :col-props="{
           span: 10,
         }"
-        hasFooter
+        has-footer
       />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">

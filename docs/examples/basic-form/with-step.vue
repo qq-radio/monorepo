@@ -9,16 +9,16 @@
         v-show="active === 0"
         v-model="productFormModel"
         :schemas="productFormSchemas"
-        hasFooter
-        :hasReset="false"
-        submitText="下一步"
+        has-footer
+        :has-reset="false"
+        submit-text="下一步"
         @submit="active = 1"
       />
       <BasicForm
         v-show="active === 1"
         v-model="deliveryFormModel"
         :schemas="deliveryFormSchemas"
-        hasFooter
+        has-footer
         @submit="handleSubmit"
       >
         <template #footer="{ submit }">

@@ -11,7 +11,7 @@
       multiple: true,
     }"
     default-expand-all
-    checkStrictly
+    check-strictly
     @change="onChange"
   />
   <div style="margin-top: 10px">双向绑定值：{{ value }}</div>

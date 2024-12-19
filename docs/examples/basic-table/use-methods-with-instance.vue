@@ -7,7 +7,7 @@
     </el-tooltip>
     <BasicButtonGroup
       :buttons="example.buttons"
-      :buttonProps="{
+      :button-props="{
         type: 'default',
       }"
     />
@@ -16,13 +16,13 @@
     ref="basicTableRef"
     :schemas="schemas"
     :request="userListApi"
-    rowKey="code"
-    hasRadioSelection
-    :radioSelectionColumnProps="{
+    row-key="code"
+    has-radio-selection
+    :radio-selection-column-props="{
       fixed: true,
       align: 'center',
     }"
-    hasSelection
+    has-selection
   />
 </template>
 

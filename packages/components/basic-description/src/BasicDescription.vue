@@ -16,8 +16,8 @@
           v-else-if="item.display && hasComponent(item.display)"
           :type="item.display"
           :value="formattedValue(item)"
-          :displayProps="getDisplayProps(item)"
-          :displaySlots="getDisplaySlots(item)"
+          :display-props="getDisplayProps(item)"
+          :display-slots="getDisplaySlots(item)"
         />
         <span v-else>
           {{ formattedValue(item) }}

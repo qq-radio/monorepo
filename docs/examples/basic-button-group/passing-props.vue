@@ -1,6 +1,6 @@
 <template>
   <BasicButtonGroup
-    :buttonProps="{
+    :button-props="{
       type: 'success',
       size: 'large',
       plain: true,

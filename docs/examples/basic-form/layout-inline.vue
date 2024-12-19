@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="formModel" v-bind="formProps" :schemas="formSchemas" hasFooter />
+      <BasicForm v-model="formModel" v-bind="formProps" :schemas="formSchemas" has-footer />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
       {{ formModel }}

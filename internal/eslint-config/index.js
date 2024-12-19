@@ -23,7 +23,7 @@ module.exports = {
   plugins: ['vue', '@typescript-eslint', 'import'],
   rules: {
     'no-undef': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -37,6 +37,5 @@ module.exports = {
       },
     ],
     'vue/attributes-order': ['error'],
-    'vue/multi-word-component-names': ['warn'],
   },
 }

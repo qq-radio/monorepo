@@ -1,7 +1,7 @@
 <template>
   <BasicInputNumberRange
     v-model="value"
-    :inputNumberProps="{
+    :input-number-props="{
       controls: true,
       size: 'large',
       step: 0.2,

@@ -7,7 +7,7 @@
     </el-tooltip>
     <BasicButtonGroup
       :buttons="example.buttons"
-      :buttonProps="{
+      :button-props="{
         type: 'default',
       }"
     />

@@ -2,7 +2,7 @@
   <BasicButtonGroup
     :buttons="buttons"
     :show-number="3"
-    :buttonProps="{
+    :button-props="{
       link: true,
     }"
   />

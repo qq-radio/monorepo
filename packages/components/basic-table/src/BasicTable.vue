@@ -58,7 +58,7 @@
                 :label="schema.label"
                 :prop="schema.prop"
                 :fixed="schema.fixed"
-                :minWidth="schema.width"
+                :min-width="schema.width"
               >
                 <template #header="{ $index, column }">
                   <TableHeader v-bind="{ rowIndex: $index, column, schema }">
@@ -89,7 +89,7 @@
               <template #default="{ row, $index, column }">
                 <BasicButtonGroup
                   v-bind="getActionProps"
-                  :callbackParams="{
+                  :callback-params="{
                     row,
                     rowIndex: $index,
                     column,

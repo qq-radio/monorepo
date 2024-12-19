@@ -1,5 +1,5 @@
 <template>
-  <BasicInputNumberRange v-model="value" prefix="¥" suffix="元" rangeSeparator="至" />
+  <BasicInputNumberRange v-model="value" prefix="¥" suffix="元" range-separator="至" />
   <div style="margin-top: 10px">双向绑定值：{{ value }}</div>
 </template>
 

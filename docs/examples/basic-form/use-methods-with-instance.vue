@@ -9,7 +9,7 @@
         </el-tooltip>
         <BasicButtonGroup
           :buttons="example.buttons"
-          :buttonProps="{
+          :button-props="{
             type: 'default',
           }"
         />
@@ -18,8 +18,8 @@
         ref="basicFormRef"
         v-model="formModel"
         :schemas="formSchemas"
-        labelWidth="110"
-        hasFooter
+        label-width="110"
+        has-footer
         @submit="handleSubmit"
         @submit-error="handleSubmitError"
       />

@@ -1,6 +1,6 @@
 <template>
   <el-button @click="dialogVisible = true">打开弹窗</el-button>
-  <BasicDialog v-model="dialogVisible" hasDebounce @confirm="handleConfirm"
+  <BasicDialog v-model="dialogVisible" has-debounce @confirm="handleConfirm"
     >确定按钮已实现防抖处理，2s中内重复点击只会触发confirm事件一次</BasicDialog
   >
 </template>

@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="formModel" :schemas="formSchemas" hasFooter>
+      <BasicForm v-model="formModel" :schemas="formSchemas" has-footer>
         <template #username>
           <el-icon v-for="i in 3" :key="i" style="color: #00cef0; vertical-align: middle">
             <StarFilled />

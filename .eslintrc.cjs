@@ -1,4 +1,7 @@
 module.exports = {
   root: true,
-  extends: ['@center/eslint-config'],
+  extends: ['plugin:vue/vue3-recommended', '@center/eslint-config'],
+  rules: {
+    'vue/multi-word-component-names': ['off'],
+  },
 }
