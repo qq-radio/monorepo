@@ -27,7 +27,7 @@ export interface BasicCheckboxGroupEmits {
 
 export type CheckboxValue = (string | number | boolean)[]
 
-export interface CheckboxOption {
+export interface CheckboxOption  extends Recordable{
   label?: string
   value?: string | number
   disabled?: boolean

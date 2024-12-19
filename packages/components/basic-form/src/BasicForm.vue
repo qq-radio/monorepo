@@ -11,8 +11,8 @@
             formModel,
             formMethods,
           }"
-          @field-change="setFieldsValue"
           @change="emitUpdateModel"
+          @field-change="setFieldsValue"
         >
           <template v-for="name in Object.keys(slots)" :key="name" #[name]="scope">
             <slot :name="name" v-bind="scope" />

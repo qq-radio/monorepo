@@ -12,6 +12,7 @@
     "eslint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue,.json",
     "eslint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.vue,.json --fix",
     "typecheck": "vue-tsc -p tsconfig.json --noEmit",
+    "typecheck:docs": "vue-tsc -p docs/tsconfig.json --noEmit",
     "prettier": "prettier ./**/*.{js,ts,jsx,tsx,vue,scss,css,json,md} --write"
   },
   "dependencies": {

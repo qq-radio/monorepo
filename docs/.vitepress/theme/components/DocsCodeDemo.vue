@@ -36,20 +36,11 @@
 </template>
 
 <script setup lang="ts">
-import { DocumentCopy, ArrowDown, ArrowUp, EditPen } from '@element-plus/icons-vue'
+import { DocumentCopy, ArrowDown, ArrowUp } from '@element-plus/icons-vue'
 import { ElIcon, ElTooltip } from 'element-plus'
 const getComponent = (moduleFiles: Record<string, any>, path: string) => {
   const key = Object.keys(moduleFiles).find((i) => i.endsWith(`/examples/${path}.vue`)) as string
   return moduleFiles[key]?.default
-}
-
-const getPlaygroundEncoded = (source: string) => {
-  const code = decodeURIComponent(source)
-  const originCode = {
-    [MAIN_FILE_NAME]: code,
-  }
-  const encoded = utoa(JSON.stringify(originCode))
-  return encoded
 }
 
 const moduleFiles = import.meta.glob('../../../examples/**/*.vue', {

@@ -27,7 +27,7 @@ export interface BasicRadioGroupEmits {
 
 export type RadioValue = undefined | string | number
 
-export interface RadioOption {
+export interface RadioOption extends Recordable {
   label?: string
   value?: string | number
   disabled?: boolean

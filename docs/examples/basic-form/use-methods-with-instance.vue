@@ -1,7 +1,7 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <div v-for="example in examples" :key="example" class="example">
+      <div v-for="example in examples" :key="example.description" class="example">
         <el-tooltip placement="top" :content="example.description">
           <el-icon class="example__description">
             <InfoFilled />

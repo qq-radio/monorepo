@@ -1,5 +1,5 @@
 <template>
-  <div v-for="example in examples" :key="example" class="example">
+  <div v-for="example in examples" :key="example.description" class="example">
     <el-tooltip placement="top" :content="example.description">
       <el-icon class="example__description">
         <InfoFilled />

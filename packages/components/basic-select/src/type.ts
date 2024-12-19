@@ -28,7 +28,7 @@ export interface BasicSelectEmits {
 
 export type SelectValue = any
 
-export interface SelectOption {
+export interface SelectOption extends Recordable {
   label?: string
   value?: string | number
   disabled?: boolean

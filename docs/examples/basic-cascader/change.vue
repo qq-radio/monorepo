@@ -85,7 +85,7 @@ const api = () => {
   })
 }
 
-const onChange = ({ _value, node }) => {
+const onChange = ({ node }) => {
   valueDetails.value = node.map((n) => n.data)
 }
 </script>

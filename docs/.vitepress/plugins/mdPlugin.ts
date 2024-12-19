@@ -1,19 +1,11 @@
 import path from 'path'
 import fs from 'fs'
-import MarkdownIt from 'markdown-it'
+
 import mdContainer from 'markdown-it-container'
-import type Token from 'markdown-it/lib/token'
-import type Renderer from 'markdown-it/lib/renderer'
 
 const docRoot = path.resolve(__dirname, '../../')
 
-interface ContainerOpts {
-  marker?: string | undefined
-  validate?(params: string): boolean
-  render?(tokens: Token[], index: number, options: any, env: any, self: Renderer): string
-}
-
-export const mdPlugin = (md: MarkdownIt) => {
+export const mdPlugin = (md) => {
   md.use(mdContainer, 'demo', {
     validate(params) {
       return !!params.trim().match(/^demo\s*(.*)$/)
@@ -37,7 +29,7 @@ export const mdPlugin = (md: MarkdownIt) => {
         return '</DocsCodeDemo>'
       }
     },
-  } as ContainerOpts)
+  })
 
   md.use(mdContainer, 'note', {
     render(tokens, idx) {
