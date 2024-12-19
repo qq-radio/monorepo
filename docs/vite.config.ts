@@ -3,6 +3,7 @@ import type { AliasOptions } from 'vite'
 import { defineConfig } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import checker from 'vite-plugin-checker'
 
 const pathResolve = (dir: string): string => fileURLToPath(new URL(dir, import.meta.url))
 
@@ -28,6 +29,9 @@ export default defineConfig(() => {
         },
       }),
       vueJsx(),
+      checker({
+        typescript: true,
+      }),
     ],
     css: {
       preprocessorOptions: {

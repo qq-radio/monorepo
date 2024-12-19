@@ -67,7 +67,8 @@ const uploadResult = reactive<UploadResult>({
 })
 
 const downloadTemplate = async () => {
-  const { url, params, fileName } = props.templateConfig
+  // const { url, params, fileName } = props.templateConfig
+  const { url } = props.templateConfig
 
   if (!url) {
     ElMessage.error('导入模板链接不能为空')
@@ -99,7 +100,7 @@ const handleUploadSuccess = (response) => {
     const { failCount, failMsgs } = response.data
 
     if (failCount) {
-      let errorNodes = <VNode[]>[]
+      const errorNodes: VNode[] = []
 
       failMsgs.forEach((v) => {
         errorNodes.push(h('div', { style: 'color: #f56c6c' }, v))

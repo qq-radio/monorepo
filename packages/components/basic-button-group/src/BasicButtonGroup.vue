@@ -112,7 +112,7 @@ const renderDefaultButton = (button: Button) => {
     : button.text
 
   const buttonComponent = h(
-    ElButton,
+    ElButton as any,
     {
       ...tagProps,
       onClick: (event) => {

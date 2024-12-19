@@ -42,7 +42,7 @@ const treeDatas = ref<Recordable[]>([])
 watch(
   () => props.modelValue,
   () => {
-    stateValue.value = props.modelValue
+    stateValue.value = props.modelValue || ''
   },
   { immediate: true },
 )
