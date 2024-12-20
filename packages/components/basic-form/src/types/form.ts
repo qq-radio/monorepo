@@ -34,13 +34,11 @@ export interface BasicFormProps {
   hasReset?: boolean
   resetText?: string
   submitText?: string
+  hasErrorMessageTip?: boolean
 
   // for form adapt
   modelAdaptee?: (model: Recordable) => Recordable // interface data -> form model
   modelAdapter?: (model: Recordable) => Recordable // form model -> interface data
-
-  // for form submit
-  hasErrorMessageTip?: boolean
 }
 
 export interface BasicFormEmits {

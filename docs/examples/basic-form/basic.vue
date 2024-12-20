@@ -1,7 +1,13 @@
 <template>
   <el-collapse v-model="activeNames">
     <el-collapse-item title="示例" name="example">
-      <BasicForm v-model="formModel" :schemas="formSchemas" has-footer @submit="handleSubmit" />
+      <BasicForm
+        v-model="formModel"
+        :schemas="formSchemas"
+        has-footer
+        @submit="handleSubmit"
+        @submit-error="handleSubmitError"
+      />
     </el-collapse-item>
     <el-collapse-item title="表单值" name="data">
       {{ formModel }}
@@ -11,6 +17,7 @@
 
 <script setup lang="ts">
 import { BasicForm, FormSchema } from '@center/components/basic-form'
+import { ElMessage } from 'element-plus'
 
 const activeNames = ref(['example'])
 
@@ -226,6 +233,12 @@ const formSchemas: FormSchema[] = [
 ]
 
 const handleSubmit = (values) => {
-  console.log('表单填写值:', values)
+  ElMessage.success('提交成功，请在[折叠面板/表单值]或[控制台]里查看数据')
+  console.log(values)
+}
+
+const handleSubmitError = (errors) => {
+  ElMessage.warning('填写有误，请重新填写后提交')
+  console.error(errors)
 }
 </script>
